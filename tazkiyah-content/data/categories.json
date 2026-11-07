@@ -1,0 +1,24 @@
+{
+  "categories": [
+    { "id": "aqidah", "name": "আকীদা", "icon": "foundation", "order": 1, "parentId": null },
+    { "id": "ibadah", "name": "ইবাদত", "icon": "mosque", "order": 2, "parentId": null },
+    { "id": "salah", "name": "সালাত", "icon": "prayer", "order": 1, "parentId": "ibadah" },
+    { "id": "sawm", "name": "সাওম", "icon": "moon", "order": 2, "parentId": "ibadah" },
+    { "id": "zakat", "name": "যাকাত", "icon": "hand", "order": 3, "parentId": "ibadah" },
+    { "id": "hajj", "name": "হজ", "icon": "kaaba", "order": 4, "parentId": "ibadah" },
+    { "id": "tazkiyah", "name": "তাযকিয়া ও আত্মশুদ্ধি", "icon": "heart", "order": 3, "parentId": null },
+    { "id": "akhlaq", "name": "আখলাক", "icon": "smile", "order": 4, "parentId": null },
+    { "id": "quran-tafsir", "name": "কুরআন ও তাফসীর", "icon": "book", "order": 5, "parentId": null },
+    { "id": "hadith", "name": "হাদিস", "icon": "scroll", "order": 6, "parentId": null },
+    { "id": "seerah", "name": "সীরাত", "icon": "star", "order": 7, "parentId": null },
+    { "id": "family", "name": "পরিবার ও দাম্পত্য", "icon": "home", "order": 8, "parentId": null },
+    { "id": "parenting", "name": "সন্তান প্রতিপালন", "icon": "child", "order": 9, "parentId": null },
+    { "id": "halal-rizq", "name": "হালাল রিযিক", "icon": "wallet", "order": 10, "parentId": null },
+    { "id": "dua-dhikr", "name": "দোয়া ও যিকির", "icon": "hands", "order": 11, "parentId": null },
+    { "id": "akhirah", "name": "মৃত্যু ও আখিরাত", "icon": "hourglass", "order": 12, "parentId": null },
+    { "id": "youth", "name": "তরুণদের জন্য", "icon": "spark", "order": 13, "parentId": null },
+    { "id": "dawah", "name": "দাওয়াহ", "icon": "megaphone", "order": 14, "parentId": null },
+    { "id": "history", "name": "ইসলামের ইতিহাস", "icon": "landmark", "order": 15, "parentId": null },
+    { "id": "contemporary", "name": "সমসাময়িক বিষয়", "icon": "news", "order": 16, "parentId": null }
+  ]
+}

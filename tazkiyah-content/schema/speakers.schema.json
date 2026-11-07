@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Tazkiyah speakers",
+  "description": "data/speakers.json. Speaker objects reject unknown keys so that a typo (e.g. \"phot\" for \"photo\") fails validation instead of being silently ignored by the app. Add new fields here when you add them to the data.",
+  "type": "object",
+  "required": ["speakers"],
+  "properties": {
+    "speakers": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/speaker" }
+    }
+  },
+  "$defs": {
+    "speaker": {
+      "type": "object",
+      "required": ["id", "name", "nameEn", "bio", "order"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "Never changes. Also the lecture file name: data/lectures/<id>.json.",
+          "type": "string",
+          "pattern": "^speaker-[0-9]{3,}$"
+        },
+        "name": {
+          "description": "Bengali name shown in the app.",
+          "type": "string",
+          "minLength": 1
+        },
+        "nameEn": {
+          "type": "string",
+          "minLength": 1
+        },
+        "bio": {
+          "type": "string"
+        },
+        "photo": {
+          "description": "Repo-relative path to a 256x256 .webp image.",
+          "type": "string",
+          "pattern": "^images/speakers/[A-Za-z0-9._-]+\\.webp$"
+        },
+        "order": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

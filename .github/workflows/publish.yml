@@ -1,0 +1,34 @@
+# docs/PLAN.md "কনটেন্ট যোগ করার ওয়ার্কফ্লো" — adapted for this monorepo: the content lives in
+# tazkiyah-content/, so every step runs there and the jsDelivr purge targets that path.
+name: publish-content
+on:
+  push:
+    branches: [main]
+    paths: ["tazkiyah-content/data/**", "tazkiyah-content/images/**", "tazkiyah-content/schema/**"]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tazkiyah-content
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install jsonschema
+      - name: Validate
+        run: python scripts/validate.py
+      - name: Build manifest
+        run: python scripts/build_manifest.py
+      - name: Commit manifest
+        run: |
+          git config user.name "content-bot"
+          git config user.email "content-bot@users.noreply.github.com"
+          git add manifest.json
+          git diff --cached --quiet || (git commit -m "chore: update manifest [skip ci]" && git push)
+      - name: Purge jsDelivr cache
+        run: curl -s "https://purge.jsdelivr.net/gh/${{ github.repository }}@main/tazkiyah-content/manifest.json"

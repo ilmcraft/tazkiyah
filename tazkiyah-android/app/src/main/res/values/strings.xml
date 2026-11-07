@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">তাযকিয়া</string>
+    <string name="tagline">আত্মশুদ্ধির পথে প্রতিদিন</string>
+
+    <!-- Bottom navigation -->
+    <string name="tab_home">হোম</string>
+    <string name="tab_speakers">বক্তা</string>
+    <string name="tab_categories">বিষয়</string>
+    <string name="tab_library">আমার</string>
+
+    <!-- Common -->
+    <string name="search">খুঁজুন</string>
+    <string name="settings">সেটিংস</string>
+    <string name="back">পেছনে</string>
+    <string name="close">বন্ধ করুন</string>
+    <string name="lecture_count">%1$s টি লেকচার</string>
+    <string name="minutes_short">%1$s মিনিট</string>
+    <string name="hours_minutes">%1$s ঘণ্টা %2$s মিনিট</string>
+    <string name="badge_new">নতুন</string>
+    <string name="badge_completed">শেষ হয়েছে</string>
+    <string name="favorite_add">ফেভারিটে যোগ করুন</string>
+    <string name="favorite_remove">ফেভারিট থেকে সরান</string>
+    <string name="added_on">যোগ হয়েছে %1$s</string>
+    <string name="published_on">প্রকাশ %1$s</string>
+    <string name="series_part">%1$s · পর্ব %2$s</string>
+    <string name="error_generic">কিছু একটা ভুল হয়েছে</string>
+    <string-array name="month_names">
+        <item>জানুয়ারি</item>
+        <item>ফেব্রুয়ারি</item>
+        <item>মার্চ</item>
+        <item>এপ্রিল</item>
+        <item>মে</item>
+        <item>জুন</item>
+        <item>জুলাই</item>
+        <item>আগস্ট</item>
+        <item>সেপ্টেম্বর</item>
+        <item>অক্টোবর</item>
+        <item>নভেম্বর</item>
+        <item>ডিসেম্বর</item>
+    </string-array>
+    <string-array name="weekday_short">
+        <item>সোম</item>
+        <item>মঙ্গল</item>
+        <item>বুধ</item>
+        <item>বৃহঃ</item>
+        <item>শুক্র</item>
+        <item>শনি</item>
+        <item>রবি</item>
+    </string-array>
+
+    <!-- Home -->
+    <string name="home_continue">চালিয়ে যান</string>
+    <string name="home_new">নতুন যোগ হয়েছে</string>
+    <string name="home_today">আজকের লেকচার</string>
+    <string name="home_topics">বিষয়ভিত্তিক</string>
+    <string name="home_empty">এখনো কোনো লেকচার নেই। ইন্টারনেট চালু করে নিচে টেনে রিফ্রেশ করুন।</string>
+    <string name="home_all_listened">মাশাআল্লাহ! সব লেকচার একবার করে শোনা হয়েছে।</string>
+    <string name="banner_new_content">নতুন কনটেন্ট এসেছে</string>
+    <string name="banner_app_update">কনটেন্টের নতুন ফরম্যাট এসেছে — নতুন লেকচার পেতে অ্যাপ আপডেট করুন। আগের তালিকা ঠিকই থাকবে।</string>
+    <string name="dismiss">ঠিক আছে</string>
+
+    <!-- Speakers -->
+    <string name="speakers_title">বক্তাগণ</string>
+    <string name="speakers_empty">এখনো কোনো বক্তা যোগ হয়নি।</string>
+    <string name="speaker_all_topics">সব বিষয়</string>
+    <string name="sort_newest">নতুন আগে</string>
+    <string name="sort_oldest">পুরনো আগে</string>
+    <string name="sort_series">সিরিজ অনুযায়ী</string>
+    <string name="no_series">সিরিজের বাইরে</string>
+    <string name="lectures_empty">এই তালিকায় কোনো লেকচার নেই।</string>
+
+    <!-- Categories -->
+    <string name="categories_title">বিষয়সমূহ</string>
+    <string name="categories_empty">এখনো কোনো বিষয় নেই।</string>
+    <string name="category_all_speakers">সব বক্তা</string>
+    <string name="subcategories">উপ-বিষয়</string>
+
+    <!-- Search -->
+    <string name="search_hint">শিরোনাম, বিষয় বা বক্তার নাম</string>
+    <string name="search_recent">সাম্প্রতিক খোঁজ</string>
+    <string name="search_clear_recent">মুছুন</string>
+    <string name="search_no_result">\"%1$s\" দিয়ে কিছু পাওয়া যায়নি</string>
+    <string name="search_prompt">লেকচার খুঁজতে লিখুন — বাংলা বা ইংরেজিতে</string>
+    <string name="search_result_count">%1$s টি ফলাফল</string>
+    <string name="clear">মুছে ফেলুন</string>
+
+    <!-- Player -->
+    <string name="now_playing">এখন চলছে</string>
+    <string name="play">চালান</string>
+    <string name="pause">থামান</string>
+    <string name="rewind_10">১০ সেকেন্ড পেছনে</string>
+    <string name="forward_10">১০ সেকেন্ড সামনে</string>
+    <string name="speed">গতি</string>
+    <string name="speed_value">%1$s×</string>
+    <string name="fullscreen">ফুলস্ক্রিন</string>
+    <string name="exit_fullscreen">ফুলস্ক্রিন থেকে বের হোন</string>
+    <string name="collapse_player">প্লেয়ার ছোট করুন</string>
+    <string name="listen_again">আবার শুনুন</string>
+    <string name="next_part">পরের পর্ব</string>
+    <string name="listen_only">শুধু শুনুন</string>
+    <string name="listen_only_desc">ভিডিও ঢেকে রেখে শুধু আওয়াজ শুনুন</string>
+    <string name="listen_only_active">শুধু শুনুন মোড চালু</string>
+    <string name="series_other_parts">এই সিরিজের অন্য পর্ব</string>
+    <string name="description">বিবরণ</string>
+    <string name="sleep_timer">স্লিপ টাইমার</string>
+    <string name="sleep_off">বন্ধ</string>
+    <string name="sleep_minutes">%1$s মিনিট</string>
+    <string name="sleep_end_of_lecture">এই লেকচার শেষে</string>
+    <string name="sleep_remaining">%1$s মিনিট পর থামবে</string>
+    <string name="sleep_at_end_active">লেকচার শেষে থামবে</string>
+    <string name="error_not_embeddable">এই ভিডিওটি অ্যাপের ভেতরে চালানোর অনুমতি নেই।</string>
+    <string name="error_not_found">ভিডিওটি পাওয়া যাচ্ছে না — হয়তো মুছে ফেলা বা প্রাইভেট করা হয়েছে।</string>
+    <string name="error_network">ইন্টারনেট সংযোগ পাওয়া যাচ্ছে না।</string>
+    <string name="error_playback">লেকচারটি চালানো যাচ্ছে না।</string>
+    <string name="focus_mode_blocked">ফোকাস মোড: ইউটিউবে যাওয়া বন্ধ</string>
+    <string name="audio_badge">অডিও</string>
+    <string name="video_badge">ভিডিও</string>
+
+    <!-- Library (আমার) -->
+    <string name="library_title">আমার</string>
+    <string name="library_favorites">ফেভারিট</string>
+    <string name="library_history">ইতিহাস</string>
+    <string name="library_completed">শেষ করা</string>
+    <string name="library_week">এই সপ্তাহে শুনেছেন</string>
+    <string name="library_favorites_empty">ফেভারিটে এখনো কিছু নেই। লেকচারের পাশে ♡ চাপুন।</string>
+    <string name="library_history_empty">এখনো কিছু শোনা হয়নি।</string>
+    <string name="library_completed_empty">শেষ করা লেকচার এখানে দেখা যাবে।</string>
+
+    <!-- Settings -->
+    <string name="settings_appearance">চেহারা</string>
+    <string name="settings_theme">থিম</string>
+    <string name="theme_system">সিস্টেম অনুযায়ী</string>
+    <string name="theme_light">লাইট</string>
+    <string name="theme_dark">ডার্ক</string>
+    <string name="settings_playback">প্লেব্যাক</string>
+    <string name="settings_default_speed">ডিফল্ট গতি</string>
+    <string name="settings_updates">কনটেন্ট আপডেট</string>
+    <string name="settings_wifi_only">শুধু Wi-Fi-তে আপডেট</string>
+    <string name="settings_wifi_only_desc">মোবাইল ডেটায় নিজে থেকে আপডেট দেখবে না</string>
+    <string name="settings_check_now">এখনই আপডেট দেখুন</string>
+    <string name="settings_data_version">ডেটা ভার্সন: %1$s</string>
+    <string name="settings_last_sync">শেষ যাচাই: %1$s</string>
+    <string name="settings_never">এখনো হয়নি</string>
+    <string name="settings_about">অ্যাপ সম্পর্কে</string>
+    <string name="settings_app_version">অ্যাপ ভার্সন: %1$s</string>
+    <string name="settings_catalog_counts">%1$s জন বক্তা · %2$s টি বিষয় · %3$s টি লেকচার</string>
+    <string name="settings_focus_note">ফোকাস মোড: রিলেটেড ভিডিও, কমেন্ট বা ইউটিউবে যাওয়ার কোনো পথ নেই।</string>
+
+    <!-- Sync results -->
+    <string name="sync_updated">নতুন লেকচার যোগ হয়েছে</string>
+    <string name="sync_up_to_date">সব আপ-টু-ডেট আছে</string>
+    <string name="sync_offline">ইন্টারনেট সংযোগ নেই বা সার্ভারে পৌঁছানো যায়নি</string>
+    <string name="sync_partial">কিছু ফাইল নামানো যায়নি — পরে আবার চেষ্টা হবে</string>
+    <string name="sync_app_update">নতুন কনটেন্টের জন্য অ্যাপ আপডেট দরকার</string>
+    <string name="syncing">আপডেট দেখা হচ্ছে…</string>
+</resources>
