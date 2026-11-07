@@ -1,0 +1,195 @@
+# তাযকিয়া — কনটেন্ট রিপো
+
+এই ফোল্ডারে (`mdhelaluddin-ctg-bd/tazkiyah` রিপোর `tazkiyah-content/`) "তাযকিয়া" অ্যাপের সব কনটেন্ট থাকে: বক্তার তালিকা, বিষয়/ক্যাটাগরি আর প্রতিটি বক্তার লেকচারের তালিকা — সবই সাধারণ JSON ফাইলে। কোনো সার্ভার নেই; অ্যাপ সরাসরি GitHub (raw.githubusercontent.com, ব্যাকআপ হিসেবে jsDelivr) থেকে ফাইল নামায়।
+
+অ্যাপ সবার আগে ছোট `manifest.json` পড়ে। তাতে প্রতিটি ডেটা ফাইলের sha256 হ্যাশ আর `dataVersion` থাকে, তাই অ্যাপ শুধু বদলে যাওয়া ফাইলটাই নামায়। `manifest.json` হাতে লিখতে হয় না — GitHub Action নিজে বানায়।
+
+## ফোল্ডারের গঠন
+
+```
+tazkiyah-content/
+├── manifest.json              # ভার্সন + ফাইল তালিকা ও হ্যাশ (Action বানায়, হাতে এডিট নয়)
+├── data/
+│   ├── speakers.json          # বক্তার তালিকা
+│   ├── categories.json        # বিষয়/ক্যাটাগরি
+│   └── lectures/
+│       └── speaker-001.json   # প্রতি বক্তার লেকচার আলাদা ফাইলে (ফাইলের নাম = বক্তার id)
+├── images/speakers/           # বক্তার ছবি (.webp, ২৫৬×২৫৬)
+├── schema/                    # JSON Schema — ভুল ফরম্যাট ধরার জন্য
+├── scripts/
+│   ├── add_lecture.py         # ইউটিউব লিংক দিলে লেকচার এন্ট্রি বানায়
+│   ├── validate.py            # সব ফাইল যাচাই করে
+│   └── build_manifest.py      # হ্যাশ হিসাব করে manifest আপডেট করে
+├── tests/                     # স্ক্রিপ্টগুলোর pytest টেস্ট
+├── notes/                     # কনটেন্ট যাচাইয়ের নোট (অ্যাপ এগুলো পড়ে না)
+└── requirements-dev.txt       # লোকালি টেস্ট চালানোর প্যাকেজ
+```
+
+GitHub Action-টি রিপোর রুটে আছে: `.github/workflows/publish.yml` (GitHub শুধু রুটের `.github` ফোল্ডার পড়ে)।
+
+## নতুন লেকচার যোগ করা
+
+### ক) স্ক্রিপ্ট দিয়ে (কম্পিউটার থেকে)
+
+১. ইউটিউব লিংক কপি করুন।
+
+২. স্ক্রিপ্ট চালান (রিপোর রুট ফোল্ডার থেকে):
+
+```bash
+python3 scripts/add_lecture.py --speaker speaker-001 --category tazkiyah "https://youtu.be/XXXXXXXXXXX"
+```
+
+স্ক্রিপ্ট যা করে:
+
+- লিংক থেকে videoId বের করে — `watch?v=`, `youtu.be/`, `shorts/`, `live/`, `embed/`, `m.youtube.com`, `music.youtube.com` — সব রকম লিংক চলে।
+- ইউটিউবের oEmbed থেকে শিরোনাম আনে (কোনো API key লাগে না)। oEmbed ব্যর্থ হলে ভিডিওটি সম্ভবত মুছে ফেলা, প্রাইভেট বা এমবেড বন্ধ — তখন অ্যাপের প্লেয়ারেও চলবে না, তাই স্ক্রিপ্ট থেমে যায়।
+- পরের ক্রমিক id বানায় (যেমন `spk001-0008`-এর পরে `spk001-0009`), `addedAt`-এ আজকের তারিখ বসায়, ফাইলের শেষে এন্ট্রি যোগ করে।
+- একই ভিডিও আগে থেকে থাকলে (যেকোনো বক্তার ফাইলে) যোগ করে না।
+- বক্তার কোনো লেকচার ফাইল না থাকলে নতুন ফাইল বানায়।
+
+আরও কিছু ব্যবহার:
+
+```bash
+# একাধিক বিষয়, আর নিজের দেওয়া শিরোনাম (তখন oEmbed থেকে শিরোনাম আনে না)
+python3 scripts/add_lecture.py --speaker speaker-001 --category salah --category ibadah \
+    --title "সালাতে খুশু" "https://www.youtube.com/watch?v=XXXXXXXXXXX"
+
+# ইউটিউবের বদলে সরাসরি অডিও লিংক (mp3/m4a) — এখানে --title দিতেই হবে
+python3 scripts/add_lecture.py --speaker speaker-001 --category salah \
+    --title "সালাতে খুশু" --audio "https://archive.org/download/ITEM/file.mp3"
+```
+
+৩. ফাইল খুলে শিরোনাম বাংলায় ঠিক করুন (ইউটিউবের শিরোনামে প্রায়ই চ্যানেলের নাম, ইংরেজি বা বানান ভুল থাকে)। চাইলে `description`, `tags`, `publishedAt`, `series` যোগ করুন।
+
+৪. যাচাই করে commit ও push করুন:
+
+```bash
+python3 scripts/validate.py
+git add data && git commit -m "নতুন লেকচার" && git push
+```
+
+বাকি সব (manifest, হ্যাশ, ভার্সন) GitHub Action করবে।
+
+> **changelog:** অ্যাপের আপডেট-ব্যানারে যে লেখা দেখায় সেটা Action নিজে বদলায় না, আগেরটাই রাখে। নতুন লেখা চাইলে push-এর আগে চালান
+> `python3 scripts/build_manifest.py --changelog "৩টি নতুন লেকচার যোগ হয়েছে"`
+> এবং `manifest.json`-ও একসাথে commit করুন। তখন Action দেখবে কিছু বদলায়নি, নতুন commit করবে না।
+
+### খ) হাতে এডিট (ফোন বা ব্রাউজার থেকে)
+
+কম্পিউটার ছাড়াও লেকচার যোগ করা যায়:
+
+- **github.dev:** ব্রাউজারে রিপোর পাতায় গিয়ে কীবোর্ডে `.` চাপুন, অথবা ঠিকানায় `github.com` বদলে `github.dev` লিখুন। VS Code-এর মতো এডিটর খুলবে; বাম দিকের Source Control থেকে commit ও push হয়।
+- **ফোনে:** ব্রাউজারে github.com-এ ফাইলটি খুলে ✏️ (Edit) চাপুন, এডিট শেষে "Commit changes"। ফোনের ব্রাউজারে "Desktop site" চালু করলে github.dev-ও খোলে।
+
+ধাপ:
+
+১. `data/lectures/speaker-001.json` খুলুন।
+২. শেষ লেকচারের `{ … }` ব্লকটি কপি করে তার পরে বসান — আগের ব্লকের `}`-এর পরে কমা (`,`) দিতে ভুলবেন না, আর তালিকার একদম শেষ ব্লকের পরে কমা থাকবে না।
+৩. নতুন ব্লকে বদলান:
+   - `id` — ফাইলের সবচেয়ে বড় নম্বরের পরেরটা (`spk001-0008` থাকলে `spk001-0009`)।
+   - `title`, `categoryIds` (`data/categories.json`-এর id)।
+   - `videoId` — লিংকের ১১ অক্ষরের অংশ: `youtu.be/` বা `v=`-এর পরের অংশ, `?`-এর আগ পর্যন্ত। যেমন `https://youtu.be/gpRK64SwTZE?si=abc` → `gpRK64SwTZE`।
+   - `addedAt` — আজকের তারিখ, `YYYY-MM-DD`।
+   - যে ঐচ্ছিক ফিল্ড লাগবে না সেটা মুছে দিন।
+৪. commit করুন। ভুল থাকলে Action ব্যর্থ হবে (GitHub-এর **Actions** ট্যাবে লাল ✗ আর ইমেইল আসবে), কিন্তু অ্যাপে ভুল ডেটা যাবে না। লগে ঠিক কোন ফাইলের কোন লেকচারে কী ভুল তা লেখা থাকে; ঠিক করে আবার commit করুন।
+
+### লেকচারের ফিল্ড
+
+```json
+{
+  "id": "spk001-0001",
+  "title": "তাওবার শর্ত ও পদ্ধতি",
+  "description": "ঐচ্ছিক সারাংশ",
+  "categoryIds": ["tazkiyah"],
+  "tags": ["তাওবা"],
+  "media": { "type": "youtube", "videoId": "XXXXXXXXXXX", "startSec": 0 },
+  "durationSec": 2730,
+  "publishedAt": "2025-03-14",
+  "addedAt": "2026-11-07",
+  "series": { "id": "series-tawbah", "title": "তাওবা সিরিজ", "part": 1 }
+}
+```
+
+| ফিল্ড | লাগবেই? | মানে |
+| --- | --- | --- |
+| `id` | হ্যাঁ | `spk<বক্তার নম্বর>-<৪ অঙ্কের ক্রমিক>`; কখনো বদলাবে না |
+| `title` | হ্যাঁ | অ্যাপে দেখানো শিরোনাম |
+| `categoryIds` | হ্যাঁ | অন্তত একটি বিষয়ের id |
+| `media` | হ্যাঁ | নিচে দেখুন |
+| `addedAt` | হ্যাঁ | রিপোতে যোগ করার তারিখ (`YYYY-MM-DD`) |
+| `description` | না | সংক্ষিপ্ত সারাংশ |
+| `tags` | না | সার্চের জন্য শব্দ — বিকল্প বানানও দিন (নামাজ / নামায / সালাত) |
+| `durationSec` | না | সময়কাল সেকেন্ডে; না দিলে অ্যাপ প্রথমবার চালানোর সময় প্লেয়ার থেকে নেয় |
+| `publishedAt` | না | মূল প্রকাশের তারিখ (`YYYY-MM-DD`) |
+| `series` | না | `id`, `title`, `part` (১, ২, ৩…) — সব কটি লাগবে |
+
+`media`-র তিন রকম মান:
+
+- `{ "type": "youtube", "videoId": "XXXXXXXXXXX", "startSec": 0 }` — videoId ঠিক ১১ অক্ষর (`A-Z a-z 0-9 _ -`); `startSec` ঐচ্ছিক, সেকেন্ডে।
+- `{ "type": "audio", "url": "https://…/file.mp3", "mimeType": "audio/mpeg" }` — সরাসরি mp3/m4a লিংক।
+- `{ "type": "video", "url": "https://…/file.mp4", "mimeType": "video/mp4" }` — সরাসরি mp4 লিংক।
+
+অডিও/ভিডিও লিংক অবশ্যই `https://` দিয়ে শুরু হবে; `mimeType` ঐচ্ছিক।
+
+## GitHub Action কী করে
+
+`main` ব্রাঞ্চে `tazkiyah-content/`-এর `data/`, `images/` বা `schema/`-এর কিছু বদলে push করলে রুটের `.github/workflows/publish.yml` চলে (Actions ট্যাব থেকে "Run workflow" দিয়ে হাতেও চালানো যায়):
+
+১. **যাচাই** — `scripts/validate.py` চালায়:
+   - প্রতিটি ফাইল তার JSON Schema মানে কিনা (`schema/` ফোল্ডারে);
+   - সব লেকচার id অনন্য কিনা (সব ফাইল মিলিয়ে), বক্তা ও বিষয়ের id-ও অনন্য কিনা;
+   - লেকচার ফাইলের `speakerId` `speakers.json`-এ আছে কিনা এবং ফাইলের নামের সাথে মেলে কিনা;
+   - প্রতিটি `categoryId` ও প্রতিটি `parentId` আসলে আছে কিনা;
+   - videoId ঠিক ১১ অক্ষরের কিনা, অডিও/ভিডিও লিংক `https://` দিয়ে শুরু কিনা, তারিখ সঠিক `YYYY-MM-DD` কিনা;
+   - বক্তার `photo` দেওয়া থাকলে ছবির ফাইলটি আছে কিনা।
+   কোনো ভুল পেলে Action এখানেই থেমে যায়, manifest আপডেট হয় না — ফলে ভুল ডেটা কখনো অ্যাপে পৌঁছায় না।
+২. **manifest তৈরি** — `scripts/build_manifest.py` প্রতিটি ডেটা ফাইলের sha256 ও আকার হিসাব করে। কোনো হ্যাশ বা ফাইলের তালিকা বদলালে তবেই `dataVersion` ১ বাড়ায় এবং `updatedAt` বসায়; কিছু না বদলালে `manifest.json` একদম অপরিবর্তিত থাকে।
+৩. **commit** — `manifest.json` বদলালে `content-bot` নামে commit ও push করে (`[skip ci]` সহ)।
+৪. **jsDelivr ক্যাশ পরিষ্কার** — যাতে ব্যাকআপ লিংকেও নতুন manifest পাওয়া যায়।
+
+এরপর অ্যাপের পরের সিঙ্কে (অ্যাপ চালু হলে বা প্রতি ১২ ঘণ্টায়) নতুন লেকচার চলে আসে। raw.githubusercontent.com সাধারণত প্রায় ৫ মিনিট ক্যাশ রাখে।
+
+## নিয়ম
+
+1. **লেকচারের `id` কখনো বদলাবে না, আবার ব্যবহারও হবে না।** ফেভারিট, ইতিহাস আর রিজিউম পজিশন এই id-তে বাঁধা। শিরোনাম, বিষয়, এমনকি বক্তার ফাইল বদলালেও id যা ছিল তাই থাকবে।
+   - স্ক্রিপ্ট সবচেয়ে বড় বিদ্যমান নম্বরের পরেরটা দেয়। তাই সবচেয়ে বড় নম্বরের লেকচারটি মুছে ফেললে পরের বার সেই id আবার তৈরি হতে পারে — এমন হলে নতুন লেকচারের id হাতে এক ধাপ বাড়িয়ে দিন।
+2. বক্তা ও বিষয়ের id-ও স্থায়ী (`speaker-001`, `tazkiyah`)। লেকচার ফাইলের নাম = বক্তার id।
+3. **তারিখ ISO ফরম্যাটে:** `YYYY-MM-DD` (যেমন `2026-11-07`)। manifest-এর `updatedAt` UTC সময়, Action নিজে বসায়।
+4. **সময়কাল সেকেন্ডে:** `durationSec: 2730` মানে ৪৫ মিনিট ৩০ সেকেন্ড; `startSec`-ও সেকেন্ডে।
+5. JSON-এ সবসময় ইংরেজি অঙ্ক; বাংলা অঙ্ক শুধু অ্যাপের UI-তে।
+6. কোনো লেকচার মুছে দিলে অ্যাপের তালিকা থেকেও সরে যাবে, তবে ইউজারের নোট/ইতিহাস মুছবে না।
+7. **নতুন ফিল্ড যোগ করলে স্কিমাতেও যোগ করুন।** বানান ভুল ধরার জন্য লেকচার, `media`, `series`, বক্তা ও বিষয়ের অবজেক্টে অজানা ফিল্ড থাকলে যাচাই ব্যর্থ হয় (যেমন `durationsec` লিখলে বলবে "did you mean 'durationSec'?")। অ্যাপ অজানা ফিল্ড উপেক্ষা করে, তাই নতুন ঐচ্ছিক ফিল্ডে পুরনো অ্যাপ ভাঙে না।
+8. `manifest.json`-এর `schemaVersion` শুধু ফরম্যাটে ভাঙা পরিবর্তন (breaking change) হলে বাড়াবেন; `minAppVersionCode` বাড়ালে এর চেয়ে পুরনো অ্যাপ ডেটা না নিয়ে "অ্যাপ আপডেট করুন" দেখাবে। `dataVersion`, `updatedAt` আর `files` হাতে বদলাবেন না।
+
+## বক্তার ছবি যোগ করা
+
+১. ছবিটি বর্গাকার করে **২৫৬×২৫৬ পিক্সেলের `.webp`** বানান, নাম হবে বক্তার id: `images/speakers/speaker-001.webp`। যেমন ImageMagick দিয়ে:
+
+```bash
+magick photo.jpg -resize 256x256^ -gravity center -extent 256x256 images/speakers/speaker-001.webp
+```
+
+২. `data/speakers.json`-এ সেই বক্তার অবজেক্টে `photo` ফিল্ড যোগ করুন:
+
+```json
+"photo": "images/speakers/speaker-001.webp",
+```
+
+৩. ছবি আর `speakers.json` একসাথে commit করুন। `photo` দেওয়া আছে কিন্তু ফাইল নেই — এমন হলে যাচাই ব্যর্থ হবে। ছবি ব্যবহারের আগে বক্তা বা তাঁর প্রতিষ্ঠানের অনুমতি নিন।
+
+## নতুন বক্তা বা বিষয় যোগ করা
+
+**বক্তা:** `data/speakers.json`-এ নতুন অবজেক্ট যোগ করুন — `id` পরের নম্বর (`speaker-002`), সাথে `name` (বাংলা), `nameEn`, `bio` (খালি `""` রাখা যায়), `order` (তালিকায় ক্রম); `photo` ঐচ্ছিক। তারপর `add_lecture.py --speaker speaker-002 …` চালালে লেকচার ফাইল নিজে তৈরি হবে।
+
+**বিষয়:** `data/categories.json`-এ `{ "id": "…", "name": "…", "icon": "…", "order": …, "parentId": null }` যোগ করুন। `id` ছোট হাতের ইংরেজি ও `-` (যেমন `halal-rizq`); উপ-বিষয় হলে `parentId`-এ মূল বিষয়ের id দিন (যেমন `salah`-এর `parentId` হলো `ibadah`)।
+
+## লোকালি যাচাই ও টেস্ট
+
+```bash
+python3 -m venv .venv
+.venv/bin/pip install -r requirements-dev.txt
+.venv/bin/python scripts/validate.py
+.venv/bin/python -m pytest
+```
+
+`add_lecture.py` আর `build_manifest.py` শুধু Python-এর নিজস্ব লাইব্রেরি ব্যবহার করে; `validate.py`-র জন্য `jsonschema` লাগে। সব স্ক্রিপ্টে `--root PATH` দিয়ে অন্য ফোল্ডারে চালানো যায় (টেস্ট এভাবেই অস্থায়ী কপিতে চলে)।

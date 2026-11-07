@@ -1,0 +1,19 @@
+# Tazkiyah — project rules
+- docs/PLAN.md is the source of truth. Read the relevant section before each task.
+- Stack: Kotlin, Jetpack Compose, Material 3, Hilt, Room, WorkManager, DataStore,
+  OkHttp + kotlinx.serialization, Media3, android-youtube-player (core).
+- All user-facing text in Bengali via strings.xml; show numbers with toBanglaDigits().
+- Never add any way to open the YouTube app or youtube.com (no share, no "open in YouTube").
+- Every YouTube video must be shown through FocusedYouTubePlayer (touch shield + cover card).
+- Content sync must never modify user tables. Never use destructive Room migrations.
+- Before finishing a task: ./gradlew lint testDebugUnitTest must pass.
+
+## Local notes
+- Content repo lives next to this one in `../tazkiyah-content`; every build copies a snapshot of it into
+  the APK's `assets/seed/` (task `copy<Variant>ContentSeed`), so a fresh offline install still has data.
+- Monorepo `mdhelaluddin-ctg-bd/tazkiyah`: content is synced from its `tazkiyah-content/` folder
+  (`tazkiyah.content*` properties in `gradle.properties`); the content Action is the root `.github/workflows/publish.yml`.
+- Playback never stops when the app is minimized or the screen is off: YouTube runs with
+  `enableBackgroundPlayback(true)` (the view is not a lifecycle observer) and always publishes a
+  MediaSession through PlaybackService; Back on the first screen calls `moveTaskToBack`. This breaks
+  YouTube's terms for store apps — fine for this personal build, remove it before any Play Store release.

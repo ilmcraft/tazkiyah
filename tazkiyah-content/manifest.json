@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "minAppVersionCode": 1,
+  "dataVersion": 1,
+  "updatedAt": "2026-11-07T10:06:13Z",
+  "changelog": "জাকারিয়া মাসুদের ৮টি লেকচার যোগ হয়েছে",
+  "files": [
+    {
+      "path": "data/speakers.json",
+      "sha256": "7387c941c527e249e770750d684d8cf32736e7983fb449809996813cf688db11",
+      "size": 570
+    },
+    {
+      "path": "data/categories.json",
+      "sha256": "7fccc0d84c4d0645b8610e07b4a6a0e951662501be16ae6c6be26912e5a95362",
+      "size": 2298
+    },
+    {
+      "path": "data/lectures/speaker-001.json",
+      "sha256": "2b3cbb2d1c7cf8d2b94009f48a36813369dc7d9020aa3c73f2f1880bd27df5b0",
+      "size": 5776
+    }
+  ]
+}

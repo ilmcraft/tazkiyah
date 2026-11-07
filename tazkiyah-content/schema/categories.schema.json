@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Tazkiyah categories",
+  "description": "data/categories.json. Category objects reject unknown keys so that a typo (e.g. \"parentID\") fails validation instead of silently turning a sub-category into a top-level one.",
+  "type": "object",
+  "required": ["categories"],
+  "properties": {
+    "categories": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/category" }
+    }
+  },
+  "$defs": {
+    "category": {
+      "type": "object",
+      "required": ["id", "name", "icon", "order", "parentId"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "Stable English slug; never changes.",
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+        },
+        "name": {
+          "description": "Bengali name shown in the app.",
+          "type": "string",
+          "minLength": 1
+        },
+        "icon": {
+          "type": "string",
+          "minLength": 1
+        },
+        "order": {
+          "description": "Sort order among siblings.",
+          "type": "integer"
+        },
+        "parentId": {
+          "description": "Parent category id, or null for a top-level category.",
+          "type": ["string", "null"]
+        }
+      }
+    }
+  }
+}
