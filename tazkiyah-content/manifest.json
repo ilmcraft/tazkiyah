@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
   "minAppVersionCode": 1,
-  "dataVersion": 1,
-  "updatedAt": "2026-11-07T10:06:13Z",
-  "changelog": "জাকারিয়া মাসুদের ৮টি লেকচার যোগ হয়েছে",
+  "dataVersion": 2,
+  "updatedAt": "2026-11-07T14:13:56Z",
+  "changelog": "৪ জন নতুন বক্তা ও ৩৪টি লেকচার যোগ হয়েছে: মুফতি হারুন ইজহার, আসিফ আদনান, আহমাদ রফিক ও ডা. শামসুল আরেফীন শক্তি",
   "files": [
     {
       "path": "data/speakers.json",
-      "sha256": "7387c941c527e249e770750d684d8cf32736e7983fb449809996813cf688db11",
-      "size": 570
+      "sha256": "ebd91a266a6c947f02b62711019886080eda6ac93848d23c3589961ee15f1c79",
+      "size": 2177
     },
     {
       "path": "data/categories.json",
@@ -17,8 +17,28 @@
     },
     {
       "path": "data/lectures/speaker-001.json",
-      "sha256": "2b3cbb2d1c7cf8d2b94009f48a36813369dc7d9020aa3c73f2f1880bd27df5b0",
-      "size": 5776
+      "sha256": "ac6bbdb8221978cbc1571570ac8fe619919e602137226d3945d6e363586248a3",
+      "size": 5867
+    },
+    {
+      "path": "data/lectures/speaker-002.json",
+      "sha256": "ad3b33ee169f709aa7d13ab8c2e9491274f6a72286626e95680298f26a12eed8",
+      "size": 3232
+    },
+    {
+      "path": "data/lectures/speaker-003.json",
+      "sha256": "01445d8c2e2f13aaf51dfacb26aca2534181bbbd4f2c2feb4186545cef572282",
+      "size": 7136
+    },
+    {
+      "path": "data/lectures/speaker-004.json",
+      "sha256": "25606e497d6f77aa7b61ea0c196272f9a0f0da262e927219d214ac41f62a1444",
+      "size": 750
+    },
+    {
+      "path": "data/lectures/speaker-005.json",
+      "sha256": "dc9511fa884899cab4c0718703f872f2b015d99791ba15e482f0410ad0e7befe",
+      "size": 9023
     }
   ]
 }

@@ -1,0 +1,14 @@
+{
+  "speakerId": "speaker-004",
+  "lectures": [
+    {
+      "id": "spk004-0001",
+      "title": "মুসলিমদের দলবদ্ধতা বনাম দলাদলি",
+      "description": "জাহাঙ্গীরনগর বিশ্ববিদ্যালয়ের JU Islamic Conference 2024-এ মুসলিম ঐক্য, দলাদলি ও ভ্রাতৃত্ব নিয়ে বক্তৃতা।",
+      "categoryIds": ["akhlaq", "contemporary"],
+      "tags": ["ঐক্য", "ভ্রাতৃত্ব", "আহমদ রফিক", "আবু তাসমিয়া"],
+      "media": { "type": "youtube", "videoId": "KhrWgPS4JkM", "startSec": 0 },
+      "addedAt": "2026-11-07"
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "speakerId": "speaker-003",
+  "lectures": [
+    {
+      "id": "spk003-0001",
+      "title": "আধুনিক রাষ্ট্রের বংশগতি",
+      "description": "ফিরাসাত হালাকাহ ১ — আধুনিক রাষ্ট্রের ঐতিহাসিক উৎপত্তির বিশ্লেষণ।",
+      "categoryIds": ["contemporary", "history"],
+      "tags": ["আধুনিক রাষ্ট্র", "রাষ্ট্রচিন্তা", "ফিরাসাত"],
+      "media": { "type": "youtube", "videoId": "QRte9SYoziU", "startSec": 0 },
+      "addedAt": "2026-11-07",
+      "series": { "id": "firasat-halaqah", "title": "ফিরাসাত হালাকাহ", "part": 1 }
+    },
+    {
+      "id": "spk003-0002",
+      "title": "সেক্যুলারিজম — শান্তি, সহিংসতা ও নিরপেক্ষতার মিথ",
+      "description": "ফিরাসাত হালাকাহ ২ — সেক্যুলারিজমের শান্তি ও নিরপেক্ষতার দাবির সমালোচনা।",
+      "categoryIds": ["contemporary", "aqidah"],
+      "tags": ["সেক্যুলারিজম", "ধর্মনিরপেক্ষতা", "ফিরাসাত"],
+      "media": { "type": "youtube", "videoId": "22T9M5luDcE", "startSec": 0 },
+      "addedAt": "2026-11-07",
+      "series": { "id": "firasat-halaqah", "title": "ফিরাসাত হালাকাহ", "part": 2 }
+    },
+    {
+      "id": "spk003-0003",
+      "title": "What Is To Be Done? — আমাদের করণীয়",
+      "description": "বাংলাদেশের চিন্তা, সংস্কৃতি ও পরিচয় নিয়ে অডিও আলোচনা।",
+      "categoryIds": ["contemporary"],
+      "tags": ["করণীয়", "পরিচয়", "অডিও"],
+      "media": { "type": "youtube", "videoId": "h2GWo968MCM", "startSec": 0 },
+      "addedAt": "2026-11-07"
+    },
+    {
+      "id": "spk003-0004",
+      "title": "শাপলা চত্বরের গণসমাবেশ ও ৫ আগস্ট",
+      "description": "শাপলা গণসমাবেশ ও ৫ আগস্ট প্রসঙ্গে বক্তব্যের অংশ।",
+      "categoryIds": ["contemporary"],
+      "tags": ["শাপলা", "৫ আগস্ট", "গণসমাবেশ"],
+      "media": { "type": "youtube", "videoId": "56ulz9lnQ5Q", "startSec": 0 },
+      "addedAt": "2026-11-07"
+    },
+    {
+      "id": "spk003-0005",
+      "title": "এই দেশে শরিয়াহ আইন কেন সম্ভব নয়",
+      "description": "এদেশে শরিয়াহ প্রতিষ্ঠার বাস্তবতা নিয়ে লেকচারের অংশ।",
+      "categoryIds": ["contemporary"],
+      "tags": ["শরিয়াহ", "শরীয়াহ", "আইন"],
+      "media": { "type": "youtube", "videoId": "lBTxV8bJcAI", "startSec": 0 },
+      "addedAt": "2026-11-07"
+    },
+    {
+      "id": "spk003-0006",
+      "title": "মুসলিম বঙ্গের অজানা ইতিহাস",
+      "description": "মুসলিম বঙ্গের রাজনৈতিক বাস্তবতা ও ইতিহাস নিয়ে আলোচনা।",
+      "categoryIds": ["history"],
+      "tags": ["মুসলিমবঙ্গ", "ইতিহাস", "বাংলা"],
+      "media": { "type": "youtube", "videoId": "hkT8uA_h5fE", "startSec": 0 },
+      "addedAt": "2026-11-07"
+    },
+    {
+      "id": "spk003-0007",
+      "title": "ভারতে মুসলিম বিপ্লব যখন হয়েছিল",
+      "description": "উপমহাদেশে মুসলিম প্রতিরোধ আন্দোলনের ইতিহাস নিয়ে লেকচারের অংশ।",
+      "categoryIds": ["history"],
+      "tags": ["উপমহাদেশ", "ভারত", "ইতিহাস"],
+      "media": { "type": "youtube", "videoId": "28DpJLCqLF8", "startSec": 0 },
+      "addedAt": "2026-11-07"
+    },
+    {
+      "id": "spk003-0008",
+      "title": "মুসলিমবঙ্গ, বাংলাদেশের পলিক্রাইসিস ও সমালোচনার জবাব",
+      "description": "Bangladesh and Beyond পডকাস্টের ২৮তম পর্বে মুসলিমবঙ্গ বই, বাংলাদেশের বহুমুখী সংকট ও সমালোচনার জবাব নিয়ে আলাপ।",
+      "categoryIds": ["contemporary"],
+      "tags": ["পডকাস্ট", "মুসলিমবঙ্গ", "বাংলাদেশ"],
+      "media": { "type": "youtube", "videoId": "0ddylmtmWQ0", "startSec": 0 },
+      "addedAt": "2026-11-07"
+    },
+    {
+      "id": "spk003-0009",
+      "title": "মুসলিমবঙ্গ, কওম ও যমীনের ভবিষ্যৎ",
+      "description": "Fireside Chat পডকাস্টের দ্বিতীয় পর্বে অতিথি হিসেবে আলাপ।",
+      "categoryIds": ["contemporary"],
+      "tags": ["পডকাস্ট", "মুসলিমবঙ্গ", "কওম"],
+      "media": { "type": "youtube", "videoId": "CeioagzIkq8", "startSec": 0 },
+      "addedAt": "2026-11-07"
+    },
+    {
+      "id": "spk003-0010",
+      "title": "Revolutions, Reforms & Islamic Revival in Bangladesh (ইংরেজি)",
+      "description": "5Pillars-এর Blood Brothers পডকাস্টে (পর্ব ১৪৯) বাংলাদেশের বিপ্লব, সংস্কার ও ইসলামি পুনর্জাগরণ নিয়ে ইংরেজিতে সাক্ষাৎকার।",
+      "categoryIds": ["contemporary"],
+      "tags": ["ইংরেজি", "পডকাস্ট", "সাক্ষাৎকার", "English"],
+      "media": { "type": "youtube", "videoId": "D_tuqdBmOHk", "startSec": 0 },
+      "addedAt": "2026-11-07"
+    },
+    {
+      "id": "spk003-0011",
+      "title": "জীবনের লক্ষ্য ঠিক করো",
+      "description": "জীবনের লক্ষ্য নির্ধারণ নিয়ে তরুণদের উদ্দেশে আলোচনা।",
+      "categoryIds": ["youth", "tazkiyah"],
+      "tags": ["লক্ষ্য", "তরুণ", "মোটিভেশন"],
+      "media": { "type": "youtube", "videoId": "zdJo1Tu-GPY", "startSec": 0 },
+      "addedAt": "2026-11-07"
+    },
+    {
+      "id": "spk003-0012",
+      "title": "নির্বাচিত লেকচার",
+      "description": "সংকলিত একটি লেকচার।",
+      "categoryIds": ["dawah"],
+      "tags": ["লেকচার"],
+      "media": { "type": "youtube", "videoId": "HFVUHRdxtLM", "startSec": 0 },
+      "addedAt": "2026-11-07"
+    }
+  ]
+}
