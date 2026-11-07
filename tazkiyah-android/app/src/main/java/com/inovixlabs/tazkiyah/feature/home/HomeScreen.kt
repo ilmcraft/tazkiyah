@@ -99,49 +99,52 @@ fun HomeScreen(
             modifier = Modifier.padding(padding).fillMaxSize(),
         ) {
             UiStateContent(state) { data ->
-                LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = 24.dp)) {
-                    item { Banners(settings, viewModel::dismissChangelog) }
-                    if (data.isEmpty) {
-                        item { EmptyState(stringResource(R.string.home_empty)) }
-                    }
-                    if (data.continueListening.isNotEmpty()) {
-                        item { SectionHeader(stringResource(R.string.home_continue)) }
-                        item { LectureRowScroller(data.continueListening, onOpenLecture) }
-                    }
-                    if (data.today != null) {
-                        item { SectionHeader(stringResource(R.string.home_today)) }
-                        item { TodayCard(data.today, onClick = { onOpenLecture(data.today.id) }) }
-                    } else if (!data.isEmpty) {
-                        item {
-                            SectionHeader(stringResource(R.string.home_today))
-                            Text(
-                                stringResource(R.string.home_all_listened),
-                                style = MaterialTheme.typography.bodyMedium,
-                                modifier = Modifier.padding(horizontal = 16.dp),
-                            )
+                // Banners sit above the list so an update notice is visible whatever the scroll position.
+                Column(Modifier.fillMaxSize()) {
+                    Banners(settings, viewModel::dismissChangelog)
+                    LazyColumn(Modifier.fillMaxWidth().weight(1f), contentPadding = PaddingValues(bottom = 24.dp)) {
+                        if (data.isEmpty) {
+                            item { EmptyState(stringResource(R.string.home_empty)) }
                         }
-                    }
-                    if (data.recent.isNotEmpty()) {
-                        item { SectionHeader(stringResource(R.string.home_new)) }
-                        items(data.recent, key = { "recent-" + it.id }) { row ->
-                            LectureListItem(row, onClick = { onOpenLecture(row.id) })
+                        if (data.continueListening.isNotEmpty()) {
+                            item { SectionHeader(stringResource(R.string.home_continue)) }
+                            item { LectureRowScroller(data.continueListening, onOpenLecture) }
                         }
-                    }
-                    if (data.topics.isNotEmpty()) {
-                        item { SectionHeader(stringResource(R.string.home_topics)) }
-                        item {
-                            FlowRow(
-                                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                                modifier = Modifier.padding(horizontal = 16.dp),
-                            ) {
-                                data.topics.forEach { topic ->
-                                    AssistChip(
-                                        onClick = { onOpenCategory(topic.category.id) },
-                                        label = { Text(topic.category.name) },
-                                        leadingIcon = {
-                                            Icon(categoryIcon(topic.category.icon), null, Modifier.size(18.dp))
-                                        },
-                                    )
+                        if (data.today != null) {
+                            item { SectionHeader(stringResource(R.string.home_today)) }
+                            item { TodayCard(data.today, onClick = { onOpenLecture(data.today.id) }) }
+                        } else if (!data.isEmpty) {
+                            item {
+                                SectionHeader(stringResource(R.string.home_today))
+                                Text(
+                                    stringResource(R.string.home_all_listened),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    modifier = Modifier.padding(horizontal = 16.dp),
+                                )
+                            }
+                        }
+                        if (data.recent.isNotEmpty()) {
+                            item { SectionHeader(stringResource(R.string.home_new)) }
+                            items(data.recent, key = { "recent-" + it.id }) { row ->
+                                LectureListItem(row, onClick = { onOpenLecture(row.id) })
+                            }
+                        }
+                        if (data.topics.isNotEmpty()) {
+                            item { SectionHeader(stringResource(R.string.home_topics)) }
+                            item {
+                                FlowRow(
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                    modifier = Modifier.padding(horizontal = 16.dp),
+                                ) {
+                                    data.topics.forEach { topic ->
+                                        AssistChip(
+                                            onClick = { onOpenCategory(topic.category.id) },
+                                            label = { Text(topic.category.name) },
+                                            leadingIcon = {
+                                                Icon(categoryIcon(topic.category.icon), null, Modifier.size(18.dp))
+                                            },
+                                        )
+                                    }
                                 }
                             }
                         }
