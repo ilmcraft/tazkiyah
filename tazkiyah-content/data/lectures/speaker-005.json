@@ -1,0 +1,142 @@
+{
+  "speakerId": "speaker-005",
+  "lectures": [
+    {
+      "id": "spk005-0001",
+      "title": "পশ্চিমা সভ্যতা কোন গাছের ফল?",
+      "description": "পশ্চিমা সভ্যতার শিকড় ও চিন্তার উৎস নিয়ে আলোচনা।",
+      "categoryIds": ["contemporary"],
+      "tags": ["পশ্চিমা সভ্যতা", "শামসুল আরেফিন"],
+      "media": { "type": "youtube", "videoId": "My08Rics9iM", "startSec": 0 },
+      "addedAt": "2026-11-07"
+    },
+    {
+      "id": "spk005-0002",
+      "title": "পশ্চিমা সভ্যতার পতন কি অবশ্যম্ভাবী?",
+      "description": "The Muslim Minds-এর আয়োজনে পশ্চিমা সভ্যতার পতনের সম্ভাবনা নিয়ে বক্তৃতা।",
+      "categoryIds": ["contemporary"],
+      "tags": ["পশ্চিমা সভ্যতা", "কনফারেন্স", "শামসুল আরেফিন"],
+      "media": { "type": "youtube", "videoId": "Kdde4EDQ2p8", "startSec": 0 },
+      "addedAt": "2026-11-07"
+    },
+    {
+      "id": "spk005-0003",
+      "title": "পর্নোগ্রাফি: বিজ্ঞান ও ব্যবসা",
+      "description": "পর্নোগ্রাফির বৈজ্ঞানিক ক্ষতি ও এর পেছনের ব্যবসা নিয়ে ওয়েবিনার (Porn, Science and Business)।",
+      "categoryIds": ["youth", "contemporary"],
+      "tags": ["পর্নোগ্রাফি", "আসক্তি", "বিজ্ঞান"],
+      "media": { "type": "youtube", "videoId": "GgSPo6oCJQA", "startSec": 0 },
+      "addedAt": "2026-11-07"
+    },
+    {
+      "id": "spk005-0004",
+      "title": "মানুষের সংজ্ঞা — ২য় পর্ব",
+      "description": "ইসলামি ও আধুনিক দৃষ্টিতে মানুষের পরিচয় নিয়ে সিরিজের দ্বিতীয় পর্ব।",
+      "categoryIds": ["aqidah"],
+      "tags": ["মানুষ", "দর্শন", "আকীদা"],
+      "media": { "type": "youtube", "videoId": "inr5nbAgDDs", "startSec": 0 },
+      "addedAt": "2026-11-07",
+      "series": { "id": "manusher-songga", "title": "মানুষের সংজ্ঞা", "part": 2 }
+    },
+    {
+      "id": "spk005-0005",
+      "title": "একজন মুসলিমের মিশন: ইসলামের বিজয়",
+      "description": "একজন মুসলিমের জীবনের মিশন কী হওয়া উচিত এবং তার প্রস্তুতি নিয়ে নসিহত।",
+      "categoryIds": ["dawah"],
+      "tags": ["মিশন", "দাওয়াহ", "নসিহত"],
+      "media": { "type": "youtube", "videoId": "SOTBzkdhUwU", "startSec": 0 },
+      "addedAt": "2026-11-07"
+    },
+    {
+      "id": "spk005-0006",
+      "title": "দাওয়াতি কাজ করেও আল্লাহর সাথে সুসম্পর্ক বজায় রাখা",
+      "description": "দাওয়াতি ব্যস্ততার মধ্যেও আল্লাহর সাথে সম্পর্ক অটুট রাখার নসিহত।",
+      "categoryIds": ["dawah", "tazkiyah"],
+      "tags": ["দাওয়াহ", "তাযকিয়া", "আল্লাহর সাথে সম্পর্ক"],
+      "media": { "type": "youtube", "videoId": "0X3wopRZmtM", "startSec": 0 },
+      "addedAt": "2026-11-07"
+    },
+    {
+      "id": "spk005-0007",
+      "title": "জবান খুলুন, ঈমান বাড়ান",
+      "description": "দ্বীনের কথা মুখে বলা কীভাবে ঈমান বাড়ায় — সে বিষয়ে রিমাইন্ডার।",
+      "categoryIds": ["dawah"],
+      "tags": ["ঈমান", "দাওয়াহ", "রিমাইন্ডার"],
+      "media": { "type": "youtube", "videoId": "Gv-iC8xNqi0", "startSec": 0 },
+      "addedAt": "2026-11-07"
+    },
+    {
+      "id": "spk005-0008",
+      "title": "দাওয়াতি কাজে প্রভাবশালী হওয়ার কৌশল",
+      "description": "দাওয়াতি কাজে কার্যকর ও প্রভাবশালী হওয়ার কৌশল।",
+      "categoryIds": ["dawah"],
+      "tags": ["দাওয়াহ", "কৌশল"],
+      "media": { "type": "youtube", "videoId": "TXehMpm3hks", "startSec": 0 },
+      "addedAt": "2026-11-07"
+    },
+    {
+      "id": "spk005-0009",
+      "title": "Gen-Z দাওয়াহ স্ট্র্যাটেজি — পর্ব ১",
+      "description": "Gen-Z প্রজন্মের কাছে দাওয়াহর কৌশল এবং শাহ ওয়ালিউল্লাহ দেহলভী (রহ.)-এর চিন্তার প্রাসঙ্গিকতা।",
+      "categoryIds": ["dawah", "youth"],
+      "tags": ["Gen-Z", "দাওয়াহ", "শাহ ওয়ালিউল্লাহ"],
+      "media": { "type": "youtube", "videoId": "jiaBIZuCZhY", "startSec": 0 },
+      "addedAt": "2026-11-07",
+      "series": { "id": "genz-dawah-strategy", "title": "Gen-Z দাওয়াহ স্ট্র্যাটেজি", "part": 1 }
+    },
+    {
+      "id": "spk005-0010",
+      "title": "উম্মাহর জাগরণ ও দ্বীন বিজয়ের সঠিক কর্মপন্থা",
+      "description": "নোয়াখালীর এক দাওয়াহ সেমিনারে উম্মাহর জাগরণের কর্মপন্থা নিয়ে বক্তৃতা।",
+      "categoryIds": ["dawah"],
+      "tags": ["উম্মাহ", "দাওয়াহ সেমিনার", "নোয়াখালী"],
+      "media": { "type": "youtube", "videoId": "UgWpxRdp-pw", "startSec": 0 },
+      "addedAt": "2026-11-07"
+    },
+    {
+      "id": "spk005-0011",
+      "title": "প্রেম, বিয়ে আর ইসলাম নিয়ে তরুণদের দ্বিধা কেন?",
+      "description": "তরুণদের প্রেম, বিয়ে, ক্যারিয়ার ও আখিরাতের প্রস্তুতি নিয়ে আলোচনা।",
+      "categoryIds": ["family", "youth"],
+      "tags": ["বিয়ে", "প্রেম", "তরুণ"],
+      "media": { "type": "youtube", "videoId": "Sat3AgVTeoY", "startSec": 0 },
+      "addedAt": "2026-11-07"
+    },
+    {
+      "id": "spk005-0012",
+      "title": "তাবলীগ জামাত: দর্শন, প্রয়োজনীয়তা ও সীমাবদ্ধতা",
+      "description": "ReThink পডকাস্টে তাবলীগের প্রয়োজনীয়তা, দর্শন ও সীমাবদ্ধতা এবং অনলাইন বনাম অফলাইন দাওয়াহ নিয়ে দীর্ঘ আলাপ।",
+      "categoryIds": ["dawah"],
+      "tags": ["তাবলীগ", "পডকাস্ট", "দাওয়াহ"],
+      "media": { "type": "youtube", "videoId": "l2p4I_8fGdQ", "startSec": 0 },
+      "addedAt": "2026-11-07"
+    },
+    {
+      "id": "spk005-0013",
+      "title": "বইয়ের মাধ্যমে কী জানাতে চান",
+      "description": "রকমারির সাক্ষাৎকারে বই লেখার উদ্দেশ্য নিয়ে আলাপ।",
+      "categoryIds": ["contemporary"],
+      "tags": ["বই", "লেখালেখি", "সাক্ষাৎকার"],
+      "media": { "type": "youtube", "videoId": "ahFlBNa4JBs", "startSec": 0 },
+      "addedAt": "2026-11-07"
+    },
+    {
+      "id": "spk005-0014",
+      "title": "বাস্তবতার নিরিখে কিছু কথা",
+      "description": "সমসাময়িক বাস্তবতা নিয়ে আলোচনা।",
+      "categoryIds": ["contemporary"],
+      "tags": ["সমসাময়িক", "শামসুল আরেফিন"],
+      "media": { "type": "youtube", "videoId": "0NnGw9TmA8I", "startSec": 0 },
+      "addedAt": "2026-11-07"
+    },
+    {
+      "id": "spk005-0015",
+      "title": "নির্বাচিত লেকচার",
+      "description": "সংকলিত একটি লেকচার।",
+      "categoryIds": ["dawah"],
+      "tags": ["লেকচার", "শামসুল আরেফিন"],
+      "media": { "type": "youtube", "videoId": "YOPIFaUxsG0", "startSec": 0 },
+      "addedAt": "2026-11-07"
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "speakerId": "speaker-002",
+  "lectures": [
+    {
+      "id": "spk002-0001",
+      "title": "তারেক রহমানের বক্তব্যের জবাব",
+      "description": "তারেক রহমানের একটি বক্তব্যের প্রতিক্রিয়ায় আলোচনা।",
+      "categoryIds": ["contemporary"],
+      "tags": ["রাজনীতি", "সমসাময়িক", "হারুন ইযহার"],
+      "media": { "type": "youtube", "videoId": "OAzkgQ6oPmA", "startSec": 0 },
+      "addedAt": "2026-11-07"
+    },
+    {
+      "id": "spk002-0002",
+      "title": "মজলুম আলেমদের সামনে রেখে বক্তব্য",
+      "description": "২০২৪ সালের একটি সমাবেশে কারাভোগী আলেমদের উপস্থিতিতে বক্তব্য।",
+      "categoryIds": ["contemporary"],
+      "tags": ["আলেম", "মাহফিল", "হারুন ইযহার"],
+      "media": { "type": "youtube", "videoId": "oy8O3yls1KU", "startSec": 0 },
+      "addedAt": "2026-11-07"
+    },
+    {
+      "id": "spk002-0003",
+      "title": "তোমরা কাকে ভয় দেখাও?",
+      "description": "মাহফিলের ওয়াজ।",
+      "categoryIds": ["contemporary"],
+      "tags": ["ওয়াজ", "মাহফিল", "হারুন ইযহার"],
+      "media": { "type": "youtube", "videoId": "7w-UAryOySk", "startSec": 0 },
+      "addedAt": "2026-11-07"
+    },
+    {
+      "id": "spk002-0004",
+      "title": "জেলখানায় আল্লাহর সাহায্য পাওয়ার বাস্তব ঘটনা",
+      "description": "কারাবাসের সময় আল্লাহর সাহায্য পাওয়ার ঘটনা দিয়ে তাওয়াক্কুল ও সবরের শিক্ষা।",
+      "categoryIds": ["tazkiyah"],
+      "tags": ["তাওয়াক্কুল", "সবর", "আত্মশুদ্ধি", "হারুন ইযহার"],
+      "media": { "type": "youtube", "videoId": "a3jxarnR4Vw", "startSec": 0 },
+      "addedAt": "2026-11-07"
+    },
+    {
+      "id": "spk002-0005",
+      "title": "নির্বাচিত লেকচার (২০২৫)",
+      "description": "২০২৫ সালের একটি দাওয়াতি লেকচার।",
+      "categoryIds": ["dawah"],
+      "tags": ["লেকচার", "ওয়াজ", "হারুন ইযহার"],
+      "media": { "type": "youtube", "videoId": "ltx_7jZGH3k", "startSec": 0 },
+      "addedAt": "2026-11-07"
+    },
+    {
+      "id": "spk002-0006",
+      "title": "মাহফিলের ওয়াজ (২০২৫)",
+      "description": "২০২৫ সালের একটি মাহফিলের ওয়াজ।",
+      "categoryIds": ["dawah"],
+      "tags": ["ওয়াজ", "মাহফিল", "হারুন ইযহার"],
+      "media": { "type": "youtube", "videoId": "i7sLxehYJSU", "startSec": 0 },
+      "addedAt": "2026-11-07"
+    }
+  ]
+}
