@@ -1,30 +1,545 @@
 {
   "speakerId": "speaker-003",
   "videos": {
+    "007vGmsufYo": {
+      "status": "duplicate",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: spk003-0010"
+    },
+    "0Ic_QDTyiTg": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "ক্লিপ: 11 মিনিট"
+    },
+    "0WmZYOAlz54": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "ক্লিপ: 10 মিনিট"
+    },
+    "0h4E33OYWH8": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0079"
+    },
+    "1mTCqBzvq3Y": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0052"
+    },
+    "1nAZSf27-ys": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "ক্লিপ: 12 মিনিট"
+    },
+    "1qcIwmqEhqw": {
+      "status": "duplicate",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: spk003-0009"
+    },
+    "233q7WyZtDY": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "মোটিভেশনাল রি-কাট চ্যানেল"
+    },
+    "3r_XZPiX2ZY": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: spk003-0042 (দৈর্ঘ্য হুবহু এক)"
+    },
+    "4qUUIoM6y0w": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "ক্লিপ: 10 মিনিট"
+    },
+    "59RRIpsf-rA": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "ক্লিপ: 13 মিনিট"
+    },
+    "5F6ZI5YCwGs": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "ক্লিপ: 11 মিনিট"
+    },
+    "5IH4z2O7KpU": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0116"
+    },
+    "6COHLYTwIJk": {
+      "status": "low-confidence",
+      "date": "2026-11-08",
+      "note": "নাম শুধু বিবরণে"
+    },
+    "6WO9d6kJuPY": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0087"
+    },
+    "6lswI9HLcr0": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "রি-কাট/হাইপ শিরোনাম"
+    },
+    "7ZCXyu_6Bcw": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "রি-কাট/হাইপ শিরোনাম"
+    },
     "7gJqJtm1QyQ": {
       "status": "rejected",
       "date": "2026-11-07",
       "note": "চলে, কিন্তু অস্পষ্ট ক্লিপ — সম্ভবত spk003-0005-এর একই লেকচারের অংশ"
+    },
+    "7rQjKuQdSxQ": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "মোটিভেশনাল রি-কাট চ্যানেল"
+    },
+    "8QNIJ7l14bI": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "ক্লিপ (১৬ মিনিট)"
+    },
+    "9PhZzRdZnfs": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0094"
+    },
+    "9n-7cqmMa-Q": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0099"
+    },
+    "9zG9CNEZze8": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0109"
+    },
+    "A6o7EEc2eG8": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0042"
+    },
+    "A_mXVx5beGI": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "মোটিভেশনাল রি-কাট চ্যানেল"
+    },
+    "B24nhyTpcJc": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0105"
+    },
+    "BGxl5lBdZ5w": {
+      "status": "duplicate",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: y-IrbQ4-Pcw"
+    },
+    "CF_fEWigfUE": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0025"
+    },
+    "Cs3mIz1yUvE": {
+      "status": "duplicate",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: SlqZcVt6Mjw"
+    },
+    "Cx87rLQ-cNA": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "মোটিভেশনাল রি-কাট চ্যানেল"
+    },
+    "DJOgDYUkb6w": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0027"
+    },
+    "DeqzfQjar84": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0080"
+    },
+    "EcW9B_XsMnk": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: spk003-0012 (দৈর্ঘ্য হুবহু এক)"
+    },
+    "GCTOsL6bGrQ": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0023"
+    },
+    "Gs_fWkAkF74": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "রি-কাট/হাইপ শিরোনাম"
+    },
+    "GueeOwNE27M": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0091"
+    },
+    "ICOG0Km3htQ": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0088"
+    },
+    "IPSbm6TqazI": {
+      "status": "duplicate",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: arMRLOz0loo"
+    },
+    "KCaW30KoMRc": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: spk003-0076"
+    },
+    "Kzz578V-Gcw": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0111"
+    },
+    "L1GJnP-koHE": {
+      "status": "duplicate",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: OGiPdYHfvtY"
+    },
+    "L6Ep6TnC9hA": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0061"
+    },
+    "LCl_F2C5OmM": {
+      "status": "duplicate",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: 6lswI9HLcr0"
     },
     "LqFEWx45DPw": {
       "status": "rejected",
       "date": "2026-11-07",
       "note": "oEmbed 403 — এমবেড বন্ধ, অ্যাপে চলবে না"
     },
+    "Mv9Ij7T9rr4": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "রি-কাট/হাইপ শিরোনাম"
+    },
+    "NYwEDK4ZVAM": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0118"
+    },
     "NwhJx1PMtj0": {
       "status": "rejected",
       "date": "2026-11-07",
       "note": "সংবাদ ক্লিপ"
+    },
+    "OGUlVf6MLU4": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "মোটিভেশনাল রি-কাট চ্যানেল"
+    },
+    "OGiPdYHfvtY": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "রি-কাট/হাইপ শিরোনাম"
+    },
+    "OZRQ9lUBV0U": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: spk003-0043 (দৈর্ঘ্য হুবহু এক)"
+    },
+    "PJIwjcisUPc": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "রি-কাট/হাইপ শিরোনাম"
     },
     "PlZ9aE3GUJ8": {
       "status": "rejected",
       "date": "2026-11-07",
       "note": "তাঁকে নিয়ে ভিডিও, তাঁর আলোচনা নয়"
     },
+    "Q7FF5OidS1I": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "ক্লিপ: 10 মিনিট"
+    },
+    "Qk8Kuy5HAww": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0046"
+    },
+    "ROrElFBpnw4": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0035"
+    },
+    "RrwHQZZW2aE": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "ক্লিপ: 13 মিনিট"
+    },
+    "SlqZcVt6Mjw": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0081"
+    },
+    "T-FYF71Q9nU": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0048"
+    },
+    "TUdS9RePhTA": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "সম্ভবত spk003-0057-এর আরেক কপি"
+    },
+    "UEVCb-38fiw": {
+      "status": "duplicate",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: spk003-0002"
+    },
+    "UtaGkaJNWNo": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0024"
+    },
+    "V9OC6qsh_TE": {
+      "status": "duplicate",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: KCaW30KoMRc"
+    },
+    "Vj3ADBdhgg8": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0047"
+    },
+    "WC8ZNKIYvJ8": {
+      "status": "duplicate",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: A6o7EEc2eG8"
+    },
     "WTxMVbSqYdY": {
       "status": "rejected",
       "date": "2026-11-07",
       "note": "404"
+    },
+    "WWbNkBJzlKQ": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0108"
+    },
+    "WXZxq_9zkjQ": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "ক্লিপ: 10 মিনিট"
+    },
+    "Way-5bbq0Zo": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0049"
+    },
+    "X99ET6UX7RU": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0019"
+    },
+    "XaWzZt2TKiE": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "ক্লিপ: 13 মিনিট"
+    },
+    "XxXjRXPi4HU": {
+      "status": "duplicate",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: y-IrbQ4-Pcw"
+    },
+    "YOlo3B5ca2E": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0020"
+    },
+    "YdhxqL_VfB0": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: spk003-0044"
+    },
+    "Z8uK9U6xYfc": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0057"
+    },
+    "ZF1COhVsNVI": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0033"
+    },
+    "ZgTGzkAWzhA": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "ক্লিপ: 13 মিনিট"
+    },
+    "a9xN5ZXKvtA": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0037"
+    },
+    "aCHW2tLYYhQ": {
+      "status": "duplicate",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: TUdS9RePhTA"
+    },
+    "aGCtTe0-UNY": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "ক্লিপ: 14 মিনিট"
+    },
+    "arMRLOz0loo": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0022"
+    },
+    "b4PIM5pF674": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0090"
+    },
+    "b6PV7DlyXbk": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0084"
+    },
+    "c10pakSg9yE": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0112"
+    },
+    "c9ew-bK3rbc": {
+      "status": "duplicate",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: GCTOsL6bGrQ"
+    },
+    "cELjXiNrY04": {
+      "status": "duplicate",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: cmZLL8PRkEg"
+    },
+    "cW3AJHApBNs": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0021"
+    },
+    "ca2NwSbMK08": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "ক্লিপ: 12 মিনিট"
+    },
+    "cktLnaZJOtQ": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0044"
+    },
+    "cmZLL8PRkEg": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0092"
+    },
+    "dr31kaotb1I": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "ক্লিপ: 12 মিনিট"
+    },
+    "e1P_8MtfToo": {
+      "status": "duplicate",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: SlqZcVt6Mjw"
+    },
+    "fLmtA7NMURY": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "শিরোনামে বিষয় নেই"
+    },
+    "gNFi_2JRNqI": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "ক্লিপ: 12 মিনিট"
+    },
+    "gecR1QYpp7w": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "ক্লিপ: 12 মিনিট"
+    },
+    "gr-fanYHvLc": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "মোটিভেশনাল রি-কাট চ্যানেল"
+    },
+    "hZPfiDzezyk": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0076"
+    },
+    "hmTiIewsyAw": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0077"
+    },
+    "i3FmONhAnRI": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0031"
+    },
+    "i86FPp-2Dtg": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "ক্লিপ: 11 মিনিট"
+    },
+    "iFTHsLrd7mo": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "ক্লিপ: 10 মিনিট"
+    },
+    "iUxDMvuroJo": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "ক্লিপ: 12 মিনিট"
+    },
+    "j7LyWzLLqGg": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "রি-কাট/হাইপ শিরোনাম"
+    },
+    "jD87Ztq-HgU": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "সম্ভবত spk003-0039-এর ছোট কপি"
+    },
+    "jPLn9KQx4-Y": {
+      "status": "low-confidence",
+      "date": "2026-11-08",
+      "note": "নাম শুধু বিবরণে"
+    },
+    "jkWtIqjBC7g": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "ক্লিপ: 10 মিনিট"
+    },
+    "kSDzT5Mo1fA": {
+      "status": "duplicate",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: 6lswI9HLcr0"
+    },
+    "keSpLVHQ54E": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0083"
+    },
+    "kw990jR16gw": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "ক্লিপ: 14 মিনিট"
     },
     "l5k0KDtN6-I": {
       "status": "rejected",
@@ -36,15 +551,90 @@
       "date": "2026-11-07",
       "note": "404 (তাছাড়া দুই বক্তার সংকলন)"
     },
+    "lcaBWuWbtr8": {
+      "status": "duplicate",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: KCaW30KoMRc"
+    },
+    "m35G61y_CvU": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "SEAN সেমিনারের (spk003-0084) কাটা কপি"
+    },
+    "mGwFJ1Bcetk": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0026"
+    },
+    "nXpsDXARnNA": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "মোটিভেশনাল রি-কাট চ্যানেল"
+    },
+    "oL6W8pU3XpM": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "রি-কাট/হাইপ শিরোনাম"
+    },
+    "oNwjFSlwnyE": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0055"
+    },
+    "obHJmX_Rzms": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "ক্লিপ: 10 মিনিট"
+    },
+    "pHwbCpfxmi4": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "ক্লিপ: 13 মিনিট"
+    },
     "pJvp-SgkCdg": {
       "status": "rejected",
       "date": "2026-11-07",
       "note": "সংবাদ প্রতিবেদন, লেকচার নয় (জাকারিয়া মাসুদের তালিকা থেকেও একই কারণে বাদ)"
     },
+    "pd6DcbhioOc": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "রি-কাট/হাইপ শিরোনাম"
+    },
+    "qhfpkQAq5NE": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0101"
+    },
     "r93GcjnYahw": {
       "status": "rejected",
       "date": "2026-11-07",
       "note": "একই (404)"
+    },
+    "rH8GmDLz1fs": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0113"
+    },
+    "rs8zrk6fjdw": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "ক্লিপ: 13 মিনিট"
+    },
+    "tOaze69z6dE": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "ক্লিপ চ্যানেল"
+    },
+    "te3IEhutbJA": {
+      "status": "duplicate",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: lcaBWuWbtr8"
+    },
+    "tqt4W71ksPo": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "রি-কাট/হাইপ শিরোনাম"
     },
     "vA0oW-mELbg": {
       "status": "rejected",
@@ -56,15 +646,60 @@
       "date": "2026-11-07",
       "note": "404"
     },
+    "vstKQSNCS9A": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "ক্লিপ: 13 মিনিট"
+    },
     "vzzLo9dVk3Q": {
       "status": "rejected",
       "date": "2026-11-07",
       "note": "পাঠক নিশ্চিত নয়"
     },
+    "w5rRByASMi0": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "ক্লিপ: 10 মিনিট"
+    },
     "wj0clFiYYWo": {
       "status": "rejected",
       "date": "2026-11-07",
       "note": "শর্ট"
+    },
+    "x-_BtKPygtA": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0039"
+    },
+    "x1KCrFY2iUY": {
+      "status": "rejected",
+      "date": "2026-11-08",
+      "note": "ক্লিপ: 13 মিনিট"
+    },
+    "x3f8kSJxXO4": {
+      "status": "duplicate",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: y-IrbQ4-Pcw"
+    },
+    "xY1eAYullIw": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0043"
+    },
+    "y-FDrYO4PyY": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0051"
+    },
+    "y-IrbQ4-Pcw": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0013"
+    },
+    "yjgL7_-4lHk": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk003-0050"
     }
   }
 }
