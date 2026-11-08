@@ -29,7 +29,10 @@ def manifest_bytes(repo: Path) -> bytes:
 
 def expected_entry(repo: Path, rel: str) -> dict:
     data = (repo / rel).read_bytes()
-    return {"path": rel, "sha256": hashlib.sha256(data).hexdigest(), "size": len(data)}
+    entry = {"path": rel, "sha256": hashlib.sha256(data).hexdigest(), "size": len(data)}
+    if rel.startswith("data/lectures/"):
+        entry["lectures"] = len(json.loads(data)["lectures"])
+    return entry
 
 
 # ---------------------------------------------------------------------------
@@ -96,7 +99,8 @@ def test_changed_hash_bumps_version_and_keeps_other_fields(repo, later, capsys):
     assert manifest["updatedAt"] == LATER
     assert manifest["schemaVersion"] == 1
     assert manifest["minAppVersionCode"] == 1
-    assert manifest["changelog"] == "প্রথম সংস্করণ"
+    # Only a title changed: no new lectures, so a generic note replaces the old one.
+    assert manifest["changelog"] == "লেকচারের তালিকা হালনাগাদ হয়েছে"
     assert manifest["files"][2] == expected_entry(repo, LECTURE_FILE)
     assert manifest["files"][0] == expected_entry(repo, "data/speakers.json")
     assert "dataVersion 2" in capsys.readouterr().out
@@ -104,12 +108,25 @@ def test_changed_hash_bumps_version_and_keeps_other_fields(repo, later, capsys):
     # Formatting: 2-space indent, real UTF-8 text, trailing newline.
     raw = (repo / "manifest.json").read_text(encoding="utf-8")
     assert raw == json.dumps(manifest, ensure_ascii=False, indent=2) + "\n"
-    assert "প্রথম সংস্করণ" in raw
+    assert "লেকচারের তালিকা হালনাগাদ হয়েছে" in raw
 
     # Running again right away changes nothing.
     before = manifest_bytes(repo)
     assert run(repo) == 0
     assert manifest_bytes(repo) == before
+
+
+def test_auto_changelog_names_speakers_and_new_lecture_counts(repo, later):
+    doc = read_json(repo, LECTURE_FILE)
+    doc["lectures"].append(dict(doc["lectures"][1], id="spk001-0003", media={"type": "youtube", "videoId": "CCCCCCCCCCC"}))
+    write_json(repo, LECTURE_FILE, doc)
+    write_json(repo, "data/lectures/speaker-002.json", {"speakerId": "speaker-002", "lectures": [
+        {"id": "spk002-0001", "title": "t", "categoryIds": ["salah"],
+         "media": {"type": "youtube", "videoId": "DDDDDDDDDDD"}, "addedAt": "2026-11-08"}]})
+    assert run(repo) == 0
+    manifest = read_json(repo, "manifest.json")
+    assert manifest["changelog"] == "নতুন লেকচার: প্রথম বক্তা (১টি), দ্বিতীয় বক্তা (১টি)"
+    assert [f.get("lectures") for f in manifest["files"]] == [None, None, 3, 1]
 
 
 def test_changelog_flag_overrides_on_change(repo, later):

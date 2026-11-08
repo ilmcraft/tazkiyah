@@ -3,7 +3,7 @@
   "minAppVersionCode": 1,
   "dataVersion": 3,
   "updatedAt": "2026-11-08T08:12:28Z",
-  "changelog": "৪ জন নতুন বক্তা ও ৩৪টি লেকচার যোগ হয়েছে: মুফতি হারুন ইজহার, আসিফ আদনান, আহমাদ রফিক ও ডা. শামসুল আরেফীন শক্তি",
+  "changelog": "নতুন লেকচার: ডা. শামসুল আরেফীন শক্তি (৩৬৯টি)",
   "files": [
     {
       "path": "data/speakers.json",
@@ -18,27 +18,32 @@
     {
       "path": "data/lectures/speaker-001.json",
       "sha256": "ac6bbdb8221978cbc1571570ac8fe619919e602137226d3945d6e363586248a3",
-      "size": 5867
+      "size": 5867,
+      "lectures": 8
     },
     {
       "path": "data/lectures/speaker-002.json",
       "sha256": "ad3b33ee169f709aa7d13ab8c2e9491274f6a72286626e95680298f26a12eed8",
-      "size": 3232
+      "size": 3232,
+      "lectures": 6
     },
     {
       "path": "data/lectures/speaker-003.json",
       "sha256": "01445d8c2e2f13aaf51dfacb26aca2534181bbbd4f2c2feb4186545cef572282",
-      "size": 7136
+      "size": 7136,
+      "lectures": 12
     },
     {
       "path": "data/lectures/speaker-004.json",
       "sha256": "25606e497d6f77aa7b61ea0c196272f9a0f0da262e927219d214ac41f62a1444",
-      "size": 750
+      "size": 750,
+      "lectures": 1
     },
     {
       "path": "data/lectures/speaker-005.json",
       "sha256": "20bda9aaff3c2ad3bc422bab9ff7f98f65f7c2b5655c5262c5924101535140ff",
-      "size": 143818
+      "size": 143818,
+      "lectures": 384
     }
   ]
 }
