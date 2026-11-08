@@ -10,6 +10,7 @@ enum class ThemeMode { SYSTEM, LIGHT, DARK }
 @Composable
 fun TazkiyahTheme(
     themeMode: ThemeMode = ThemeMode.SYSTEM,
+    font: AppFont = AppFont.NOTO_SANS,
     content: @Composable () -> Unit,
 ) {
     val dark = when (themeMode) {
@@ -19,7 +20,7 @@ fun TazkiyahTheme(
     }
     MaterialTheme(
         colorScheme = if (dark) DarkColors else LightColors,
-        typography = TazkiyahTypography,
+        typography = typographyFor(font),
         content = content,
     )
 }

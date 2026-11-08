@@ -14,6 +14,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Code
 import androidx.compose.material.icons.rounded.Description
 import androidx.compose.material.icons.rounded.Email
+import androidx.compose.material.icons.rounded.Language
+import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material.icons.rounded.SystemUpdate
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.HorizontalDivider
@@ -46,6 +48,7 @@ import com.inovixlabs.tazkiyah.BuildConfig
 import com.inovixlabs.tazkiyah.R
 import com.inovixlabs.tazkiyah.core.designsystem.AppScreen
 import com.inovixlabs.tazkiyah.core.designsystem.LocalShowMessage
+import com.inovixlabs.tazkiyah.core.util.shareApp
 import com.inovixlabs.tazkiyah.core.util.toBanglaDigits
 import com.inovixlabs.tazkiyah.data.repository.AppSettings
 import com.inovixlabs.tazkiyah.data.repository.SettingsRepository
@@ -79,7 +82,7 @@ private val LIBRARIES = listOf(
     "OkHttp, Okio" to "Apache-2.0",
     "Coil" to "Apache-2.0",
     "Guava" to "Apache-2.0",
-    "Hind Siliguri, Tiro Bangla (ফন্ট)" to "SIL OFL 1.1",
+    "Noto Sans/Serif Bengali, Hind Siliguri, Anek Bangla, Baloo Da 2 (ফন্ট)" to "SIL OFL 1.1",
 )
 
 @HiltViewModel
@@ -115,6 +118,7 @@ fun AboutScreen(
     val checking by viewModel.checking.collectAsStateWithLifecycle()
     val showMessage = LocalShowMessage.current
     val resources = LocalResources.current
+    val context = LocalContext.current
     val openLink = rememberLinkOpener()
     var showLicense by rememberSaveable { mutableStateOf(false) }
     val repoUrl = "https://github.com/${BuildConfig.GITHUB_REPO}"
@@ -165,6 +169,13 @@ fun AboutScreen(
                     colors = ListItemDefaults.colors(containerColor = Color.Transparent),
                     modifier = Modifier.clickable(enabled = update != null) { update?.let { openLink(it.url) } },
                 )
+            }
+            item {
+                LinkRow(Icons.Rounded.Share, stringResource(R.string.share_app), stringResource(R.string.share_app_desc)) { shareApp(context) }
+            }
+            item {
+                val site = BuildConfig.DOWNLOAD_PAGE_URL
+                LinkRow(Icons.Rounded.Language, stringResource(R.string.about_download_page), site.removePrefix("https://")) { openLink(site) }
             }
             item {
                 LinkRow(Icons.Rounded.Code, stringResource(R.string.about_source), repoUrl.removePrefix("https://")) { openLink(repoUrl) }

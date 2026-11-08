@@ -48,6 +48,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.ui.graphics.Color
+import com.inovixlabs.tazkiyah.core.util.formatClock
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -120,7 +122,12 @@ fun SpeakerAvatar(name: String, photoUrl: String?, size: Dp, modifier: Modifier 
 
 /** Thumbnail tile: YouTube thumbnail for videos, a calm icon tile for audio. */
 @Composable
-fun LectureThumbnail(row: LectureRow, modifier: Modifier = Modifier, showProgress: Boolean = true) {
+fun LectureThumbnail(
+    row: LectureRow,
+    modifier: Modifier = Modifier,
+    showProgress: Boolean = true,
+    showDuration: Boolean = true,
+) {
     Box(
         modifier
             .clip(RoundedCornerShape(12.dp))
@@ -140,6 +147,22 @@ fun LectureThumbnail(row: LectureRow, modifier: Modifier = Modifier, showProgres
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize(),
             )
+        }
+        val duration = row.durationSec
+        if (showDuration && duration != null) {
+            // Length on the picture, as on YouTube ("৪৫:১২").
+            Surface(
+                color = Color.Black.copy(alpha = 0.72f),
+                contentColor = Color.White,
+                shape = RoundedCornerShape(4.dp),
+                modifier = Modifier.align(Alignment.BottomEnd).padding(4.dp),
+            ) {
+                Text(
+                    formatClock(duration),
+                    style = MaterialTheme.typography.labelSmall,
+                    modifier = Modifier.padding(horizontal = 4.dp),
+                )
+            }
         }
         if (showProgress && (row.progressSec ?: 0) > 0 && !row.isCompleted) {
             LinearProgressIndicator(

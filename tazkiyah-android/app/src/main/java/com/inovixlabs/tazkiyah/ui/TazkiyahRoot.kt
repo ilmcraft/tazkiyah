@@ -71,6 +71,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.inovixlabs.tazkiyah.R
+import com.inovixlabs.tazkiyah.core.designsystem.AppFont
 import com.inovixlabs.tazkiyah.core.designsystem.LocalShowMessage
 import com.inovixlabs.tazkiyah.core.designsystem.TazkiyahTheme
 import com.inovixlabs.tazkiyah.core.designsystem.ThemeMode
@@ -117,7 +118,7 @@ fun TazkiyahRoot(
     player: PlayerViewModel = hiltViewModel(),
 ) {
     val settings by player.settings.collectAsStateWithLifecycle()
-    TazkiyahTheme(themeMode = settings?.themeMode ?: ThemeMode.SYSTEM) {
+    TazkiyahTheme(themeMode = settings?.themeMode ?: ThemeMode.SYSTEM, font = settings?.appFont ?: AppFont.NOTO_SANS) {
         val navController = rememberNavController()
         val snackbar = remember { SnackbarHostState() }
         val scope = rememberCoroutineScope()

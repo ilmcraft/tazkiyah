@@ -12,10 +12,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
 import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material.icons.rounded.Sync
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -25,6 +28,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
@@ -35,10 +39,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
@@ -46,9 +52,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import com.inovixlabs.tazkiyah.BuildConfig
 import com.inovixlabs.tazkiyah.R
+import com.inovixlabs.tazkiyah.core.designsystem.AppFont
 import com.inovixlabs.tazkiyah.core.designsystem.AppScreen
+import com.inovixlabs.tazkiyah.core.designsystem.family
 import com.inovixlabs.tazkiyah.core.designsystem.LocalShowMessage
 import com.inovixlabs.tazkiyah.core.designsystem.ThemeMode
+import com.inovixlabs.tazkiyah.core.util.shareApp
 import com.inovixlabs.tazkiyah.core.util.toBanglaDigits
 import com.inovixlabs.tazkiyah.data.repository.AppSettings
 import com.inovixlabs.tazkiyah.data.repository.CatalogCounts
@@ -92,6 +101,10 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch { settingsRepository.setThemeMode(mode) }
     }
 
+    fun setFont(font: AppFont) {
+        viewModelScope.launch { settingsRepository.setAppFont(font) }
+    }
+
     fun setDefaultSpeed(speed: Float) {
         viewModelScope.launch { settingsRepository.setDefaultSpeed(speed) }
     }
@@ -123,6 +136,7 @@ fun SettingsScreen(
         viewModel.results.collect { showMessage(resources.getString(syncResultRes(it))) }
     }
     val s = settings ?: AppSettings()
+    val context = LocalContext.current
     val months = stringArrayResource(R.array.month_names)
 
     AppScreen(title = stringResource(R.string.settings), onBack = onBack) { padding ->
@@ -146,6 +160,16 @@ fun SettingsScreen(
                         }
                     }
                 }
+            }
+            item {
+                Text(
+                    stringResource(R.string.settings_font),
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(start = 16.dp, top = 20.dp, end = 16.dp, bottom = 4.dp),
+                )
+            }
+            items(AppFont.entries) { font ->
+                FontOption(font, selected = s.appFont == font, onSelect = { viewModel.setFont(font) })
             }
             item { Section(stringResource(R.string.settings_playback)) }
             item {
@@ -248,8 +272,32 @@ fun SettingsScreen(
                     modifier = Modifier.padding(top = 8.dp).clickable(onClick = onOpenAbout),
                 )
             }
+            item {
+                ListItem(
+                    headlineContent = { Text(stringResource(R.string.share_app)) },
+                    supportingContent = { Text(stringResource(R.string.share_app_desc)) },
+                    leadingContent = { Icon(Icons.Rounded.Share, contentDescription = null) },
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+                    modifier = Modifier.clickable { shareApp(context) },
+                )
+            }
         }
     }
+}
+
+/** One font, previewed in itself — including the digits, so "১" can be compared. */
+@Composable
+private fun FontOption(font: AppFont, selected: Boolean, onSelect: () -> Unit) {
+    val family = font.family()
+    ListItem(
+        headlineContent = { Text(stringResource(font.label), fontFamily = family, fontWeight = FontWeight.Medium) },
+        supportingContent = {
+            Text(stringResource(R.string.font_sample), fontFamily = family, style = MaterialTheme.typography.bodyMedium)
+        },
+        leadingContent = { RadioButton(selected = selected, onClick = null) },
+        colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+        modifier = Modifier.selectable(selected = selected, role = Role.RadioButton, onClick = onSelect),
+    )
 }
 
 @Composable

@@ -1,3 +1,11 @@
+Bundled fonts (res/font/), all under the SIL Open Font License 1.1 (text below):
+  - Hind Siliguri — Copyright (c) 2015 Indian Type Foundry
+  - Noto Sans Bengali, Noto Serif Bengali — Copyright 2022 The Noto Project Authors (https://github.com/notofonts/bengali)
+  - Anek Bangla — Copyright 2021 The Anek Project Authors (https://github.com/EkType/Anek)
+  - Baloo Da 2 — Copyright 2019 Ek Type (www.ektype.in)
+The Noto, Anek and Baloo files are subset to Bengali + Latin and fixed to the normal width
+(fontTools); "Reserved Font Names" are not used for the modified files' family names in the app UI.
+
 Copyright (c) 2015 Indian Type Foundry (info@indiantypefoundry.com)
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.

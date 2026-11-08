@@ -217,4 +217,18 @@
     <string name="about_license_full">পূর্ণ লাইসেন্স (ইংরেজি)</string>
     <string name="about_libraries">ব্যবহৃত ওপেন-সোর্স লাইব্রেরি ও ফন্ট</string>
     <string name="no_app_for_link">লিংকটি খোলার মতো অ্যাপ পাওয়া যায়নি</string>
+    <!-- Fonts -->
+    <string name="settings_font">ফন্ট</string>
+    <string name="font_sample">আত্মশুদ্ধির পথে প্রতিদিন — ১২৩৪৫৬৭৮৯০</string>
+    <string name="font_noto_sans">নোটো সান্স বাংলা</string>
+    <string name="font_hind_siliguri">হিন্দ শিলিগুড়ি</string>
+    <string name="font_anek_bangla">আনেক বাংলা</string>
+    <string name="font_baloo_da">বালু দা</string>
+    <string name="font_noto_serif">নোটো সেরিফ বাংলা</string>
+    <string name="font_system">ফোনের নিজের ফন্ট</string>
+    <!-- Sharing the app -->
+    <string name="share_app">অ্যাপ শেয়ার করুন</string>
+    <string name="share_app_desc">পরিচিতদের তাযকিয়ার ডাউনলোড লিংক পাঠান</string>
+    <string name="share_app_text">তাযকিয়া — বাছাই করা বাংলা ইসলামিক লেকচার, মনোযোগ ধরে রেখে শোনা ও দেখার জন্য। ফ্রি ডাউনলোড: %1$s</string>
+    <string name="about_download_page">ডাউনলোড পাতা</string>
 </resources>

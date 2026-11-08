@@ -11,6 +11,7 @@ import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.inovixlabs.tazkiyah.BuildConfig
+import com.inovixlabs.tazkiyah.core.designsystem.AppFont
 import com.inovixlabs.tazkiyah.core.designsystem.ThemeMode
 import com.inovixlabs.tazkiyah.data.update.AppRelease
 import com.inovixlabs.tazkiyah.data.update.AppUpdateChecker
@@ -27,6 +28,7 @@ private val Context.settingsStore: DataStore<Preferences> by preferencesDataStor
 
 data class AppSettings(
     val themeMode: ThemeMode = ThemeMode.SYSTEM,
+    val appFont: AppFont = AppFont.NOTO_SANS,
     val wifiOnlyUpdates: Boolean = false,
     val defaultSpeed: Float = 1f,
     val youtubeListenOnly: Boolean = false,
@@ -61,6 +63,7 @@ class SettingsRepository @Inject constructor(
         }
         AppSettings(
             themeMode = p[THEME]?.let { runCatching { ThemeMode.valueOf(it) }.getOrNull() } ?: ThemeMode.SYSTEM,
+            appFont = p[FONT]?.let { runCatching { AppFont.valueOf(it) }.getOrNull() } ?: AppFont.NOTO_SANS,
             wifiOnlyUpdates = p[WIFI_ONLY] ?: false,
             defaultSpeed = p[DEFAULT_SPEED] ?: 1f,
             youtubeListenOnly = p[YT_LISTEN_ONLY] ?: false,
@@ -80,6 +83,7 @@ class SettingsRepository @Inject constructor(
     suspend fun current(): AppSettings = settings.first()
 
     suspend fun setThemeMode(mode: ThemeMode) = store.edit { it[THEME] = mode.name }
+    suspend fun setAppFont(font: AppFont) = store.edit { it[FONT] = font.name }
     suspend fun setWifiOnlyUpdates(enabled: Boolean) = store.edit { it[WIFI_ONLY] = enabled }
     suspend fun setDefaultSpeed(speed: Float) = store.edit { it[DEFAULT_SPEED] = speed }
     suspend fun setYoutubeListenOnly(enabled: Boolean) = store.edit { it[YT_LISTEN_ONLY] = enabled }
@@ -128,6 +132,7 @@ class SettingsRepository @Inject constructor(
 
     private companion object {
         val THEME = stringPreferencesKey("theme")
+        val FONT = stringPreferencesKey("app_font")
         val WIFI_ONLY = booleanPreferencesKey("wifi_only")
         val DEFAULT_SPEED = floatPreferencesKey("default_speed")
         val YT_LISTEN_ONLY = booleanPreferencesKey("youtube_listen_only")

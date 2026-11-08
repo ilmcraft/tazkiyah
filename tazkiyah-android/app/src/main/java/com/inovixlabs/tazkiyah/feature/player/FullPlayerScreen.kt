@@ -377,7 +377,7 @@ fun MiniPlayer(
                 Modifier.clickable(onClick = onExpand).padding(horizontal = 12.dp, vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                LectureThumbnail(lecture, Modifier.width(72.dp).aspectRatio(16f / 9f), showProgress = false)
+                LectureThumbnail(lecture, Modifier.width(72.dp).aspectRatio(16f / 9f), showProgress = false, showDuration = false)
                 Spacer(Modifier.width(12.dp))
                 Column(Modifier.weight(1f)) {
                     Text(lecture.lecture.title, style = MaterialTheme.typography.titleSmall, maxLines = 1, overflow = TextOverflow.Ellipsis)

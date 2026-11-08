@@ -21,6 +21,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -36,6 +37,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -54,6 +56,7 @@ import com.inovixlabs.tazkiyah.core.designsystem.UiStateContent
 import com.inovixlabs.tazkiyah.core.designsystem.categoryIcon
 import com.inovixlabs.tazkiyah.core.designsystem.durationLabel
 import com.inovixlabs.tazkiyah.data.local.entity.LectureRow
+import com.inovixlabs.tazkiyah.core.util.shareApp
 import com.inovixlabs.tazkiyah.core.util.toBanglaDigits
 import com.inovixlabs.tazkiyah.feature.about.rememberLinkOpener
 import com.inovixlabs.tazkiyah.data.repository.AppSettings
@@ -78,6 +81,7 @@ fun HomeScreen(
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val settings by viewModel.settings.collectAsStateWithLifecycle()
+    val context = LocalContext.current
     val syncing by viewModel.isSyncing.collectAsStateWithLifecycle()
     val showMessage = LocalShowMessage.current
     val resources = LocalResources.current
@@ -92,6 +96,7 @@ fun HomeScreen(
         largeTitle = true,
         actions = {
             IconButton(onClick = onSearch) { Icon(Icons.Rounded.Search, stringResource(R.string.search)) }
+            IconButton(onClick = { shareApp(context) }) { Icon(Icons.Rounded.Share, stringResource(R.string.share_app)) }
             IconButton(onClick = onSettings) { Icon(Icons.Rounded.Settings, stringResource(R.string.settings)) }
         },
     ) { padding ->

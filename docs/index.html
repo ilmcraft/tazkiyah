@@ -153,14 +153,14 @@
         }
       })
       .catch(function () {});
-    // Screenshots are optional files: shot-1.png … shot-4.png.
+    // Screenshots are optional files: shot-1.webp … shot-4.webp.
     var box = document.querySelector("#screenshots .shots");
     [1, 2, 3, 4].forEach(function (n) {
       var img = new Image();
       img.alt = "স্ক্রিনশট " + bn(n);
       img.onload = function () { document.getElementById("screenshots").hidden = false; };
       img.onerror = function () { img.remove(); };
-      img.src = "assets/shot-" + n + ".png";
+      img.src = "assets/shot-" + n + ".webp";
       box.appendChild(img);
     });
   })();
