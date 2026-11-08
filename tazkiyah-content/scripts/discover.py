@@ -1,0 +1,663 @@
+#!/usr/bin/env python3
+"""Find a speaker's new YouTube lectures and add them to the catalog for review.
+
+Run daily by .github/workflows/discover-lectures.yml, one speaker per day (rotation), which then
+opens a pull request; nothing reaches the app until a person merges it.
+
+    python scripts/discover.py pick [--speaker speaker-002] [--date 2026-11-08]
+    python scripts/discover.py sweep --speaker speaker-002 [--search-budget 90] [--report r.md] [--dry-run]
+    python scripts/discover.py import --speaker speaker-002 --file research.md [--report r.md] [--dry-run]
+    python scripts/discover.py prompt --speaker speaker-002 [--out prompt.md]
+
+sweep   reads the speaker's channels and playlists (discovery/sources.json) completely and runs
+        every search query, within the free daily quota.
+import  takes the YouTube links from a research result (see `prompt`) through the same checks.
+prompt  prints the deep-research prompt for one speaker, with the lectures already in the catalog.
+
+Every candidate goes through the same checks: not already in the catalog or in
+discovery/seen/<speaker>.json, public, embeddable, not blocked in Bangladesh, not live, at least
+5 minutes long, not a namesake, and the speaker's name in the title (official channels and
+trusted playlists excepted). Likely re-uploads of a lecture that is already there (similar title
+and the same length) are listed but not added. Needs YOUTUBE_API_KEY except for `pick`/`prompt`.
+Only the Python standard library is used.
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import re
+import sys
+from dataclasses import dataclass, field
+from datetime import date
+from pathlib import Path
+from typing import Any, Iterable
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from add_lecture import (  # noqa: E402
+    AddLectureError,
+    _all_lectures,
+    _read_json,
+    _write_atomic,
+    format_lecture_file,
+    next_lecture_id,
+)
+from bangla import clean_title, contains_any, guess_categories, similarity  # noqa: E402
+from youtube_api import QuotaExceeded, YouTubeApiError, YouTubeClient, parse_duration, uploads_playlist  # noqa: E402
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
+SOURCES = "discovery/sources.json"
+SEEN_DIR = "discovery/seen"
+PROMPT_TEMPLATE = "discovery/research-prompt.md"
+SPEAKERS = "data/speakers.json"
+CATEGORIES = "data/categories.json"
+LECTURES_DIR = "data/lectures"
+
+DEFAULT_SEARCH_BUDGET = 90  # of the 100 free search calls a day; the rest is for manual runs
+DEFAULT_MIN_DURATION = 300  # Shorts are at most 3 minutes; short clips go too
+CLIP_HINT_SEC = 900
+DUPLICATE_SIMILARITY = 0.8
+SPEAKER_ID_RE = re.compile(r"^speaker-[0-9]{3,}$")
+VIDEO_URL_RE = re.compile(r"(?:[?&]v=|youtu\.be/|/shorts/|/live/|/embed/)([A-Za-z0-9_-]{11})(?![A-Za-z0-9_-])")
+
+DROP_REASONS = {
+    "unavailable": "মুছে ফেলা, প্রাইভেট বা প্রসেস হয়নি",
+    "not_embeddable": "অ্যাপে চালানো যায় না (এমবেড বন্ধ / বয়সসীমা)",
+    "region": "বাংলাদেশে ব্লক",
+    "live": "লাইভ বা আসন্ন",
+    "short": "৫ মিনিটের কম (Shorts / ক্লিপ)",
+    "namesake": "অন্য ব্যক্তি (একই নাম)",
+    "no_name": "শিরোনামে বক্তার নাম নেই",
+}
+
+
+class DiscoverError(Exception):
+    """A user-facing error; main() prints it and exits with status 1."""
+
+
+@dataclass
+class Candidate:
+    video_id: str
+    sources: list[str] = field(default_factory=list)
+    trusted: bool = False
+    title: str = ""
+    channel: str = ""
+    channel_id: str = ""
+    description: str = ""
+    published: str | None = None
+    duration: int = 0
+    app_title: str = ""
+    categories: list[str] = field(default_factory=list)
+    flags: list[str] = field(default_factory=list)
+    decision: str = ""
+    duplicate_of: str | None = None
+    lecture_id: str | None = None
+
+
+@dataclass
+class Result:
+    speaker_id: str
+    speaker_name: str
+    mode: str
+    order: str | None
+    added: list[Candidate]
+    duplicates: list[Candidate]
+    low_confidence: list[Candidate]
+    dropped: dict[str, int]
+    looked_at: int
+    already_known: int
+    units: int
+    searches: int
+    files_changed: list[str]
+
+    @property
+    def listed(self) -> int:
+        return len(self.duplicates) + len(self.low_confidence)
+
+
+# ---------------------------------------------------------------------------
+# Loading
+# ---------------------------------------------------------------------------
+
+def _load(root: Path, rel: str) -> Any:
+    try:
+        return _read_json(root / rel, rel)
+    except AddLectureError as exc:
+        raise DiscoverError(str(exc)) from exc
+
+
+def load_sources(root: Path) -> list[dict[str, Any]]:
+    doc = _load(root, SOURCES)
+    speakers = doc.get("speakers") if isinstance(doc, dict) else None
+    if not isinstance(speakers, list) or not speakers:
+        raise DiscoverError(f"{SOURCES} has no speakers")
+    return speakers
+
+
+def source_for(root: Path, speaker_id: str) -> dict[str, Any]:
+    for entry in load_sources(root):
+        if entry.get("speakerId") == speaker_id:
+            return entry
+    raise DiscoverError(f"{speaker_id} is not in {SOURCES}")
+
+
+def speaker_info(root: Path, speaker_id: str) -> dict[str, Any]:
+    for sp in _load(root, SPEAKERS).get("speakers", []):
+        if sp.get("id") == speaker_id:
+            return sp
+    raise DiscoverError(f"{speaker_id} is not in {SPEAKERS}")
+
+
+def seen_path(root: Path, speaker_id: str) -> Path:
+    return root / SEEN_DIR / f"{speaker_id}.json"
+
+
+def load_seen(root: Path, speaker_id: str) -> dict[str, Any]:
+    path = seen_path(root, speaker_id)
+    if not path.exists():
+        return {"speakerId": speaker_id, "videos": {}}
+    return _load(root, f"{SEEN_DIR}/{speaker_id}.json")
+
+
+def save_seen(root: Path, doc: dict[str, Any]) -> None:
+    doc["videos"] = dict(sorted(doc["videos"].items()))
+    _write_atomic(seen_path(root, doc["speakerId"]), json.dumps(doc, ensure_ascii=False, indent=2) + "\n")
+
+
+# ---------------------------------------------------------------------------
+# Picking today's speaker
+# ---------------------------------------------------------------------------
+
+def rotation_speaker(sources: list[dict[str, Any]], today: date) -> str:
+    """One speaker per day, in sources.json order; needs no stored state."""
+    return sources[today.toordinal() % len(sources)]["speakerId"]
+
+
+def search_order(today: date) -> str:
+    """Alternate weekly: newest uploads one week, YouTube's relevance ranking (older talks) the next."""
+    return "date" if (today.toordinal() // 7) % 2 == 0 else "relevance"
+
+
+def pick_speaker(root: Path, requested: str | None, today: date) -> str:
+    sources = load_sources(root)
+    if requested:
+        requested = requested.strip()
+        if not SPEAKER_ID_RE.match(requested):
+            raise DiscoverError(f"speaker id must look like 'speaker-001', got {requested!r}")
+        if requested not in {s["speakerId"] for s in sources}:
+            raise DiscoverError(f"{requested} is not in {SOURCES}")
+        return requested
+    return rotation_speaker(sources, today)
+
+
+# ---------------------------------------------------------------------------
+# Checking candidates
+# ---------------------------------------------------------------------------
+
+def classify(c: Candidate, item: dict[str, Any] | None, config: dict[str, Any], official_ids: set[str]) -> None:
+    if item is None:
+        c.decision = "unavailable"
+        return
+    snippet, details, status = item.get("snippet", {}), item.get("contentDetails", {}), item.get("status", {})
+    c.title = snippet.get("title", "")
+    c.channel = snippet.get("channelTitle", "")
+    c.channel_id = snippet.get("channelId", "")
+    c.description = snippet.get("description", "")
+    c.published = (snippet.get("publishedAt") or "")[:10] or None
+    c.duration = parse_duration(details.get("duration"))
+    if c.channel_id in official_ids:
+        c.trusted = True
+
+    region = details.get("regionRestriction") or {}
+    min_duration = config.get("minDurationSec", DEFAULT_MIN_DURATION)
+    if status.get("privacyStatus") != "public" or status.get("uploadStatus", "processed") != "processed":
+        c.decision = "unavailable"
+    elif not status.get("embeddable", True) or (details.get("contentRating") or {}).get("ytRating") == "ytAgeRestricted":
+        c.decision = "not_embeddable"
+    elif "BD" in region.get("blocked", []) or ("allowed" in region and "BD" not in region["allowed"]):
+        c.decision = "region"
+    elif snippet.get("liveBroadcastContent", "none") != "none":
+        c.decision = "live"
+    elif c.duration < min_duration:
+        c.decision = "short"
+    elif config.get("exclude") and contains_any(f"{c.title} {c.channel}", config["exclude"]):
+        c.decision = "namesake"
+    elif c.trusted or contains_any(c.title, config["mustMatch"]):
+        c.decision = "add"
+    elif contains_any(c.description, config["mustMatch"]):
+        c.decision = "low-confidence"
+    else:
+        c.decision = "no_name"
+    if c.decision == "add" and c.duration < CLIP_HINT_SEC:
+        c.flags.append("ক্লিপ হতে পারে (১৫ মিনিটের কম)")
+
+
+def same_lecture(title_a: str, duration_a: int, title_b: str, duration_b: int) -> bool:
+    """Likely the same recording: similar title and the same length (re-encodes differ by ~1 s)."""
+    if duration_a <= 0 or duration_b <= 0:
+        return False
+    tolerance = max(3, round(0.01 * max(duration_a, duration_b)))
+    return abs(duration_a - duration_b) <= tolerance and similarity(title_a, title_b) >= DUPLICATE_SIMILARITY
+
+
+def mark_duplicates(
+    accepted: list[Candidate], existing: list[tuple[str, str, int]]
+) -> tuple[list[Candidate], list[Candidate]]:
+    """(kept, duplicates). Official copies are preferred, then the oldest upload."""
+    kept: list[Candidate] = []
+    duplicates: list[Candidate] = []
+    for c in sorted(accepted, key=lambda x: (not x.trusted, x.published or "9999", x.video_id)):
+        match = next((lid for lid, title, dur in existing if same_lecture(c.app_title, c.duration, title, dur)), None)
+        if match is None:
+            other = next((k for k in kept if same_lecture(c.app_title, c.duration, k.app_title, k.duration)), None)
+            match = other.video_id if other else None
+        if match is None:
+            kept.append(c)
+        else:
+            c.decision, c.duplicate_of = "duplicate", match
+            duplicates.append(c)
+    return kept, duplicates
+
+
+# ---------------------------------------------------------------------------
+# The run
+# ---------------------------------------------------------------------------
+
+def discover(
+    root: Path,
+    speaker_id: str,
+    client: YouTubeClient,
+    today: date,
+    *,
+    search_budget: int = DEFAULT_SEARCH_BUDGET,
+    order: str | None = None,
+    imported_ids: list[str] | None = None,
+    dry_run: bool = False,
+) -> Result:
+    config = source_for(root, speaker_id)
+    speaker = speaker_info(root, speaker_id)
+    category_ids = [c["id"] for c in _load(root, CATEGORIES).get("categories", [])]
+    lectures = _all_lectures(root)
+    seen = load_seen(root, speaker_id)
+    official_ids = {ch["id"] for ch in config.get("channels", []) if ch.get("official")}
+    mode = "import" if imported_ids is not None else "sweep"
+    order = order or search_order(today)
+
+    candidates: dict[str, Candidate] = {}
+
+    def add(ids: Iterable[str], label: str, trusted: bool) -> None:
+        for vid in ids:
+            c = candidates.setdefault(vid, Candidate(vid))
+            if label not in c.sources:
+                c.sources.append(label)
+            c.trusted = c.trusted or trusted
+
+    if imported_ids is not None:
+        add(imported_ids, "রিসার্চ ফাইল", trusted=False)
+    else:
+        for ch in config.get("channels", []):
+            add(client.playlist_video_ids(uploads_playlist(ch["id"])), f"চ্যানেল: {ch['name']}", ch.get("official", False))
+        for pl in config.get("playlists", []):
+            add(client.playlist_video_ids(pl["id"]), f"প্লেলিস্ট: {pl['name']}", pl.get("trusted", False))
+        queries = config.get("queries", [])
+        for i, query in enumerate(queries):
+            remaining = search_budget - client.usage.searches
+            if remaining <= 0:
+                break
+            share = max(1, remaining // (len(queries) - i))
+            add(client.search_video_ids(query, order, share), f"সার্চ: {query}", trusted=False)
+
+    known = {
+        lec.get("media", {}).get("videoId")
+        for _, lec in lectures
+        if isinstance(lec.get("media"), dict)
+    }
+    fresh = [c for c in candidates.values() if c.video_id not in known and c.video_id not in seen["videos"]]
+    details = client.videos(c.video_id for c in fresh) if fresh else {}
+
+    names = [speaker["name"], speaker["nameEn"], *config.get("queries", [])]
+    dropped: dict[str, int] = {}
+    accepted: list[Candidate] = []
+    low: list[Candidate] = []
+    for c in fresh:
+        classify(c, details.get(c.video_id), config, official_ids)
+        if c.decision in {"add", "low-confidence"}:
+            c.app_title = clean_title(c.title, names, c.channel)
+            c.categories = guess_categories(
+                f"{c.app_title} {c.title}", category_ids, config.get("defaultCategoryIds", [])
+            )
+        if c.decision == "add":
+            accepted.append(c)
+        elif c.decision == "low-confidence":
+            low.append(c)
+        else:
+            dropped[c.decision] = dropped.get(c.decision, 0) + 1
+
+    # The speaker's existing lectures, with lengths, to catch re-uploads of the same talk.
+    existing: list[tuple[str, str, int]] = []
+    own = [lec for rel, lec in lectures if rel == f"{LECTURES_DIR}/{speaker_id}.json"]
+    if accepted:
+        yt = [lec for lec in own if lec.get("media", {}).get("type") == "youtube"]
+        lengths = client.videos(lec["media"]["videoId"] for lec in yt) if yt else {}
+        for lec in yt:
+            item = lengths.get(lec["media"]["videoId"], {})
+            duration = lec.get("durationSec") or parse_duration(item.get("contentDetails", {}).get("duration"))
+            existing.append((lec["id"], lec["title"], duration))
+    added, duplicates = mark_duplicates(accepted, existing)
+
+    added.sort(key=lambda x: (x.published or "9999", x.video_id))
+    all_ids = [lec.get("id") for _, lec in lectures]
+    for c in added:
+        c.lecture_id = next_lecture_id(speaker_id, all_ids)
+        all_ids.append(c.lecture_id)
+
+    files_changed: list[str] = []
+    if not dry_run:
+        stamp = today.isoformat()
+        if added:
+            rel = f"{LECTURES_DIR}/{speaker_id}.json"
+            path = root / rel
+            doc = _load(root, rel) if path.exists() else {"speakerId": speaker_id, "lectures": []}
+            for c in added:
+                entry: dict[str, Any] = {
+                    "id": c.lecture_id,
+                    "title": c.app_title,
+                    "categoryIds": c.categories,
+                    "media": {"type": "youtube", "videoId": c.video_id, "startSec": 0},
+                    "durationSec": c.duration,
+                }
+                if c.published:
+                    entry["publishedAt"] = c.published
+                entry["addedAt"] = stamp
+                doc["lectures"].append(entry)
+            _write_atomic(path, format_lecture_file(doc))
+            files_changed.append(rel)
+        for c in added:
+            seen["videos"][c.video_id] = {"status": "proposed", "date": stamp, "lectureId": c.lecture_id}
+        for c in duplicates:
+            seen["videos"][c.video_id] = {"status": "duplicate", "date": stamp, "note": f"একই লেকচার: {c.duplicate_of}"}
+        for c in low:
+            seen["videos"][c.video_id] = {"status": "low-confidence", "date": stamp, "note": "নাম শুধু বিবরণে"}
+        if added or duplicates or low:
+            save_seen(root, seen)
+            files_changed.append(f"{SEEN_DIR}/{speaker_id}.json")
+
+    return Result(
+        speaker_id=speaker_id,
+        speaker_name=speaker["name"],
+        mode=mode,
+        order=order if mode == "sweep" else None,
+        added=added,
+        duplicates=duplicates,
+        low_confidence=low,
+        dropped=dropped,
+        looked_at=len(candidates),
+        already_known=len(candidates) - len(fresh),
+        units=client.usage.units,
+        searches=client.usage.searches,
+        files_changed=files_changed,
+    )
+
+
+# ---------------------------------------------------------------------------
+# Report (pull request body)
+# ---------------------------------------------------------------------------
+
+BANGLA_DIGITS = str.maketrans("0123456789", "০১২৩৪৫৬৭৮৯")
+
+
+def bn(value: Any) -> str:
+    return str(value).translate(BANGLA_DIGITS)
+
+
+def clock(seconds: int) -> str:
+    h, rest = divmod(seconds, 3600)
+    m, s = divmod(rest, 60)
+    return bn(f"{h}:{m:02d}:{s:02d}" if h else f"{m}:{s:02d}")
+
+
+def _cell(text: str) -> str:
+    return text.replace("|", "\\|").replace("\n", " ").strip() or "—"
+
+
+def render_report(result: Result, today: date) -> str:
+    r = result
+    lines = [
+        f"## নতুন লেকচার: {r.speaker_name} — {bn(len(r.added))}টি যোগ, {bn(r.listed)}টি শুধু তালিকায়",
+        "",
+        f"`{r.speaker_id}` · {bn(today.isoformat())} · "
+        + ("রিসার্চ ফাইল থেকে আমদানি" if r.mode == "import" else f"চ্যানেল, প্লেলিস্ট ও সার্চ (order: {r.order})")
+        + f" · দেখা হয়েছে {bn(r.looked_at)}টি ভিডিও, আগে থেকেই জানা {bn(r.already_known)}টি"
+        + f" · কোটা: সার্চ {bn(r.searches)}/১০০, অন্যান্য {bn(r.units)}/১০,০০০ ইউনিট",
+        "",
+    ]
+    if r.added:
+        lines += [
+            "### যোগ করা হয়েছে — রিভিউ করুন",
+            "",
+            "| id | অ্যাপের শিরোনাম | ইউটিউবের শিরোনাম | চ্যানেল | দৈর্ঘ্য | প্রকাশ | ক্যাটাগরি | মন্তব্য |",
+            "|---|---|---|---|---|---|---|---|",
+        ]
+        for c in r.added:
+            note = ", ".join(c.flags + (["অফিশিয়াল/বিশ্বস্ত সোর্স"] if c.trusted else []))
+            lines.append(
+                f"| `{c.lecture_id}` | {_cell(c.app_title)} | [{_cell(c.title)}](https://youtu.be/{c.video_id}) "
+                f"| {_cell(c.channel)} | {clock(c.duration)} | {bn(c.published or '—')} | {', '.join(c.categories)} | {_cell(note)} |"
+            )
+        lines.append("")
+    if r.duplicates:
+        lines += ["### সম্ভাব্য ডুপ্লিকেট — যোগ হয়নি", "", "| ভিডিও | চ্যানেল | দৈর্ঘ্য | একই লেকচার |", "|---|---|---|---|"]
+        for c in r.duplicates:
+            lines.append(
+                f"| [{_cell(c.title)}](https://youtu.be/{c.video_id}) | {_cell(c.channel)} | {clock(c.duration)} | `{c.duplicate_of}` |"
+            )
+        lines.append("")
+    if r.low_confidence:
+        lines += [
+            "### কম নিশ্চিত — নাম শুধু বিবরণে, যোগ হয়নি",
+            "",
+            "দরকার হলে হাতে যোগ করুন: `python scripts/add_lecture.py --speaker "
+            f"{r.speaker_id} --category <id> <link>`",
+            "",
+            "| ভিডিও | চ্যানেল | দৈর্ঘ্য |",
+            "|---|---|---|",
+        ]
+        for c in r.low_confidence:
+            lines.append(f"| [{_cell(c.title)}](https://youtu.be/{c.video_id}) | {_cell(c.channel)} | {clock(c.duration)} |")
+        lines.append("")
+    if r.dropped:
+        lines += ["### বাদ পড়েছে", ""]
+        lines += [f"- {DROP_REASONS.get(k, k)}: {bn(v)}টি" for k, v in sorted(r.dropped.items(), key=lambda kv: -kv[1])]
+        lines.append("")
+    lines += [
+        "### কীভাবে রিভিউ করবেন",
+        "",
+        "1. **Files changed**-এ গিয়ে প্রতিটা লেকচারের শিরোনাম আর ক্যাটাগরি দেখে ঠিক করুন (✏️ Edit file)।",
+        f"2. কোনো লেকচার না চাইলে `data/lectures/{r.speaker_id}.json` থেকে সেটা মুছে দিন, কিন্তু "
+        f"`discovery/seen/{r.speaker_id}.json`-এর এন্ট্রি রেখে দিন — তাহলে বট আর কখনো সেটা আনবে না।",
+        "3. **Merge** করলে publish workflow চলবে আর অ্যাপে আপডেট চলে যাবে।",
+        "",
+        "_এই PR খোলা থাকা অবস্থায় বট এই বক্তার জন্য নতুন PR খুলবে না।_",
+    ]
+    return "\n".join(lines) + "\n"
+
+
+def summary(result: Result) -> str:
+    r = result
+    return (
+        f"{r.speaker_id}: added {len(r.added)}, duplicates {len(r.duplicates)}, "
+        f"low-confidence {len(r.low_confidence)}, dropped {sum(r.dropped.values())}, "
+        f"looked at {r.looked_at} ({r.already_known} already known); "
+        f"quota used: search {r.searches}/100, units {r.units}/10000"
+    )
+
+
+# ---------------------------------------------------------------------------
+# Research prompt
+# ---------------------------------------------------------------------------
+
+def research_ids(text: str) -> list[str]:
+    """Video ids from a research result, ignoring everything after its "Skipped" list."""
+    cut = re.search(r"^\W*skipped\b", text, flags=re.IGNORECASE | re.MULTILINE)
+    body = text[: cut.start()] if cut else text
+    return list(dict.fromkeys(VIDEO_URL_RE.findall(body)))
+
+
+_COMBO_WORDS = {"লেকচার", "পডকাস্ট", "ওয়াজ", "বয়ান", "সিয়ান", "ইসলামিক", "lecture", "podcast", "sean", "waz"}
+
+
+def _is_query_combo(query: str) -> bool:
+    """A search query that is a name plus a topic word, not a spelling of the name."""
+    words = {w.lower() for w in query.split()}
+    return bool(words & {w.lower() for w in _COMBO_WORDS})
+
+
+def render_prompt(root: Path, speaker_id: str) -> str:
+    config = source_for(root, speaker_id)
+    speaker = speaker_info(root, speaker_id)
+    template = (root / PROMPT_TEMPLATE).read_text(encoding="utf-8")
+    known = sorted(
+        {
+            lec["media"]["videoId"]
+            for rel, lec in _all_lectures(root)
+            if rel == f"{LECTURES_DIR}/{speaker_id}.json" and lec.get("media", {}).get("type") == "youtube"
+        }
+        | set(load_seen(root, speaker_id)["videos"])
+    )
+    sources = [
+        f"  - Channel: {ch['name']} — https://www.youtube.com/{ch.get('handle') or 'channel/' + ch['id']}"
+        + (" (the speaker's official channel)" if ch.get("official") else " (also has other speakers)")
+        for ch in config.get("channels", [])
+    ] + [
+        f"  - Playlist: {pl['name']} — https://www.youtube.com/playlist?list={pl['id']}"
+        for pl in config.get("playlists", [])
+    ]
+    values = {
+        "NAME_BN": speaker["name"],
+        "NAME_EN": speaker["nameEn"],
+        "BIO": speaker.get("bio") or "—",
+        "NAME_VARIANTS": "\n".join(f"  - {q}" for q in config.get("queries", []) if not _is_query_combo(q)),
+        "SOURCES": "\n".join(sources) or "  - (none known yet — finding the official channel is part of the task)",
+        "EXCLUDE": "\n".join(f"  - {x}" for x in config.get("exclude", [])) or "  - (none known)",
+        "KNOWN_IDS": ", ".join(known) or "(none yet)",
+    }
+    for key, value in values.items():
+        template = template.replace("{{" + key + "}}", value)
+    return template
+
+
+# ---------------------------------------------------------------------------
+# CLI
+# ---------------------------------------------------------------------------
+
+def _write_outputs(path: str | None, values: dict[str, Any]) -> None:
+    if not path:
+        return
+    with open(path, "a", encoding="utf-8") as handle:
+        for key, value in values.items():
+            handle.write(f"{key}={value}\n")
+
+
+def _client() -> YouTubeClient:
+    key = os.environ.get("YOUTUBE_API_KEY", "").strip()
+    if not key:
+        raise DiscoverError("YOUTUBE_API_KEY is not set (GitHub: Settings → Secrets → Actions)")
+    return YouTubeClient(key)
+
+
+def main(argv: list[str] | None = None, client: YouTubeClient | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Find a speaker's new YouTube lectures.")
+    sub = parser.add_subparsers(dest="command", required=True)
+
+    def common(p: argparse.ArgumentParser) -> None:
+        p.add_argument("--root", type=Path, default=REPO_ROOT, help="repo root (default: this repo)")
+        p.add_argument("--date", type=date.fromisoformat, default=None, help="pretend today is YYYY-MM-DD")
+        p.add_argument("--github-output", default=None, help="append key=value results to this file")
+
+    p_pick = sub.add_parser("pick", help="print today's speaker (or check --speaker)")
+    common(p_pick)
+    p_pick.add_argument("--speaker", default="")
+
+    for name in ("sweep", "import"):
+        p = sub.add_parser(name)
+        common(p)
+        p.add_argument("--speaker", required=True)
+        p.add_argument("--report", type=Path, default=None, help="write the pull request text here")
+        p.add_argument("--dry-run", action="store_true", help="check everything but write no files")
+        if name == "sweep":
+            p.add_argument("--search-budget", type=int, default=DEFAULT_SEARCH_BUDGET)
+            p.add_argument("--order", choices=["date", "relevance"], default=None)
+        else:
+            p.add_argument("--file", type=Path, required=True, help="research result with YouTube links")
+
+    p_prompt = sub.add_parser("prompt", help="print the research prompt for a speaker")
+    common(p_prompt)
+    p_prompt.add_argument("--speaker", required=True)
+    p_prompt.add_argument("--out", type=Path, default=None)
+
+    args = parser.parse_args(argv)
+    today = args.date or date.today()
+    try:
+        if args.command == "pick":
+            speaker_id = pick_speaker(args.root, args.speaker, today)
+            print(speaker_id)
+            _write_outputs(args.github_output, {"speaker": speaker_id})
+            return 0
+        if args.command == "prompt":
+            speaker_id = pick_speaker(args.root, args.speaker, today)
+            text = render_prompt(args.root, speaker_id)
+            if args.out:
+                args.out.write_text(text, encoding="utf-8")
+                print(f"Wrote {args.out}")
+            else:
+                print(text)
+            return 0
+
+        speaker_id = pick_speaker(args.root, args.speaker, today)
+        imported = None
+        if args.command == "import":
+            imported = research_ids(args.file.read_text(encoding="utf-8"))
+            if not imported:
+                raise DiscoverError(f"no YouTube links found in {args.file}")
+        api = client or _client()
+        result = discover(
+            args.root,
+            speaker_id,
+            api,
+            today,
+            search_budget=getattr(args, "search_budget", DEFAULT_SEARCH_BUDGET),
+            order=getattr(args, "order", None),
+            imported_ids=imported,
+            dry_run=args.dry_run,
+        )
+    except DiscoverError as exc:
+        print(f"ERROR {exc}", file=sys.stderr)
+        return 1
+    except QuotaExceeded as exc:
+        print(f"STOPPED {exc}. Nothing was written; the next run continues.", file=sys.stderr)
+        return 3
+    except YouTubeApiError as exc:
+        print(f"ERROR {exc}", file=sys.stderr)
+        return 2
+
+    print(summary(result))
+    for c in result.added:
+        print(f"  + {c.lecture_id} {c.video_id} {c.app_title} [{', '.join(c.categories)}]")
+    if args.report:
+        args.report.write_text(render_report(result, today), encoding="utf-8")
+    _write_outputs(
+        args.github_output,
+        {
+            "speaker": result.speaker_id,
+            "name": result.speaker_name,
+            "added": len(result.added),
+            "listed": result.listed,
+            "changed": "true" if result.files_changed else "false",
+        },
+    )
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -8,7 +8,11 @@ Checks:
   * speaker and category ids are unique, lecture ids are unique across all files;
   * each lecture file's speakerId exists in speakers.json and matches the file name;
   * every categoryId exists; every category parentId exists (and forms no cycle);
-  * a speaker's photo file exists.
+  * a speaker's photo file exists;
+  * no YouTube video or media URL is in the catalog twice (in any speaker's file);
+  * a series id has one title everywhere and no part number twice;
+  * the bot's discovery/sources.json and discovery/seen/*.json match their schemas and point at
+    existing speakers and categories.
 
 Exits 0 when everything is valid, 1 (with one line per problem) otherwise.
 
@@ -41,7 +45,11 @@ SCHEMA_FILES = {
     "speakers": "schema/speakers.schema.json",
     "categories": "schema/categories.schema.json",
     "lectures": "schema/lectures.schema.json",
+    "discovery": "schema/discovery.schema.json",
+    "seen": "schema/seen.schema.json",
 }
+DISCOVERY_SOURCES = "discovery/sources.json"
+SEEN_DIR = "discovery/seen"
 
 
 class Problems:
@@ -284,6 +292,8 @@ def check_lecture_file(
     category_ids: set[str] | None,
     seen_lecture_ids: dict[str, str],
     problems: Problems,
+    seen_media: dict[str, str] | None = None,
+    series: dict[str, tuple[str, dict[int, str]]] | None = None,
 ) -> int:
     if not isinstance(doc, dict):
         return 0
@@ -314,7 +324,88 @@ def check_lecture_file(
             for cat in cats:
                 if isinstance(cat, str) and cat not in category_ids:
                     problems.add(rel, f"unknown categoryId {cat!r}", where)
+        if seen_media is not None:
+            check_media_unique(rel, lec, where, seen_media, problems)
+        if series is not None:
+            check_series(rel, lec, where, series, problems)
     return count
+
+
+def check_media_unique(rel: str, lec: dict, where: str, seen_media: dict[str, str], problems: Problems) -> None:
+    """One lecture per recording: the same YouTube video or file URL may appear only once."""
+    media = lec.get("media")
+    if not isinstance(media, dict):
+        return
+    key = media.get("videoId") if media.get("type") == "youtube" else media.get("url")
+    if not isinstance(key, str):
+        return
+    label = f"video {key!r}" if media.get("type") == "youtube" else f"media URL {key!r}"
+    if key in seen_media:
+        problems.add(rel, f"{label} is already in the catalog as {seen_media[key]}", where)
+    else:
+        seen_media[key] = f"{lec.get('id')} ({rel})"
+
+
+def check_series(
+    rel: str, lec: dict, where: str, series: dict[str, tuple[str, dict[int, str]]], problems: Problems
+) -> None:
+    """A series id has one title, and each part number is used once."""
+    info = lec.get("series")
+    if not isinstance(info, dict) or not isinstance(info.get("id"), str):
+        return
+    sid, title, part = info["id"], info.get("title"), info.get("part")
+    if sid not in series:
+        series[sid] = (title, {})
+    known_title, parts = series[sid]
+    if title != known_title:
+        problems.add(rel, f"series {sid!r} has title {title!r} here but {known_title!r} elsewhere", where)
+    if isinstance(part, int):
+        if part in parts:
+            problems.add(rel, f"series {sid!r} part {part} is also used by {parts[part]}", where)
+        else:
+            parts[part] = str(lec.get("id"))
+
+
+def check_discovery(
+    root: Path,
+    validators: dict,
+    speaker_ids: set[str] | None,
+    category_ids: set[str] | None,
+    problems: Problems,
+) -> None:
+    """The bot's config and its per-speaker lists of videos already decided on."""
+    if (root / DISCOVERY_SOURCES).exists():
+        doc = load_json(root, DISCOVERY_SOURCES, problems)
+        if doc is not None and "discovery" in validators:
+            schema_problems(validators["discovery"], doc, DISCOVERY_SOURCES, problems)
+        listed: set[str] = set()
+        for i, entry in _items(doc, "speakers"):
+            sid = entry.get("speakerId")
+            where = f"speakers[{i}]" + (f" ({sid})" if isinstance(sid, str) else "")
+            if not isinstance(sid, str):
+                continue
+            if sid in listed:
+                problems.add(DISCOVERY_SOURCES, f"speaker {sid!r} is listed twice", where)
+            listed.add(sid)
+            if speaker_ids is not None and sid not in speaker_ids:
+                problems.add(DISCOVERY_SOURCES, f"speakerId {sid!r} is not in {SPEAKERS}", where)
+            for cat in entry.get("defaultCategoryIds") or []:
+                if category_ids is not None and isinstance(cat, str) and cat not in category_ids:
+                    problems.add(DISCOVERY_SOURCES, f"unknown categoryId {cat!r}", where)
+    folder = root / SEEN_DIR
+    for path in sorted(folder.glob("*.json")) if folder.is_dir() else []:
+        rel = f"{SEEN_DIR}/{path.name}"
+        doc = load_json(root, rel, problems)
+        if doc is None:
+            continue
+        if "seen" in validators:
+            schema_problems(validators["seen"], doc, rel, problems)
+        sid = doc.get("speakerId") if isinstance(doc, dict) else None
+        if isinstance(sid, str):
+            if sid != path.stem:
+                problems.add(rel, f"speakerId {sid!r} does not match the file name (expected {path.stem!r})")
+            if speaker_ids is not None and sid not in speaker_ids:
+                problems.add(rel, f"speakerId {sid!r} is not in {SPEAKERS}")
 
 
 # ---------------------------------------------------------------------------
@@ -349,11 +440,17 @@ def validate_repo(root: Path) -> tuple[list[str], dict[str, int]]:
     category_ids = check_categories(categories, problems) if categories is not None else None
 
     seen: dict[str, str] = {}
+    seen_media: dict[str, str] = {}
+    series: dict[str, tuple[str, dict[int, str]]] = {}
     lecture_count = 0
     files = lecture_files(root)
     for rel in files:
         doc = load_and_check(rel, "lectures")
-        lecture_count += check_lecture_file(rel, doc, speaker_ids, category_ids, seen, problems)
+        lecture_count += check_lecture_file(
+            rel, doc, speaker_ids, category_ids, seen, problems, seen_media, series
+        )
+
+    check_discovery(root, validators, speaker_ids, category_ids, problems)
 
     counts = {
         "speakers": len(speaker_ids or ()),

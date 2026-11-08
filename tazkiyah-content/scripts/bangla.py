@@ -1,0 +1,208 @@
+"""Bengali text helpers shared by the content scripts.
+
+`normalize` is a line-for-line port of the app's BanglaNormalizer.kt
+(tazkiyah-android/.../core/util/BanglaNormalizer.kt), so the bot compares titles exactly the way
+the app searches them. `clean_title` turns a YouTube upload title into an app title; a person
+still reviews every title in the bot's pull request. Only the standard library is used.
+"""
+from __future__ import annotations
+
+import re
+import unicodedata
+from difflib import SequenceMatcher
+from typing import Iterable
+
+_INVISIBLE = re.compile("[​‌‍⁠﻿­]")
+_WHITESPACE = re.compile(r"\s+")
+_BANGLA_DIGITS = str.maketrans("০১২৩৪৫৬৭৮৯", "0123456789")
+_BENGALI_LETTER = re.compile("[ঀ-৿]")
+
+
+def fold(text: str) -> str:
+    """Unify encodings without changing case: NFC, khanda-ta, joiners, য়/ড়/ঢ়, digits."""
+    s = unicodedata.normalize("NFC", text)
+    # Legacy khanda-ta (TA + HASANTA + ZWJ) becomes U+09CE; must run before joiners are stripped.
+    s = s.replace("ত্‍", "ৎ")
+    s = _INVISIBLE.sub("", s)
+    # NFC decomposes these three (composition exclusions); fold both spellings to one code point.
+    s = s.replace("য়", "য়").replace("ড়", "ড়").replace("ঢ়", "ঢ়")
+    return s.translate(_BANGLA_DIGITS)
+
+
+def canonical(text: str) -> str:
+    """Standard stored form: NFC (so য়/ড়/ঢ় stay letter + nukta), no joiners, single spaces.
+
+    Unlike fold(), digits and case are kept — this is what goes into the catalog.
+    """
+    s = unicodedata.normalize("NFC", text).replace("ত্\u200D", "\u09CE")
+    return _WHITESPACE.sub(" ", _INVISIBLE.sub("", s)).strip()
+
+
+def normalize(text: str) -> str:
+    """Same result as BanglaNormalizer.normalize() in the app."""
+    return _WHITESPACE.sub(" ", fold(text).lower()).strip()
+
+
+def contains_any(text: str, needles: Iterable[str]) -> bool:
+    haystack = normalize(text)
+    return any(normalize(n) in haystack for n in needles if n.strip())
+
+
+def similarity(a: str, b: str) -> float:
+    """0..1 similarity of two titles after normalisation."""
+    na, nb = normalize(a), normalize(b)
+    if not na or not nb:
+        return 0.0
+    return SequenceMatcher(None, na, nb).ratio()
+
+
+# ---------------------------------------------------------------------------
+# Title cleaning
+# ---------------------------------------------------------------------------
+
+_SEPARATORS = re.compile(r"\s*(?:\|\|?|｜|‖|::|\s[-–—]\s)\s*")
+_HASHTAG = re.compile(r"#\S+")
+_BRACKETED_NOISE = re.compile(
+    r"[\[(【](?:[^\])】]*?(?:official|full|hd|4k|new|waz|lecture|video|ভিডিও|ওয়াজ|লেকচার)[^\])】]*?)[\])】]",
+    re.IGNORECASE,
+)
+# Generic words that are not a topic on their own.
+_GENERIC = {
+    "ওয়াজ", "নতুন ওয়াজ", "বাংলা ওয়াজ", "লেকচার", "বয়ান", "আলোচনা", "ওয়াজ মাহফিল", "মাহফিল",
+    "waz", "new waz", "bangla waz", "full waz", "lecture", "full lecture", "bayan", "official",
+    "full video", "ফুল ভিডিও", "podcast", "পডকাস্ট",
+}
+_YEAR = r"(?:19|20|১৯|২০)[0-9০-৯]{2}"
+_GENERIC_NORMALIZED: set[str] = set()  # filled below, once normalize() exists
+_NOISE_PATTERNS = [
+    rf"\b(?:new|full|bangla|best)\s+(?:waz|lecture|bayan)(?:\s+{_YEAR})?\b",
+    rf"(?:নতুন|বাংলা|সেরা|সম্পূর্ণ)\s+(?:ওয়াজ|লেকচার|বয়ান)(?:\s+{_YEAR})?",
+    rf"ওয়াজ\s+{_YEAR}",
+    r"\b(?:official|hd|4k|full\s+video|must\s+watch|viral)\b",
+    r"(?:ফুল ভিডিও|অবশ্যই দেখুন|ভাইরাল)",
+]
+# Sensational wording replaced by a neutral form (README: titles stay calm and factual).
+_SENSATIONAL = [
+    (r"কড়া\s+জবাব", "জবাব"),
+    (r"দাঁতভাঙা\s+জবাব", "জবাব"),
+    (r"উচিত\s+জবাব", "জবাব"),
+    (r"হুংকার", ""),
+    (r"তোলপাড়", ""),
+    (r"ধুয়ে\s+দিলেন", ""),
+]
+_HONORIFIC = r"(?:মুফতি|মুফতী|ডা\.?|ড\.|ডক্টর|শায়খ|শাইখ|উস্তাদ|উস্তায|মাওলানা|mufti|dr\.?|shaykh|sheikh|ustadh)"
+_NAME_SUFFIX = r"(?:\s*(?:চৌধুরী|চৌধুরি|chowdhury|ভাই|bhai))?(?:য়ের|এর|ের|র|'s)?"
+_EDGE_PUNCT = " \t-–—|:;,.।·•*_~'\"“”‘’"
+
+
+def _name_pattern(names: Iterable[str]) -> re.Pattern[str] | None:
+    variants = sorted({canonical(n) for n in names if n.strip()}, key=len, reverse=True)
+    if not variants:
+        return None
+    alternatives = "|".join(re.escape(v).replace(r"\ ", r"\s+") for v in variants)
+    honorific, suffix = canonical(_HONORIFIC), canonical(_NAME_SUFFIX)
+    return re.compile(rf"(?:{honorific}\s*)?(?:{alternatives}){suffix}", re.IGNORECASE)
+
+
+_GENERIC_NORMALIZED.update(normalize(g) for g in _GENERIC)
+
+
+def _bengali_letters(text: str) -> int:
+    return len(_BENGALI_LETTER.findall(text))
+
+
+def _tidy(text: str) -> str:
+    text = re.sub(r"[\[(【]\s*[\])】]", "", text)
+    text = _WHITESPACE.sub(" ", text).strip()
+    return text.strip(_EDGE_PUNCT).strip()
+
+
+def _is_generic(segment: str) -> bool:
+    plain = normalize(segment).strip(_EDGE_PUNCT + "!?")
+    return not plain or plain in _GENERIC_NORMALIZED or len(plain) < 3
+
+
+def clean_title(title: str, names: Iterable[str] = (), channel: str | None = None) -> str:
+    """A calm app title from a YouTube upload title.
+
+    Removes the speaker's name (with honorifics and possessive endings), the channel name,
+    hashtags, emojis, "| channel |" segments, "new waz 2025"-style noise and sensational words,
+    then keeps the segment with the most Bengali text. Falls back to the original title.
+    """
+    original = canonical(title)
+    text = _HASHTAG.sub(" ", original)
+    text = "".join(ch for ch in text if unicodedata.category(ch) not in {"So", "Sk", "Cs", "Co"} and ch != "️")
+    text = _BRACKETED_NOISE.sub(" ", text)
+    names_re = _name_pattern(names)
+    if names_re is not None:
+        text = names_re.sub(" ", text)
+    if channel and channel.strip():
+        text = re.sub(re.escape(canonical(channel)), " ", text, flags=re.IGNORECASE)
+    for pattern in _NOISE_PATTERNS:
+        text = re.sub(canonical(pattern), " ", text, flags=re.IGNORECASE)
+    for pattern, replacement in _SENSATIONAL:
+        text = re.sub(canonical(pattern), canonical(replacement), text)
+
+    segments = [_tidy(s) for s in _SEPARATORS.split(text)]
+    segments = [s for s in segments if not _is_generic(s)]
+    if not segments:
+        return _tidy(original) or title.strip()
+    best = max(segments, key=lambda s: (_bengali_letters(s), len(s)))
+    # Keep the first such segment when two tie (the title's lead is usually the topic).
+    for s in segments:
+        if (_bengali_letters(s), len(s)) == (_bengali_letters(best), len(best)):
+            best = s
+            break
+    return best
+
+
+# ---------------------------------------------------------------------------
+# Categories
+# ---------------------------------------------------------------------------
+
+CATEGORY_KEYWORDS: list[tuple[str, tuple[str, ...]]] = [
+    ("quran-tafsir", ("তাফসীর", "তাফসির", "tafsir", "কুরআন", "কোরআন", "quran", "সূরা", "সুরা")),
+    ("hadith", ("হাদিস", "হাদীস", "hadith")),
+    ("seerah", ("সীরাত", "সিরাত", "নবীজি", "রাসূল", "রাসুল", "seerah", "sirah")),
+    ("aqidah", ("আকীদা", "আকিদা", "তাওহীদ", "তাওহিদ", "শিরক", "ঈমান", "aqidah", "tawheed")),
+    ("salah", ("নামাজ", "নামায", "সালাত", "salah", "namaz")),
+    ("sawm", ("রোজা", "রোযা", "সাওম", "রমজান", "রমাদান", "ramadan")),
+    ("zakat", ("যাকাত", "জাকাত", "zakat")),
+    ("hajj", ("হজ", "হজ্জ", "উমরা", "hajj")),
+    ("family", ("বিয়ে", "বিবাহ", "দাম্পত্য", "স্বামী", "স্ত্রী", "পরিবার", "marriage", "family")),
+    ("parenting", ("সন্তান", "প্যারেন্টিং", "parenting", "শিশু")),
+    ("akhirah", ("মৃত্যু", "কবর", "আখিরাত", "আখেরাত", "জান্নাত", "জাহান্নাম", "কিয়ামত", "কেয়ামত")),
+    ("tazkiyah", ("তাওবা", "তওবা", "আত্মশুদ্ধি", "তাযকিয়া", "তাজকিয়া", "গুনাহ", "গোনাহ")),
+    ("akhlaq", ("আখলাক", "চরিত্র", "আদব")),
+    ("dua-dhikr", ("দোয়া", "দুআ", "দোআ", "যিকির", "জিকির", "dua", "dhikr")),
+    ("halal-rizq", ("হালাল", "রিযিক", "রিজিক", "সুদ", "ব্যবসা", "rizq")),
+    ("history", ("ইতিহাস", "history", "খিলাফত", "সালতানাত")),
+    ("dawah", ("দাওয়াহ", "দাওয়াত", "দাওয়া", "dawah")),
+    ("youth", ("তরুণ", "তরুণদের", "যুবক", "যুবসমাজ", "youth", "gen z", "জেন-জি", "জেন জি", "ক্যাম্পাস")),
+]
+
+# A keyword matches a whole word, or the word plus one of these endings ("নামাজের", "রোজায়").
+_SUFFIXES = ("", "ের", "এর", "র", "য়ের", "য়", "ে", "তে", "দের", "গুলো", "সমূহ", "s")
+_WORD_SPLIT = re.compile(r"[^\wঀ-৿]+")
+
+
+def _has_keyword(tokens: list[str], joined: str, keyword: str) -> bool:
+    nk = normalize(keyword)
+    if " " in nk or "-" in nk:
+        return f" {nk} " in joined
+    endings = {normalize(nk + s) for s in _SUFFIXES}
+    return any(t in endings for t in tokens)
+
+
+def guess_categories(text: str, allowed: Iterable[str], fallback: Iterable[str], limit: int = 2) -> list[str]:
+    """Up to `limit` category ids whose keywords appear in `text`; else the speaker's defaults."""
+    allowed_set = set(allowed)
+    tokens = [t for t in _WORD_SPLIT.split(normalize(text)) if t]
+    joined = f" {' '.join(tokens)} "
+    found = [
+        cat for cat, words in CATEGORY_KEYWORDS
+        if cat in allowed_set and any(_has_keyword(tokens, joined, w) for w in words)
+    ]
+    if found:
+        return found[:limit]
+    return [c for c in fallback if c in allowed_set] or list(fallback)[:1]

@@ -214,3 +214,76 @@ def test_every_problem_is_reported_not_just_the_first(repo):
     lines = problems(repo)
     assert len(lines) == 2
     assert all(line.startswith(f"{LECTURE_FILE}: lectures[") for line in lines)
+
+
+# ---------------------------------------------------------------------------
+# Same recording twice, series, and the bot's files
+# ---------------------------------------------------------------------------
+
+def _second_speaker_file(repo: Path, media: dict, series: dict | None = None) -> None:
+    lec = {"id": "spk002-0001", "title": "আরেকটি", "categoryIds": ["salah"], "media": media, "addedAt": "2026-11-08"}
+    if series:
+        lec["series"] = series
+    write_json(repo, "data/lectures/speaker-002.json", {"speakerId": "speaker-002", "lectures": [lec]})
+
+
+def test_same_youtube_video_in_two_speaker_files_is_an_error(repo):
+    _second_speaker_file(repo, {"type": "youtube", "videoId": "AAAAAAAAAAA", "startSec": 0})
+    assert problems(repo) == [
+        "data/lectures/speaker-002.json: lectures[0] (spk002-0001): video 'AAAAAAAAAAA' is already in the "
+        "catalog as spk001-0001 (data/lectures/speaker-001.json)"
+    ]
+
+
+def test_same_audio_url_twice_is_an_error(repo):
+    _second_speaker_file(repo, {"type": "audio", "url": "https://archive.org/download/ITEM/file.mp3"})
+    assert "media URL 'https://archive.org/download/ITEM/file.mp3' is already in the catalog" in problems(repo)[0]
+
+
+def test_series_title_and_parts_must_agree(repo):
+    _second_speaker_file(
+        repo,
+        {"type": "youtube", "videoId": "BBBBBBBBBBB"},
+        {"id": "series-tawbah", "title": "অন্য নাম", "part": 1},
+    )
+    found = problems(repo)
+    assert any("series 'series-tawbah' has title 'অন্য নাম' here but 'তাওবা সিরিজ' elsewhere" in p for p in found)
+    assert any("series 'series-tawbah' part 1 is also used by spk001-0001" in p for p in found)
+
+
+SOURCES_OK = {
+    "speakers": [
+        {
+            "speakerId": "speaker-001",
+            "channels": [{"id": "UCaaaaaaaaaaaaaaaaaaaaaa", "name": "অফিশিয়াল", "official": True}],
+            "playlists": [],
+            "queries": ["প্রথম বক্তা"],
+            "mustMatch": ["প্রথম বক্তা"],
+            "exclude": [],
+            "defaultCategoryIds": ["salah"],
+        }
+    ]
+}
+
+
+def test_discovery_files_are_validated(repo):
+    write_json(repo, "discovery/sources.json", SOURCES_OK)
+    write_json(repo, "discovery/seen/speaker-001.json", {"speakerId": "speaker-001", "videos": {
+        "AAAAAAAAAAA": {"status": "proposed", "date": "2026-11-08", "lectureId": "spk001-0001"}}})
+    assert problems(repo) == []
+
+
+def test_discovery_problems_are_reported(repo):
+    bad = json.loads(json.dumps(SOURCES_OK))
+    bad["speakers"][0]["speakerId"] = "speaker-009"
+    bad["speakers"][0]["defaultCategoryIds"] = ["nope"]
+    bad["speakers"][0]["channels"][0]["id"] = "not-a-channel"
+    write_json(repo, "discovery/sources.json", bad)
+    write_json(repo, "discovery/seen/speaker-002.json", {"speakerId": "speaker-001", "videos": {
+        "AAAAAAAAAAA": {"status": "maybe", "date": "2026-11-08"}}})
+    found = "\n".join(problems(repo))
+    assert "speakerId 'speaker-009' is not in data/speakers.json" in found
+    assert "unknown categoryId 'nope'" in found
+    assert "discovery/sources.json: speakers[0].channels[0] (not-a-channel).id" in found
+    assert "discovery/seen/speaker-002.json: speakerId 'speaker-001' does not match the file name" in found
+    assert "discovery/seen/speaker-002.json: videos.AAAAAAAAAAA.status" in found

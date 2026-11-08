@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/mdhelaluddin-ctg-bd/tazkiyah/tazkiyah-content/schema/discovery.schema.json",
+  "title": "Where the daily bot looks for each speaker's lectures (discovery/sources.json)",
+  "type": "object",
+  "required": ["speakers"],
+  "additionalProperties": false,
+  "properties": {
+    "speakers": {
+      "description": "Rotation order: the bot sweeps one speaker per day, in this order.",
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/speaker" }
+    }
+  },
+  "$defs": {
+    "text": { "type": "string", "minLength": 1 },
+    "speaker": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["speakerId", "channels", "playlists", "queries", "mustMatch", "exclude", "defaultCategoryIds"],
+      "properties": {
+        "speakerId": { "type": "string", "pattern": "^speaker-[0-9]{3,}$" },
+        "channels": { "type": "array", "items": { "$ref": "#/$defs/channel" } },
+        "playlists": { "type": "array", "items": { "$ref": "#/$defs/playlist" } },
+        "queries": {
+          "description": "YouTube search queries: every spelling of the name in Bengali and English.",
+          "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/text" }
+        },
+        "mustMatch": {
+          "description": "A video from a non-official source counts only if its title contains one of these (compared after Bangla normalisation).",
+          "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/text" }
+        },
+        "exclude": {
+          "description": "Namesakes and unrelated matches: a title or channel containing any of these is dropped.",
+          "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/text" }
+        },
+        "defaultCategoryIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/text" } },
+        "minDurationSec": { "description": "Shorter videos are dropped (default 300).", "type": "integer", "minimum": 0 }
+      }
+    },
+    "channel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "official"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^UC[A-Za-z0-9_-]{22}$" },
+        "handle": { "type": "string", "pattern": "^@[A-Za-z0-9._-]+$" },
+        "name": { "$ref": "#/$defs/text" },
+        "official": { "description": "The speaker's own channel: every upload is theirs, no name check.", "type": "boolean" }
+      }
+    },
+    "playlist": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "trusted"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^(PL|UU|OL|FL)[A-Za-z0-9_-]{10,}$" },
+        "name": { "$ref": "#/$defs/text" },
+        "trusted": { "description": "Every video in it is this speaker's: no name check.", "type": "boolean" }
+      }
+    }
+  }
+}
