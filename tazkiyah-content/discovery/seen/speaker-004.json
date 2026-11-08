@@ -1,10 +1,45 @@
 {
   "speakerId": "speaker-004",
   "videos": {
+    "8kEKcg1VQNU": {
+      "status": "low-confidence",
+      "date": "2026-11-08",
+      "note": "নাম শুধু বিবরণে"
+    },
+    "JLVUWlTglcY": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk004-0003"
+    },
+    "JXB8_27hjDg": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk004-0005"
+    },
+    "TfPqVrwwhlM": {
+      "status": "low-confidence",
+      "date": "2026-11-08",
+      "note": "নাম শুধু বিবরণে"
+    },
+    "jxD-ONMULAs": {
+      "status": "low-confidence",
+      "date": "2026-11-08",
+      "note": "নাম শুধু বিবরণে"
+    },
+    "n6Sj3ej5xUk": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk004-0004"
+    },
     "wqsD_e_C3Hs": {
       "status": "rejected",
       "date": "2026-11-07",
       "note": "ইতিমধ্যে spk001-0008 (ডুপ্লিকেট)"
+    },
+    "zLckSHJiWZ4": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk004-0002"
     }
   }
 }
