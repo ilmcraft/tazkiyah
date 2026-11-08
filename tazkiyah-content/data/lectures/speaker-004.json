@@ -11,6 +11,42 @@
       "durationSec": 2293,
       "publishedAt": "2025-01-10",
       "addedAt": "2026-11-07"
+    },
+    {
+      "id": "spk004-0002",
+      "title": "তরুণদের মধ্যে খারেজী চিন্তার প্রভাব : কারণ ও করণীয়",
+      "categoryIds": ["youth"],
+      "media": { "type": "youtube", "videoId": "zLckSHJiWZ4", "startSec": 0 },
+      "durationSec": 1659,
+      "publishedAt": "2024-08-31",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk004-0003",
+      "title": "রাজনৈতিক সহিংসতা ও আমাদের পক্ষপাতমূলক প্রতিক্রিয়া",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "JLVUWlTglcY", "startSec": 0 },
+      "durationSec": 2380,
+      "publishedAt": "2024-09-26",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk004-0004",
+      "title": "নিজের আত্ম-মর্যাদা বুঝে নিতে ভিডিওটি দেখুন",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "n6Sj3ej5xUk", "startSec": 0 },
+      "durationSec": 1285,
+      "publishedAt": "2024-12-23",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk004-0005",
+      "title": "EP5 সাইয়েদ কুতুব কেন আজও প্রাসঙ্গিক?",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "JXB8_27hjDg", "startSec": 0 },
+      "durationSec": 6990,
+      "publishedAt": "2026-09-21",
+      "addedAt": "2026-11-08"
     }
   ]
 }
