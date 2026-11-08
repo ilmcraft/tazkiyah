@@ -454,3 +454,30 @@ def test_real_sources_cover_every_speaker():
     speakers = {s["id"] for s in json.loads((REPO_ROOT / "data/speakers.json").read_text())["speakers"]}
     sources = {s["speakerId"] for s in discover.load_sources(REPO_ROOT)}
     assert sources == speakers
+
+
+def test_durations_are_filled_in_without_touching_other_fields(content):
+    def strip(doc):
+        doc["lectures"][0].pop("durationSec")
+        doc["lectures"][0].pop("publishedAt")
+    path = content / LECTURE_FILE
+    doc = json.loads(path.read_text(encoding="utf-8"))
+    strip(doc)
+    from add_lecture import format_lecture_file
+    path.write_text(format_lecture_file(doc), encoding="utf-8")
+    fake = FakeClient(videos={"AAAAAAAAAAA": item("AAAAAAAAAAA", "x", duration="PT45M30S", published="2025-03-14T08:00:00Z")})
+    assert discover.main(["durations", "--root", str(content)], client=fake) == 0
+    lecture = read_json(content, LECTURE_FILE)["lectures"][0]
+    assert lecture["durationSec"] == 2730 and lecture["publishedAt"] == "2025-03-14"
+    assert list(lecture)[:7] == ["id", "title", "description", "categoryIds", "tags", "media", "durationSec"]
+    assert validate.validate_repo(content)[0] == []
+
+
+def test_durations_skip_unavailable_videos(content):
+    path = content / LECTURE_FILE
+    doc = json.loads(path.read_text(encoding="utf-8"))
+    doc["lectures"][0].pop("durationSec")
+    from add_lecture import format_lecture_file
+    path.write_text(format_lecture_file(doc), encoding="utf-8")
+    missing, filled, changed = discover.fill_durations(content, FakeClient())
+    assert (missing, filled, changed) == (1, 0, [])

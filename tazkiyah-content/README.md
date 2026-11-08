@@ -199,6 +199,8 @@ magick photo.jpg -resize 256x256^ -gravity center -extent 256x256 images/speaker
 
 **আপনার কাজ শুধু PR রিভিউ:** শিরোনাম/ক্যাটাগরি ঠিক করুন, না-চাওয়া লেকচার `data/lectures/…`-থেকে মুছুন (কিন্তু `discovery/seen/…`-এর এন্ট্রি রেখে দিন, তাহলে আর আসবে না), তারপর Merge। Merge করলেই publish workflow অ্যাপে পাঠিয়ে দেয়। একজন বক্তার PR খোলা থাকলে বট সেই বক্তার জন্য আর PR খোলে না।
 
+**লেকচারের দৈর্ঘ্য:** `.github/workflows/fill-durations.yml` প্রতি শুক্রবার (আর হাতে চালালে) যেসব লেকচারে `durationSec` নেই — হাতে যোগ করা বা পুরোনো — তাদের দৈর্ঘ্য ও প্রকাশের তারিখ YouTube থেকে বসিয়ে একটি PR খোলে (`python scripts/discover.py durations`)। অ্যাপ প্রতিটি লেকচারের ছবিতে কত মিনিটের তা দেখায়।
+
 হাতে চালাতে: Actions → **discover-lectures** → Run workflow → `speaker` ঘরে যেমন `speaker-002` (খালি রাখলে আজকের পালার বক্তা)।
 
 **প্রথমবার সেটআপ:** রিপোর Settings → Secrets and variables → Actions-এ `YOUTUBE_API_KEY` (শুধু YouTube Data API v3-এ সীমিত key), আর Settings → Actions → General-এ "Allow GitHub Actions to create and approve pull requests" চালু। রিপো public হওয়ায় ৬০ দিন কোনো কাজ না হলে GitHub নির্ধারিত workflow থামিয়ে দেয় (আগে ইমেইল পাঠায়) — তখন Actions ট্যাব থেকে আবার Enable করুন।

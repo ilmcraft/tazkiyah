@@ -441,6 +441,53 @@ def discover(
 
 
 # ---------------------------------------------------------------------------
+# Filling in lengths
+# ---------------------------------------------------------------------------
+
+def fill_durations(root: Path, client: YouTubeClient, dry_run: bool = False) -> tuple[int, int, list[str]]:
+    """Adds durationSec (and publishedAt when missing) to every YouTube lecture that lacks it.
+
+    Returns (missing, filled, changed files). One videos.list call per 50 lectures.
+    """
+    docs: dict[str, dict[str, Any]] = {}
+    missing: dict[str, tuple[str, int]] = {}
+    folder = root / LECTURES_DIR
+    for path in sorted(folder.glob("*.json")):
+        rel = f"{LECTURES_DIR}/{path.name}"
+        docs[rel] = _load(root, rel)
+        for i, lec in enumerate(docs[rel].get("lectures", [])):
+            media = lec.get("media") or {}
+            if media.get("type") == "youtube" and not lec.get("durationSec"):
+                missing[media["videoId"]] = (rel, i)
+    details = client.videos(missing) if missing else {}
+    changed: set[str] = set()
+    filled = 0
+    for vid, (rel, i) in missing.items():
+        item = details.get(vid)
+        seconds = parse_duration((item or {}).get("contentDetails", {}).get("duration"))
+        if seconds <= 0:
+            continue  # gone, private or live: validate/the app handle it
+        published = ((item or {}).get("snippet", {}).get("publishedAt") or "")[:10]
+        lecture = docs[rel]["lectures"][i]
+        updated: dict[str, Any] = {}
+        for key, value in lecture.items():
+            if key in {"durationSec"}:
+                continue
+            updated[key] = value
+            if key == "media":
+                updated["durationSec"] = seconds
+                if published and "publishedAt" not in lecture:
+                    updated["publishedAt"] = published
+        docs[rel]["lectures"][i] = updated
+        changed.add(rel)
+        filled += 1
+    if not dry_run:
+        for rel in changed:
+            _write_atomic(root / rel, format_lecture_file(docs[rel]))
+    return len(missing), filled, sorted(changed)
+
+
+# ---------------------------------------------------------------------------
 # Report (pull request body)
 # ---------------------------------------------------------------------------
 
@@ -631,6 +678,11 @@ def main(argv: list[str] | None = None, client: YouTubeClient | None = None) -> 
         else:
             p.add_argument("--file", type=Path, required=True, help="research result with YouTube links")
 
+    p_dur = sub.add_parser("durations", help="add missing lecture lengths from YouTube")
+    common(p_dur)
+    p_dur.add_argument("--report", type=Path, default=None)
+    p_dur.add_argument("--dry-run", action="store_true")
+
     p_prompt = sub.add_parser("prompt", help="print the research prompt for a speaker")
     common(p_prompt)
     p_prompt.add_argument("--speaker", required=True)
@@ -643,6 +695,21 @@ def main(argv: list[str] | None = None, client: YouTubeClient | None = None) -> 
             speaker_id = pick_speaker(args.root, args.speaker, today)
             print(speaker_id)
             _write_outputs(args.github_output, {"speaker": speaker_id})
+            return 0
+        if args.command == "durations":
+            api = client or _client()
+            missing, filled, changed = fill_durations(args.root, api, dry_run=args.dry_run)
+            print(f"durations: {filled} of {missing} missing filled in {len(changed)} file(s); units {api.usage.units}")
+            if args.report:
+                args.report.write_text(
+                    f"## লেকচারের দৈর্ঘ্য যোগ — {bn(filled)}টি\n\n"
+                    f"যেসব লেকচারে দৈর্ঘ্য (`durationSec`) ছিল না, YouTube থেকে তা যোগ করা হয়েছে "
+                    f"({bn(missing)}টির মধ্যে {bn(filled)}টি; বাকিগুলো মুছে ফেলা/প্রাইভেট/লাইভ হতে পারে)। "
+                    "অ্যাপে প্রতিটি লেকচারের পাশে কত মিনিটের তা দেখাবে।\n\n"
+                    + "".join(f"- `{rel}`\n" for rel in changed),
+                    encoding="utf-8",
+                )
+            _write_outputs(args.github_output, {"changed": "true" if changed else "false", "filled": filled})
             return 0
         if args.command == "prompt":
             speaker_id = pick_speaker(args.root, args.speaker, today)
