@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "minAppVersionCode": 1,
-  "dataVersion": 2,
-  "updatedAt": "2026-11-07T14:13:56Z",
+  "dataVersion": 3,
+  "updatedAt": "2026-11-08T08:12:28Z",
   "changelog": "৪ জন নতুন বক্তা ও ৩৪টি লেকচার যোগ হয়েছে: মুফতি হারুন ইজহার, আসিফ আদনান, আহমাদ রফিক ও ডা. শামসুল আরেফীন শক্তি",
   "files": [
     {
@@ -37,8 +37,8 @@
     },
     {
       "path": "data/lectures/speaker-005.json",
-      "sha256": "dc9511fa884899cab4c0718703f872f2b015d99791ba15e482f0410ad0e7befe",
-      "size": 9023
+      "sha256": "20bda9aaff3c2ad3bc422bab9ff7f98f65f7c2b5655c5262c5924101535140ff",
+      "size": 143818
     }
   ]
 }
