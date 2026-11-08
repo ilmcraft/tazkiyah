@@ -63,14 +63,19 @@ fun SpeakerScreen(
                                 FilterChip(
                                     selected = page.selectedCategory == null,
                                     onClick = { viewModel.selectCategory(null) },
-                                    label = { Text(stringResource(R.string.speaker_all_topics)) },
+                                    label = {
+                                        Text(stringResource(R.string.chip_with_count, stringResource(R.string.speaker_all_topics), page.totalLectures.toBanglaDigits()))
+                                    },
                                 )
                             }
                             items(page.categories, key = { it.id }) { category ->
                                 FilterChip(
                                     selected = page.selectedCategory == category.id,
                                     onClick = { viewModel.selectCategory(category.id) },
-                                    label = { Text(category.name) },
+                                    label = {
+                                        val count = page.categoryCounts[category.id] ?: 0
+                                        Text(stringResource(R.string.chip_with_count, category.name, count.toBanglaDigits()))
+                                    },
                                 )
                             }
                         }

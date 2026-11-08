@@ -7,6 +7,7 @@ import androidx.navigation.toRoute
 import com.inovixlabs.tazkiyah.core.designsystem.UiState
 import com.inovixlabs.tazkiyah.core.designsystem.asUiState
 import com.inovixlabs.tazkiyah.data.local.entity.CategoryEntity
+import com.inovixlabs.tazkiyah.data.local.entity.LectureCategoryEntity
 import com.inovixlabs.tazkiyah.data.local.entity.LectureRow
 import com.inovixlabs.tazkiyah.data.local.entity.SpeakerEntity
 import com.inovixlabs.tazkiyah.data.repository.CatalogRepository
@@ -28,6 +29,8 @@ data class LectureGroup(val title: String?, val lectures: List<LectureRow>)
 data class SpeakerPage(
     val speaker: SpeakerEntity?,
     val categories: List<CategoryEntity>,
+    /** Lectures of this speaker in each category (chip label "আকীদা (৫)"). */
+    val categoryCounts: Map<String, Int>,
     val selectedCategory: String?,
     val sort: SpeakerSort,
     val groups: List<LectureGroup>,
@@ -58,6 +61,7 @@ class SpeakerViewModel @Inject constructor(
         SpeakerPage(
             speaker = speaker,
             categories = categories,
+            categoryCounts = categoryCounts(links, lectures),
             selectedCategory = category,
             sort = sortBy,
             groups = group(filtered, sortBy),
@@ -76,6 +80,15 @@ class SpeakerViewModel @Inject constructor(
     fun toggleFavorite(lectureId: String) = playback.toggleFavorite(lectureId)
 
     companion object {
+        /** How many of [lectures] each category holds; links to lectures not in the list are ignored. */
+        fun categoryCounts(links: List<LectureCategoryEntity>, lectures: List<LectureRow>): Map<String, Int> {
+            val ids = lectures.mapTo(HashSet()) { it.id }
+            return links.filter { it.lectureId in ids }
+                .distinctBy { it.categoryId to it.lectureId }
+                .groupingBy { it.categoryId }
+                .eachCount()
+        }
+
         /** Newest = latest publish/added date, then later position in the content file. */
         private val newestFirst = compareByDescending<LectureRow> { it.lecture.publishedAt ?: it.lecture.addedAt ?: "" }
             .thenByDescending { it.lecture.addedAt ?: "" }
