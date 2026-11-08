@@ -75,6 +75,7 @@ import com.inovixlabs.tazkiyah.core.designsystem.LocalShowMessage
 import com.inovixlabs.tazkiyah.core.designsystem.TazkiyahTheme
 import com.inovixlabs.tazkiyah.core.designsystem.ThemeMode
 import com.inovixlabs.tazkiyah.core.designsystem.isAppInDarkTheme
+import com.inovixlabs.tazkiyah.feature.about.AboutScreen
 import com.inovixlabs.tazkiyah.feature.categories.CategoriesScreen
 import com.inovixlabs.tazkiyah.feature.category.CategoryScreen
 import com.inovixlabs.tazkiyah.feature.home.HomeScreen
@@ -375,7 +376,10 @@ private fun AppNavHost(
             SearchScreen(onBack = back, onOpenLecture = onOpenLecture)
         }
         composable<SettingsRoute> {
-            SettingsScreen(onBack = back)
+            SettingsScreen(onBack = back, onOpenAbout = { navController.navigate(AboutRoute) { launchSingleTop = true } })
+        }
+        composable<AboutRoute> {
+            AboutScreen(onBack = back)
         }
     }
 }

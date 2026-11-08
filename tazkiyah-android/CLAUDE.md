@@ -25,3 +25,9 @@
   DownloadWorker fetches 5 MB ranged chunks into `files/downloads/<id>.<itag>.part` (resumable), picks the
   original-language audio (never a dub) and H.264 video, and muxes them with MediaMuxer. A saved lecture
   plays in ExoPlayer instead of YouTube (PlaybackManager `Active.saved`).
+- Distribution: signed APK on GitHub Releases (tag `app-v<versionName>`), not Play Store. The app's
+  `AppUpdateChecker` reads those releases once a day and shows "নতুন ভার্সন এসেছে". Every release: bump
+  `versionCode` + `versionName`, `./gradlew lint testDebugUnitTest assembleRelease`, test on a phone, tag, upload.
+- Release builds use R8 (`proguard-rules.pro` keeps NewPipeExtractor/Rhino whole) and the release key from
+  `~/.gradle/gradle.properties` (`TAZKIYAH_RELEASE_*`, keystore in `~/.android/keystores/`); never the debug key,
+  never commit either. The whole app is GPL-3.0 (root `LICENSE`, shown in-app under About).

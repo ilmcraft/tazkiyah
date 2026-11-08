@@ -1,5 +1,6 @@
 package com.inovixlabs.tazkiyah.feature.settings
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -13,6 +14,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
+import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.Sync
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -108,6 +111,7 @@ class SettingsViewModel @Inject constructor(
 @Composable
 fun SettingsScreen(
     onBack: () -> Unit,
+    onOpenAbout: () -> Unit,
     viewModel: SettingsViewModel = hiltViewModel(),
 ) {
     val settings by viewModel.settings.collectAsStateWithLifecycle()
@@ -225,6 +229,24 @@ fun SettingsScreen(
                         modifier = Modifier.padding(top = 8.dp),
                     )
                 }
+            }
+            item {
+                val update = s.appUpdate
+                ListItem(
+                    headlineContent = { Text(stringResource(R.string.settings_open_about)) },
+                    supportingContent = update?.let {
+                        {
+                            Text(
+                                stringResource(R.string.settings_open_about_update, it.versionName.toBanglaDigits()),
+                                color = MaterialTheme.colorScheme.primary,
+                            )
+                        }
+                    },
+                    leadingContent = { Icon(Icons.Rounded.Info, contentDescription = null) },
+                    trailingContent = { Icon(Icons.AutoMirrored.Rounded.KeyboardArrowRight, contentDescription = null) },
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+                    modifier = Modifier.padding(top = 8.dp).clickable(onClick = onOpenAbout),
+                )
             }
         }
     }
