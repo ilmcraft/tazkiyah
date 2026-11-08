@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "minAppVersionCode": 1,
-  "dataVersion": 4,
-  "updatedAt": "2026-11-08T08:25:21Z",
-  "changelog": "বক্তাদের ছবি যোগ হয়েছে",
+  "dataVersion": 5,
+  "updatedAt": "2026-11-08T08:36:17Z",
+  "changelog": "লেকচারের তালিকা হালনাগাদ হয়েছে",
   "files": [
     {
       "path": "data/speakers.json",
@@ -17,32 +17,32 @@
     },
     {
       "path": "data/lectures/speaker-001.json",
-      "sha256": "ac6bbdb8221978cbc1571570ac8fe619919e602137226d3945d6e363586248a3",
-      "size": 5867,
+      "sha256": "eb469d59a1a4f033d5c43378cf59d12d1b7e62e5ca78acbbe64bd836ba696c67",
+      "size": 6327,
       "lectures": 8
     },
     {
       "path": "data/lectures/speaker-002.json",
-      "sha256": "ad3b33ee169f709aa7d13ab8c2e9491274f6a72286626e95680298f26a12eed8",
-      "size": 3232,
+      "sha256": "28ac29ae16c6fad44176de5604d3f1319ad96ca2b9a07d6e511ef0792f603e52",
+      "size": 3604,
       "lectures": 6
     },
     {
       "path": "data/lectures/speaker-003.json",
-      "sha256": "01445d8c2e2f13aaf51dfacb26aca2534181bbbd4f2c2feb4186545cef572282",
-      "size": 7136,
+      "sha256": "f1d8cc1db1af669084952c1303fc42e0a0b4b0e445d0d89dd7ed76f492f0dd17",
+      "size": 7877,
       "lectures": 12
     },
     {
       "path": "data/lectures/speaker-004.json",
-      "sha256": "25606e497d6f77aa7b61ea0c196272f9a0f0da262e927219d214ac41f62a1444",
-      "size": 750,
+      "sha256": "05cf9adc011e0b7f07dff3720498d7e7bef3c61e4f82bead0c10654c4b5bd135",
+      "size": 812,
       "lectures": 1
     },
     {
       "path": "data/lectures/speaker-005.json",
-      "sha256": "20bda9aaff3c2ad3bc422bab9ff7f98f65f7c2b5655c5262c5924101535140ff",
-      "size": 143818,
+      "sha256": "59e961135782c0b3a64250ff34cd88f982c49ea560a29bab4c44d354e0128c15",
+      "size": 144743,
       "lectures": 384
     }
   ]
