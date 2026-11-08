@@ -1,0 +1,51 @@
+# Weekly: adds the length (durationSec) of every YouTube lecture that has none yet — lectures added
+# by hand or by older runs — so the app can show how long each one is. Opens a review PR.
+# Uses about 1 quota unit per 50 lectures (of the free 10,000/day).
+name: fill-durations
+on:
+  schedule:
+    - cron: "41 2 * * 5" # Fridays 08:41 Bangladesh time
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write
+concurrency:
+  group: fill-durations
+  cancel-in-progress: false
+jobs:
+  durations:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: tazkiyah-content
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: tazkiyah-content/requirements-dev.txt
+      - run: pip install -r requirements-dev.txt
+      - name: Fill in lecture lengths
+        id: fill
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: python scripts/discover.py durations --report "$RUNNER_TEMP/report.md" --github-output "$GITHUB_OUTPUT"
+      - name: Validate
+        if: steps.fill.outputs.changed == 'true'
+        run: python scripts/validate.py
+      - name: Open the review pull request
+        if: steps.fill.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v8
+        with:
+          branch: bot/durations
+          delete-branch: true
+          add-paths: tazkiyah-content/data/lectures/*.json
+          commit-message: "content: fill in lecture lengths (bot)"
+          title: "লেকচারের দৈর্ঘ্য যোগ (${{ steps.fill.outputs.filled }}টি)"
+          body-path: ${{ runner.temp }}/report.md
+          labels: lecture-lengths
+          assignees: ${{ github.repository_owner }}
+          author: content-bot <content-bot@users.noreply.github.com>
+          committer: content-bot <content-bot@users.noreply.github.com>
