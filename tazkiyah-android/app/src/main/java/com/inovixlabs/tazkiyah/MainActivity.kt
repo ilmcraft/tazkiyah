@@ -1,6 +1,7 @@
 package com.inovixlabs.tazkiyah
 
 import android.content.Intent
+import android.media.AudioManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -20,6 +21,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+        // The side buttons change the lecture volume in the app, even while paused (not the ringer).
+        volumeControlStream = AudioManager.STREAM_MUSIC
         handleIntent(intent)
         setContent {
             TazkiyahRoot(

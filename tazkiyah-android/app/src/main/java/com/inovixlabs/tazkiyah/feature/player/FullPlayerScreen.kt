@@ -189,6 +189,7 @@ fun FullPlayerScreen(
                     Column(Modifier.padding(horizontal = 16.dp)) {
                         SeekBar(state, onSeekTo)
                         TransportRow(state, onPlayPause, onSeekBy, Modifier.fillMaxWidth())
+                        VolumeControl(Modifier.fillMaxWidth())
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Text(stringResource(R.string.speed), style = MaterialTheme.typography.labelLarge)
                             SpeedButton(state.speed, onSpeed)

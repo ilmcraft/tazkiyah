@@ -292,8 +292,17 @@ main { display: block; max-width: 1080px; margin: 0 auto; padding: 16px 16px 40p
 .ctrl small { font-size: 12px; font-weight: 600; }
 .ctrl.main { width: 50px; height: 50px; background: var(--primary); color: var(--on-primary); }
 .ctrl.speed { font-weight: 600; font-size: 15px; }
+.vol-box { display: inline-flex; align-items: center; }
+.vol { width: 96px; height: 28px; margin: 0 6px 0 0; accent-color: var(--primary); cursor: pointer; }
+/* Phones change the volume with their side buttons (iPhones only allow that); just the mute button there. */
+@media (max-width: 600px) { .vol { display: none; } }
 .time { margin-left: 6px; color: var(--muted); font-size: 14px; white-space: nowrap; }
 .grow { flex: 1; }
+@media (max-width: 480px) {
+  .ctrl-row { gap: 0; }
+  .ctrl { min-width: 40px; padding: 0 6px; }
+  .time { margin-left: 2px; font-size: 13px; }
+}
 @media (max-width: 380px) { .time { display: none; } }
 .mini-info { display: none; }
 

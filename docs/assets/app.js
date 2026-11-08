@@ -35,6 +35,9 @@
     replay: "M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z",
     forward: "M12 5V1l5 5-5 5V7c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6h2c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8z",
     fullscreen: "M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z",
+    volumeUp: "M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z",
+    volumeDown: "M18.5 12A4.5 4.5 0 0 0 16 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02zM5 9v6h4l5 5V4L9 9H5z",
+    volumeOff: "M16.5 12A4.5 4.5 0 0 0 14 7.97v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51A8.8 8.8 0 0 0 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3 3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06a8.99 8.99 0 0 0 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4 9.91 6.09 12 8.18V4z",
     close: "M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z",
     download: "M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z",
     share: "M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11A2.99 2.99 0 0 0 21 5a3 3 0 1 0-5.91.7L8.04 9.81A2.99 2.99 0 0 0 3 12a3 3 0 0 0 5.04 2.19l7.12 4.16c-.05.21-.08.43-.08.65A2.92 2.92 0 1 0 18 16.08z",
@@ -273,6 +276,8 @@
     const miniToggle = $("#mini-toggle");
     const speedBtn = $("#speed");
     const fsBtn = $("#fs");
+    const muteBtn = $("#mute");
+    const volEl = $("#vol");
 
     let mode = "hidden";
     let lecture = null;
@@ -287,6 +292,15 @@
     let lastSave = 0;
     let autoplayId = null;
     let rate = SPEEDS.includes(store.get("rate", 1)) ? store.get("rate", 1) : 1;
+    const savedVolume = Number(store.get("volume", 100));
+    let volume = Number.isFinite(savedVolume) ? Math.max(0, Math.min(100, Math.round(savedVolume))) : 100; // 0–100
+    let muted = store.get("muted", false) === true;
+    // iPhone and iPad only let the side buttons change the volume (muting still works), so no slider there.
+    const volumeSettable = (() => {
+      const ios = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+      if (ios) return false;
+      try { const a = document.createElement("audio"); a.volume = 0.5; return a.volume === 0.5; } catch (e) { return false; }
+    })();
 
     // ---- YouTube engine (IFrame API) ----
     let ytApi = null;
@@ -350,6 +364,8 @@
                 iframe.setAttribute("tabindex", "-1");
                 iframe.setAttribute("title", "লেকচারের ভিডিও");
                 player.setPlaybackRate(rate);
+                player.setVolume(volume);
+                if (muted) player.mute(); else player.unMute();
                 if (!target) return;
                 if (target.videoId !== createdWith || target.autoplay || wantPlay) { target.autoplay = target.autoplay || wantPlay; apply(); }
                 else target.applied = true;
@@ -379,6 +395,11 @@
         time() { return ready ? player.getCurrentTime() || 0 : 0; },
         duration() { return ready ? player.getDuration() || 0 : 0; },
         setRate(r) { if (ready) player.setPlaybackRate(r); },
+        setVolume(vol, m) {
+          if (!ready) return; // onReady applies the current volume
+          player.setVolume(vol);
+          if (m) player.mute(); else player.unMute();
+        },
         show(on) { const el = player ? player.getIframe() : host; if (el) el.style.visibility = on ? "" : "hidden"; },
       };
     }
@@ -390,6 +411,11 @@
       v.preload = "metadata";
       v.setAttribute("tabindex", "-1");
       frame.prepend(v);
+      const applyVolume = (vol, m) => {
+        try { v.volume = vol / 100; } catch (e) { /* read-only on some browsers */ }
+        v.muted = m;
+      };
+      applyVolume(volume, muted);
       let startAt = 0;
       const self = () => engines.html5 === engine;
       v.addEventListener("loadedmetadata", () => { if (startAt) v.currentTime = startAt; v.playbackRate = rate; if (self()) onEngineState(wantPlay ? "buffering" : "cued"); });
@@ -409,6 +435,7 @@
         time() { return v.currentTime || 0; },
         duration() { return Number.isFinite(v.duration) ? v.duration : 0; },
         setRate(r) { v.playbackRate = r; },
+        setVolume: applyVolume,
         show(on) { v.style.visibility = on ? "" : "hidden"; },
       };
     }
@@ -625,6 +652,36 @@
       Object.values(engines).forEach((e) => e.setRate(rate));
       updateButtons();
     }
+
+    function paintVolume() {
+      const silent = muted || volume === 0;
+      muteBtn.innerHTML = icon(silent ? "volumeOff" : volume < 50 ? "volumeDown" : "volumeUp");
+      muteBtn.setAttribute("aria-label", silent ? "আওয়াজ চালু করুন" : "আওয়াজ বন্ধ করুন");
+      const shown = muted ? 0 : volume;
+      volEl.value = String(shown);
+      volEl.setAttribute("aria-valuetext", `${bn(shown)}%`);
+    }
+    function applyVolume() {
+      Object.values(engines).forEach((e) => e.setVolume(volume, muted));
+      store.set("volume", volume);
+      store.set("muted", muted);
+      paintVolume();
+    }
+    function setVolume(v) {
+      volume = Math.max(0, Math.min(100, Math.round(v)));
+      muted = false;
+      applyVolume();
+    }
+    /** Muting keeps the level; unmuting at 0 goes to half volume. */
+    function toggleMute() {
+      if (muted || volume === 0) {
+        muted = false;
+        if (volume === 0) volume = 50;
+      } else {
+        muted = true;
+      }
+      applyVolume();
+    }
     function toggleFullscreen() {
       const doc = document;
       if (doc.fullscreenElement || doc.webkitFullscreenElement) {
@@ -697,7 +754,9 @@
     // ---- controls ----
     $$("[data-icon]", root).forEach((el) => { el.innerHTML = icon(el.dataset.icon); });
     if (!(box.requestFullscreen || box.webkitRequestFullscreen)) fsBtn.hidden = true;
+    if (!volumeSettable) volEl.hidden = true;
     updateButtons();
+    paintVolume();
 
     coverBtn.addEventListener("click", (e) => { e.stopPropagation(); if (mode === "mini") return openPage(); play(); });
     cover.addEventListener("click", (e) => {
@@ -713,6 +772,8 @@
     $("#back10").addEventListener("click", () => skip(-10));
     $("#fwd10").addEventListener("click", () => skip(10));
     speedBtn.addEventListener("click", cycleSpeed);
+    muteBtn.addEventListener("click", toggleMute);
+    volEl.addEventListener("input", () => setVolume(Number(volEl.value)));
     fsBtn.addEventListener("click", toggleFullscreen);
     seek.addEventListener("input", () => { seeking = true; showTime(); });
     seek.addEventListener("change", () => {
@@ -739,6 +800,8 @@
         skip(10);
       } else if (mode === "full" && e.key === "f") {
         toggleFullscreen();
+      } else if (e.key === "m") {
+        toggleMute();
       }
     });
     window.addEventListener("pagehide", saveProgress);

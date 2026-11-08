@@ -1,5 +1,9 @@
 package com.inovixlabs.tazkiyah.feature.player
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -8,6 +12,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.VolumeDown
+import androidx.compose.material.icons.automirrored.rounded.VolumeOff
+import androidx.compose.material.icons.automirrored.rounded.VolumeUp
 import androidx.compose.material.icons.rounded.Forward10
 import androidx.compose.material.icons.rounded.Pause
 import androidx.compose.material.icons.rounded.PlayArrow
@@ -26,21 +33,31 @@ import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import com.inovixlabs.tazkiyah.R
 import com.inovixlabs.tazkiyah.core.util.formatClock
 import com.inovixlabs.tazkiyah.core.util.toBanglaDigits
+import com.inovixlabs.tazkiyah.playback.MediaVolume
 import com.inovixlabs.tazkiyah.playback.PlayerState
 import com.inovixlabs.tazkiyah.playback.SPEED_OPTIONS
+import com.inovixlabs.tazkiyah.playback.VolumeLevel
+import com.inovixlabs.tazkiyah.playback.volumeLevel
+import kotlin.math.roundToInt
 
 fun speedLabel(speed: Float): String {
     val text = if (speed % 1f == 0f) speed.toInt().toString() else speed.toString().trimEnd('0')
@@ -143,6 +160,91 @@ fun TransportRow(
         IconButton(onClick = { onSeekBy(10) }) {
             Icon(Icons.Rounded.Forward10, stringResource(R.string.forward_10), tint = tint, modifier = Modifier.size(if (big) 34.dp else 28.dp))
         }
+    }
+}
+
+/**
+ * Mute button and slider for the phone's media volume ([MediaVolume]). Follows the side buttons
+ * while it is on screen. Hidden on devices whose volume can't be changed.
+ *
+ * @param onAdjust called on every change, e.g. to keep auto-hiding video controls on screen.
+ */
+@Composable
+fun VolumeControl(
+    modifier: Modifier = Modifier,
+    onDark: Boolean = false,
+    onAdjust: () -> Unit = {},
+) {
+    val context = LocalContext.current.applicationContext
+    val volume = remember(context) { MediaVolume(context) }
+    if (!volume.adjustable) return
+    var level by remember { mutableIntStateOf(volume.level()) }
+    var dragging by remember { mutableStateOf(false) }
+    var dragValue by remember { mutableFloatStateOf(0f) }
+
+    DisposableEffect(volume) {
+        val receiver = object : BroadcastReceiver() {
+            override fun onReceive(c: Context, intent: Intent) {
+                level = volume.level()
+            }
+        }
+        val filter = IntentFilter().apply {
+            addAction(MediaVolume.ACTION_VOLUME_CHANGED)
+            addAction(MediaVolume.ACTION_MUTE_CHANGED)
+        }
+        // System broadcasts still reach a not-exported receiver.
+        ContextCompat.registerReceiver(context, receiver, filter, ContextCompat.RECEIVER_NOT_EXPORTED)
+        level = volume.level()
+        onDispose { context.unregisterReceiver(receiver) }
+    }
+
+    val tint = if (onDark) Color.White else MaterialTheme.colorScheme.onSurfaceVariant
+    val shown = if (dragging) dragValue.roundToInt() else level
+    val sliderLabel = stringResource(R.string.volume)
+    Row(modifier, verticalAlignment = Alignment.CenterVertically) {
+        IconButton(
+            onClick = {
+                volume.toggleMute()
+                level = volume.level()
+                onAdjust()
+            },
+        ) {
+            Icon(
+                when (volumeLevel(shown, volume.max)) {
+                    VolumeLevel.Off -> Icons.AutoMirrored.Rounded.VolumeOff
+                    VolumeLevel.Low -> Icons.AutoMirrored.Rounded.VolumeDown
+                    VolumeLevel.High -> Icons.AutoMirrored.Rounded.VolumeUp
+                },
+                contentDescription = stringResource(if (shown > 0) R.string.volume_mute else R.string.volume_unmute),
+                tint = tint,
+            )
+        }
+        Slider(
+            value = if (dragging) dragValue else level.toFloat(),
+            onValueChange = {
+                dragging = true
+                dragValue = it
+                val target = it.roundToInt()
+                if (target != level) {
+                    volume.setLevel(target)
+                    level = volume.level()
+                }
+                onAdjust()
+            },
+            onValueChangeFinished = {
+                dragging = false
+                level = volume.level()
+            },
+            valueRange = 0f..volume.max.toFloat(),
+            colors = SliderDefaults.colors(
+                thumbColor = MaterialTheme.colorScheme.secondary,
+                activeTrackColor = MaterialTheme.colorScheme.secondary,
+                inactiveTrackColor = if (onDark) Color.White.copy(alpha = 0.3f) else MaterialTheme.colorScheme.surfaceVariant,
+            ),
+            modifier = Modifier
+                .weight(1f)
+                .semantics { contentDescription = sliderLabel },
+        )
     }
 }
 

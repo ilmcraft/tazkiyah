@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Fullscreen
 import androidx.compose.material.icons.rounded.FullscreenExit
@@ -29,6 +30,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -54,6 +56,7 @@ import com.inovixlabs.tazkiyah.data.local.entity.LectureRow
 import com.inovixlabs.tazkiyah.feature.player.SeekBar
 import com.inovixlabs.tazkiyah.feature.player.SpeedButton
 import com.inovixlabs.tazkiyah.feature.player.TransportRow
+import com.inovixlabs.tazkiyah.feature.player.VolumeControl
 import com.inovixlabs.tazkiyah.feature.player.errorText
 import com.inovixlabs.tazkiyah.playback.PlayerState
 import com.inovixlabs.tazkiyah.playback.youTubeThumbnail
@@ -86,7 +89,9 @@ fun FocusedVideoFrame(
     video: @Composable () -> Unit,
 ) {
     var controlsVisible by remember { mutableStateOf(true) }
-    LaunchedEffect(controlsVisible, state.isPlaying) {
+    // Bumped while the volume is being changed, so the controls don't hide under the finger.
+    var lastAdjust by remember { mutableLongStateOf(0L) }
+    LaunchedEffect(controlsVisible, state.isPlaying, lastAdjust) {
         if (controlsVisible && state.isPlaying) {
             delay(3_000)
             controlsVisible = false
@@ -133,6 +138,7 @@ fun FocusedVideoFrame(
                 onSeekTo = onSeekTo,
                 onSpeed = onSpeed,
                 onToggleFullscreen = onToggleFullscreen,
+                onAdjustVolume = { lastAdjust = System.currentTimeMillis() },
             )
         }
     }
@@ -277,6 +283,7 @@ private fun OverlayControls(
     onSeekTo: (Long) -> Unit,
     onSpeed: (Float) -> Unit,
     onToggleFullscreen: () -> Unit,
+    onAdjustVolume: () -> Unit,
 ) {
     Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.25f))) {
         if (showTransport) {
@@ -297,6 +304,8 @@ private fun OverlayControls(
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 SeekBar(state, onSeekTo, Modifier.weight(1f), onDark = true)
+                // The full player screen has its own volume row; fullscreen needs one here.
+                if (fullscreen) VolumeControl(Modifier.width(168.dp), onDark = true, onAdjust = onAdjustVolume)
                 SpeedButton(state.speed, onSpeed, onDark = true)
                 IconButton(onClick = onToggleFullscreen) {
                     Icon(

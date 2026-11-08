@@ -93,6 +93,9 @@
     <string name="forward_10">১০ সেকেন্ড সামনে</string>
     <string name="speed">গতি</string>
     <string name="speed_value">%1$s×</string>
+    <string name="volume">ভলিউম</string>
+    <string name="volume_mute">আওয়াজ বন্ধ করুন</string>
+    <string name="volume_unmute">আওয়াজ চালু করুন</string>
     <string name="fullscreen">ফুলস্ক্রিন</string>
     <string name="exit_fullscreen">ফুলস্ক্রিন থেকে বের হোন</string>
     <string name="collapse_player">প্লেয়ার ছোট করুন</string>
