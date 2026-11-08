@@ -1,0 +1,70 @@
+{
+  "speakerId": "speaker-003",
+  "videos": {
+    "7gJqJtm1QyQ": {
+      "status": "rejected",
+      "date": "2026-11-07",
+      "note": "চলে, কিন্তু অস্পষ্ট ক্লিপ — সম্ভবত spk003-0005-এর একই লেকচারের অংশ"
+    },
+    "LqFEWx45DPw": {
+      "status": "rejected",
+      "date": "2026-11-07",
+      "note": "oEmbed 403 — এমবেড বন্ধ, অ্যাপে চলবে না"
+    },
+    "NwhJx1PMtj0": {
+      "status": "rejected",
+      "date": "2026-11-07",
+      "note": "সংবাদ ক্লিপ"
+    },
+    "PlZ9aE3GUJ8": {
+      "status": "rejected",
+      "date": "2026-11-07",
+      "note": "তাঁকে নিয়ে ভিডিও, তাঁর আলোচনা নয়"
+    },
+    "WTxMVbSqYdY": {
+      "status": "rejected",
+      "date": "2026-11-07",
+      "note": "404"
+    },
+    "l5k0KDtN6-I": {
+      "status": "rejected",
+      "date": "2026-11-07",
+      "note": "404"
+    },
+    "lXKzuYQ-r2M": {
+      "status": "rejected",
+      "date": "2026-11-07",
+      "note": "404 (তাছাড়া দুই বক্তার সংকলন)"
+    },
+    "pJvp-SgkCdg": {
+      "status": "rejected",
+      "date": "2026-11-07",
+      "note": "সংবাদ প্রতিবেদন, লেকচার নয় (জাকারিয়া মাসুদের তালিকা থেকেও একই কারণে বাদ)"
+    },
+    "r93GcjnYahw": {
+      "status": "rejected",
+      "date": "2026-11-07",
+      "note": "একই (404)"
+    },
+    "vA0oW-mELbg": {
+      "status": "rejected",
+      "date": "2026-11-07",
+      "note": "oEmbed দুবার 404 — মুছে ফেলা/প্রাইভেট, অথবা লিংক ভুল"
+    },
+    "vDXsnzJYVD8": {
+      "status": "rejected",
+      "date": "2026-11-07",
+      "note": "404"
+    },
+    "vzzLo9dVk3Q": {
+      "status": "rejected",
+      "date": "2026-11-07",
+      "note": "পাঠক নিশ্চিত নয়"
+    },
+    "wj0clFiYYWo": {
+      "status": "rejected",
+      "date": "2026-11-07",
+      "note": "শর্ট"
+    }
+  }
+}

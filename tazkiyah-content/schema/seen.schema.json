@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/mdhelaluddin-ctg-bd/tazkiyah/tazkiyah-content/schema/seen.schema.json",
+  "title": "Videos the bot has already decided on for one speaker (discovery/seen/<speaker>.json)",
+  "type": "object",
+  "required": ["speakerId", "videos"],
+  "additionalProperties": false,
+  "properties": {
+    "speakerId": { "type": "string", "pattern": "^speaker-[0-9]{3,}$" },
+    "videos": {
+      "type": "object",
+      "propertyNames": { "pattern": "^[A-Za-z0-9_-]{11}$" },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["status", "date"],
+        "properties": {
+          "status": {
+            "description": "proposed: added to a review PR. duplicate / low-confidence: only listed in the PR. rejected: excluded by a person.",
+            "enum": ["proposed", "duplicate", "low-confidence", "rejected"]
+          },
+          "date": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$", "format": "date" },
+          "lectureId": { "type": "string", "pattern": "^spk[0-9]{3,}-[0-9]{4,}$" },
+          "note": { "type": "string" }
+        }
+      }
+    }
+  }
+}

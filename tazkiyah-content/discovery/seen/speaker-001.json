@@ -1,0 +1,25 @@
+{
+  "speakerId": "speaker-001",
+  "videos": {
+    "DXk2UdsuKkY": {
+      "status": "rejected",
+      "date": "2026-11-07",
+      "note": "একই কারণ"
+    },
+    "hl2ZmmJ9yJE": {
+      "status": "rejected",
+      "date": "2026-11-07",
+      "note": "oEmbed দুবার ব্যর্থ — এমবেড বন্ধ, মুছে ফেলা বা প্রাইভেট; অ্যাপের প্লেয়ারে চলবে না"
+    },
+    "nmqP_xlLqYM": {
+      "status": "rejected",
+      "date": "2026-11-07",
+      "note": "একই কারণ"
+    },
+    "pJvp-SgkCdg": {
+      "status": "rejected",
+      "date": "2026-11-07",
+      "note": "ভিডিও চলে, তবে এটি Somoy TV-র সংবাদ প্রতিবেদন, লেকচার নয়"
+    }
+  }
+}

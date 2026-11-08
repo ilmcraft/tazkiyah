@@ -1,0 +1,88 @@
+# Daily lecture finder: sweeps ONE speaker per day (rotation in tazkiyah-content/discovery/sources.json),
+# so the free YouTube quota (100 searches/day) is spent deeply on that speaker. New lectures arrive as a
+# pull request for review; nothing reaches the app until it is merged (publish.yml then ships it).
+#
+# Needs the repository secret YOUTUBE_API_KEY, and Settings → Actions → General →
+# "Allow GitHub Actions to create and approve pull requests".
+# GitHub pauses scheduled workflows after 60 days without repository activity (public repo): if that
+# happens, re-enable it from the Actions tab.
+name: discover-lectures
+on:
+  schedule:
+    - cron: "17 1 * * *" # 07:17 Bangladesh time
+  workflow_dispatch:
+    inputs:
+      speaker:
+        description: "Speaker id such as speaker-002 (empty: today's speaker in the rotation)"
+        required: false
+        default: ""
+permissions:
+  contents: write
+  pull-requests: write
+concurrency:
+  group: discover-lectures
+  cancel-in-progress: false
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: tazkiyah-content
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: tazkiyah-content/requirements-dev.txt
+      - run: pip install -r requirements-dev.txt
+
+      - name: Pick the speaker
+        id: pick
+        env:
+          REQUESTED: ${{ inputs.speaker }}
+        run: python scripts/discover.py pick --speaker "$REQUESTED" --github-output "$GITHUB_OUTPUT"
+
+      - name: Skip while a review is open
+        id: open
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SPEAKER: ${{ steps.pick.outputs.speaker }}
+        run: |
+          count=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "bot/lectures-$SPEAKER" --state open --json number --jq length)
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+          if [ "$count" != "0" ]; then
+            echo "::notice::$SPEAKER already has an open review pull request; it is skipped until that one is merged or closed."
+          fi
+
+      - name: Find new lectures
+        id: discover
+        if: steps.open.outputs.count == '0'
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          SPEAKER: ${{ steps.pick.outputs.speaker }}
+        run: >-
+          python scripts/discover.py sweep --speaker "$SPEAKER"
+          --report "$RUNNER_TEMP/report.md" --github-output "$GITHUB_OUTPUT"
+
+      - name: Validate
+        if: steps.discover.outputs.changed == 'true'
+        run: python scripts/validate.py
+
+      - name: Open the review pull request
+        if: steps.discover.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v8
+        with:
+          branch: bot/lectures-${{ steps.pick.outputs.speaker }}
+          delete-branch: true
+          add-paths: |
+            tazkiyah-content/data/lectures/*.json
+            tazkiyah-content/discovery/seen/*.json
+          commit-message: "content: new lectures for ${{ steps.pick.outputs.speaker }} (bot)"
+          title: "নতুন লেকচার: ${{ steps.discover.outputs.name }} (${{ steps.discover.outputs.added }}টি)"
+          body-path: ${{ runner.temp }}/report.md
+          labels: new-lectures
+          assignees: ${{ github.repository_owner }}
+          author: content-bot <content-bot@users.noreply.github.com>
+          committer: content-bot <content-bot@users.noreply.github.com>

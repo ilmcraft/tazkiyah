@@ -1,0 +1,40 @@
+{
+  "speakerId": "speaker-002",
+  "videos": {
+    "9x7DtkSuHKs": {
+      "status": "rejected",
+      "date": "2026-11-07",
+      "note": "একই (404)"
+    },
+    "R4_OsgJE7hk": {
+      "status": "rejected",
+      "date": "2026-11-07",
+      "note": "ওয়াজ নয় যেন জান্নাতি সুর — বক্তার নাম নেই, তাই বক্তা নিশ্চিত নয়"
+    },
+    "UsZt27_acrE": {
+      "status": "rejected",
+      "date": "2026-11-07",
+      "note": "একই (404)"
+    },
+    "YPqd2QCvL28": {
+      "status": "rejected",
+      "date": "2026-11-07",
+      "note": "Kaler Kantho-র সংবাদ-শর্ট"
+    },
+    "lFKPeThkAwk": {
+      "status": "rejected",
+      "date": "2026-11-07",
+      "note": "oEmbed দুবার 404 — মুছে ফেলা/প্রাইভেট, অথবা লিংক ভুল"
+    },
+    "uTNDnhtTDU8": {
+      "status": "rejected",
+      "date": "2026-11-07",
+      "note": "Somoy TV-র সংবাদ প্রতিবেদন, লেকচার নয়"
+    },
+    "x-5Dzm8WBDw": {
+      "status": "rejected",
+      "date": "2026-11-07",
+      "note": "একই (404)"
+    }
+  }
+}

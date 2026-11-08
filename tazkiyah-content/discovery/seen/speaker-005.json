@@ -1,0 +1,40 @@
+{
+  "speakerId": "speaker-005",
+  "videos": {
+    "3uWW2jsdXrk": {
+      "status": "rejected",
+      "date": "2026-11-07",
+      "note": "পণ্যের প্রচারমূলক ভিডিও; তাছাড়া oEmbed 403 (এমবেড বন্ধ)"
+    },
+    "C7gl_dySw8s": {
+      "status": "rejected",
+      "date": "2026-11-07",
+      "note": "404"
+    },
+    "HkOmuMKJRPc": {
+      "status": "rejected",
+      "date": "2026-11-07",
+      "note": "oEmbed দুবার 404 — মুছে ফেলা/প্রাইভেট, অথবা লিংক ভুল"
+    },
+    "TJC8DaWPFZs": {
+      "status": "rejected",
+      "date": "2026-11-07",
+      "note": "404"
+    },
+    "ZOWGQ5CYuFA": {
+      "status": "rejected",
+      "date": "2026-11-07",
+      "note": "404"
+    },
+    "ZfdHhxGRskM": {
+      "status": "rejected",
+      "date": "2026-11-07",
+      "note": "404"
+    },
+    "s-QBO9Myas0": {
+      "status": "rejected",
+      "date": "2026-11-07",
+      "note": "ক্লিপ; মূল সাক্ষাৎকার spk005-0013 যোগ হয়েছে"
+    }
+  }
+}
