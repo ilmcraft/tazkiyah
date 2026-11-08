@@ -49,7 +49,7 @@ cd tazkiyah-android
 
 1. `tazkiyah-android/app/build.gradle.kts`-এ `versionCode` ১ বাড়ান, `versionName` নতুন দিন (যেমন `1.2.0`)।
 2. `./gradlew lint testDebugUnitTest assembleRelease` — R8 দিয়ে ছোট করা, release key-তে সাইন করা APK পাবেন `app/build/outputs/apk/release/app-release.apk`-এ। ফোনে চালিয়ে দেখুন (সেভ, প্লে, সিঙ্ক)।
-3. commit-এ ট্যাগ দিন `app-v1.2.0` আর push করুন; GitHub-এ ওই ট্যাগে Release বানিয়ে `tazkiyah-1.2.0.apk`, তার `.sha256`, **আর একই ফাইল `tazkiyah.apk` নামে** যুক্ত করুন (ডাউনলোড পাতার বোতাম `releases/latest/download/tazkiyah.apk`-এ যায়)। রিলিজ নোট লিখুন `tazkiyah-android/release-notes/<ভার্সন>.md`-এ। অ্যাপ শুধু `app-v` দিয়ে শুরু হওয়া ট্যাগকেই নতুন ভার্সন হিসেবে চেনে।
+3. commit-এ ট্যাগ দিন `app-v1.2.1` আর push করুন; GitHub-এ ওই ট্যাগে Release বানিয়ে `tazkiyah-1.2.1.apk`, তার `.sha256`, **আর একই ফাইল `tazkiyah.apk` নামে** যুক্ত করুন (ডাউনলোড পাতার বোতাম `releases/latest/download/tazkiyah.apk`-এ যায়)। রিলিজ নোট লিখুন `tazkiyah-android/release-notes/<ভার্সন>.md`-এ। অ্যাপ শুধু `app-v` দিয়ে শুরু হওয়া ট্যাগকেই নতুন ভার্সন হিসেবে চেনে।
 
 **সাইনিং key:** release key রিপোর বাইরে থাকে — `~/.android/keystores/tazkiyah-release.jks`, আর তার পাসওয়ার্ড `~/.gradle/gradle.properties`-এ (`TAZKIYAH_RELEASE_STORE_FILE`, `TAZKIYAH_RELEASE_STORE_PASSWORD`, `TAZKIYAH_RELEASE_KEY_ALIAS`, `TAZKIYAH_RELEASE_KEY_PASSWORD`)। দুটোরই ব্যাকআপ রাখুন (যেমন পাসওয়ার্ড ম্যানেজার + এনক্রিপ্টেড ড্রাইভ): key হারালে ব্যবহারকারীদের ফোনে আর আপডেট দেওয়া যাবে না, নতুন key-র APK বসাতে আগেরটা আনইনস্টল করতে হবে। key না থাকলে release বিল্ড পরিষ্কার error দেয়, ডিবাগ key দিয়ে চুপচাপ সাইন করে না।
 
