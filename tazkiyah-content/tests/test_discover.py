@@ -498,3 +498,55 @@ def test_durations_skip_unavailable_videos(content):
     path.write_text(format_lecture_file(doc), encoding="utf-8")
     missing, filled, changed = discover.fill_durations(content, FakeClient())
     assert (missing, filled, changed) == (1, 0, [])
+
+
+# ------------------------------------------------------------------ re-cuts and re-uploads
+
+
+@pytest.mark.parametrize(
+    "title, seconds, clickbait",
+    [
+        ("Indian Reaction | কথাগুলো হীরার চেয়েও দামি", 3000, True),
+        ("১০০% আপনি চমকে যাবেন এভাবে কেউ বলেনি", 1100, True),
+        ("কখনো হতাশ হবেন না🖤 আসিফ আদনান", 750, True),
+        ("৭১ প্রশ্ন ? রাজশাহী ইসলামী সেমিনার ⚔গুরুত্বপূর্ণ", 4013, False),  # a whole seminar
+        ("সভ্যতার উত্থান ও পতন", 3751, False),
+    ],
+)
+def test_looks_clickbait(title, seconds, clickbait):
+    assert discover.looks_clickbait(title, seconds) is clickbait
+
+
+def test_clickbait_from_other_channels_is_dropped_but_not_from_official(content):
+    fake = FakeClient(
+        playlists={"UUofficial0000000000000a": ["OFFICIALEMO"]},
+        searches={"প্রথম বক্তা": [["RECUTCLIP01"]]},
+        videos={
+            "RECUTCLIP01": item("RECUTCLIP01", "প্রথম বক্তা | জীবন বদলে যাবে😥", duration="PT18M"),
+            "OFFICIALEMO": item("OFFICIALEMO", "রমজানের প্রস্তুতি 🌙", channel_id=OFFICIAL, duration="PT18M"),
+        },
+    )
+    result = run(content, fake)
+    assert [c.video_id for c in result.added] == ["OFFICIALEMO"]
+    assert result.dropped == {"clickbait": 1}
+
+
+def test_same_length_uploads_months_apart_are_not_merged_without_similar_titles():
+    a, b = "জুলাই অভ্যুত্থান, অতঃপর", "The Political Thought of the Ummah"
+    assert discover.same_lecture(a, 2945, b, 2945, "2024-08-26", "2024-09-11")
+    assert not discover.same_lecture(a, 2945, b, 2946, "2024-08-26", "2025-09-11")
+    assert not discover.same_lecture(a, 2945, b, 2945)  # no dates: titles must agree
+
+
+def test_reuploads_of_one_talk_with_new_titles_keep_one(content):
+    fake = FakeClient(
+        searches={"প্রথম বক্তা": [["FIRSTUPLOAD", "SECONDCOPY1", "THIRDCOPY01"]]},
+        videos={
+            "FIRSTUPLOAD": item("FIRSTUPLOAD", "প্রথম বক্তা | ঢাকা বিশ্ববিদ্যালয়ে বক্তব্য", duration="PT39M16S", published="2026-08-17T08:00:00Z"),
+            "SECONDCOPY1": item("SECONDCOPY1", "প্রথম বক্তা | ট্রান্সহিউম্যানিজম নিয়ে বিশ্লেষণ", duration="PT39M17S", published="2026-08-17T12:00:00Z"),
+            "THIRDCOPY01": item("THIRDCOPY01", "প্রথম বক্তার লেকচার শুনে সবাই অবাক", duration="PT39M16S", published="2026-08-18T12:00:00Z"),
+        },
+    )
+    result = run(content, fake)
+    assert [c.video_id for c in result.added] == ["FIRSTUPLOAD"]
+    assert {c.video_id for c in result.duplicates} == {"SECONDCOPY1", "THIRDCOPY01"}

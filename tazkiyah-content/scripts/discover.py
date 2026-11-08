@@ -28,6 +28,7 @@ import json
 import os
 import re
 import sys
+import unicodedata
 from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
@@ -64,13 +65,20 @@ LECTURES_DIR = "data/lectures"
 DEFAULT_SEARCH_BUDGET = 90  # of the 100 free search calls a day; the rest is for manual runs
 # Shorts are at most 3 minutes. Other channels mostly post clips cut from longer talks, so they need
 # 10 minutes; the speaker's own channel and trusted playlists keep short talks from 5 minutes.
-DEFAULT_MIN_DURATION = 600
+DEFAULT_MIN_DURATION = 900  # other channels: shorter uploads are nearly always clips cut from a talk
 TRUSTED_MIN_DURATION = 300
 CLIP_HINT_SEC = 900
 DUPLICATE_SIMILARITY = 0.8
 SAME_LENGTH_SIMILARITY = 0.45
 # Videos about a course, a book or an event rather than a talk.
 NOT_LECTURES = ("intro video", "ইন্ট্রো ভিডিও", "trailer", "ট্রেলার", "promo", "প্রোমো", "teaser", "টিজার")
+# Re-cut "motivation" uploads from other channels: reactions and hype titles, never a whole talk.
+CLICKBAIT = (
+    "reaction", "রিঅ্যাকশন", "shocking", "চমকে যাবেন", "নাড়িয়ে দিবে", "নাড়িয়ে দেবে", "সেরা লেকচার",
+    "viral", "ভাইরাল", "কেউ বলেনি",
+)
+CLICKBAIT_EMOJI_MAX_SEC = 1500  # an emoji-decorated title on an upload under 25 minutes is a cut clip
+SAME_LENGTH_DAYS = 120  # equal length (±2 s) uploaded this close together: the same recording
 SPEAKER_ID_RE = re.compile(r"^speaker-[0-9]{3,}$")
 VIDEO_URL_RE = re.compile(r"(?:[?&]v=|youtu\.be/|/shorts/|/live/|/embed/)([A-Za-z0-9_-]{11})(?![A-Za-z0-9_-])")
 
@@ -241,6 +249,8 @@ def classify(c: Candidate, item: dict[str, Any] | None, config: dict[str, Any], 
         c.decision = "namesake"
     elif contains_any(c.title, NOT_LECTURES):
         c.decision = "not_lecture"
+    elif not c.trusted and looks_clickbait(c.title, c.duration):
+        c.decision = "clickbait"
     elif c.trusted or contains_any(c.title, config["mustMatch"]):
         c.decision = "add"
     elif contains_any(c.description, config["mustMatch"]):
@@ -251,12 +261,31 @@ def classify(c: Candidate, item: dict[str, Any] | None, config: dict[str, Any], 
         c.flags.append("ক্লিপ হতে পারে (১৫ মিনিটের কম)")
 
 
-def same_lecture(title_a: str, duration_a: int, title_b: str, duration_b: int) -> bool:
+def looks_clickbait(title: str, duration: int) -> bool:
+    """A hype or reaction re-cut: a clickbait phrase, or emojis on an upload too short to be a talk."""
+    if contains_any(title, CLICKBAIT):
+        return True
+    has_emoji = any(unicodedata.category(ch) == "So" for ch in title)
+    return has_emoji and 0 < duration < CLICKBAIT_EMOJI_MAX_SEC
+
+
+def _days_apart(a: str | None, b: str | None) -> int | None:
+    try:
+        return abs((date.fromisoformat(a[:10]) - date.fromisoformat(b[:10])).days)  # type: ignore[index]
+    except (TypeError, ValueError):
+        return None
+
+
+def same_lecture(
+    title_a: str, duration_a: int, title_b: str, duration_b: int,
+    published_a: str | None = None, published_b: str | None = None,
+) -> bool:
     """Likely the same recording, re-uploaded.
 
     Re-uploads keep the exact length (re-encodes differ by a second or two) but often get a new
-    title, so the same length needs only loosely similar titles; a near-identical title allows a
-    slightly trimmed copy. Different part numbers ("পর্ব ১" / "পর্ব ২") are never the same lecture.
+    title, so the same length needs only loosely similar titles — or none at all when both copies
+    went up within a few months. A near-identical title allows a slightly trimmed copy. Different
+    part numbers ("পর্ব ১" / "পর্ব ২") are never the same lecture.
     """
     if duration_a <= 0 or duration_b <= 0:
         return False
@@ -268,6 +297,9 @@ def same_lecture(title_a: str, duration_a: int, title_b: str, duration_b: int) -
     sim = similarity(title_a, title_b)
     if gap <= 2 and sim >= SAME_LENGTH_SIMILARITY:
         return True
+    days = _days_apart(published_a, published_b)
+    if gap <= 2 and days is not None and days <= SAME_LENGTH_DAYS:
+        return True
     if gap <= 3 and shared_topic_words(title_a, title_b):
         return True
     if gap <= max(3, round(0.01 * longest)) and sim >= DUPLICATE_SIMILARITY:
@@ -276,15 +308,23 @@ def same_lecture(title_a: str, duration_a: int, title_b: str, duration_b: int) -
 
 
 def mark_duplicates(
-    accepted: list[Candidate], existing: list[tuple[str, str, int]]
+    accepted: list[Candidate], existing: list[tuple[str, ...]]
 ) -> tuple[list[Candidate], list[Candidate]]:
-    """(kept, duplicates). Official copies are preferred, then the oldest upload."""
+    """(kept, duplicates). Official copies are preferred, then the oldest upload.
+
+    `existing` holds (lecture id, title, length[, published date]) of the speaker's lectures."""
     kept: list[Candidate] = []
     duplicates: list[Candidate] = []
     for c in sorted(accepted, key=lambda x: (not x.trusted, x.published or "9999", x.video_id)):
-        match = next((lid for lid, title, dur in existing if same_lecture(c.app_title, c.duration, title, dur)), None)
+        match = next(
+            (e[0] for e in existing if same_lecture(c.app_title, c.duration, e[1], e[2], c.published, (e + (None,))[3])),
+            None,
+        )
         if match is None:
-            other = next((k for k in kept if same_lecture(c.app_title, c.duration, k.app_title, k.duration)), None)
+            other = next(
+                (k for k in kept if same_lecture(c.app_title, c.duration, k.app_title, k.duration, c.published, k.published)),
+                None,
+            )
             match = other.video_id if other else None
         if match is None:
             kept.append(c)
@@ -391,7 +431,7 @@ def discover(
         for lec in yt:
             item = lengths.get(lec["media"]["videoId"], {})
             duration = lec.get("durationSec") or parse_duration(item.get("contentDetails", {}).get("duration"))
-            existing.append((lec["id"], lec["title"], duration))
+            existing.append((lec["id"], lec["title"], duration, lec.get("publishedAt")))
     added, duplicates = mark_duplicates(accepted, existing)
 
     added.sort(key=lambda x: (x.published or "9999", x.video_id))

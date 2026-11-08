@@ -91,7 +91,7 @@ def similarity(a: str, b: str) -> float:
 # Title cleaning
 # ---------------------------------------------------------------------------
 
-_SEPARATORS = re.compile(r"\s*(?:\|\|?|｜|‖|::|॥|।\s*।|\s।\s|\s[-–—]\s|\s[Il]\s[Il]\s)\s*")
+_SEPARATORS = re.compile(r"\s*(?:\|\|?|｜|‖|::|॥|।\s*।|\s।\s|\s[-–—~]\s|\s[Il]\s[Il]\s)\s*")
 _HASHTAG = re.compile(r"#\S+")
 _BRACKETED_NOISE = re.compile(
     r"[\[(【](?:[^\])】]*?(?:official|full|hd|4k|new|waz|lecture|video|ভিডিও|ওয়াজ|লেকচার)[^\])】]*?)[\])】]",
@@ -128,19 +128,21 @@ _SENSATIONAL = [
     (r"একবার\s+শুনে\s+দেখুন", ""),
     (r"অসাধারণ\s+(?:আলোচনা|বয়ান|লেকচার)", ""),
 ]
-_HONORIFIC = r"(?:মুফতি|মুফতী|ডাঃ|ডা\s?\.?|ড\.|ডঃ|ডক্টর|শায়খ|শাইখ|উস্তাদ|উস্তায|মাওলানা|মাওঃ|mufti|dr\.?|shaykh|sheikh|ustadh)"
+_HONORIFIC = r"(?:মুফতি|মুফতী|ডাঃ|ডা\s?\.?|ড\.|ডঃ|ডক্টর|শায়খুনা|শাইখুনা|শায়খ|শাইখ|উস্তাযুনা|উস্তাদ|উস্তায|মাওলানা|মাওঃ|mufti|dr\.?|shaykh|sheikh|ustadh)"
 # An honorific left on its own ("[ডা . ]", "মাওঃ") once the name was removed.
 _LONE_HONORIFIC = re.compile(r"[(\[]?\s*(?:ডাঃ|ডা\s?\.|ড\.|মাওঃ|ডঃ)\s*[)\]]?(?![\w\u0980-\u09FF])")
 _NAME_SUFFIX = r"(?:\s*(?:চৌধুরী|চৌধুরি|chowdhury|ভাই|bhai))?(?:য়ের|এর|ের|র|'s)?"
 _WORD_CHAR = "\\w\u0980-\u09FF"
 # "হাফিঃ", "(হাফি.)", "হাফিযাহুল্লাহ" — the blessing after a name, left behind once the name is gone.
 _BLESSING = re.compile(r"[(\[]?\s*হাফি(?:যাহুল্লাহ|জাহুল্লাহ|যাহুল্লা|জাহুল্লা|ঃ|\.|:)?\s*[)\]]?(?![\w\u0980-\u09FF])")
+# "(ফাক্কাল্লাহু আসরাহ)" — "may Allah free him", said of an imprisoned scholar; also left behind with the name.
+_RELEASE_PRAYER = re.compile(r"[(\[]?\s*ফা(?:ক্কাল্লাহু|ক্কাল্লাহ)\s+আস(?:রাহু|রাহ|রহু|রহ)\s*[)\]]?")
 # A Latin tail after Bengali text is almost always the English duplicate of the title.
 _LATIN_TAIL = re.compile(r"(?<=[\u0980-\u09FF?!।\])])\s+(?:[\[(]\s*[\])]\s*)*[A-Za-z][A-Za-z0-9 .:,'’&()\[\]_\-]*$")
-_EDGE_PUNCT = " \t-–—|:;,.।·•*_~'\"“”‘’"
+_EDGE_PUNCT = " \t-–—|:;,.।·•*_~'\"“”‘’ঃ"
 
 
-_HONORIFIC_WORDS = {"মুফতি", "মুফতী", "ডা.", "ডাঃ", "ডা", "ড.", "ডক্টর", "শায়খ", "শাইখ", "উস্তাদ", "মাওলানা", "mufti", "dr.", "dr", "shaykh", "sheikh"}
+_HONORIFIC_WORDS = {"মুফতি", "মুফতী", "ডা.", "ডাঃ", "ডা", "ড.", "ডক্টর", "শায়খ", "শাইখ", "শায়খুনা", "শাইখুনা", "উস্তাদ", "মাওলানা", "mufti", "dr.", "dr", "shaykh", "sheikh"}
 
 
 def name_variants(names: Iterable[str]) -> set[str]:
@@ -213,6 +215,7 @@ def clean_title(title: str, names: Iterable[str] = (), channel: str | None = Non
         text = re.sub(canonical(pattern), " ", text, flags=re.IGNORECASE)
     for pattern, replacement in _SENSATIONAL:
         text = re.sub(canonical(pattern), canonical(replacement), text)
+    text = _RELEASE_PRAYER.sub(" ", text)
     text = _BLESSING.sub(" ", text)
     text = _LONE_HONORIFIC.sub(" ", text)
     text = re.sub(r"(?<=\S)_(?=\s|$)", "?", text).replace("_", " ")  # re-uploads turn "?" into "_"

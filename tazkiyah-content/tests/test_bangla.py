@@ -144,3 +144,23 @@ def test_guess_categories(text, expected):
 
 def test_guess_categories_only_returns_existing_ids():
     assert bangla.guess_categories("হজের প্রস্তুতি", ["salah"], ["salah"]) == ["salah"]
+
+
+HARUN = ["মুফতি হারুন ইজহার", "Mufti Harun Izhar", "হারুন ইজহার"]
+
+
+@pytest.mark.parametrize(
+    "title, expected",
+    [
+        ("অনলাইনকেন্দ্রিক দ্বীনি ভাইদের প্রতি বার্তা। উস্তায হারুন ইজহার (ফাক্কাল্লাহু আসরহ)", "অনলাইনকেন্দ্রিক দ্বীনি ভাইদের প্রতি বার্তা"),
+        ("শবে মেরাজ ও প্রাসঙ্গিক আলাপ । শাইখ হারুন ইজহার ফাক্কাল্লাহু আসরহ।", "শবে মেরাজ ও প্রাসঙ্গিক আলাপ"),
+        ("বাড়াবাড়ি, ছাড়াছাড়ি নিয়ে আলোচনা ~ শাইখুনা হারুন ইজহার হাফিযাহুল্লাহ", "বাড়াবাড়ি, ছাড়াছাড়ি নিয়ে আলোচনা"),
+    ],
+)
+def test_clean_title_release_prayer_and_shaykhuna(title, expected):
+    assert bangla.clean_title(title, HARUN) == expected
+
+
+def test_clean_title_drops_a_leading_visarga_colon():
+    title = "আসিফ আদনানের নতুন লেকচারঃ দ্বীন কায়িমের দ্বায়িত্ব কাদের?"
+    assert bangla.clean_title(title, ["আসিফ আদনান"]) == "দ্বীন কায়িমের দ্বায়িত্ব কাদের?"
