@@ -125,6 +125,7 @@ class Result:
     units: int
     searches: int
     files_changed: list[str]
+    search_cut: bool = False  # the daily search quota ran out part-way; channels and playlists were still read
 
     @property
     def listed(self) -> int:
@@ -318,6 +319,7 @@ def discover(
     order = order or search_order(today)
 
     candidates: dict[str, Candidate] = {}
+    search_cut = False
 
     def add(ids: Iterable[str], label: str, trusted: bool) -> None:
         for vid in ids:
@@ -339,7 +341,13 @@ def discover(
             if remaining <= 0:
                 break
             share = max(1, remaining // (len(queries) - i))
-            add(client.search_video_ids(query, order, share), f"সার্চ: {query}", trusted=False)
+            try:
+                add(client.search_video_ids(query, order, share), f"সার্চ: {query}", trusted=False)
+            except QuotaExceeded:
+                # The search bucket (100/day) is separate from the units pool: keep what the channels and
+                # playlists found and finish the run; tomorrow's searches pick up the rest.
+                search_cut = True
+                break
 
     known = {
         lec.get("media", {}).get("videoId")
@@ -437,6 +445,7 @@ def discover(
         units=client.usage.units,
         searches=client.usage.searches,
         files_changed=files_changed,
+        search_cut=search_cut,
     )
 
 
@@ -519,6 +528,8 @@ def render_report(result: Result, today: date) -> str:
         + f" · কোটা: সার্চ {bn(r.searches)}/১০০, অন্যান্য {bn(r.units)}/১০,০০০ ইউনিট",
         "",
     ]
+    if r.search_cut:
+        lines += ["> আজকের সার্চ কোটা শেষ হয়ে যাওয়ায় সার্চ মাঝপথে থেমেছে; চ্যানেল ও প্লেলিস্ট পুরো দেখা হয়েছে।", ""]
     if r.added:
         lines += [
             "### যোগ করা হয়েছে — রিভিউ করুন",
@@ -577,6 +588,7 @@ def summary(result: Result) -> str:
         f"low-confidence {len(r.low_confidence)}, dropped {sum(r.dropped.values())}, "
         f"looked at {r.looked_at} ({r.already_known} already known); "
         f"quota used: search {r.searches}/100, units {r.units}/10000"
+        + ("; search quota ran out, searches stopped early" if r.search_cut else "")
     )
 
 
