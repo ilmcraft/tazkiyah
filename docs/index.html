@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>তাযকিয়া — বাংলা ইসলামিক লেকচার অ্যাপ</title>
+  <meta name="description" content="বাছাই করা বাংলা ইসলামিক লেকচার — বক্তা ও বিষয় অনুযায়ী সাজানো, মনোযোগ ধরে রেখে শোনা ও দেখার জন্য। ফ্রি Android অ্যাপ।">
+  <meta property="og:title" content="তাযকিয়া — বাংলা ইসলামিক লেকচার অ্যাপ">
+  <meta property="og:description" content="বাছাই করা বাংলা ইসলামিক লেকচার, মনোযোগ ধরে রেখে শোনা ও দেখার জন্য। ফ্রি ডাউনলোড।">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#0F5C4D">
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <style>
+    @font-face {
+      font-family: "Noto Sans Bengali";
+      src: url("assets/NotoSansBengali.ttf") format("truetype");
+      font-weight: 100 900;
+      font-display: swap;
+    }
+    :root {
+      --bg: #FBF8F1; --surface: #FFFFFF; --text: #1B1C1A; --muted: #5B615E;
+      --primary: #0F5C4D; --on-primary: #FFFFFF; --gold: #C9A227; --soft: #E3F1EC; --line: #E4E2DA;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #111412; --surface: #1A1E1C; --text: #E7E9E6; --muted: #A9B0AC;
+              --primary: #7FD3BE; --on-primary: #00382D; --gold: #E3C46B; --soft: #1F2C28; --line: #2C3330; }
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font: 17px/1.65 "Noto Sans Bengali", system-ui, sans-serif;
+    }
+    main { max-width: 760px; margin: 0 auto; padding: 32px 16px 56px; }
+    header { text-align: center; padding: 16px 0 8px; }
+    header img { width: 104px; height: 104px; border-radius: 26px; box-shadow: 0 10px 30px rgba(15,92,77,.28); }
+    h1 { font-size: 42px; line-height: 1.3; margin: 18px 0 2px; color: var(--primary); }
+    .tagline { color: var(--gold); font-weight: 600; font-size: 19px; margin: 0; }
+    .lead { color: var(--muted); margin: 10px auto 0; max-width: 34em; }
+    .cta { margin: 28px auto 6px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .button {
+      display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
+      background: var(--primary); color: var(--on-primary); font-weight: 600; font-size: 19px;
+      padding: 14px 28px; border-radius: 999px; box-shadow: 0 6px 18px rgba(15,92,77,.25);
+    }
+    .button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+    .button svg { width: 22px; height: 22px; }
+    .meta { color: var(--muted); font-size: 14px; }
+    section { margin-top: 36px; }
+    h2 { font-size: 22px; margin: 0 0 12px; color: var(--primary); }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 14px 16px; }
+    .card b { display: block; margin-bottom: 2px; }
+    .card span { color: var(--muted); font-size: 15px; }
+    ol, ul { padding-left: 1.3em; margin: 0; }
+    li { margin: 4px 0; }
+    .note { background: var(--soft); border-radius: 14px; padding: 12px 16px; font-size: 15px; }
+    details { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 10px 16px; margin: 8px 0; }
+    summary { cursor: pointer; font-weight: 600; }
+    code { font-size: 13px; word-break: break-all; }
+    .shots { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 6px; scroll-snap-type: x mandatory; }
+    .shots img { width: 200px; flex: 0 0 auto; border-radius: 18px; border: 1px solid var(--line); scroll-snap-align: start; }
+    footer { margin-top: 44px; color: var(--muted); font-size: 14px; text-align: center; }
+    a { color: var(--primary); }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <img src="assets/icon.svg" alt="">
+    <h1>তাযকিয়া</h1>
+    <p class="tagline">আত্মশুদ্ধির পথে প্রতিদিন</p>
+    <p class="lead">বাছাই করা বাংলা ইসলামিক লেকচার — বক্তা ও বিষয় অনুযায়ী সাজানো, মনোযোগ ধরে রেখে শোনা ও দেখার জন্য। বিজ্ঞাপন নেই, অ্যাকাউন্ট লাগে না।</p>
+  </header>
+
+  <div class="cta">
+    <a class="button" id="download" href="https://github.com/mdhelaluddin-ctg-bd/tazkiyah/releases/latest/download/tazkiyah.apk">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+      Android অ্যাপ ডাউনলোড
+    </a>
+    <div class="meta" id="release-meta">ফ্রি · Android ৮.০ বা তার পরের ভার্সন</div>
+  </div>
+
+  <section>
+    <h2>যা পাবেন</h2>
+    <div class="cards">
+      <div class="card"><b>বক্তা ও বিষয় অনুযায়ী</b><span>শত শত লেকচার, প্রতিটির দৈর্ঘ্যসহ; নতুন লেকচার নিজে থেকেই আসে।</span></div>
+      <div class="card"><b>মনোযোগী প্লেয়ার</b><span>সাজেশন, কমেন্ট বা অন্য ভিডিওতে চলে যাওয়ার পথ নেই।</span></div>
+      <div class="card"><b>অফলাইনে সেভ</b><span>শুধু অডিও বা ভিডিও ফোনে রেখে নেট ছাড়াই শুনুন।</span></div>
+      <div class="card"><b>স্ক্রিন বন্ধ রেখেও</b><span>অ্যাপ মিনিমাইজ করলেও শোনা চলে; লক স্ক্রিন থেকে নিয়ন্ত্রণ।</span></div>
+      <div class="card"><b>যেখানে থেমেছিলেন</b><span>সেখান থেকেই আবার চালু; ফেভারিট, ইতিহাস, স্লিপ টাইমার।</span></div>
+      <div class="card"><b>বাংলা সার্চ ও পছন্দের ফন্ট</b><span>যেকোনো বানানে খুঁজুন; কয়েকটি বাংলা ফন্ট থেকে বেছে নিন।</span></div>
+    </div>
+  </section>
+
+  <section id="screenshots" hidden>
+    <h2>দেখতে যেমন</h2>
+    <div class="shots"></div>
+  </section>
+
+  <section>
+    <h2>ইনস্টল করবেন যেভাবে</h2>
+    <ol>
+      <li>ওপরের <b>ডাউনলোড</b> বোতাম চাপুন, <code>tazkiyah.apk</code> ফাইল নামবে।</li>
+      <li>ফাইলটি খুলুন। প্রথমবার ফোন <b>"অজানা উৎস থেকে ইনস্টল"</b> (Install unknown apps) অনুমতি চাইবে — যে অ্যাপ দিয়ে খুলছেন (Chrome/Files), তাকে অনুমতি দিন।</li>
+      <li><b>Install</b> চাপুন। নতুন ভার্সন এলে অ্যাপই জানিয়ে দেবে; একইভাবে বসালে আপনার ফেভারিট ও ইতিহাস থেকে যায়।</li>
+    </ol>
+    <p class="note">Play Protect "অজানা অ্যাপ" বলে সতর্ক করতে পারে — অ্যাপটি Play Store-এ নেই বলে এমন বলে। <b>More details → Install anyway</b> চাপলেই হবে।</p>
+  </section>
+
+  <section>
+    <h2>প্রশ্নোত্তর</h2>
+    <details><summary>অ্যাপটি কি নিরাপদ?</summary>
+      <p>অ্যাপের পুরো সোর্স কোড <a href="https://github.com/mdhelaluddin-ctg-bd/tazkiyah">GitHub-এ খোলা</a>; প্রতিটি রিলিজ একই সাইনিং key-তে সই করা। অ্যাপ কোনো অ্যাকাউন্ট চায় না, আপনার কোনো তথ্য সংগ্রহ করে না।</p>
+      <p class="meta" id="checksum"></p>
+    </details>
+    <details><summary>Play Store-এ নেই কেন?</summary>
+      <p>অফলাইন সেভ আর স্ক্রিন বন্ধ রেখে শোনার সুবিধা ইউটিউবের ডেভেলপার নীতির বাইরে, তাই অ্যাপটি ব্যক্তিগতভাবে বিতরণ করা হয়।</p>
+    </details>
+    <details><summary>লেকচারগুলো কোথা থেকে আসে?</summary>
+      <p>বক্তাদের অফিশিয়াল ও অন্যান্য ইউটিউব চ্যানেল থেকে বাছাই করা; ভিডিও চলে ইউটিউবের প্লেয়ারেই। লেকচারের স্বত্ব বক্তা ও আপলোডকারীদের; এই অ্যাপ কোনো বক্তা বা ইউটিউবের সাথে সম্পর্কিত নয়।</p>
+    </details>
+    <details><summary>আইফোনে চলবে?</summary>
+      <p>এখনো না — আপাতত শুধু Android।</p>
+    </details>
+  </section>
+
+  <footer>
+    <p>যোগাযোগ: <a href="mailto:helal.dev.bd@gmail.com">helal.dev.bd@gmail.com</a> ·
+      <a href="https://github.com/mdhelaluddin-ctg-bd/tazkiyah/releases">সব রিলিজ</a> ·
+      <a href="https://github.com/mdhelaluddin-ctg-bd/tazkiyah">সোর্স কোড (GPL-3.0)</a></p>
+  </footer>
+</main>
+<script>
+  // Shows the current version, size and checksum from GitHub (the button works without it).
+  (function () {
+    var bn = function (s) { return String(s).replace(/[0-9]/g, function (d) { return "০১২৩৪৫৬৭৮৯"[d]; }); };
+    fetch("https://api.github.com/repos/mdhelaluddin-ctg-bd/tazkiyah/releases/latest")
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (rel) {
+        if (!rel || !rel.tag_name || rel.tag_name.indexOf("app-v") !== 0) return;
+        var version = rel.tag_name.slice(5);
+        var apk = (rel.assets || []).filter(function (a) { return a.name === "tazkiyah.apk"; })[0]
+          || (rel.assets || []).filter(function (a) { return /\.apk$/.test(a.name); })[0];
+        if (!apk) return;
+        document.getElementById("download").href = apk.browser_download_url;
+        var mb = (apk.size / 1048576).toFixed(1);
+        var date = new Date(rel.published_at).toLocaleDateString("bn-BD", { day: "numeric", month: "long", year: "numeric" });
+        document.getElementById("release-meta").textContent =
+          "ভার্সন " + bn(version) + " · " + bn(mb) + " এমবি · " + date + " · Android ৮.০+";
+        if (apk.digest) {
+          document.getElementById("checksum").innerHTML = "ফাইলের SHA-256: <code>" + apk.digest.replace("sha256:", "") + "</code>";
+        }
+      })
+      .catch(function () {});
+    // Screenshots are optional files: shot-1.png … shot-4.png.
+    var box = document.querySelector("#screenshots .shots");
+    [1, 2, 3, 4].forEach(function (n) {
+      var img = new Image();
+      img.alt = "স্ক্রিনশট " + bn(n);
+      img.onload = function () { document.getElementById("screenshots").hidden = false; };
+      img.onerror = function () { img.remove(); };
+      img.src = "assets/shot-" + n + ".png";
+      box.appendChild(img);
+    });
+  })();
+</script>
+</body>
+</html>
