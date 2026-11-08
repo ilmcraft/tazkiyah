@@ -1,4 +1,13 @@
 {
+  "excludeChannels": [
+    "Al-Taqwa",
+    "Al-Yaqin",
+    "Ruhama",
+    "satmonjil",
+    "Babon Creation",
+    "Taqwalife",
+    "Youth Voice 24"
+  ],
   "speakers": [
     {
       "speakerId": "speaker-001",
@@ -34,7 +43,9 @@
         "audiobook",
         "audio book",
         "অডিওবুক",
-        "অডিও বুক"
+        "অডিও বুক",
+        "মুফতি জাকারিয়া",
+        "মুফতি যাকারিয়া"
       ],
       "defaultCategoryIds": [
         "contemporary"

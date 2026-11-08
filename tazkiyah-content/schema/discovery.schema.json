@@ -6,6 +6,10 @@
   "required": ["speakers"],
   "additionalProperties": false,
   "properties": {
+    "excludeChannels": {
+      "description": "Channels whose uploads are never taken (re-cut motivation clips, reaction compilations), by name or channel id. Applies to every speaker; a speaker may add its own.",
+      "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/text" }
+    },
     "speakers": {
       "description": "Rotation order: the bot sweeps one speaker per day, in this order.",
       "type": "array",
@@ -30,6 +34,10 @@
         "mustMatch": {
           "description": "A video from a non-official source counts only if its title contains one of these (compared after Bangla normalisation).",
           "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/text" }
+        },
+        "excludeChannels": {
+          "description": "This speaker's extra channels to skip (see the file-wide excludeChannels).",
+          "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/text" }
         },
         "exclude": {
           "description": "Namesakes and unrelated matches: a title or channel containing any of these is dropped.",

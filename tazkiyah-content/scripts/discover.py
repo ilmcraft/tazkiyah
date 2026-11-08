@@ -48,6 +48,7 @@ from bangla import (  # noqa: E402
     clean_title,
     contains_any,
     guess_categories,
+    normalize,
     part_number,
     shared_topic_words,
     similarity,
@@ -78,6 +79,11 @@ CLICKBAIT = (
     "viral", "ভাইরাল", "কেউ বলেনি",
 )
 CLICKBAIT_EMOJI_MAX_SEC = 1500  # an emoji-decorated title on an upload under 25 minutes is a cut clip
+# Hype on a short upload from another channel means a cut-out "best part"; on a whole talk it is only a bad title.
+HYPE = (
+    "সেরা", "শুনেননি", "মূল্যবান", "হীরার", "হৃদয় ছুঁয়ে", "জীবন পরিবর্তন", "জীবন বদলে", "জীবন পাল্টে",
+    "কলিজায়", "অগ্নিঝরা", "কঠিন বক্তব্য", "মুখ খুল", "একবার হলেও", "মন কাড়বে", "!!", "‼",
+)
 SAME_LENGTH_DAYS = 120  # equal length (±2 s) uploaded this close together: the same recording
 SPEAKER_ID_RE = re.compile(r"^speaker-[0-9]{3,}$")
 VIDEO_URL_RE = re.compile(r"(?:[?&]v=|youtu\.be/|/shorts/|/live/|/embed/)([A-Za-z0-9_-]{11})(?![A-Za-z0-9_-])")
@@ -160,10 +166,19 @@ def load_sources(root: Path) -> list[dict[str, Any]]:
 
 
 def source_for(root: Path, speaker_id: str) -> dict[str, Any]:
+    """The speaker's entry, with the file-wide `excludeChannels` added to its own."""
+    doc = _load(root, SOURCES)
+    shared = doc.get("excludeChannels", []) if isinstance(doc, dict) else []
     for entry in load_sources(root):
         if entry.get("speakerId") == speaker_id:
-            return entry
+            return {**entry, "excludeChannels": [*shared, *entry.get("excludeChannels", [])]}
     raise DiscoverError(f"{speaker_id} is not in {SOURCES}")
+
+
+def channel_excluded(c: Candidate, config: dict[str, Any]) -> bool:
+    """A re-cut or compilation channel listed in excludeChannels (by name or channel id)."""
+    names = {normalize(x) for x in config.get("excludeChannels", [])}
+    return bool(names) and (normalize(c.channel) in names or normalize(c.channel_id) in names)
 
 
 def speaker_info(root: Path, speaker_id: str) -> dict[str, Any]:
@@ -249,7 +264,7 @@ def classify(c: Candidate, item: dict[str, Any] | None, config: dict[str, Any], 
         c.decision = "namesake"
     elif contains_any(c.title, NOT_LECTURES):
         c.decision = "not_lecture"
-    elif not c.trusted and looks_clickbait(c.title, c.duration):
+    elif not c.trusted and (channel_excluded(c, config) or looks_clickbait(c.title, c.duration)):
         c.decision = "clickbait"
     elif c.trusted or contains_any(c.title, config["mustMatch"]):
         c.decision = "add"
@@ -262,11 +277,12 @@ def classify(c: Candidate, item: dict[str, Any] | None, config: dict[str, Any], 
 
 
 def looks_clickbait(title: str, duration: int) -> bool:
-    """A hype or reaction re-cut: a clickbait phrase, or emojis on an upload too short to be a talk."""
+    """A hype or reaction re-cut: a clickbait phrase, or emojis/hype on an upload too short to be a talk."""
     if contains_any(title, CLICKBAIT):
         return True
+    short = 0 < duration < CLICKBAIT_EMOJI_MAX_SEC
     has_emoji = any(unicodedata.category(ch) == "So" for ch in title)
-    return has_emoji and 0 < duration < CLICKBAIT_EMOJI_MAX_SEC
+    return short and (has_emoji or contains_any(title, HYPE))
 
 
 def _days_apart(a: str | None, b: str | None) -> int | None:

@@ -511,6 +511,8 @@ def test_durations_skip_unavailable_videos(content):
         ("কখনো হতাশ হবেন না🖤 আসিফ আদনান", 750, True),
         ("৭১ প্রশ্ন ? রাজশাহী ইসলামী সেমিনার ⚔গুরুত্বপূর্ণ", 4013, False),  # a whole seminar
         ("সভ্যতার উত্থান ও পতন", 3751, False),
+        ("জীবন পরিবর্তনের জন্য এই কথাগুলোই যথেষ্ট", 1200, True),  # hype on a short upload: a cut clip
+        ("এত সুন্দর ওয়াজ আর কোনোদিন শুনেননি", 4100, False),  # hype on a whole talk: only a bad title
     ],
 )
 def test_looks_clickbait(title, seconds, clickbait):
@@ -550,3 +552,19 @@ def test_reuploads_of_one_talk_with_new_titles_keep_one(content):
     result = run(content, fake)
     assert [c.video_id for c in result.added] == ["FIRSTUPLOAD"]
     assert {c.video_id for c in result.duplicates} == {"SECONDCOPY1", "THIRDCOPY01"}
+
+
+def test_excluded_channels_are_skipped_for_every_speaker(content):
+    sources = json.loads((content / "discovery/sources.json").read_text(encoding="utf-8"))
+    sources["excludeChannels"] = ["Motivation Clips BD"]
+    (content / "discovery/sources.json").write_text(json.dumps(sources, ensure_ascii=False), encoding="utf-8")
+    fake = FakeClient(
+        searches={"প্রথম বক্তা": [["RECUTCHAN01", "OTHERCHAN01"]]},
+        videos={
+            "RECUTCHAN01": item("RECUTCHAN01", "প্রথম বক্তা | তাওবার শর্ত", channel="Motivation Clips BD", duration="PT40M"),
+            "OTHERCHAN01": item("OTHERCHAN01", "প্রথম বক্তা | সবরের ফজিলত", duration="PT40M"),
+        },
+    )
+    result = run(content, fake)
+    assert [c.video_id for c in result.added] == ["OTHERCHAN01"]
+    assert result.dropped == {"clickbait": 1}
