@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
   "minAppVersionCode": 1,
-  "dataVersion": 3,
-  "updatedAt": "2026-11-08T08:12:28Z",
-  "changelog": "নতুন লেকচার: ডা. শামসুল আরেফীন শক্তি (৩৬৯টি)",
+  "dataVersion": 4,
+  "updatedAt": "2026-11-08T08:25:21Z",
+  "changelog": "বক্তাদের ছবি যোগ হয়েছে",
   "files": [
     {
       "path": "data/speakers.json",
-      "sha256": "ebd91a266a6c947f02b62711019886080eda6ac93848d23c3589961ee15f1c79",
-      "size": 2177
+      "sha256": "9bb68c0b8baecb858c916f5a3456efa4f4c67c66ecc589a8df2f1636579140a6",
+      "size": 2432
     },
     {
       "path": "data/categories.json",
