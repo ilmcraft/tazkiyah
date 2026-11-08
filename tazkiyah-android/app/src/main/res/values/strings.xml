@@ -231,4 +231,5 @@
     <string name="share_app_desc">পরিচিতদের তাযকিয়ার ডাউনলোড লিংক পাঠান</string>
     <string name="share_app_text">তাযকিয়া — বাছাই করা বাংলা ইসলামিক লেকচার, মনোযোগ ধরে রেখে শোনা ও দেখার জন্য। ফ্রি ডাউনলোড: %1$s</string>
     <string name="about_download_page">ডাউনলোড পাতা</string>
+    <string name="chip_with_count">%1$s (%2$s)</string>
 </resources>
