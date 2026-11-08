@@ -8,5 +8,6 @@ import kotlinx.serialization.Serializable
 @Serializable data object LibraryRoute
 @Serializable data object SearchRoute
 @Serializable data object SettingsRoute
+@Serializable data object AboutRoute
 @Serializable data class SpeakerRoute(val id: String)
 @Serializable data class CategoryRoute(val id: String)

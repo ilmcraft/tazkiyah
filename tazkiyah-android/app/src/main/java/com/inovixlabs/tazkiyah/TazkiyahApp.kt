@@ -5,6 +5,7 @@ import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import com.inovixlabs.tazkiyah.data.download.DownloadRepository
 import com.inovixlabs.tazkiyah.data.repository.SettingsRepository
+import com.inovixlabs.tazkiyah.data.update.AppUpdateChecker
 import com.inovixlabs.tazkiyah.data.sync.ContentSyncCoordinator
 import com.inovixlabs.tazkiyah.data.sync.SyncScheduler
 import dagger.hilt.android.HiltAndroidApp
@@ -22,6 +23,7 @@ class TazkiyahApp : Application(), Configuration.Provider {
     @Inject lateinit var syncScheduler: SyncScheduler
     @Inject lateinit var settings: SettingsRepository
     @Inject lateinit var downloads: DownloadRepository
+    @Inject lateinit var appUpdates: AppUpdateChecker
 
     private val appScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
@@ -37,6 +39,7 @@ class TazkiyahApp : Application(), Configuration.Provider {
             syncScheduler.schedulePeriodic(wifiOnly)
             syncScheduler.syncOnAppStart(wifiOnly)
             downloads.resumeUnfinished()
+            appUpdates.checkIfDue()
         }
     }
 }

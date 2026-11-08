@@ -13,6 +13,18 @@ val contentRepo = providers.gradleProperty("tazkiyah.contentRepo").get()
 val contentBranch = providers.gradleProperty("tazkiyah.contentBranch").get()
 val contentPath = providers.gradleProperty("tazkiyah.contentPath").getOrElse("")
 
+// Release signing: the upload key lives OUTSIDE the repo, in ~/.gradle/gradle.properties
+// (TAZKIYAH_RELEASE_STORE_FILE / _STORE_PASSWORD / _KEY_ALIAS / _KEY_PASSWORD). Without it a
+// release build fails instead of silently falling back to the debug key.
+val releaseStoreFile = providers.gradleProperty("TAZKIYAH_RELEASE_STORE_FILE").orNull
+val wantsRelease = gradle.startParameter.taskNames.any { it.contains("Release", ignoreCase = false) }
+if (wantsRelease && releaseStoreFile == null) {
+    throw GradleException(
+        "Release signing is not configured: add TAZKIYAH_RELEASE_STORE_FILE, TAZKIYAH_RELEASE_STORE_PASSWORD, " +
+            "TAZKIYAH_RELEASE_KEY_ALIAS and TAZKIYAH_RELEASE_KEY_PASSWORD to ~/.gradle/gradle.properties (see README).",
+    )
+}
+
 android {
     namespace = "com.inovixlabs.tazkiyah"
     compileSdk {
@@ -25,8 +37,8 @@ android {
         applicationId = "com.inovixlabs.tazkiyah"
         minSdk = 26
         targetSdk = 37
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = 2
+        versionName = "1.1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -38,12 +50,27 @@ android {
             "String", "CONTENT_FALLBACK_URL",
             "\"https://cdn.jsdelivr.net/gh/$contentOwner/$contentRepo@$contentBranch/$contentPath\"",
         )
+        // App releases (APK on GitHub Releases, tags app-v<version>) and the source code.
+        buildConfigField("String", "GITHUB_REPO", "\"$contentOwner/$contentRepo\"")
+    }
+
+    signingConfigs {
+        if (releaseStoreFile != null) {
+            create("release") {
+                storeFile = file(releaseStoreFile)
+                storePassword = providers.gradleProperty("TAZKIYAH_RELEASE_STORE_PASSWORD").get()
+                keyAlias = providers.gradleProperty("TAZKIYAH_RELEASE_KEY_ALIAS").get()
+                keyPassword = providers.gradleProperty("TAZKIYAH_RELEASE_KEY_PASSWORD").get()
+            }
+        }
     }
 
     buildTypes {
         release {
-            // Personal app: release is signed with the debug key so it can be side-loaded.
-            signingConfig = signingConfigs.getByName("debug")
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.findByName("release")
         }
     }
     compileOptions {

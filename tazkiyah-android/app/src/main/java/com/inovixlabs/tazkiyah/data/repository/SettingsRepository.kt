@@ -10,7 +10,10 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.inovixlabs.tazkiyah.BuildConfig
 import com.inovixlabs.tazkiyah.core.designsystem.ThemeMode
+import com.inovixlabs.tazkiyah.data.update.AppRelease
+import com.inovixlabs.tazkiyah.data.update.AppUpdateChecker
 import com.inovixlabs.tazkiyah.data.sync.SyncResult
 import com.inovixlabs.tazkiyah.data.sync.SyncStateStore
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -34,6 +37,11 @@ data class AppSettings(
     val lastSyncAt: Long = 0,
     val lastSyncResult: SyncResult? = null,
     val recentSearches: List<String> = emptyList(),
+    /** A newer app version on GitHub Releases, if any. */
+    val appUpdate: AppRelease? = null,
+    /** True until the user dismisses the Home banner for this version. */
+    val showAppUpdateBanner: Boolean = false,
+    val lastAppCheckAt: Long = 0,
 )
 
 @Singleton
@@ -45,6 +53,12 @@ class SettingsRepository @Inject constructor(
     val settings: Flow<AppSettings> = store.data.map { p ->
         val version = p[DATA_VERSION] ?: 0
         val changelog = p[CHANGELOG]
+        val latestApp = p[LATEST_APP_VERSION]
+        val appUpdate = if (latestApp != null && AppUpdateChecker.isNewer(latestApp, BuildConfig.VERSION_NAME)) {
+            AppRelease(latestApp, p[LATEST_APP_URL].orEmpty())
+        } else {
+            null
+        }
         AppSettings(
             themeMode = p[THEME]?.let { runCatching { ThemeMode.valueOf(it) }.getOrNull() } ?: ThemeMode.SYSTEM,
             wifiOnlyUpdates = p[WIFI_ONLY] ?: false,
@@ -57,6 +71,9 @@ class SettingsRepository @Inject constructor(
             lastSyncAt = p[LAST_SYNC_AT] ?: 0,
             lastSyncResult = p[LAST_SYNC_RESULT]?.let { runCatching { SyncResult.valueOf(it) }.getOrNull() },
             recentSearches = p[RECENT_SEARCHES]?.split('\n')?.filter { it.isNotBlank() }.orEmpty(),
+            appUpdate = appUpdate,
+            showAppUpdateBanner = appUpdate != null && p[APP_UPDATE_DISMISSED] != appUpdate.versionName,
+            lastAppCheckAt = p[LAST_APP_CHECK_AT] ?: 0,
         )
     }
 
@@ -77,6 +94,16 @@ class SettingsRepository @Inject constructor(
     }
 
     suspend fun clearRecentSearches() = store.edit { it.remove(RECENT_SEARCHES) }
+
+    suspend fun saveAppReleaseCheck(latestVersion: String?, url: String?, checkedAt: Long) = store.edit {
+        if (latestVersion != null && url != null) {
+            it[LATEST_APP_VERSION] = latestVersion
+            it[LATEST_APP_URL] = url
+        }
+        it[LAST_APP_CHECK_AT] = checkedAt
+    }
+
+    suspend fun dismissAppUpdate(version: String) = store.edit { it[APP_UPDATE_DISMISSED] = version }
 
     suspend fun recordSync(result: SyncResult) = store.edit {
         it[LAST_SYNC_RESULT] = result.name
@@ -111,5 +138,9 @@ class SettingsRepository @Inject constructor(
         val LAST_SYNC_AT = longPreferencesKey("last_sync_at")
         val LAST_SYNC_RESULT = stringPreferencesKey("last_sync_result")
         val RECENT_SEARCHES = stringPreferencesKey("recent_searches")
+        val LATEST_APP_VERSION = stringPreferencesKey("latest_app_version")
+        val LATEST_APP_URL = stringPreferencesKey("latest_app_url")
+        val LAST_APP_CHECK_AT = longPreferencesKey("last_app_check_at")
+        val APP_UPDATE_DISMISSED = stringPreferencesKey("app_update_dismissed")
     }
 }

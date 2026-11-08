@@ -75,6 +75,10 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch { settingsRepository.dismissChangelog() }
     }
 
+    fun dismissAppUpdate(version: String) {
+        viewModelScope.launch { settingsRepository.dismissAppUpdate(version) }
+    }
+
     /** One lecture per day from the ones not heard yet, stable for the whole day. */
     private fun pickForToday(candidates: List<LectureRow>): LectureRow? {
         if (candidates.isEmpty()) return null

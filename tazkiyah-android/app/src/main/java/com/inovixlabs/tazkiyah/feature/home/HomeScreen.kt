@@ -54,6 +54,8 @@ import com.inovixlabs.tazkiyah.core.designsystem.UiStateContent
 import com.inovixlabs.tazkiyah.core.designsystem.categoryIcon
 import com.inovixlabs.tazkiyah.core.designsystem.durationLabel
 import com.inovixlabs.tazkiyah.data.local.entity.LectureRow
+import com.inovixlabs.tazkiyah.core.util.toBanglaDigits
+import com.inovixlabs.tazkiyah.feature.about.rememberLinkOpener
 import com.inovixlabs.tazkiyah.data.repository.AppSettings
 import com.inovixlabs.tazkiyah.data.sync.SyncResult
 
@@ -101,7 +103,7 @@ fun HomeScreen(
             UiStateContent(state) { data ->
                 // Banners sit above the list so an update notice is visible whatever the scroll position.
                 Column(Modifier.fillMaxSize()) {
-                    Banners(settings, viewModel::dismissChangelog)
+                    Banners(settings, viewModel::dismissChangelog, viewModel::dismissAppUpdate)
                     LazyColumn(Modifier.fillMaxWidth().weight(1f), contentPadding = PaddingValues(bottom = 24.dp)) {
                         if (data.isEmpty) {
                             item { EmptyState(stringResource(R.string.home_empty)) }
@@ -156,9 +158,32 @@ fun HomeScreen(
 }
 
 @Composable
-private fun Banners(settings: AppSettings?, onDismiss: () -> Unit) {
+private fun Banners(settings: AppSettings?, onDismiss: () -> Unit, onDismissAppUpdate: (String) -> Unit) {
     settings ?: return
+    val openLink = rememberLinkOpener()
     Column(Modifier.padding(horizontal = 16.dp)) {
+        val update = settings.appUpdate
+        if (update != null && settings.showAppUpdateBanner) {
+            Surface(
+                color = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                shape = RoundedCornerShape(12.dp),
+                modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+            ) {
+                Column(Modifier.padding(start = 16.dp, top = 12.dp, end = 8.dp)) {
+                    Text(
+                        stringResource(R.string.banner_app_update_available, update.versionName.toBanglaDigits()),
+                        style = MaterialTheme.typography.titleSmall,
+                    )
+                    Text(stringResource(R.string.banner_app_update_desc), style = MaterialTheme.typography.bodyMedium)
+                    Row {
+                        Spacer(Modifier.weight(1f))
+                        TextButton(onClick = { onDismissAppUpdate(update.versionName) }) { Text(stringResource(R.string.later)) }
+                        TextButton(onClick = { openLink(update.url) }) { Text(stringResource(R.string.download)) }
+                    }
+                }
+            }
+        }
         if (settings.appUpdateRequired) {
             Surface(
                 color = MaterialTheme.colorScheme.errorContainer,

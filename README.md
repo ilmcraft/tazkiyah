@@ -1,18 +1,31 @@
 # তাযকিয়া (Tazkiyah)
 
-আত্মশুদ্ধির পথে প্রতিদিন — বাংলা ইসলামিক বক্তাদের ভিডিও ও অডিও লেকচার, বক্তা ও বিষয় অনুযায়ী সাজানো একটি ব্যক্তিগত Android অ্যাপ।
+আত্মশুদ্ধির পথে প্রতিদিন — বাংলা ইসলামিক বক্তাদের ভিডিও ও অডিও লেকচার, বক্তা ও বিষয় অনুযায়ী সাজানো একটি Android অ্যাপ।
+
+## ডাউনলোড ও ইনস্টল
+
+সর্বশেষ APK: **[Releases পাতা](https://github.com/mdhelaluddin-ctg-bd/tazkiyah/releases/latest)** থেকে `tazkiyah-<ভার্সন>.apk` নামান (Android 8.0 বা তার পরের ভার্সন লাগবে)।
+
+1. APK-টি ফোনে খুলুন। প্রথমবার ফোন "অজানা উৎস থেকে ইনস্টল" (Install unknown apps) অনুমতি চাইবে — যে অ্যাপ দিয়ে খুলছেন (Chrome / Files) তাকে অনুমতি দিন।
+2. **Install** চাপুন। Play Protect সতর্ক করলে "More details → Install anyway"।
+3. নতুন ভার্সন এলে অ্যাপের Home-এ আর Settings → "আপডেট, লাইসেন্স ও যোগাযোগ"-এ জানানো হবে; একইভাবে নতুন APK ইনস্টল করলে আপনার ফেভারিট, ইতিহাস ও সেভ করা লেকচার থেকে যায়।
+
+ফাইল ঠিক আছে কিনা মেলাতে চাইলে রিলিজ পাতার `.sha256` ফাইলের সাথে `shasum -a 256 tazkiyah-<ভার্সন>.apk` মিলিয়ে নিন।
+
+## রিপোতে কী আছে
 
 | ফোল্ডার | কী আছে |
 | --- | --- |
-| [`tazkiyah-android/`](tazkiyah-android) | Android অ্যাপ (Kotlin, Jetpack Compose, Room, Media3, android-youtube-player) |
-| [`tazkiyah-content/`](tazkiyah-content) | লেকচারের তালিকা (JSON), স্কিমা, স্ক্রিপ্ট — অ্যাপ এখান থেকেই নতুন লেকচার নামায় |
-| [`.github/workflows/publish.yml`](.github/workflows/publish.yml) | কনটেন্ট বদলালে যাচাই করে `manifest.json` আপডেট করে |
+| [`tazkiyah-android/`](tazkiyah-android) | Android অ্যাপ (Kotlin, Jetpack Compose, Room, Media3, android-youtube-player, NewPipeExtractor) |
+| [`tazkiyah-content/`](tazkiyah-content) | লেকচারের তালিকা (JSON), স্কিমা, স্ক্রিপ্ট ও নতুন লেকচার খোঁজার বট — অ্যাপ এখান থেকেই নতুন লেকচার নামায় |
+| [`.github/workflows/`](.github/workflows) | `publish.yml` (কনটেন্ট যাচাই ও manifest), `discover-lectures.yml` (দৈনিক বট), `content-ci.yml`, `android-ci.yml` |
 
 বিস্তারিত পরিকল্পনা: [`tazkiyah-android/docs/PLAN.md`](tazkiyah-android/docs/PLAN.md)।
 
-## নতুন লেকচার যোগ করা
+## নতুন লেকচার
 
-[`tazkiyah-content/README.md`](tazkiyah-content/README.md) দেখুন। সংক্ষেপে:
+- **নিজে থেকে:** বট প্রতিদিন একজন বক্তার নতুন লেকচার খুঁজে একটি Pull Request খোলে; রিভিউ করে Merge করলেই অ্যাপে চলে যায়।
+- **হাতে বা AI রিসার্চ দিয়ে:** [`tazkiyah-content/README.md`](tazkiyah-content/README.md) দেখুন। সংক্ষেপে:
 
 ```bash
 cd tazkiyah-content
@@ -25,8 +38,24 @@ python scripts/add_lecture.py --speaker speaker-001 --category tazkiyah "https:/
 
 ```bash
 cd tazkiyah-android
-./gradlew assembleDebug        # app/build/outputs/apk/debug/app-debug.apk
 ./gradlew lint testDebugUnitTest
+./gradlew assembleDebug        # app/build/outputs/apk/debug/app-debug.apk
 ```
 
 প্রতিটি বিল্ড `tazkiyah-content/`-এর একটি কপি অ্যাপের ভেতরে রাখে, তাই নেট ছাড়াও প্রথমবার তালিকা দেখা যায়। অ্যাপ কনটেন্ট নামায় `https://raw.githubusercontent.com/mdhelaluddin-ctg-bd/tazkiyah/main/tazkiyah-content/` থেকে (ব্যাকআপ: jsDelivr)।
+
+### রিলিজ বানানো (রক্ষণাবেক্ষণকারীর জন্য)
+
+1. `tazkiyah-android/app/build.gradle.kts`-এ `versionCode` ১ বাড়ান, `versionName` নতুন দিন (যেমন `1.2.0`)।
+2. `./gradlew lint testDebugUnitTest assembleRelease` — R8 দিয়ে ছোট করা, release key-তে সাইন করা APK পাবেন `app/build/outputs/apk/release/app-release.apk`-এ। ফোনে চালিয়ে দেখুন (সেভ, প্লে, সিঙ্ক)।
+3. commit-এ ট্যাগ দিন `app-v1.2.0` আর push করুন; GitHub-এ ওই ট্যাগে Release বানিয়ে `tazkiyah-1.2.0.apk` ও তার `.sha256` যুক্ত করুন। অ্যাপ শুধু `app-v` দিয়ে শুরু হওয়া ট্যাগকেই নতুন ভার্সন হিসেবে চেনে।
+
+**সাইনিং key:** release key রিপোর বাইরে থাকে — `~/.android/keystores/tazkiyah-release.jks`, আর তার পাসওয়ার্ড `~/.gradle/gradle.properties`-এ (`TAZKIYAH_RELEASE_STORE_FILE`, `TAZKIYAH_RELEASE_STORE_PASSWORD`, `TAZKIYAH_RELEASE_KEY_ALIAS`, `TAZKIYAH_RELEASE_KEY_PASSWORD`)। দুটোরই ব্যাকআপ রাখুন (যেমন পাসওয়ার্ড ম্যানেজার + এনক্রিপ্টেড ড্রাইভ): key হারালে ব্যবহারকারীদের ফোনে আর আপডেট দেওয়া যাবে না, নতুন key-র APK বসাতে আগেরটা আনইনস্টল করতে হবে। key না থাকলে release বিল্ড পরিষ্কার error দেয়, ডিবাগ key দিয়ে চুপচাপ সাইন করে না।
+
+## লাইসেন্স
+
+অ্যাপটি [GNU GPL v3.0](LICENSE)-তে প্রকাশিত (অফলাইন সেভের জন্য ব্যবহৃত NewPipeExtractor GPL-3.0, তাই পুরো অ্যাপও তাই)। ফন্টগুলো SIL OFL 1.1। লেকচারগুলোর স্বত্ব তাদের বক্তা ও আপলোডকারীদের; অ্যাপ সেগুলো ইউটিউবের প্লেয়ারেই চালায়।
+
+> ব্যক্তিগত ব্যবহারের অ্যাপ: ব্যাকগ্রাউন্ডে ইউটিউব চালানো ও ইউটিউব থেকে অফলাইন সেভ ইউটিউবের শর্তের বাইরে, তাই এটি Play Store-এ দেওয়া হয়নি।
+
+যোগাযোগ: https://github.com/ilmcraft/tazkiyah/issues
