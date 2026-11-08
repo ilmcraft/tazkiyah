@@ -8,6 +8,8 @@
       "categoryIds": ["aqidah", "dawah"],
       "tags": ["ইসলাম", "জীবনব্যবস্থা", "দ্বীন"],
       "media": { "type": "youtube", "videoId": "gpRK64SwTZE", "startSec": 0 },
+      "durationSec": 2426,
+      "publishedAt": "2024-10-28",
       "addedAt": "2026-11-07"
     },
     {
@@ -17,6 +19,8 @@
       "categoryIds": ["history"],
       "tags": ["বাংলার ইতিহাস", "মুসলিম বাংলা", "ইতিহাস"],
       "media": { "type": "youtube", "videoId": "adxqYATrzsk", "startSec": 0 },
+      "durationSec": 2398,
+      "publishedAt": "2024-10-30",
       "addedAt": "2026-11-07"
     },
     {
@@ -26,6 +30,8 @@
       "categoryIds": ["history", "contemporary"],
       "tags": ["জাতীয়তাবাদ", "উপনিবেশ", "মুসলিম বাংলা", "হালাকাহ"],
       "media": { "type": "youtube", "videoId": "Eh7TnpLSVI0", "startSec": 0 },
+      "durationSec": 6341,
+      "publishedAt": "2025-08-22",
       "addedAt": "2026-11-07"
     },
     {
@@ -35,6 +41,8 @@
       "categoryIds": ["history"],
       "tags": ["ভারত বিজয়", "উপমহাদেশ", "মুসলিম শাসন", "ইতিহাস"],
       "media": { "type": "youtube", "videoId": "HtkVGYtOfLY", "startSec": 0 },
+      "durationSec": 1792,
+      "publishedAt": "2025-06-12",
       "addedAt": "2026-11-07"
     },
     {
@@ -44,6 +52,8 @@
       "categoryIds": ["contemporary"],
       "tags": ["ইসলামবিদ্বেষ", "ইসলামোফোবিয়া", "বাংলা সাহিত্য", "সেমিনার"],
       "media": { "type": "youtube", "videoId": "upsUniIbS3E", "startSec": 0 },
+      "durationSec": 2267,
+      "publishedAt": "2024-10-14",
       "addedAt": "2026-11-07"
     },
     {
@@ -53,6 +63,7 @@
       "categoryIds": ["youth", "contemporary"],
       "tags": ["তরুণ", "জীবনের উদ্দেশ্য", "দারসুল ঈমান", "সেমিনার"],
       "media": { "type": "youtube", "videoId": "n2pfOt24Ot8", "startSec": 0 },
+      "durationSec": 946,
       "publishedAt": "2025-11-13",
       "addedAt": "2026-11-07"
     },
@@ -63,6 +74,8 @@
       "categoryIds": ["family", "youth"],
       "tags": ["ভালোবাসা", "প্রেম", "বিয়ে", "বিবাহ", "আর্লি ম্যারেজ", "পডকাস্ট"],
       "media": { "type": "youtube", "videoId": "0r2Cp4iFq0Q", "startSec": 0 },
+      "durationSec": 7626,
+      "publishedAt": "2024-05-23",
       "addedAt": "2026-11-07"
     },
     {
@@ -72,6 +85,8 @@
       "categoryIds": ["contemporary", "youth"],
       "tags": ["তৌহিদী জনতা", "সুশীল সমাজ", "তরুণ", "পডকাস্ট", "আহমাদ রফিক", "আহমদ রফিক", "ডা. মেহেদী"],
       "media": { "type": "youtube", "videoId": "wqsD_e_C3Hs", "startSec": 0 },
+      "durationSec": 3302,
+      "publishedAt": "2025-02-25",
       "addedAt": "2026-11-07"
     }
   ]

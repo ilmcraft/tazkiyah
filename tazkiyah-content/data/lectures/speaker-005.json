@@ -8,6 +8,8 @@
       "categoryIds": ["contemporary"],
       "tags": ["পশ্চিমা সভ্যতা", "শামসুল আরেফিন"],
       "media": { "type": "youtube", "videoId": "My08Rics9iM", "startSec": 0 },
+      "durationSec": 2254,
+      "publishedAt": "2026-08-20",
       "addedAt": "2026-11-07"
     },
     {
@@ -17,6 +19,8 @@
       "categoryIds": ["contemporary"],
       "tags": ["পশ্চিমা সভ্যতা", "কনফারেন্স", "শামসুল আরেফিন"],
       "media": { "type": "youtube", "videoId": "Kdde4EDQ2p8", "startSec": 0 },
+      "durationSec": 3478,
+      "publishedAt": "2025-08-06",
       "addedAt": "2026-11-07"
     },
     {
@@ -26,6 +30,8 @@
       "categoryIds": ["youth", "contemporary"],
       "tags": ["পর্নোগ্রাফি", "আসক্তি", "বিজ্ঞান"],
       "media": { "type": "youtube", "videoId": "GgSPo6oCJQA", "startSec": 0 },
+      "durationSec": 6375,
+      "publishedAt": "2021-04-15",
       "addedAt": "2026-11-07"
     },
     {
@@ -35,6 +41,8 @@
       "categoryIds": ["aqidah"],
       "tags": ["মানুষ", "দর্শন", "আকীদা"],
       "media": { "type": "youtube", "videoId": "inr5nbAgDDs", "startSec": 0 },
+      "durationSec": 499,
+      "publishedAt": "2021-05-27",
       "addedAt": "2026-11-07",
       "series": { "id": "manusher-songga", "title": "মানুষের সংজ্ঞা", "part": 2 }
     },
@@ -45,6 +53,8 @@
       "categoryIds": ["dawah"],
       "tags": ["মিশন", "দাওয়াহ", "নসিহত"],
       "media": { "type": "youtube", "videoId": "SOTBzkdhUwU", "startSec": 0 },
+      "durationSec": 352,
+      "publishedAt": "2022-08-31",
       "addedAt": "2026-11-07"
     },
     {
@@ -54,6 +64,8 @@
       "categoryIds": ["dawah", "tazkiyah"],
       "tags": ["দাওয়াহ", "তাযকিয়া", "আল্লাহর সাথে সম্পর্ক"],
       "media": { "type": "youtube", "videoId": "0X3wopRZmtM", "startSec": 0 },
+      "durationSec": 193,
+      "publishedAt": "2022-05-20",
       "addedAt": "2026-11-07"
     },
     {
@@ -63,6 +75,8 @@
       "categoryIds": ["dawah"],
       "tags": ["ঈমান", "দাওয়াহ", "রিমাইন্ডার"],
       "media": { "type": "youtube", "videoId": "Gv-iC8xNqi0", "startSec": 0 },
+      "durationSec": 106,
+      "publishedAt": "2022-08-22",
       "addedAt": "2026-11-07"
     },
     {
@@ -72,6 +86,8 @@
       "categoryIds": ["dawah"],
       "tags": ["দাওয়াহ", "কৌশল"],
       "media": { "type": "youtube", "videoId": "TXehMpm3hks", "startSec": 0 },
+      "durationSec": 1163,
+      "publishedAt": "2024-11-01",
       "addedAt": "2026-11-07"
     },
     {
@@ -81,6 +97,8 @@
       "categoryIds": ["dawah", "youth"],
       "tags": ["Gen-Z", "দাওয়াহ", "শাহ ওয়ালিউল্লাহ"],
       "media": { "type": "youtube", "videoId": "jiaBIZuCZhY", "startSec": 0 },
+      "durationSec": 3509,
+      "publishedAt": "2026-03-29",
       "addedAt": "2026-11-07",
       "series": { "id": "genz-dawah-strategy", "title": "Gen-Z দাওয়াহ স্ট্র্যাটেজি", "part": 1 }
     },
@@ -91,6 +109,8 @@
       "categoryIds": ["dawah"],
       "tags": ["উম্মাহ", "দাওয়াহ সেমিনার", "নোয়াখালী"],
       "media": { "type": "youtube", "videoId": "UgWpxRdp-pw", "startSec": 0 },
+      "durationSec": 2759,
+      "publishedAt": "2025-02-18",
       "addedAt": "2026-11-07"
     },
     {
@@ -100,6 +120,8 @@
       "categoryIds": ["family", "youth"],
       "tags": ["বিয়ে", "প্রেম", "তরুণ"],
       "media": { "type": "youtube", "videoId": "Sat3AgVTeoY", "startSec": 0 },
+      "durationSec": 4373,
+      "publishedAt": "2025-03-14",
       "addedAt": "2026-11-07"
     },
     {
@@ -109,6 +131,8 @@
       "categoryIds": ["dawah"],
       "tags": ["তাবলীগ", "পডকাস্ট", "দাওয়াহ"],
       "media": { "type": "youtube", "videoId": "l2p4I_8fGdQ", "startSec": 0 },
+      "durationSec": 6757,
+      "publishedAt": "2026-08-13",
       "addedAt": "2026-11-07"
     },
     {
@@ -118,6 +142,8 @@
       "categoryIds": ["contemporary"],
       "tags": ["বই", "লেখালেখি", "সাক্ষাৎকার"],
       "media": { "type": "youtube", "videoId": "ahFlBNa4JBs", "startSec": 0 },
+      "durationSec": 1055,
+      "publishedAt": "2020-10-15",
       "addedAt": "2026-11-07"
     },
     {
@@ -127,6 +153,8 @@
       "categoryIds": ["contemporary"],
       "tags": ["সমসাময়িক", "শামসুল আরেফিন"],
       "media": { "type": "youtube", "videoId": "0NnGw9TmA8I", "startSec": 0 },
+      "durationSec": 488,
+      "publishedAt": "2026-08-12",
       "addedAt": "2026-11-07"
     },
     {
@@ -136,6 +164,8 @@
       "categoryIds": ["dawah"],
       "tags": ["লেকচার", "শামসুল আরেফিন"],
       "media": { "type": "youtube", "videoId": "YOPIFaUxsG0", "startSec": 0 },
+      "durationSec": 2802,
+      "publishedAt": "2024-10-03",
       "addedAt": "2026-11-07"
     },
     {
