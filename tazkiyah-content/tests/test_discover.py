@@ -77,12 +77,13 @@ def item(
 
 
 class FakeClient:
-    def __init__(self, playlists=None, searches=None, videos=None, fail_search=False):
+    def __init__(self, playlists=None, searches=None, videos=None, fail_search=False, fail_videos=False):
         self.usage = Usage()
         self.playlists = playlists or {}
         self.searches = searches or {}
         self.items = videos or {}
         self.search_calls = []
+        self.fail_videos = fail_videos
         self.fail_search = fail_search
 
     def playlist_video_ids(self, playlist_id, max_pages=200):
@@ -100,6 +101,8 @@ class FakeClient:
         return found
 
     def videos(self, ids):
+        if self.fail_videos:
+            raise QuotaExceeded("videos: quotaExceeded")
         ids = list(ids)
         self.usage.units += max(1, -(-len(ids) // 50))
         return {i: self.items[i] for i in ids if i in self.items}
@@ -397,9 +400,23 @@ def test_main_sweep_writes_report_and_outputs(content, tmp_path):
     assert "added=1\n" in out.read_text() and "changed=true\n" in out.read_text()
 
 
-def test_quota_exceeded_stops_without_writing(content, capsys):
+def test_used_up_search_quota_keeps_the_channel_lectures(content, capsys):
+    fake = FakeClient(
+        playlists={"UUofficial0000000000000a": ["OFFICIALTK1"]},
+        videos={"OFFICIALTK1": item("OFFICIALTK1", "তাওবার শর্ত", channel_id=OFFICIAL)},
+        fail_search=True,
+    )
+    code = discover.main(["sweep", "--root", str(content), "--speaker", "speaker-001"], client=fake)
+    assert code == 0 and "search quota ran out" in capsys.readouterr().out
+    assert "OFFICIALTK1" in (content / LECTURE_FILE).read_text()
+    result = run(content, FakeClient(fail_search=True))
+    assert result.search_cut and "সার্চ কোটা শেষ" in discover.render_report(result, TODAY)
+
+
+def test_quota_exceeded_on_lookup_stops_without_writing(content, capsys):
     before = (content / LECTURE_FILE).read_text()
-    code = discover.main(["sweep", "--root", str(content), "--speaker", "speaker-001"], client=FakeClient(fail_search=True))
+    fake = FakeClient(playlists={"UU" + OFFICIAL[2:]: ["N0000000001"]}, fail_videos=True)
+    code = discover.main(["sweep", "--root", str(content), "--speaker", "speaker-001"], client=fake)
     assert code == 3 and "quota" in capsys.readouterr().err
     assert (content / LECTURE_FILE).read_text() == before
 

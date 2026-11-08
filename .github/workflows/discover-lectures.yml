@@ -16,6 +16,10 @@ on:
         description: "Speaker id such as speaker-002 (empty: today's speaker in the rotation)"
         required: false
         default: ""
+      search_budget:
+        description: "Searches this run may use (empty: 90). The 100 searches/day are shared by every run that day."
+        required: false
+        default: ""
 permissions:
   contents: write
   pull-requests: write
@@ -62,8 +66,9 @@ jobs:
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           SPEAKER: ${{ steps.pick.outputs.speaker }}
+          SEARCH_BUDGET: ${{ inputs.search_budget }}
         run: >-
-          python scripts/discover.py sweep --speaker "$SPEAKER"
+          python scripts/discover.py sweep --speaker "$SPEAKER" --search-budget "${SEARCH_BUDGET:-90}"
           --report "$RUNNER_TEMP/report.md" --github-output "$GITHUB_OUTPUT"
 
       - name: Validate
