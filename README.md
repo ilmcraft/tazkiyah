@@ -4,7 +4,7 @@
 
 ## ডাউনলোড ও ইনস্টল
 
-সর্বশেষ APK: **[Releases পাতা](https://github.com/mdhelaluddin-ctg-bd/tazkiyah/releases/latest)** থেকে `tazkiyah-<ভার্সন>.apk` নামান (Android 8.0 বা তার পরের ভার্সন লাগবে)।
+**ডাউনলোড পাতা: https://mdhelaluddin-ctg-bd.github.io/tazkiyah/** — অন্যদের এই লিংকটাই দিন (অ্যাপের "অ্যাপ শেয়ার করুন"-ও এটাই পাঠায়)। সরাসরি সর্বশেষ APK: https://github.com/mdhelaluddin-ctg-bd/tazkiyah/releases/latest/download/tazkiyah.apk (Android 8.0 বা তার পরের ভার্সন লাগবে)।
 
 1. APK-টি ফোনে খুলুন। প্রথমবার ফোন "অজানা উৎস থেকে ইনস্টল" (Install unknown apps) অনুমতি চাইবে — যে অ্যাপ দিয়ে খুলছেন (Chrome / Files) তাকে অনুমতি দিন।
 2. **Install** চাপুন। Play Protect সতর্ক করলে "More details → Install anyway"।
@@ -18,7 +18,8 @@
 | --- | --- |
 | [`tazkiyah-android/`](tazkiyah-android) | Android অ্যাপ (Kotlin, Jetpack Compose, Room, Media3, android-youtube-player, NewPipeExtractor) |
 | [`tazkiyah-content/`](tazkiyah-content) | লেকচারের তালিকা (JSON), স্কিমা, স্ক্রিপ্ট ও নতুন লেকচার খোঁজার বট — অ্যাপ এখান থেকেই নতুন লেকচার নামায় |
-| [`.github/workflows/`](.github/workflows) | `publish.yml` (কনটেন্ট যাচাই ও manifest), `discover-lectures.yml` (দৈনিক বট), `content-ci.yml`, `android-ci.yml` |
+| [`.github/workflows/`](.github/workflows) | `publish.yml` (কনটেন্ট যাচাই ও manifest), `discover-lectures.yml` (দৈনিক বট), `fill-durations.yml` (সাপ্তাহিক দৈর্ঘ্য), `content-ci.yml`, `android-ci.yml` |
+| [`docs/`](docs) | ডাউনলোড পাতা (GitHub Pages) |
 
 বিস্তারিত পরিকল্পনা: [`tazkiyah-android/docs/PLAN.md`](tazkiyah-android/docs/PLAN.md)।
 
@@ -48,7 +49,7 @@ cd tazkiyah-android
 
 1. `tazkiyah-android/app/build.gradle.kts`-এ `versionCode` ১ বাড়ান, `versionName` নতুন দিন (যেমন `1.2.0`)।
 2. `./gradlew lint testDebugUnitTest assembleRelease` — R8 দিয়ে ছোট করা, release key-তে সাইন করা APK পাবেন `app/build/outputs/apk/release/app-release.apk`-এ। ফোনে চালিয়ে দেখুন (সেভ, প্লে, সিঙ্ক)।
-3. commit-এ ট্যাগ দিন `app-v1.2.0` আর push করুন; GitHub-এ ওই ট্যাগে Release বানিয়ে `tazkiyah-1.2.0.apk` ও তার `.sha256` যুক্ত করুন। অ্যাপ শুধু `app-v` দিয়ে শুরু হওয়া ট্যাগকেই নতুন ভার্সন হিসেবে চেনে।
+3. commit-এ ট্যাগ দিন `app-v1.2.0` আর push করুন; GitHub-এ ওই ট্যাগে Release বানিয়ে `tazkiyah-1.2.0.apk`, তার `.sha256`, **আর একই ফাইল `tazkiyah.apk` নামে** যুক্ত করুন (ডাউনলোড পাতার বোতাম `releases/latest/download/tazkiyah.apk`-এ যায়)। রিলিজ নোট লিখুন `tazkiyah-android/release-notes/<ভার্সন>.md`-এ। অ্যাপ শুধু `app-v` দিয়ে শুরু হওয়া ট্যাগকেই নতুন ভার্সন হিসেবে চেনে।
 
 **সাইনিং key:** release key রিপোর বাইরে থাকে — `~/.android/keystores/tazkiyah-release.jks`, আর তার পাসওয়ার্ড `~/.gradle/gradle.properties`-এ (`TAZKIYAH_RELEASE_STORE_FILE`, `TAZKIYAH_RELEASE_STORE_PASSWORD`, `TAZKIYAH_RELEASE_KEY_ALIAS`, `TAZKIYAH_RELEASE_KEY_PASSWORD`)। দুটোরই ব্যাকআপ রাখুন (যেমন পাসওয়ার্ড ম্যানেজার + এনক্রিপ্টেড ড্রাইভ): key হারালে ব্যবহারকারীদের ফোনে আর আপডেট দেওয়া যাবে না, নতুন key-র APK বসাতে আগেরটা আনইনস্টল করতে হবে। key না থাকলে release বিল্ড পরিষ্কার error দেয়, ডিবাগ key দিয়ে চুপচাপ সাইন করে না।
 

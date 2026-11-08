@@ -31,3 +31,7 @@
 - Release builds use R8 (`proguard-rules.pro` keeps NewPipeExtractor/Rhino whole) and the release key from
   `~/.gradle/gradle.properties` (`TAZKIYAH_RELEASE_*`, keystore in `~/.android/keystores/`); never the debug key,
   never commit either. The whole app is GPL-3.0 (root `LICENSE`, shown in-app under About).
+- Fonts: `AppFont` (core/designsystem/Type.kt), chosen in Settings, default Noto Sans Bengali; the Noto/Anek/Baloo
+  files are fontTools-instanced (wdth=100) and subset to Bengali+Latin — keep the APK small when adding fonts.
+- Sharing shares only the download page (`BuildConfig.DOWNLOAD_PAGE_URL`, GitHub Pages from `/docs`), never a
+  YouTube link. Every release also uploads the APK as `tazkiyah.apk` (the page's stable link).

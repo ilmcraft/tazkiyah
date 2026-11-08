@@ -37,8 +37,8 @@ android {
         applicationId = "com.inovixlabs.tazkiyah"
         minSdk = 26
         targetSdk = 37
-        versionCode = 2
-        versionName = "1.1.0"
+        versionCode = 3
+        versionName = "1.2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -52,6 +52,8 @@ android {
         )
         // App releases (APK on GitHub Releases, tags app-v<version>) and the source code.
         buildConfigField("String", "GITHUB_REPO", "\"$contentOwner/$contentRepo\"")
+        // Public download page (GitHub Pages, from /docs) — what "অ্যাপ শেয়ার করুন" sends.
+        buildConfigField("String", "DOWNLOAD_PAGE_URL", "\"https://${contentOwner.lowercase()}.github.io/$contentRepo/\"")
     }
 
     signingConfigs {
