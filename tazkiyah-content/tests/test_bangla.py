@@ -72,6 +72,42 @@ def test_clean_title(title, names, channel, expected):
     assert bangla.clean_title(title, names, channel) == expected
 
 
+SHAKTI = ["ডা. শামসুল আরেফীন শক্তি", "Dr. Shamsul Arefin Shakti", "শামসুল আরেফিন শক্তি", "শামসুল আরেফ", "shamsul arefin"]
+
+
+@pytest.mark.parametrize(
+    ("title", "expected"),
+    [
+        ("মানুষের সংজ্ঞা: ২য় পর্ব [ডাঃ শামসুল আরেফীন] Definition of Man: Part 2 [Dr. Shamsul Arefin]", "মানুষের সংজ্ঞা: ২য় পর্ব"),
+        ("আমাদের জীবনের প্রকৃত উদ্দেশ্য কি_ শামসুল আরেফীন শক্তি হাফিঃ", "আমাদের জীবনের প্রকৃত উদ্দেশ্য কি?"),
+        ("বিয়ের প্রকৃত প্রস্তুতি কীভাবে নিবো ॥ ডা. শামসুল আরেফীন শক্তি", "বিয়ের প্রকৃত প্রস্তুতি কীভাবে নিবো"),
+        ("কেনো আমরা সুখ খুঁজি মন দিয়ে শুনুন ডা শামসুল আরেফিন", "কেনো আমরা সুখ খুঁজি"),
+        ("দ্বীনে ফেরার গল্প Samsul Arefin Shakti", "দ্বীনে ফেরার গল্প"),
+    ],
+)
+def test_clean_title_reupload_noise(title, expected):
+    assert bangla.clean_title(title, SHAKTI) == expected
+
+
+def test_fake_danda_is_fixed():
+    assert bangla.clean_title("জীবন ও আখিরাত নিয়ে আলোচনা৷ ৷") == "জীবন ও আখিরাত নিয়ে আলোচনা"
+
+
+def test_partial_name_never_cuts_a_word():
+    # "শামসুল আরেফ" is a search fragment; it must not leave "ীন" behind.
+    assert bangla.clean_title("শামসুল আরেফীন উজ্জল স্যারের চিকিৎসা পরামর্শ", ["শামসুল আরেফ"]) == (
+        "শামসুল আরেফীন উজ্জল স্যারের চিকিৎসা পরামর্শ"
+    )
+
+
+@pytest.mark.parametrize(
+    ("title", "part"),
+    [("মানুষের সংজ্ঞা: ২য় পর্ব", 2), ("Part 3", 3), ("মুমিনের ক্যারিয়ার ভাবনা পর্ব_২", 2), ("পর্ব-১০", 10), ("সাধারণ আলোচনা", None)],
+)
+def test_part_number(title, part):
+    assert bangla.part_number(title) == part
+
+
 def test_clean_title_keeps_original_when_nothing_is_left():
     assert bangla.clean_title("মুফতি হারুন ইজহার", HARUN) == "মুফতি হারুন ইজহার"
 

@@ -43,7 +43,7 @@ from add_lecture import (  # noqa: E402
     format_lecture_file,
     next_lecture_id,
 )
-from bangla import clean_title, contains_any, guess_categories, similarity  # noqa: E402
+from bangla import clean_title, contains_any, guess_categories, part_number, similarity  # noqa: E402
 from youtube_api import QuotaExceeded, YouTubeApiError, YouTubeClient, parse_duration, uploads_playlist  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -55,9 +55,13 @@ CATEGORIES = "data/categories.json"
 LECTURES_DIR = "data/lectures"
 
 DEFAULT_SEARCH_BUDGET = 90  # of the 100 free search calls a day; the rest is for manual runs
-DEFAULT_MIN_DURATION = 300  # Shorts are at most 3 minutes; short clips go too
+# Shorts are at most 3 minutes. Other channels mostly post clips cut from longer talks, so they need
+# 10 minutes; the speaker's own channel and trusted playlists keep short talks from 5 minutes.
+DEFAULT_MIN_DURATION = 600
+TRUSTED_MIN_DURATION = 300
 CLIP_HINT_SEC = 900
 DUPLICATE_SIMILARITY = 0.8
+SAME_LENGTH_SIMILARITY = 0.45
 SPEAKER_ID_RE = re.compile(r"^speaker-[0-9]{3,}$")
 VIDEO_URL_RE = re.compile(r"(?:[?&]v=|youtu\.be/|/shorts/|/live/|/embed/)([A-Za-z0-9_-]{11})(?![A-Za-z0-9_-])")
 
@@ -66,7 +70,7 @@ DROP_REASONS = {
     "not_embeddable": "অ্যাপে চালানো যায় না (এমবেড বন্ধ / বয়সসীমা)",
     "region": "বাংলাদেশে ব্লক",
     "live": "লাইভ বা আসন্ন",
-    "short": "৫ মিনিটের কম (Shorts / ক্লিপ)",
+    "short": "খুব ছোট (Shorts / ক্লিপ)",
     "namesake": "অন্য ব্যক্তি (একই নাম)",
     "no_name": "শিরোনামে বক্তার নাম নেই",
 }
@@ -210,7 +214,7 @@ def classify(c: Candidate, item: dict[str, Any] | None, config: dict[str, Any], 
         c.trusted = True
 
     region = details.get("regionRestriction") or {}
-    min_duration = config.get("minDurationSec", DEFAULT_MIN_DURATION)
+    min_duration = TRUSTED_MIN_DURATION if c.trusted else config.get("minDurationSec", DEFAULT_MIN_DURATION)
     if status.get("privacyStatus") != "public" or status.get("uploadStatus", "processed") != "processed":
         c.decision = "unavailable"
     elif not status.get("embeddable", True) or (details.get("contentRating") or {}).get("ytRating") == "ytAgeRestricted":
@@ -234,11 +238,25 @@ def classify(c: Candidate, item: dict[str, Any] | None, config: dict[str, Any], 
 
 
 def same_lecture(title_a: str, duration_a: int, title_b: str, duration_b: int) -> bool:
-    """Likely the same recording: similar title and the same length (re-encodes differ by ~1 s)."""
+    """Likely the same recording, re-uploaded.
+
+    Re-uploads keep the exact length (re-encodes differ by a second or two) but often get a new
+    title, so the same length needs only loosely similar titles; a near-identical title allows a
+    slightly trimmed copy. Different part numbers ("পর্ব ১" / "পর্ব ২") are never the same lecture.
+    """
     if duration_a <= 0 or duration_b <= 0:
         return False
-    tolerance = max(3, round(0.01 * max(duration_a, duration_b)))
-    return abs(duration_a - duration_b) <= tolerance and similarity(title_a, title_b) >= DUPLICATE_SIMILARITY
+    part_a, part_b = part_number(title_a), part_number(title_b)
+    if part_a is not None and part_b is not None and part_a != part_b:
+        return False
+    gap = abs(duration_a - duration_b)
+    longest = max(duration_a, duration_b)
+    sim = similarity(title_a, title_b)
+    if gap <= 2 and sim >= SAME_LENGTH_SIMILARITY:
+        return True
+    if gap <= max(3, round(0.01 * longest)) and sim >= DUPLICATE_SIMILARITY:
+        return True
+    return sim >= 0.92 and gap <= 0.1 * longest
 
 
 def mark_duplicates(
@@ -316,7 +334,7 @@ def discover(
     fresh = [c for c in candidates.values() if c.video_id not in known and c.video_id not in seen["videos"]]
     details = client.videos(c.video_id for c in fresh) if fresh else {}
 
-    names = [speaker["name"], speaker["nameEn"], *config.get("queries", [])]
+    names = [speaker["name"], speaker["nameEn"], *config.get("queries", []), *config.get("mustMatch", [])]
     dropped: dict[str, int] = {}
     accepted: list[Candidate] = []
     low: list[Candidate] = []
@@ -324,6 +342,8 @@ def discover(
         classify(c, details.get(c.video_id), config, official_ids)
         if c.decision in {"add", "low-confidence"}:
             c.app_title = clean_title(c.title, names, c.channel)
+            if contains_any(c.app_title, config["mustMatch"]) or len(c.app_title.split()) < 2:
+                c.flags.append("শিরোনাম দেখুন")
             c.categories = guess_categories(
                 f"{c.app_title} {c.title}", category_ids, config.get("defaultCategoryIds", [])
             )
