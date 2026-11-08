@@ -12,10 +12,17 @@ data class LectureRow(
     val completed: Boolean?,
     val lastPlayedAt: Long?,
     val isFavorite: Boolean,
+    /** [DownloadStatus]; null when the lecture is not saved on the phone. */
+    val downloadStatus: String? = null,
+    val downloadKind: String? = null,
+    val downloadedBytes: Long? = null,
+    val downloadTotalBytes: Long? = null,
 ) {
     val id: String get() = lecture.id
     val durationSec: Long? get() = lecture.durationSec?.takeIf { it > 0 } ?: knownDurationSec?.takeIf { it > 0 }
     val isCompleted: Boolean get() = completed == true
+    val isSaved: Boolean get() = downloadStatus == DownloadStatus.DONE
+    val isSaving: Boolean get() = downloadStatus == DownloadStatus.QUEUED || downloadStatus == DownloadStatus.RUNNING
     val progressFraction: Float
         get() {
             val d = durationSec ?: return 0f

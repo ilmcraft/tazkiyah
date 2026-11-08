@@ -140,6 +140,7 @@ dependencies {
     implementation(libs.androidx.media3.session)
     implementation(libs.androidx.media3.ui)
     implementation(libs.youtube.player.core)
+    implementation(libs.newpipe.extractor)
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)

@@ -41,6 +41,7 @@ class CatalogRepository @Inject constructor(
     fun continueListening(limit: Int = 10): Flow<List<LectureRow>> = dao.continueListening(limit)
     fun todayCandidates(startOfDayMillis: Long): Flow<List<LectureRow>> = dao.todayCandidates(startOfDayMillis)
     fun favorites(): Flow<List<LectureRow>> = dao.favorites()
+    fun downloaded(): Flow<List<LectureRow>> = dao.downloaded()
     fun history(limit: Int = 100): Flow<List<LectureRow>> = dao.history(limit)
     fun completed(): Flow<List<LectureRow>> = dao.completed()
 

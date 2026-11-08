@@ -29,3 +29,45 @@ data class ListenLogEntity(
     @PrimaryKey val date: String,
     val listenedSec: Long,
 )
+
+object DownloadKind {
+    const val AUDIO = "audio"
+    const val VIDEO = "video"
+}
+
+object DownloadStatus {
+    /** Waiting for its turn or for a network connection. */
+    const val QUEUED = "queued"
+    const val RUNNING = "running"
+    const val DONE = "done"
+    const val FAILED = "failed"
+}
+
+/** Error codes stored in [DownloadEntity.error]; the UI maps them to Bengali text. */
+object DownloadError {
+    const val NETWORK = "network"
+    const val UNAVAILABLE = "unavailable"
+    const val STORAGE = "storage"
+    const val UNKNOWN = "unknown"
+}
+
+/** A lecture saved on the phone for offline use (docs/PLAN.md, `downloads`). */
+@Entity(tableName = "downloads", indices = [Index("createdAt")])
+data class DownloadEntity(
+    @PrimaryKey val lectureId: String,
+    /** [DownloadKind]. */
+    val kind: String,
+    /** Video height (360, 720…); 0 for audio. */
+    val quality: Int,
+    /** [DownloadStatus]. */
+    val status: String,
+    /** The finished file; set once [status] is DONE. */
+    val localPath: String?,
+    val mimeType: String?,
+    val downloadedBytes: Long,
+    /** Expected size; 0 when not known yet. */
+    val totalBytes: Long,
+    /** [DownloadError] of the last failed attempt. */
+    val error: String?,
+    val createdAt: Long,
+)

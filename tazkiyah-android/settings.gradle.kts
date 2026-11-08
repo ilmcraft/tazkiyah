@@ -19,6 +19,10 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        // NewPipeExtractor (saving YouTube lectures for offline use) is only published on JitPack.
+        maven("https://jitpack.io") {
+            content { includeGroupByRegex("com\\.github\\.TeamNewPipe.*") }
+        }
     }
 }
 

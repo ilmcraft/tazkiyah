@@ -75,11 +75,11 @@ import com.inovixlabs.tazkiyah.core.designsystem.LocalShowMessage
 import com.inovixlabs.tazkiyah.core.designsystem.TazkiyahTheme
 import com.inovixlabs.tazkiyah.core.designsystem.ThemeMode
 import com.inovixlabs.tazkiyah.core.designsystem.isAppInDarkTheme
-import com.inovixlabs.tazkiyah.data.local.entity.MediaType
 import com.inovixlabs.tazkiyah.feature.categories.CategoriesScreen
 import com.inovixlabs.tazkiyah.feature.category.CategoryScreen
 import com.inovixlabs.tazkiyah.feature.home.HomeScreen
 import com.inovixlabs.tazkiyah.feature.library.LibraryScreen
+import com.inovixlabs.tazkiyah.feature.player.DownloadSection
 import com.inovixlabs.tazkiyah.feature.player.FullPlayerScreen
 import com.inovixlabs.tazkiyah.feature.player.MiniPlayer
 import com.inovixlabs.tazkiyah.feature.player.PlayerViewModel
@@ -87,6 +87,8 @@ import com.inovixlabs.tazkiyah.feature.search.SearchScreen
 import com.inovixlabs.tazkiyah.feature.settings.SettingsScreen
 import com.inovixlabs.tazkiyah.feature.speaker.SpeakerScreen
 import com.inovixlabs.tazkiyah.feature.speakers.SpeakersScreen
+import com.inovixlabs.tazkiyah.playback.PlayerSurface
+import com.inovixlabs.tazkiyah.playback.video.FocusedFileVideoPlayer
 import com.inovixlabs.tazkiyah.playback.youtube.FocusedYouTubePlayer
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -102,9 +104,10 @@ private val tabs = listOf(
 )
 
 /**
- * Layering (bottom → top): the YouTube host while collapsed (zIndex −1, still attached so audio
- * keeps going), the tabbed app with the mini player, the full player, and the YouTube host
- * again when expanded/fullscreen. The host is never re-created when the player is collapsed.
+ * Layering (bottom → top): the video host (YouTube, or a saved/direct file) while collapsed
+ * (zIndex −1, still attached so audio keeps going), the tabbed app with the mini player, the full
+ * player, and the video host again when expanded/fullscreen. The host is never re-created when
+ * the player is collapsed.
  */
 @Composable
 fun TazkiyahRoot(
@@ -127,6 +130,10 @@ fun TazkiyahRoot(
         val seriesParts by player.seriesParts.collectAsStateWithLifecycle()
         val categories by player.categories.collectAsStateWithLifecycle()
         val audioPlayer by player.audioPlayer.collectAsStateWithLifecycle()
+        val surface by player.surface.collectAsStateWithLifecycle()
+        val playingSaved by player.playingSaved.collectAsStateWithLifecycle()
+        val download by player.download.collectAsStateWithLifecycle()
+        val downloadChoices by player.downloadChoices.collectAsStateWithLifecycle()
 
         var expanded by rememberSaveable { mutableStateOf(false) }
         var fullscreen by rememberSaveable { mutableStateOf(false) }
@@ -139,6 +146,9 @@ fun TazkiyahRoot(
                 expanded = false
                 fullscreen = false
             }
+        }
+        LaunchedEffect(surface) {
+            if (surface != PlayerSurface.YOUTUBE && surface != PlayerSurface.VIDEO) fullscreen = false
         }
         FullscreenEffect(fullscreen)
         SystemBarIconsFollowTheme()
@@ -159,9 +169,9 @@ fun TazkiyahRoot(
         CompositionLocalProvider(LocalShowMessage provides showMessage) {
             Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
                 val lecture = current
-                val isYouTube = lecture?.lecture?.mediaType == MediaType.YOUTUBE
+                val videoSurface = surface == PlayerSurface.YOUTUBE || surface == PlayerSurface.VIDEO
 
-                if (lecture != null && isYouTube) {
+                if (lecture != null && videoSurface) {
                     val density = LocalDensity.current
                     val slot = videoSlot
                     val hostModifier = when {
@@ -173,22 +183,42 @@ fun TazkiyahRoot(
                         }
                         else -> Modifier.fillMaxWidth().aspectRatio(16f / 9f)
                     }
-                    FocusedYouTubePlayer(
-                        controller = player.youTubeController,
-                        lecture = lecture,
-                        state = state,
-                        listenOnly = listenOnly,
-                        fullscreen = fullscreen,
-                        nextInSeries = nextInSeries,
-                        onPlayPause = player::togglePlayPause,
-                        onSeekBy = player::seekBy,
-                        onSeekTo = player::seekTo,
-                        onSpeed = player::setSpeed,
-                        onReplay = player::replay,
-                        onPlayNext = { openLecture(it.id) },
-                        onToggleFullscreen = { fullscreen = !fullscreen },
-                        modifier = hostModifier.zIndex(if (expanded || fullscreen) 2f else -1f),
-                    )
+                    val frameModifier = hostModifier.zIndex(if (expanded || fullscreen) 2f else -1f)
+                    if (surface == PlayerSurface.YOUTUBE) {
+                        FocusedYouTubePlayer(
+                            controller = player.youTubeController,
+                            lecture = lecture,
+                            state = state,
+                            listenOnly = listenOnly,
+                            fullscreen = fullscreen,
+                            nextInSeries = nextInSeries,
+                            onPlayPause = player::togglePlayPause,
+                            onSeekBy = player::seekBy,
+                            onSeekTo = player::seekTo,
+                            onSpeed = player::setSpeed,
+                            onReplay = player::replay,
+                            onPlayNext = { openLecture(it.id) },
+                            onToggleFullscreen = { fullscreen = !fullscreen },
+                            modifier = frameModifier,
+                        )
+                    } else {
+                        FocusedFileVideoPlayer(
+                            player = audioPlayer,
+                            lecture = lecture,
+                            state = state,
+                            listenOnly = listenOnly,
+                            fullscreen = fullscreen,
+                            nextInSeries = nextInSeries,
+                            onPlayPause = player::togglePlayPause,
+                            onSeekBy = player::seekBy,
+                            onSeekTo = player::seekTo,
+                            onSpeed = player::setSpeed,
+                            onReplay = player::replay,
+                            onPlayNext = { openLecture(it.id) },
+                            onToggleFullscreen = { fullscreen = !fullscreen },
+                            modifier = frameModifier,
+                        )
+                    }
                 }
 
                 Scaffold(
@@ -231,7 +261,7 @@ fun TazkiyahRoot(
                         sleepTimer = sleepTimer,
                         seriesParts = seriesParts,
                         categories = categories,
-                        audioPlayer = audioPlayer,
+                        surface = surface ?: PlayerSurface.ARTWORK,
                         onVideoSlot = { videoSlot = it },
                         onCollapse = { expanded = false },
                         onPlayPause = player::togglePlayPause,
@@ -246,6 +276,18 @@ fun TazkiyahRoot(
                         onOpenLecture = openLecture,
                         onOpenSpeaker = { navigateFromPlayer(SpeakerRoute(it)) },
                         onOpenCategory = { navigateFromPlayer(CategoryRoute(it)) },
+                        downloadSection = {
+                            DownloadSection(
+                                download = download,
+                                playingSaved = playingSaved,
+                                choices = downloadChoices,
+                                onSave = player::showDownloadChoices,
+                                onChoose = player::startDownload,
+                                onDismissChoices = player::dismissDownloadChoices,
+                                onRetry = player::retryDownload,
+                                onRemove = player::removeDownload,
+                            )
+                        },
                         modifier = Modifier.zIndex(1f),
                     )
                 }
