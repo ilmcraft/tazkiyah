@@ -8,6 +8,8 @@
       "categoryIds": ["contemporary", "history"],
       "tags": ["আধুনিক রাষ্ট্র", "রাষ্ট্রচিন্তা", "ফিরাসাত"],
       "media": { "type": "youtube", "videoId": "QRte9SYoziU", "startSec": 0 },
+      "durationSec": 8683,
+      "publishedAt": "2026-08-06",
       "addedAt": "2026-11-07",
       "series": { "id": "firasat-halaqah", "title": "ফিরাসাত হালাকাহ", "part": 1 }
     },
@@ -18,6 +20,8 @@
       "categoryIds": ["contemporary", "aqidah"],
       "tags": ["সেক্যুলারিজম", "ধর্মনিরপেক্ষতা", "ফিরাসাত"],
       "media": { "type": "youtube", "videoId": "22T9M5luDcE", "startSec": 0 },
+      "durationSec": 7347,
+      "publishedAt": "2026-09-01",
       "addedAt": "2026-11-07",
       "series": { "id": "firasat-halaqah", "title": "ফিরাসাত হালাকাহ", "part": 2 }
     },
@@ -28,6 +32,8 @@
       "categoryIds": ["contemporary"],
       "tags": ["করণীয়", "পরিচয়", "অডিও"],
       "media": { "type": "youtube", "videoId": "h2GWo968MCM", "startSec": 0 },
+      "durationSec": 8598,
+      "publishedAt": "2025-12-04",
       "addedAt": "2026-11-07"
     },
     {
@@ -37,6 +43,8 @@
       "categoryIds": ["contemporary"],
       "tags": ["শাপলা", "৫ আগস্ট", "গণসমাবেশ"],
       "media": { "type": "youtube", "videoId": "56ulz9lnQ5Q", "startSec": 0 },
+      "durationSec": 724,
+      "publishedAt": "2025-08-05",
       "addedAt": "2026-11-07"
     },
     {
@@ -46,6 +54,8 @@
       "categoryIds": ["contemporary"],
       "tags": ["শরিয়াহ", "শরীয়াহ", "আইন"],
       "media": { "type": "youtube", "videoId": "lBTxV8bJcAI", "startSec": 0 },
+      "durationSec": 1218,
+      "publishedAt": "2025-09-21",
       "addedAt": "2026-11-07"
     },
     {
@@ -55,6 +65,8 @@
       "categoryIds": ["history"],
       "tags": ["মুসলিমবঙ্গ", "ইতিহাস", "বাংলা"],
       "media": { "type": "youtube", "videoId": "hkT8uA_h5fE", "startSec": 0 },
+      "durationSec": 2782,
+      "publishedAt": "2026-05-07",
       "addedAt": "2026-11-07"
     },
     {
@@ -64,6 +76,8 @@
       "categoryIds": ["history"],
       "tags": ["উপমহাদেশ", "ভারত", "ইতিহাস"],
       "media": { "type": "youtube", "videoId": "28DpJLCqLF8", "startSec": 0 },
+      "durationSec": 512,
+      "publishedAt": "2025-05-08",
       "addedAt": "2026-11-07"
     },
     {
@@ -73,6 +87,8 @@
       "categoryIds": ["contemporary"],
       "tags": ["পডকাস্ট", "মুসলিমবঙ্গ", "বাংলাদেশ"],
       "media": { "type": "youtube", "videoId": "0ddylmtmWQ0", "startSec": 0 },
+      "durationSec": 6488,
+      "publishedAt": "2026-05-13",
       "addedAt": "2026-11-07"
     },
     {
@@ -82,6 +98,8 @@
       "categoryIds": ["contemporary"],
       "tags": ["পডকাস্ট", "মুসলিমবঙ্গ", "কওম"],
       "media": { "type": "youtube", "videoId": "CeioagzIkq8", "startSec": 0 },
+      "durationSec": 7797,
+      "publishedAt": "2026-05-29",
       "addedAt": "2026-11-07"
     },
     {
@@ -91,6 +109,8 @@
       "categoryIds": ["contemporary"],
       "tags": ["ইংরেজি", "পডকাস্ট", "সাক্ষাৎকার", "English"],
       "media": { "type": "youtube", "videoId": "D_tuqdBmOHk", "startSec": 0 },
+      "durationSec": 1499,
+      "publishedAt": "2024-11-12",
       "addedAt": "2026-11-07"
     },
     {
@@ -100,6 +120,8 @@
       "categoryIds": ["youth", "tazkiyah"],
       "tags": ["লক্ষ্য", "তরুণ", "মোটিভেশন"],
       "media": { "type": "youtube", "videoId": "zdJo1Tu-GPY", "startSec": 0 },
+      "durationSec": 597,
+      "publishedAt": "2025-09-26",
       "addedAt": "2026-11-07"
     },
     {
@@ -109,6 +131,8 @@
       "categoryIds": ["dawah"],
       "tags": ["লেকচার"],
       "media": { "type": "youtube", "videoId": "HFVUHRdxtLM", "startSec": 0 },
+      "durationSec": 2648,
+      "publishedAt": "2025-10-08",
       "addedAt": "2026-11-07"
     }
   ]

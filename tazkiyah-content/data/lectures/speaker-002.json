@@ -8,6 +8,8 @@
       "categoryIds": ["contemporary"],
       "tags": ["রাজনীতি", "সমসাময়িক", "হারুন ইযহার"],
       "media": { "type": "youtube", "videoId": "OAzkgQ6oPmA", "startSec": 0 },
+      "durationSec": 1681,
+      "publishedAt": "2025-08-22",
       "addedAt": "2026-11-07"
     },
     {
@@ -17,6 +19,8 @@
       "categoryIds": ["contemporary"],
       "tags": ["আলেম", "মাহফিল", "হারুন ইযহার"],
       "media": { "type": "youtube", "videoId": "oy8O3yls1KU", "startSec": 0 },
+      "durationSec": 1340,
+      "publishedAt": "2024-09-14",
       "addedAt": "2026-11-07"
     },
     {
@@ -26,6 +30,8 @@
       "categoryIds": ["contemporary"],
       "tags": ["ওয়াজ", "মাহফিল", "হারুন ইযহার"],
       "media": { "type": "youtube", "videoId": "7w-UAryOySk", "startSec": 0 },
+      "durationSec": 3010,
+      "publishedAt": "2021-01-17",
       "addedAt": "2026-11-07"
     },
     {
@@ -35,6 +41,8 @@
       "categoryIds": ["tazkiyah"],
       "tags": ["তাওয়াক্কুল", "সবর", "আত্মশুদ্ধি", "হারুন ইযহার"],
       "media": { "type": "youtube", "videoId": "a3jxarnR4Vw", "startSec": 0 },
+      "durationSec": 1389,
+      "publishedAt": "2024-01-05",
       "addedAt": "2026-11-07"
     },
     {
@@ -44,6 +52,8 @@
       "categoryIds": ["dawah"],
       "tags": ["লেকচার", "ওয়াজ", "হারুন ইযহার"],
       "media": { "type": "youtube", "videoId": "ltx_7jZGH3k", "startSec": 0 },
+      "durationSec": 4441,
+      "publishedAt": "2025-01-30",
       "addedAt": "2026-11-07"
     },
     {
@@ -53,6 +63,8 @@
       "categoryIds": ["dawah"],
       "tags": ["ওয়াজ", "মাহফিল", "হারুন ইযহার"],
       "media": { "type": "youtube", "videoId": "i7sLxehYJSU", "startSec": 0 },
+      "durationSec": 2304,
+      "publishedAt": "2025-02-02",
       "addedAt": "2026-11-07"
     }
   ]
