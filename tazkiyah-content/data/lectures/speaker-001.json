@@ -88,6 +88,672 @@
       "durationSec": 3302,
       "publishedAt": "2025-02-25",
       "addedAt": "2026-11-07"
+    },
+    {
+      "id": "spk001-0009",
+      "title": "প্রতিটি কথা মহামূল্যবান হীরার মতো",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "jIBL4SCm4YI", "startSec": 0 },
+      "durationSec": 1853,
+      "publishedAt": "2024-11-05",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0010",
+      "title": "বাঙালি জাতিসত্তার বিকাশ",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "oxgoPBsxD30", "startSec": 0 },
+      "durationSec": 3041,
+      "publishedAt": "2025-07-28",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0011",
+      "title": "ঢাকা বিশ্ববিদ্যালয় প্রতিষ্ঠায় মুসলিমদের অবদান",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "9EchoAI1dv8", "startSec": 0 },
+      "durationSec": 2669,
+      "publishedAt": "2026-01-18",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0012",
+      "title": "আর্লি ম্যারিজ, আর্লি ইনকাম",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "uSxK2O-Jq7g", "startSec": 0 },
+      "durationSec": 473,
+      "publishedAt": "2026-01-19",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0013",
+      "title": "দাওয়াহ : কী, কেন, কীভাবে",
+      "categoryIds": ["dawah"],
+      "media": { "type": "youtube", "videoId": "um70fHaZQnk", "startSec": 0 },
+      "durationSec": 4156,
+      "publishedAt": "2026-01-19",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0014",
+      "title": "বিয়ে সহজ করে দিলে কিছু ব্যবসায়ীদের বিরাট লস",
+      "categoryIds": ["family"],
+      "media": { "type": "youtube", "videoId": "jDtEOGeA3yk", "startSec": 0 },
+      "durationSec": 2240,
+      "publishedAt": "2026-04-27",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0015",
+      "title": "বিয়ের এপিঠ ওপিঠ ফুল পডকাস্ট",
+      "categoryIds": ["family"],
+      "media": { "type": "youtube", "videoId": "Rrbz2V9TtiI", "startSec": 0 },
+      "durationSec": 2240,
+      "publishedAt": "2026-05-10",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0016",
+      "title": "কুরবানী নিয়ে শাহবাগীদের চুলকানির জবাব দিলেন",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "AmFNiPwOBNk", "startSec": 0 },
+      "durationSec": 3367,
+      "publishedAt": "2026-05-25",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0017",
+      "title": "বিজয়ী জাতি কিভাবে পরাজিত হলো !?",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "IM2S4b_iU5s", "startSec": 0 },
+      "durationSec": 3246,
+      "publishedAt": "2026-06-01",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0018",
+      "title": "আমাদের ব্রেইনকে পুঁজি করে অন্যরা কীভাবে লাভবান হচ্ছে? জানালেন",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "rlPFFr8zw4M", "startSec": 0 },
+      "durationSec": 1565,
+      "publishedAt": "2026-06-28",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0019",
+      "title": "আপনার গুরুত্বপূর্ণ সময়কে কীভাবে ব্যবহার করছে অন্যরা? আপনি বুঝতেই পারছেন না! বক্তব্য",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "_-YLngHJ0Tw", "startSec": 0 },
+      "durationSec": 1413,
+      "publishedAt": "2026-06-30",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0020",
+      "title": "জীবন পরিবর্তনের জন্য এই কথাগুলোই যথেষ্ট ! একটি ঘটনা শুনুন",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "MyrqH5B2p0I", "startSec": 0 },
+      "durationSec": 1223,
+      "publishedAt": "2026-07-02",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0021",
+      "title": "যুবকদের উদ্দেশ্যে হৃদয় ছুঁয়ে যাওয়া নসিহত",
+      "categoryIds": ["youth"],
+      "media": { "type": "youtube", "videoId": "jPxl9kJmC74", "startSec": 0 },
+      "durationSec": 1247,
+      "publishedAt": "2026-07-03",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0022",
+      "title": "নবীর প্রতি সাহাবীদের ভালোবাসা কেমন ছিল..?",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "d5sjUGcTDEk", "startSec": 0 },
+      "durationSec": 1375,
+      "publishedAt": "2026-07-26",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0023",
+      "title": "বাঙ্গালির বাল্য-বিবাহ ফোবিয়া",
+      "categoryIds": ["family"],
+      "media": { "type": "youtube", "videoId": "PXkAr2AA1uY", "startSec": 0 },
+      "durationSec": 2240,
+      "publishedAt": "2026-07-30",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0024",
+      "title": "ভাষা থেকে স্বাধীনতা",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "f-6J3kWX8EI", "startSec": 0 },
+      "durationSec": 3039,
+      "publishedAt": "2026-08-08",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0025",
+      "title": "যদি কথাগুলো সবাইকে শুনাতে পারতাম !!",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "9kxpy0yx8Sg", "startSec": 0 },
+      "durationSec": 967,
+      "publishedAt": "2026-08-10",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0026",
+      "title": "ঈমান ও হেদায়েতের গুরুত্ব",
+      "categoryIds": ["aqidah"],
+      "media": { "type": "youtube", "videoId": "BEqbFlSwIg8", "startSec": 0 },
+      "durationSec": 1399,
+      "publishedAt": "2026-08-10",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0027",
+      "title": "রাসূল ﷺ-এর প্রতি সাহাবীদের ভালোবাসা কেমন ছিলো !!",
+      "categoryIds": ["seerah"],
+      "media": { "type": "youtube", "videoId": "tp7uUtjL8t0", "startSec": 0 },
+      "durationSec": 2024,
+      "publishedAt": "2026-08-26",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0028",
+      "title": "রাসুলের প্রতি সাহাবীদের ভালোবাসা কতটা ছিল",
+      "categoryIds": ["seerah"],
+      "media": { "type": "youtube", "videoId": "Ue1EH38Ryjg", "startSec": 0 },
+      "durationSec": 1873,
+      "publishedAt": "2026-08-27",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0029",
+      "title": "আধুনিকতার নামে বর্তমান যা হচ্ছে",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "Xbcf2bnSnYQ", "startSec": 0 },
+      "durationSec": 3240,
+      "publishedAt": "2026-09-05",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0030",
+      "title": "সমৃদ্ধি থেকে পতনের নেপথ্যে !!",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "Dcsi-wcZOuM", "startSec": 0 },
+      "durationSec": 3537,
+      "publishedAt": "2026-09-08",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0031",
+      "title": "লেকচার ১",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "hLJWKvLsRwg", "startSec": 0 },
+      "durationSec": 861,
+      "publishedAt": "2026-09-09",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0032",
+      "title": "প্রেম-ভালোবাসার আড়ালে লুকিয়ে আছে এক মহামারি !!",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "oM1LsTM13Go", "startSec": 0 },
+      "durationSec": 6282,
+      "publishedAt": "2026-09-18",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0033",
+      "title": "দাওয়াহ’ কী? কেনো? কিভাবে?",
+      "categoryIds": ["dawah"],
+      "media": { "type": "youtube", "videoId": "SWQnoBfSHC0", "startSec": 0 },
+      "durationSec": 5149,
+      "publishedAt": "2026-09-19",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0034",
+      "title": "লেকচার ২",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "SE8QB2yi7gc", "startSec": 0 },
+      "durationSec": 898,
+      "publishedAt": "2026-09-22",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0035",
+      "title": "দল না করলে জ*বাই করাও জায়েজ ‼",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "Xwc9nnsChf8", "startSec": 0 },
+      "durationSec": 1430,
+      "publishedAt": "2026-09-22",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0036",
+      "title": "পুরুষত্বের সেই সোনালি দিনগুলো",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "K-w8dbxjuEg", "startSec": 0 },
+      "durationSec": 1779,
+      "publishedAt": "2026-09-23",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0037",
+      "title": "কেমন হওয়া উচিৎ মুসলিম উম্মাহর যুবক সম্প্রদায়?!",
+      "categoryIds": ["youth"],
+      "media": { "type": "youtube", "videoId": "F6O-eli3mFQ", "startSec": 0 },
+      "durationSec": 2337,
+      "publishedAt": "2026-09-25",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0038",
+      "title": "সমাজ বিপ্লব !!",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "89-LK1wBnvY", "startSec": 0 },
+      "durationSec": 4136,
+      "publishedAt": "2026-09-26",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0039",
+      "title": "দারসুল ঈমান সেমিনারের সেই সাড়া জাগানো বক্তব্য",
+      "categoryIds": ["aqidah"],
+      "media": { "type": "youtube", "videoId": "6Zm0EsGvaHU", "startSec": 0 },
+      "durationSec": 1625,
+      "publishedAt": "2026-09-27",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0040",
+      "title": "মানবতার মূল্যায়নে ইসলাম বনাম পুঁজিবাদ",
+      "categoryIds": ["seerah", "contemporary"],
+      "media": { "type": "youtube", "videoId": "syb8bdLz0BY", "startSec": 0 },
+      "durationSec": 3257,
+      "publishedAt": "2026-09-27",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0041",
+      "title": "সিরাতের আলোকে বর্তমান প্রজন্মের সংকট ও তার সমাধান",
+      "categoryIds": ["seerah"],
+      "media": { "type": "youtube", "videoId": "nhrYXJvypZ4", "startSec": 0 },
+      "durationSec": 1039,
+      "publishedAt": "2026-09-28",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0042",
+      "title": "নিপীড়ন থেকে মুক্তি—কীভাবে?",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "8Ijm2H5xw10", "startSec": 0 },
+      "durationSec": 1565,
+      "publishedAt": "2026-09-29",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0043",
+      "title": "পুঁজিবাদের উদারতার আড়ালে !!",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "m1jC_rHdKjc", "startSec": 0 },
+      "durationSec": 3257,
+      "publishedAt": "2026-09-29",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0044",
+      "title": "কেনো পৃথিবীর শরীয়াহ প্রয়োজন !!",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "B58ZPwQ7vCE", "startSec": 0 },
+      "durationSec": 2866,
+      "publishedAt": "2026-10-04",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0045",
+      "title": "আমাদের আদি ইতিহাস",
+      "categoryIds": ["history"],
+      "media": { "type": "youtube", "videoId": "NUw1v5HWEYw", "startSec": 0 },
+      "durationSec": 2388,
+      "publishedAt": "2026-10-04",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0046",
+      "title": "যে কথাগুলো সবার শোনা দরকার !!",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "QX6Es4ZrPxk", "startSec": 0 },
+      "durationSec": 4086,
+      "publishedAt": "2026-10-04",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0047",
+      "title": "আমরা সেই বিজয়ী কাফেলা !",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "TZK0lqSJOTA", "startSec": 0 },
+      "durationSec": 2611,
+      "publishedAt": "2026-10-05",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0048",
+      "title": "কিভাবে জেনেবুঝে বিপদের দিকে এগিয়ে যাচ্ছি আমরা !!",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "Tapvx_cFqts", "startSec": 0 },
+      "durationSec": 1614,
+      "publishedAt": "2026-10-05",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0049",
+      "title": "সেই দিন বেশি দূরে নয় !!",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "9IPnqmwJglI", "startSec": 0 },
+      "durationSec": 4086,
+      "publishedAt": "2026-10-06",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0050",
+      "title": "ফিরে এসো রবের দিকে",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "buuGJNgHN_w", "startSec": 0 },
+      "durationSec": 2358,
+      "publishedAt": "2026-10-06",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0051",
+      "title": "সীরাতে রাসূল সাল্লাল্লাহু আলাই সালাম এর জীবনী",
+      "categoryIds": ["seerah"],
+      "media": { "type": "youtube", "videoId": "l1cSeIRxvqQ", "startSec": 0 },
+      "durationSec": 5218,
+      "publishedAt": "2026-10-06",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0052",
+      "title": "রাষ্ট্র যেভাবে খোদার আসনে আশ্বিন হয়",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "t5QeXzB9UpM", "startSec": 0 },
+      "durationSec": 2317,
+      "publishedAt": "2026-10-06",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0053",
+      "title": "সাহেবের নতুন বই নিয়ে আলোচনা !!",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "S1_VjGLDEfU", "startSec": 0 },
+      "durationSec": 2317,
+      "publishedAt": "2026-10-07",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0054",
+      "title": "সিরাতুন নবী সাল্লাল্লাহু আলাই সালাম সেমিনার 2024",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "gNmREIx9zVs", "startSec": 0 },
+      "durationSec": 3612,
+      "publishedAt": "2026-10-08",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0055",
+      "title": "এই বিশ্ব-ব্যবস্থা আপনাকে গণতন্ত্র করতে বাধ্য করবে",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "WpV6uC-Htv4", "startSec": 0 },
+      "durationSec": 1430,
+      "publishedAt": "2026-10-09",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0056",
+      "title": "মুসলিম তারুণ্যের অধঃপতন !!",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "WPcVVQCYsro", "startSec": 0 },
+      "durationSec": 2318,
+      "publishedAt": "2026-10-10",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0057",
+      "title": "বাংলা সাহিত্যের আদ্যোপান্ত !!",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "EVbnY4d570c", "startSec": 0 },
+      "durationSec": 2259,
+      "publishedAt": "2026-10-11",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0058",
+      "title": "দ্বীনি হালাকা",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "jRyJUQ-r9gQ", "startSec": 0 },
+      "durationSec": 3353,
+      "publishedAt": "2026-10-11",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0059",
+      "title": "আমাদের প্রস্তুতি কতদূর!",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "hmLXnIV12Uo", "startSec": 0 },
+      "durationSec": 3523,
+      "publishedAt": "2026-10-14",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0060",
+      "title": "পরিবর্তিত হচ্ছে পৃথিবী !",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "v4yUKsVXH8g", "startSec": 0 },
+      "durationSec": 3523,
+      "publishedAt": "2026-10-14",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0061",
+      "title": "সন্দীপন পাক্ষিক হালাকাহ পর্ব- ৩",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "K0mjm0Z_FWE", "startSec": 0 },
+      "durationSec": 3465,
+      "publishedAt": "2026-10-17",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0062",
+      "title": "কিভাবে সেই ভালোবাসা ভুলে গেলাম আমরা ?!",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "gHaI8xC3MDE", "startSec": 0 },
+      "durationSec": 2875,
+      "publishedAt": "2026-10-19",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0063",
+      "title": "কি হলো এই উম্মাহর তরুণদের ?!",
+      "categoryIds": ["youth"],
+      "media": { "type": "youtube", "videoId": "HnA4Qljj3Eg", "startSec": 0 },
+      "durationSec": 2318,
+      "publishedAt": "2026-10-20",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0064",
+      "title": "মুসলিম বঙ্গের অজানা ইতিহাস.?",
+      "categoryIds": ["history"],
+      "media": { "type": "youtube", "videoId": "-YP1Ztn7hrg", "startSec": 0 },
+      "durationSec": 2147,
+      "publishedAt": "2026-10-22",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0065",
+      "title": "দুনিয়াকে আঁকড়ে ধরার পরিণতি কী?",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "KRROI6JWLpo", "startSec": 0 },
+      "durationSec": 1749,
+      "publishedAt": "2026-10-24",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0066",
+      "title": "ফেসবুকের ৪১ তম লাইভ প্রোগ্রাম বিষয়ঃ- নামাজের গুরুত্ব।আলোচকঃ",
+      "categoryIds": ["salah"],
+      "media": { "type": "youtube", "videoId": "4spR2Va1PH4", "startSec": 0 },
+      "durationSec": 2280,
+      "publishedAt": "2026-10-25",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0067",
+      "title": "রাসূলের উম্মত হয়েও আমরা আজ কোথায় হারিয়ে যাচ্ছি?",
+      "categoryIds": ["seerah"],
+      "media": { "type": "youtube", "videoId": "ARrjHpJM4PI", "startSec": 0 },
+      "durationSec": 2302,
+      "publishedAt": "2026-10-25",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0068",
+      "title": "বাংলাদেশের শিক্ষা সিলেবাস সংস্কারের প্রস্তাবনা !!আসিফ আদনান",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "tqt4W71ksPo", "startSec": 0 },
+      "durationSec": 1406,
+      "publishedAt": "2026-10-25",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0069",
+      "title": "এবার বইমেলার সবচে আলোচিত দুই বই নিয়ে লেখকের কিছু কথা !!",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "jbcvsCi4aBw", "startSec": 0 },
+      "durationSec": 783,
+      "publishedAt": "2026-10-26",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0070",
+      "title": "সরকার যখন খোদা",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "qHStSYJc0pc", "startSec": 0 },
+      "durationSec": 2318,
+      "publishedAt": "2026-10-26",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0071",
+      "title": "সেই নির্যাতিত নারীর চাঞ্চল্যকর ঘটনা যা আপনাকেও কাঁদাবে",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "u_r96ZnQT_c", "startSec": 0 },
+      "durationSec": 2388,
+      "publishedAt": "2026-10-26",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0072",
+      "title": "যে ইতিহাস কেউ বলে না!",
+      "categoryIds": ["history"],
+      "media": { "type": "youtube", "videoId": "uc5wZjyx-oI", "startSec": 0 },
+      "durationSec": 604,
+      "publishedAt": "2026-10-26",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0073",
+      "title": "পুরুষ মানে কী? আপনি কি সেই মানদণ্ডে পড়েন",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "o81w2SSGvl0", "startSec": 0 },
+      "durationSec": 1637,
+      "publishedAt": "2026-10-27",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0074",
+      "title": "মুসলমানদের আসল ইতিহাস!",
+      "categoryIds": ["history"],
+      "media": { "type": "youtube", "videoId": "0EFB08_Ji9M", "startSec": 0 },
+      "durationSec": 1555,
+      "publishedAt": "2026-10-28",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0075",
+      "title": "সালাফদের জীবন থেকে",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "bPOR8oDgSbc", "startSec": 0 },
+      "durationSec": 2859,
+      "publishedAt": "2026-10-28",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0076",
+      "title": "বইমেলায় দ্বীনি ভাইদের সাথে বই আড্ডায় , শামসুল আরেফিন শক্তি ও আব্দুল্লাহ আল মাসুদ",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "AnxQefzR_aE", "startSec": 0 },
+      "durationSec": 3046,
+      "publishedAt": "2026-10-30",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0077",
+      "title": "রাষ্ট্র যখন খোদার আসনে: আধুনিক রাষ্ট্র, সার্বভৌমত্ব ও নিরঙ্কুশ ক্ষমতা",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "tdl0ULiFsn4", "startSec": 0 },
+      "durationSec": 4012,
+      "publishedAt": "2026-10-30",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0078",
+      "title": "আধ্যাতিকতা থেকে বস্তুবাদ !!",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "K_r_wuNZhD8", "startSec": 0 },
+      "durationSec": 3454,
+      "publishedAt": "2026-11-01",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0079",
+      "title": "কথাগুলো প্রত্যেকের শোনা জরুরী !!",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "mgDcnTJtif4", "startSec": 0 },
+      "durationSec": 2065,
+      "publishedAt": "2026-11-02",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0080",
+      "title": "সিরাত আলোকে দ্বীন কায়েম",
+      "categoryIds": ["seerah"],
+      "media": { "type": "youtube", "videoId": "6WVJMcbuRRo", "startSec": 0 },
+      "durationSec": 3286,
+      "publishedAt": "2026-11-04",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0081",
+      "title": "হাদিসশাস্ত্র সম্পর্কে চমৎকার আলোচনা",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "K1W41kS2Kzw", "startSec": 0 },
+      "durationSec": 3796,
+      "publishedAt": "2026-11-05",
+      "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0082",
+      "title": "ওমর রাঃ ওয়াজ",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "VIo7b38yMrs", "startSec": 0 },
+      "durationSec": 2612,
+      "publishedAt": "2026-11-08",
+      "addedAt": "2026-11-08"
     }
   ]
 }

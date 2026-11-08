@@ -1,25 +1,455 @@
 {
   "speakerId": "speaker-001",
   "videos": {
+    "-YP1Ztn7hrg": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0064"
+    },
+    "0EFB08_Ji9M": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0074"
+    },
+    "4spR2Va1PH4": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0066"
+    },
+    "6WVJMcbuRRo": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0080"
+    },
+    "6Zm0EsGvaHU": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0039"
+    },
+    "6kK97JN_tkk": {
+      "status": "duplicate",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: hLJWKvLsRwg"
+    },
+    "89-LK1wBnvY": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0038"
+    },
+    "8Ijm2H5xw10": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0042"
+    },
+    "9EchoAI1dv8": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0011"
+    },
+    "9IPnqmwJglI": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0049"
+    },
+    "9Qqb21mRfMg": {
+      "status": "duplicate",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: spk001-0004"
+    },
+    "9kxpy0yx8Sg": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0025"
+    },
+    "ARrjHpJM4PI": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0067"
+    },
+    "AmFNiPwOBNk": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0016"
+    },
+    "AnxQefzR_aE": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0076"
+    },
+    "B58ZPwQ7vCE": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0044"
+    },
+    "BEqbFlSwIg8": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0026"
+    },
     "DXk2UdsuKkY": {
       "status": "rejected",
       "date": "2026-11-07",
       "note": "একই কারণ"
+    },
+    "Dcsi-wcZOuM": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0030"
+    },
+    "EVbnY4d570c": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0057"
+    },
+    "F6O-eli3mFQ": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0037"
+    },
+    "HnA4Qljj3Eg": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0063"
+    },
+    "IM2S4b_iU5s": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0017"
+    },
+    "ImnBbXmeCnE": {
+      "status": "duplicate",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: t5QeXzB9UpM"
+    },
+    "K-w8dbxjuEg": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0036"
+    },
+    "K0mjm0Z_FWE": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0061"
+    },
+    "K1W41kS2Kzw": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0081"
+    },
+    "KRROI6JWLpo": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0065"
+    },
+    "K_r_wuNZhD8": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0078"
+    },
+    "MyrqH5B2p0I": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0020"
+    },
+    "NUw1v5HWEYw": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0045"
+    },
+    "PXkAr2AA1uY": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0023"
+    },
+    "QX6Es4ZrPxk": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0046"
+    },
+    "Rrbz2V9TtiI": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0015"
+    },
+    "S1_VjGLDEfU": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0053"
+    },
+    "SE8QB2yi7gc": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0034"
+    },
+    "SWQnoBfSHC0": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0033"
+    },
+    "TZK0lqSJOTA": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0047"
+    },
+    "Tapvx_cFqts": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0048"
+    },
+    "Ue1EH38Ryjg": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0028"
+    },
+    "VIo7b38yMrs": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0082"
+    },
+    "WPcVVQCYsro": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0056"
+    },
+    "WpV6uC-Htv4": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0055"
+    },
+    "Xbcf2bnSnYQ": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0029"
+    },
+    "Xwc9nnsChf8": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0035"
+    },
+    "_-YLngHJ0Tw": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0019"
+    },
+    "bPOR8oDgSbc": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0075"
+    },
+    "buuGJNgHN_w": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0050"
+    },
+    "cdS4N99kYK8": {
+      "status": "low-confidence",
+      "date": "2026-11-08",
+      "note": "নাম শুধু বিবরণে"
+    },
+    "d5sjUGcTDEk": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0022"
+    },
+    "f-6J3kWX8EI": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0024"
+    },
+    "gHaI8xC3MDE": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0062"
+    },
+    "gNmREIx9zVs": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0054"
+    },
+    "gOj93NHgbKA": {
+      "status": "duplicate",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: tp7uUtjL8t0"
+    },
+    "gVwioANEZh4": {
+      "status": "duplicate",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: WPcVVQCYsro"
+    },
+    "gwz-wnnd5pc": {
+      "status": "duplicate",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: spk001-0002"
+    },
+    "hLJWKvLsRwg": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0031"
     },
     "hl2ZmmJ9yJE": {
       "status": "rejected",
       "date": "2026-11-07",
       "note": "oEmbed দুবার ব্যর্থ — এমবেড বন্ধ, মুছে ফেলা বা প্রাইভেট; অ্যাপের প্লেয়ারে চলবে না"
     },
+    "hmLXnIV12Uo": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0059"
+    },
+    "jDtEOGeA3yk": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0014"
+    },
+    "jIBL4SCm4YI": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0009"
+    },
+    "jPxl9kJmC74": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0021"
+    },
+    "jRyJUQ-r9gQ": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0058"
+    },
+    "jbcvsCi4aBw": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0069"
+    },
+    "l1cSeIRxvqQ": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0051"
+    },
+    "lgv7ypmPtGU": {
+      "status": "duplicate",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: jDtEOGeA3yk"
+    },
+    "m1jC_rHdKjc": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0043"
+    },
+    "mgDcnTJtif4": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0079"
+    },
+    "mlrL3M03oDM": {
+      "status": "duplicate",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: tp7uUtjL8t0"
+    },
+    "n2nZ0Kg_cak": {
+      "status": "duplicate",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: SE8QB2yi7gc"
+    },
+    "nhrYXJvypZ4": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0041"
+    },
     "nmqP_xlLqYM": {
       "status": "rejected",
       "date": "2026-11-07",
       "note": "একই কারণ"
     },
+    "o81w2SSGvl0": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0073"
+    },
+    "oM1LsTM13Go": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0032"
+    },
+    "oxgoPBsxD30": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0010"
+    },
     "pJvp-SgkCdg": {
       "status": "rejected",
       "date": "2026-11-07",
       "note": "ভিডিও চলে, তবে এটি Somoy TV-র সংবাদ প্রতিবেদন, লেকচার নয়"
+    },
+    "qBDbX7VHNBM": {
+      "status": "duplicate",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: hLJWKvLsRwg"
+    },
+    "qHStSYJc0pc": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0070"
+    },
+    "rlPFFr8zw4M": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0018"
+    },
+    "svmcdX0vd6c": {
+      "status": "duplicate",
+      "date": "2026-11-08",
+      "note": "একই লেকচার: KRROI6JWLpo"
+    },
+    "syb8bdLz0BY": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0040"
+    },
+    "t5QeXzB9UpM": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0052"
+    },
+    "tdl0ULiFsn4": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0077"
+    },
+    "tp7uUtjL8t0": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0027"
+    },
+    "tqt4W71ksPo": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0068"
+    },
+    "uSxK2O-Jq7g": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0012"
+    },
+    "u_r96ZnQT_c": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0071"
+    },
+    "uc5wZjyx-oI": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0072"
+    },
+    "um70fHaZQnk": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0013"
+    },
+    "v4yUKsVXH8g": {
+      "status": "proposed",
+      "date": "2026-11-08",
+      "lectureId": "spk001-0060"
     }
   }
 }
