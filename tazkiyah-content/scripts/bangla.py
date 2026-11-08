@@ -12,7 +12,8 @@ import unicodedata
 from difflib import SequenceMatcher
 from typing import Iterable
 
-_INVISIBLE = re.compile("[​‌‍⁠﻿­]")
+_INVISIBLE = re.compile("[\u200B\u200C\u200D\u2060\uFEFF\u00AD]")
+_WORD_SPLIT = re.compile(r"[^\w\u0980-\u09FF]+")
 _WHITESPACE = re.compile(r"\s+")
 _BANGLA_DIGITS = str.maketrans("০১২৩৪৫৬৭৮৯", "0123456789")
 _BENGALI_LETTER = re.compile("[ঀ-৿]")
@@ -22,10 +23,10 @@ def fold(text: str) -> str:
     """Unify encodings without changing case: NFC, khanda-ta, joiners, য়/ড়/ঢ়, digits."""
     s = unicodedata.normalize("NFC", text)
     # Legacy khanda-ta (TA + HASANTA + ZWJ) becomes U+09CE; must run before joiners are stripped.
-    s = s.replace("ত্‍", "ৎ")
+    s = s.replace("\u09A4\u09CD\u200D", "\u09CE")
     s = _INVISIBLE.sub("", s)
     # NFC decomposes these three (composition exclusions); fold both spellings to one code point.
-    s = s.replace("য়", "য়").replace("ড়", "ড়").replace("ঢ়", "ঢ়")
+    s = s.replace("\u09AF\u09BC", "\u09DF").replace("\u09A1\u09BC", "\u09DC").replace("\u09A2\u09BC", "\u09DD")
     return s.translate(_BANGLA_DIGITS)
 
 
@@ -62,6 +63,22 @@ def part_number(title: str) -> int | None:
     return int(match.group(1) or match.group(2))
 
 
+_COMMON_WORDS = {
+    normalize(w) for w in (
+        "ও এর কি কী কেন কেমন কিভাবে কীভাবে যে যা এই সেই আমাদের আমরা তার তাদের জন্য থেকে নিয়ে সাথে এবং বা না "
+        "নয় হবে হয় করে করা করতে আলোচনা লেকচার বক্তব্য ওয়াজ পর্ব জীবন কথা কিছু যেভাবে সবার আপনার আপনি "
+        "গুরুত্বপূর্ণ সেরা নতুন মাস বিষয়ে সম্পর্কে the of and in a to lecture"
+    ).split()
+}
+
+
+def shared_topic_words(a: str, b: str) -> set[str]:
+    """Meaningful words (4+ letters, not filler) that both titles use."""
+    def words(t: str) -> set[str]:
+        return {w for w in _WORD_SPLIT.split(normalize(t)) if len(w) >= 4 and w not in _COMMON_WORDS}
+    return words(a) & words(b)
+
+
 def similarity(a: str, b: str) -> float:
     """0..1 similarity of two titles after normalisation."""
     na, nb = normalize(a), normalize(b)
@@ -94,6 +111,9 @@ _NOISE_PATTERNS = [
     rf"ওয়াজ\s+{_YEAR}",
     r"\b(?:official|hd|4k|full\s+video|must\s+watch|viral)\b",
     r"(?:ফুল ভিডিও|অবশ্যই দেখুন|ভাইরাল)",
+    r"\.(?:mp4|mkv|webm|avi)\b",  # file names used as titles
+    r"@[\w.\-]+",  # @channel handles
+    r"/{2,}",
 ]
 # Sensational wording replaced by a neutral form (README: titles stay calm and factual).
 _SENSATIONAL = [
@@ -108,7 +128,9 @@ _SENSATIONAL = [
     (r"একবার\s+শুনে\s+দেখুন", ""),
     (r"অসাধারণ\s+(?:আলোচনা|বয়ান|লেকচার)", ""),
 ]
-_HONORIFIC = r"(?:মুফতি|মুফতী|ডাঃ|ডা\.?|ড\.|ডক্টর|শায়খ|শাইখ|উস্তাদ|উস্তায|মাওলানা|mufti|dr\.?|shaykh|sheikh|ustadh)"
+_HONORIFIC = r"(?:মুফতি|মুফতী|ডাঃ|ডা\s?\.?|ড\.|ডঃ|ডক্টর|শায়খ|শাইখ|উস্তাদ|উস্তায|মাওলানা|মাওঃ|mufti|dr\.?|shaykh|sheikh|ustadh)"
+# An honorific left on its own ("[ডা . ]", "মাওঃ") once the name was removed.
+_LONE_HONORIFIC = re.compile(r"[(\[]?\s*(?:ডাঃ|ডা\s?\.|ড\.|মাওঃ|ডঃ)\s*[)\]]?(?![\w\u0980-\u09FF])")
 _NAME_SUFFIX = r"(?:\s*(?:চৌধুরী|চৌধুরি|chowdhury|ভাই|bhai))?(?:য়ের|এর|ের|র|'s)?"
 _WORD_CHAR = "\\w\u0980-\u09FF"
 # "হাফিঃ", "(হাফি.)", "হাফিযাহুল্লাহ" — the blessing after a name, left behind once the name is gone.
@@ -192,6 +214,7 @@ def clean_title(title: str, names: Iterable[str] = (), channel: str | None = Non
     for pattern, replacement in _SENSATIONAL:
         text = re.sub(canonical(pattern), canonical(replacement), text)
     text = _BLESSING.sub(" ", text)
+    text = _LONE_HONORIFIC.sub(" ", text)
     text = re.sub(r"(?<=\S)_(?=\s|$)", "?", text).replace("_", " ")  # re-uploads turn "?" into "_"
 
     segments = [_tidy(s) for s in _SEPARATORS.split(text)]
@@ -232,11 +255,15 @@ CATEGORY_KEYWORDS: list[tuple[str, tuple[str, ...]]] = [
     ("history", ("ইতিহাস", "history", "খিলাফত", "সালতানাত")),
     ("dawah", ("দাওয়াহ", "দাওয়াত", "দাওয়া", "dawah")),
     ("youth", ("তরুণ", "তরুণদের", "যুবক", "যুবসমাজ", "youth", "gen z", "জেন-জি", "জেন জি", "ক্যাম্পাস")),
+    ("contemporary", (
+        "পশ্চিমা", "পশ্চিমের", "সেক্যুলার", "সেকুলার", "নারীবাদ", "ট্রান্সজেন্ডার", "ট্রান্স", "সমকাম", "সমকামিতা",
+        "গণতন্ত্র", "গণতান্ত্রিক", "মিডিয়া", "জায়নবাদ", "শাহবাগ", "নাস্তিক", "নাস্তিকতা", "আধুনিকতা", "পুঁজিবাদ",
+        "উপনিবেশ", "রাষ্ট্র", "রাজনীতি", "lgbt", "lgbtq", "feminism", "secular",
+    )),
 ]
 
 # A keyword matches a whole word, or the word plus one of these endings ("নামাজের", "রোজায়").
 _SUFFIXES = ("", "ের", "এর", "র", "য়ের", "য়", "ে", "তে", "দের", "গুলো", "সমূহ", "s")
-_WORD_SPLIT = re.compile(r"[^\wঀ-৿]+")
 
 
 def _has_keyword(tokens: list[str], joined: str, keyword: str) -> bool:
