@@ -3,7 +3,12 @@
     {
       "speakerId": "speaker-001",
       "channels": [
-        { "id": "UCMf7m_uGFBdPl91ydY_OYCg", "handle": "@jakariamasudofficial", "name": "Jakaria Masud Official", "official": true }
+        {
+          "id": "UCMf7m_uGFBdPl91ydY_OYCg",
+          "handle": "@jakariamasudofficial",
+          "name": "Jakaria Masud Official",
+          "official": true
+        }
       ],
       "playlists": [],
       "queries": [
@@ -16,15 +21,34 @@
         "Zakaria Masud",
         "Zakaria Masood"
       ],
-      "mustMatch": ["জাকারিয়া মাসু", "যাকারিয়া মাসু", "জাকারিয়া মাসউ", "jakaria masud", "jakaria masood", "zakaria masud", "zakaria masood"],
-      "exclude": [],
-      "defaultCategoryIds": ["contemporary"]
+      "mustMatch": [
+        "জাকারিয়া মাসু",
+        "যাকারিয়া মাসু",
+        "জাকারিয়া মাসউ",
+        "jakaria masud",
+        "jakaria masood",
+        "zakaria masud",
+        "zakaria masood"
+      ],
+      "exclude": [
+        "audiobook",
+        "audio book",
+        "অডিওবুক",
+        "অডিও বুক"
+      ],
+      "defaultCategoryIds": [
+        "contemporary"
+      ]
     },
     {
       "speakerId": "speaker-002",
       "channels": [],
       "playlists": [
-        { "id": "PLgdxQlGUmz8qoBMLt2jMN0AQF22vUs0ju", "name": "শাইখ হারুন ইজহার হাফিযাহুল্লাহ (Mashwara Official)", "trusted": true }
+        {
+          "id": "PLgdxQlGUmz8qoBMLt2jMN0AQF22vUs0ju",
+          "name": "শাইখ হারুন ইজহার হাফিযাহুল্লাহ (Mashwara Official)",
+          "trusted": true
+        }
       ],
       "queries": [
         "মুফতি হারুন ইজহার",
@@ -36,16 +60,48 @@
         "Harun Izhar",
         "Harun Izhar Chowdhury"
       ],
-      "mustMatch": ["হারুন ইজহার", "হারুন ইযহার", "হারুন ইজাহার", "হারুন ইযাহার", "harun izhar", "harun ijhar", "harun ijar", "haroon izhar"],
-      "exclude": ["haяun"],
-      "defaultCategoryIds": ["contemporary"]
+      "mustMatch": [
+        "হারুন ইজহার",
+        "হারুন ইযহার",
+        "হারুন ইজাহার",
+        "হারুন ইযাহার",
+        "harun izhar",
+        "harun ijhar",
+        "harun ijar",
+        "haroon izhar"
+      ],
+      "exclude": [
+        "haяun",
+        "audiobook",
+        "audio book",
+        "অডিওবুক",
+        "অডিও বুক"
+      ],
+      "defaultCategoryIds": [
+        "contemporary"
+      ]
     },
     {
       "speakerId": "speaker-003",
       "channels": [
-        { "id": "UCjEWXE-d8olTilYtyqO7wEQ", "handle": "@Firasatbd", "name": "Firasat", "official": false },
-        { "id": "UCfMEytMbdD1PiQeqvFXJAow", "handle": "@AsifAdnan007", "name": "Asif Adnan (not confirmed official)", "official": false },
-        { "id": "UCxqJPPSAal9vHvvwdHInpvA", "handle": "@seanpublicationltd", "name": "SEAN Publication", "official": false }
+        {
+          "id": "UCjEWXE-d8olTilYtyqO7wEQ",
+          "handle": "@Firasatbd",
+          "name": "Firasat",
+          "official": false
+        },
+        {
+          "id": "UCfMEytMbdD1PiQeqvFXJAow",
+          "handle": "@AsifAdnan007",
+          "name": "Asif Adnan (not confirmed official)",
+          "official": false
+        },
+        {
+          "id": "UCxqJPPSAal9vHvvwdHInpvA",
+          "handle": "@seanpublicationltd",
+          "name": "SEAN Publication",
+          "official": false
+        }
       ],
       "playlists": [],
       "queries": [
@@ -56,14 +112,34 @@
         "Asif Adnan",
         "Asif Adnan lecture"
       ],
-      "mustMatch": ["আসিফ আদনান", "asif adnan"],
-      "exclude": ["asif adnan bro", "adnan asif", "আবু ত্বহা", "আবু তহা", "abu taha"],
-      "defaultCategoryIds": ["contemporary"]
+      "mustMatch": [
+        "আসিফ আদনান",
+        "asif adnan"
+      ],
+      "exclude": [
+        "asif adnan bro",
+        "adnan asif",
+        "আবু ত্বহা",
+        "আবু তহা",
+        "abu taha",
+        "audiobook",
+        "audio book",
+        "অডিওবুক",
+        "অডিও বুক"
+      ],
+      "defaultCategoryIds": [
+        "contemporary"
+      ]
     },
     {
       "speakerId": "speaker-004",
       "channels": [
-        { "id": "UCxqJPPSAal9vHvvwdHInpvA", "handle": "@seanpublicationltd", "name": "SEAN Publication", "official": false }
+        {
+          "id": "UCxqJPPSAal9vHvvwdHInpvA",
+          "handle": "@seanpublicationltd",
+          "name": "SEAN Publication",
+          "official": false
+        }
       ],
       "playlists": [],
       "queries": [
@@ -75,15 +151,47 @@
         "Ahmad Rafiq SEAN",
         "Abu Tasmia Ahmad Rafiq"
       ],
-      "mustMatch": ["আহমাদ রফিক", "আহমদ রফিক", "আবু তাসমিয়া", "ahmad rafiq", "ahmad rafique", "ahmed rafiq", "abu tasmia"],
-      "exclude": ["ভাষাসৈনিক", "ভাষা সৈনিক", "ভাষা আন্দোলন", "একুশে পদক", "রবীন্দ্র", "language movement", "bhasha"],
-      "defaultCategoryIds": ["contemporary"]
+      "mustMatch": [
+        "আহমাদ রফিক",
+        "আহমদ রফিক",
+        "আবু তাসমিয়া",
+        "ahmad rafiq",
+        "ahmad rafique",
+        "ahmed rafiq",
+        "abu tasmia"
+      ],
+      "exclude": [
+        "ভাষাসৈনিক",
+        "ভাষা সৈনিক",
+        "ভাষা আন্দোলন",
+        "একুশে পদক",
+        "রবীন্দ্র",
+        "language movement",
+        "bhasha",
+        "audiobook",
+        "audio book",
+        "অডিওবুক",
+        "অডিও বুক"
+      ],
+      "defaultCategoryIds": [
+        "contemporary"
+      ]
     },
     {
       "speakerId": "speaker-005",
       "channels": [
-        { "id": "UCfx50GXZb6gDbxfTBScSGaw", "handle": "@ShamsulArefinShaktiOfficial", "name": "Shamsul Arefin Shakti (Official)", "official": true },
-        { "id": "UC5tWuwzLfPlZA915Qie1Eww", "handle": "@MashwaraOfficial", "name": "Mashwara Official", "official": false }
+        {
+          "id": "UCfx50GXZb6gDbxfTBScSGaw",
+          "handle": "@ShamsulArefinShaktiOfficial",
+          "name": "Shamsul Arefin Shakti (Official)",
+          "official": true
+        },
+        {
+          "id": "UC5tWuwzLfPlZA915Qie1Eww",
+          "handle": "@MashwaraOfficial",
+          "name": "Mashwara Official",
+          "official": false
+        }
       ],
       "playlists": [],
       "queries": [
@@ -94,9 +202,31 @@
         "Shamsul Arefin Shakti",
         "Dr Shamsul Arefin"
       ],
-      "mustMatch": ["শামসুল আরেফ", "আরেফীন শক্তি", "আরেফিন শক্তি", "shamsul arefin", "arefin shakti"],
-      "exclude": ["আরেফিন সিদ্দিক", "আরেফীন সিদ্দিক", "arefin siddique", "a a m s"],
-      "defaultCategoryIds": ["dawah"]
+      "mustMatch": [
+        "শামসুল আরেফ",
+        "আরেফীন শক্তি",
+        "আরেফিন শক্তি",
+        "shamsul arefin",
+        "arefin shakti"
+      ],
+      "exclude": [
+        "আরেফিন সিদ্দিক",
+        "আরেফীন সিদ্দিক",
+        "arefin siddique",
+        "a a m s",
+        "shamsul arefin uzzal",
+        "arefin uzzal",
+        "আরেফিন উজ্জল",
+        "আরেফীন উজ্জ্বল",
+        "(bpt)",
+        "audiobook",
+        "audio book",
+        "অডিওবুক",
+        "অডিও বুক"
+      ],
+      "defaultCategoryIds": [
+        "dawah"
+      ]
     }
   ]
 }

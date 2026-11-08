@@ -229,6 +229,14 @@ def test_filters(content, video, reason):
     assert not (content / "discovery/seen/speaker-001.json").read_text().count("CANDIDATE01")
 
 
+def test_title_that_is_only_the_name_is_flagged(content):
+    fake = FakeClient(
+        playlists={"UUofficial0000000000000a": ["NAMEONLY001"]},
+        videos={"NAMEONLY001": item("NAMEONLY001", "প্রথম বক্তা", channel_id=OFFICIAL)},
+    )
+    assert "শিরোনাম দেখুন" in run(content, fake).added[0].flags
+
+
 def test_name_only_in_description_is_listed_not_added(content):
     fake = FakeClient(
         searches={"প্রথম বক্তা": [["DESCONLY001"]]},
@@ -239,12 +247,36 @@ def test_name_only_in_description_is_listed_not_added(content):
     assert read_json(content, "discovery/seen/speaker-001.json")["videos"]["DESCONLY001"]["status"] == "low-confidence"
 
 
-def test_short_talks_are_flagged_as_possible_clips(content):
+def test_short_talks_from_the_official_channel_are_kept_and_flagged(content):
+    fake = FakeClient(
+        playlists={"UUofficial0000000000000a": ["SHORTTALK01"]},
+        videos={"SHORTTALK01": item("SHORTTALK01", "দোয়ার আদব", channel_id=OFFICIAL, duration="PT8M")},
+    )
+    assert run(content, fake).added[0].flags == ["ক্লিপ হতে পারে (১৫ মিনিটের কম)"]
+
+
+def test_short_videos_from_other_channels_are_clips(content):
     fake = FakeClient(
         searches={"প্রথম বক্তা": [["SHORTTALK01"]]},
         videos={"SHORTTALK01": item("SHORTTALK01", "প্রথম বক্তা: দোয়ার আদব", duration="PT8M")},
     )
-    assert run(content, fake).added[0].flags == ["ক্লিপ হতে পারে (১৫ মিনিটের কম)"]
+    result = run(content, fake)
+    assert result.added == [] and result.dropped == {"short": 1}
+
+
+def test_same_length_reupload_with_a_new_title_is_a_duplicate(content):
+    fake = FakeClient(
+        searches={"প্রথম বক্তা": [["ORIGINAL001", "REUPLOAD002"]]},
+        videos={
+            "ORIGINAL001": item("ORIGINAL001", "গণতান্ত্রিক শাসনের চেয়ে শরিয়া শাসন কেন উত্তম | প্রথম বক্তা",
+                                duration="PT56M9S", published="2025-01-01T00:00:00Z"),
+            "REUPLOAD002": item("REUPLOAD002", "গনতান্ত্রিক শাষনের চেয়ে কেনো শরীয়াহ শাসন | প্রথম বক্তা",
+                                duration="PT56M9S", published="2025-06-01T00:00:00Z"),
+        },
+    )
+    result = run(content, fake)
+    assert [c.video_id for c in result.added] == ["ORIGINAL001"]
+    assert [(c.video_id, c.duplicate_of) for c in result.duplicates] == [("REUPLOAD002", "ORIGINAL001")]
 
 
 def test_reupload_of_an_existing_lecture_is_a_duplicate(content):
@@ -272,6 +304,20 @@ def test_two_copies_keep_the_official_one(content):
     result = run(content, fake)
     assert [c.video_id for c in result.added] == ["OFFICIALCPY"]
     assert [(c.video_id, c.duplicate_of) for c in result.duplicates] == [("MIRRORCOPY1", "OFFICIALCPY")]
+
+
+@pytest.mark.parametrize(
+    ("a", "da", "b", "db", "same"),
+    [
+        ("জীবন নিয়ে এভাবে কখনো ভেবেছেন?", 2062, "জীবন নিয়ে এভাবে কখনো ভেবেছেন বগুড়া", 2062, True),
+        ("ক্যারিয়ার ভাবনা", 3600, "ক্যারিয়ার ভাবনা", 3420, True),  # trimmed copy, same title
+        ("সীরাত পর্ব ১", 3000, "সীরাত পর্ব ২", 3000, False),  # parts differ
+        ("সালাতে খুশু", 1800, "রমজানের প্রস্তুতি", 1801, False),  # same length by chance
+        ("তাওবা", 0, "তাওবা", 0, False),  # length unknown
+    ],
+)
+def test_same_lecture(a, da, b, db, same):
+    assert discover.same_lecture(a, da, b, db) is same
 
 
 def test_parts_of_a_series_are_not_duplicates(content):
@@ -313,7 +359,7 @@ def test_report_lists_everything_for_review(content):
     report = discover.render_report(run(content, fake), TODAY)
     assert "১টি যোগ, ১টি শুধু তালিকায়" in report
     assert "`spk001-0003` | সবরের ফজিলত | [সবরের ফজিলত \\| প্রথম বক্তা](https://youtu.be/SEARCHHIT01)" in report
-    assert "কম নিশ্চিত" in report and "৫ মিনিটের কম (Shorts / ক্লিপ): ১টি" in report
+    assert "কম নিশ্চিত" in report and "খুব ছোট (Shorts / ক্লিপ): ১টি" in report
 
 
 # ------------------------------------------------------------------ CLI, import, prompt

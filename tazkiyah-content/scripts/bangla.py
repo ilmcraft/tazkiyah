@@ -48,6 +48,20 @@ def contains_any(text: str, needles: Iterable[str]) -> bool:
     return any(normalize(n) in haystack for n in needles if n.strip())
 
 
+_PART = re.compile(
+    fold(r"(?:পর্ব|পার্ট|খণ্ড|part|episode|ep\.?)\s*[-:–#_]?\s*([0-9০-৯]+)|([0-9০-৯]+)\s*(?:ম|য়|য়|র্থ|ষ্ঠ|তম)?\s*(?:পর্ব|খণ্ড)"),
+    re.IGNORECASE,
+)
+
+
+def part_number(title: str) -> int | None:
+    """"পর্ব ২", "২য় পর্ব", "Part 2" -> 2; None when the title names no part."""
+    match = _PART.search(fold(title))
+    if not match:
+        return None
+    return int(match.group(1) or match.group(2))
+
+
 def similarity(a: str, b: str) -> float:
     """0..1 similarity of two titles after normalisation."""
     na, nb = normalize(a), normalize(b)
@@ -60,7 +74,7 @@ def similarity(a: str, b: str) -> float:
 # Title cleaning
 # ---------------------------------------------------------------------------
 
-_SEPARATORS = re.compile(r"\s*(?:\|\|?|｜|‖|::|\s[-–—]\s)\s*")
+_SEPARATORS = re.compile(r"\s*(?:\|\|?|｜|‖|::|॥|।\s*।|\s।\s|\s[-–—]\s|\s[Il]\s[Il]\s)\s*")
 _HASHTAG = re.compile(r"#\S+")
 _BRACKETED_NOISE = re.compile(
     r"[\[(【](?:[^\])】]*?(?:official|full|hd|4k|new|waz|lecture|video|ভিডিও|ওয়াজ|লেকচার)[^\])】]*?)[\])】]",
@@ -89,19 +103,52 @@ _SENSATIONAL = [
     (r"হুংকার", ""),
     (r"তোলপাড়", ""),
     (r"ধুয়ে\s+দিলেন", ""),
+    (r"মন\s+দিয়ে\s+শুনুন", ""),
+    (r"(?:সবাই|অবশ্যই)\s+শুনুন", ""),
+    (r"একবার\s+শুনে\s+দেখুন", ""),
+    (r"অসাধারণ\s+(?:আলোচনা|বয়ান|লেকচার)", ""),
 ]
-_HONORIFIC = r"(?:মুফতি|মুফতী|ডা\.?|ড\.|ডক্টর|শায়খ|শাইখ|উস্তাদ|উস্তায|মাওলানা|mufti|dr\.?|shaykh|sheikh|ustadh)"
+_HONORIFIC = r"(?:মুফতি|মুফতী|ডাঃ|ডা\.?|ড\.|ডক্টর|শায়খ|শাইখ|উস্তাদ|উস্তায|মাওলানা|mufti|dr\.?|shaykh|sheikh|ustadh)"
 _NAME_SUFFIX = r"(?:\s*(?:চৌধুরী|চৌধুরি|chowdhury|ভাই|bhai))?(?:য়ের|এর|ের|র|'s)?"
+_WORD_CHAR = "\\w\u0980-\u09FF"
+# "হাফিঃ", "(হাফি.)", "হাফিযাহুল্লাহ" — the blessing after a name, left behind once the name is gone.
+_BLESSING = re.compile(r"[(\[]?\s*হাফি(?:যাহুল্লাহ|জাহুল্লাহ|যাহুল্লা|জাহুল্লা|ঃ|\.|:)?\s*[)\]]?(?![\w\u0980-\u09FF])")
+# A Latin tail after Bengali text is almost always the English duplicate of the title.
+_LATIN_TAIL = re.compile(r"(?<=[\u0980-\u09FF?!।\])])\s+(?:[\[(]\s*[\])]\s*)*[A-Za-z][A-Za-z0-9 .:,'’&()\[\]_\-]*$")
 _EDGE_PUNCT = " \t-–—|:;,.।·•*_~'\"“”‘’"
 
 
+_HONORIFIC_WORDS = {"মুফতি", "মুফতী", "ডা.", "ডাঃ", "ডা", "ড.", "ডক্টর", "শায়খ", "শাইখ", "উস্তাদ", "মাওলানা", "mufti", "dr.", "dr", "shaykh", "sheikh"}
+
+
+def name_variants(names: Iterable[str]) -> set[str]:
+    """Each name plus the name without its last word ("শামসুল আরেফীন শক্তি" -> "শামসুল আরেফীন"),
+    when at least two real name words remain — titles often drop the nickname."""
+    out: set[str] = set()
+    for name in names:
+        name = canonical(name)
+        if not name:
+            continue
+        out.add(name)
+        words = name.split(" ")
+        while words and words[0].lower() in _HONORIFIC_WORDS:  # the honorific is matched separately
+            words = words[1:]
+        for form in (words, words[:-1]):
+            if len(form) >= 2:
+                out.add(" ".join(form))
+    return out
+
+
 def _name_pattern(names: Iterable[str]) -> re.Pattern[str] | None:
-    variants = sorted({canonical(n) for n in names if n.strip()}, key=len, reverse=True)
+    variants = sorted(name_variants(names), key=len, reverse=True)
     if not variants:
         return None
     alternatives = "|".join(re.escape(v).replace(r"\ ", r"\s+") for v in variants)
+    # Whole words only: "শামসুল আরেফ" must not eat the start of "শামসুল আরেফীন".
     honorific, suffix = canonical(_HONORIFIC), canonical(_NAME_SUFFIX)
-    return re.compile(rf"(?:{honorific}\s*)?(?:{alternatives}){suffix}", re.IGNORECASE)
+    return re.compile(
+        rf"(?<![{_WORD_CHAR}])(?:{honorific}\s*)?(?:{alternatives}){suffix}(?![{_WORD_CHAR}])", re.IGNORECASE
+    )
 
 
 _GENERIC_NORMALIZED.update(normalize(g) for g in _GENERIC)
@@ -112,6 +159,8 @@ def _bengali_letters(text: str) -> int:
 
 
 def _tidy(text: str) -> str:
+    text = text.replace("\u09F7", "।")  # "৷" (a currency sign) typed as a danda
+    text = re.sub(r"।(\s*।)+", "।", text)
     text = re.sub(r"[\[(【]\s*[\])】]", "", text)
     text = _WHITESPACE.sub(" ", text).strip()
     return text.strip(_EDGE_PUNCT).strip()
@@ -142,11 +191,15 @@ def clean_title(title: str, names: Iterable[str] = (), channel: str | None = Non
         text = re.sub(canonical(pattern), " ", text, flags=re.IGNORECASE)
     for pattern, replacement in _SENSATIONAL:
         text = re.sub(canonical(pattern), canonical(replacement), text)
+    text = _BLESSING.sub(" ", text)
+    text = re.sub(r"(?<=\S)_(?=\s|$)", "?", text).replace("_", " ")  # re-uploads turn "?" into "_"
 
     segments = [_tidy(s) for s in _SEPARATORS.split(text)]
     segments = [s for s in segments if not _is_generic(s)]
     if not segments:
         return _tidy(original) or title.strip()
+    segments = [_tidy(_LATIN_TAIL.sub("", s)) if _bengali_letters(s) else s for s in segments]
+    segments = [s for s in segments if not _is_generic(s)] or segments
     best = max(segments, key=lambda s: (_bengali_letters(s), len(s)))
     # Keep the first such segment when two tie (the title's lead is usually the topic).
     for s in segments:
