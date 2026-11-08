@@ -174,6 +174,7 @@ fun LectureListItem(
     modifier: Modifier = Modifier,
     showSpeaker: Boolean = true,
     onToggleFavorite: (() -> Unit)? = null,
+    trailing: (@Composable () -> Unit)? = null,
 ) {
     Row(
         modifier
@@ -208,6 +209,8 @@ fun LectureListItem(
             Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.padding(top = 2.dp)) {
                 if (row.isNew()) Badge(stringResource(R.string.badge_new))
                 if (row.isCompleted) Badge(stringResource(R.string.badge_completed), gold = false)
+                if (row.isSaved) Badge(stringResource(R.string.badge_saved), gold = false)
+                if (row.isSaving) Badge(stringResource(R.string.badge_saving), gold = false)
                 when (row.lecture.mediaType) {
                     MediaType.AUDIO -> Badge(stringResource(R.string.audio_badge), gold = false)
                     MediaType.VIDEO -> Badge(stringResource(R.string.video_badge), gold = false)
@@ -217,6 +220,7 @@ fun LectureListItem(
         if (onToggleFavorite != null) {
             FavoriteButton(row.isFavorite, onToggleFavorite)
         }
+        trailing?.invoke()
     }
 }
 

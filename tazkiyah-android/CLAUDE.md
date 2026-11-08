@@ -4,7 +4,8 @@
   OkHttp + kotlinx.serialization, Media3, android-youtube-player (core).
 - All user-facing text in Bengali via strings.xml; show numbers with toBanglaDigits().
 - Never add any way to open the YouTube app or youtube.com (no share, no "open in YouTube").
-- Every YouTube video must be shown through FocusedYouTubePlayer (touch shield + cover card).
+- Every video must be shown inside FocusedVideoFrame (touch shield + cover card): streaming YouTube via
+  FocusedYouTubePlayer, saved/direct files via FocusedFileVideoPlayer.
 - Content sync must never modify user tables. Never use destructive Room migrations.
 - Before finishing a task: ./gradlew lint testDebugUnitTest must pass.
 
@@ -17,3 +18,10 @@
   `enableBackgroundPlayback(true)` (the view is not a lifecycle observer) and always publishes a
   MediaSession through PlaybackService; Back on the first screen calls `moveTaskToBack`. This breaks
   YouTube's terms for store apps — fine for this personal build, remove it before any Play Store release.
+- Offline saving (`data/download/`): YouTube lectures are saved with NewPipeExtractor (JitPack,
+  `newpipeExtractor` in libs.versions.toml) — like background play, this breaks YouTube's terms; personal
+  build only. When saving stops working, try a newer extractor version first. NewPipeExtractor is GPL-3.0:
+  handing this APK to others means its source must be released under GPL too.
+  DownloadWorker fetches 5 MB ranged chunks into `files/downloads/<id>.<itag>.part` (resumable), picks the
+  original-language audio (never a dub) and H.264 video, and muxes them with MediaMuxer. A saved lecture
+  plays in ExoPlayer instead of YouTube (PlaybackManager `Active.saved`).

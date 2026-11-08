@@ -17,6 +17,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.CheckCircle
+import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.DownloadForOffline
 import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material.icons.rounded.History
 import androidx.compose.material.icons.rounded.Settings
@@ -25,12 +27,13 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.PrimaryTabRow
+import androidx.compose.material3.PrimaryScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -43,6 +46,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
+import com.inovixlabs.tazkiyah.data.download.DownloadRepository
+import com.inovixlabs.tazkiyah.feature.player.DeleteDownloadDialog
+import com.inovixlabs.tazkiyah.feature.player.sizeLabel
+import kotlinx.coroutines.launch
 import com.inovixlabs.tazkiyah.R
 import com.inovixlabs.tazkiyah.core.designsystem.AppScreen
 import com.inovixlabs.tazkiyah.core.designsystem.EmptyState
@@ -70,6 +77,7 @@ data class LibraryData(
     val favorites: List<LectureRow>,
     val history: List<LectureRow>,
     val completed: List<LectureRow>,
+    val saved: List<LectureRow>,
     val week: List<DayListen>,
 )
 
@@ -78,6 +86,7 @@ class LibraryViewModel @Inject constructor(
     catalog: CatalogRepository,
     userData: UserDataRepository,
     private val playback: PlaybackManager,
+    private val downloads: DownloadRepository,
 ) : ViewModel() {
     private val today = LocalDate.now()
 
@@ -87,17 +96,25 @@ class LibraryViewModel @Inject constructor(
         catalog.favorites(),
         catalog.history(),
         catalog.completed(),
+        catalog.downloaded(),
         userData.weeklyListenLog(today),
-    ) { favorites, history, completed, log ->
+    ) { favorites, history, completed, saved, log ->
         val byDate = log.associate { it.date to it.listenedSec }
         val week = (6 downTo 0).map { back ->
             val date = today.minusDays(back.toLong())
             DayListen(date, byDate[date.toString()] ?: 0)
         }
-        LibraryData(favorites, history, completed, week)
+        LibraryData(favorites, history, completed, saved, week)
     }.asUiState().stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), UiState.Loading)
 
     fun toggleFavorite(lectureId: String) = playback.toggleFavorite(lectureId)
+
+    fun removeDownload(lectureId: String) {
+        viewModelScope.launch {
+            playback.leaveSavedFile(lectureId)
+            downloads.remove(lectureId)
+        }
+    }
 }
 
 @Composable
@@ -108,6 +125,7 @@ fun LibraryScreen(
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     var tab by rememberSaveable { mutableIntStateOf(0) }
+    var deleting by rememberSaveable { mutableStateOf<String?>(null) }
     AppScreen(
         title = stringResource(R.string.library_title),
         actions = { IconButton(onClick = onSettings) { Icon(Icons.Rounded.Settings, stringResource(R.string.settings)) } },
@@ -117,12 +135,18 @@ fun LibraryScreen(
                 Triple(R.string.library_favorites, data.favorites, R.string.library_favorites_empty),
                 Triple(R.string.library_history, data.history, R.string.library_history_empty),
                 Triple(R.string.library_completed, data.completed, R.string.library_completed_empty),
+                Triple(R.string.library_saved, data.saved, R.string.library_saved_empty),
             )
+            val savedTab = tab == tabs.lastIndex
             val (_, rows, emptyText) = tabs[tab]
             LazyColumn(Modifier.padding(padding).fillMaxSize(), contentPadding = PaddingValues(bottom = 24.dp)) {
                 item { WeekCard(data.week) }
                 item {
-                    PrimaryTabRow(selectedTabIndex = tab, containerColor = MaterialTheme.colorScheme.background) {
+                    PrimaryScrollableTabRow(
+                        selectedTabIndex = tab,
+                        containerColor = MaterialTheme.colorScheme.background,
+                        edgePadding = 8.dp,
+                    ) {
                         tabs.forEachIndexed { index, (label, list, _) ->
                             Tab(
                                 selected = tab == index,
@@ -137,20 +161,53 @@ fun LibraryScreen(
                         val icon = when (tab) {
                             0 -> Icons.Rounded.FavoriteBorder
                             1 -> Icons.Rounded.History
-                            else -> Icons.Rounded.CheckCircle
+                            2 -> Icons.Rounded.CheckCircle
+                            else -> Icons.Rounded.DownloadForOffline
                         }
                         EmptyState(stringResource(emptyText), icon = icon)
                     }
                 }
+                if (savedTab && rows.isNotEmpty()) {
+                    item {
+                        val total = rows.filter { it.isSaved }.sumOf { it.downloadedBytes ?: 0 }
+                        Text(
+                            stringResource(R.string.library_saved_total, sizeLabel(total)),
+                            style = MaterialTheme.typography.labelLarge,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                        )
+                    }
+                }
                 items(rows, key = { "$tab-" + it.id }) { row ->
-                    LectureListItem(
-                        row = row,
-                        onClick = { onOpenLecture(row.id) },
-                        onToggleFavorite = { viewModel.toggleFavorite(row.id) },
-                    )
+                    if (savedTab) {
+                        LectureListItem(
+                            row = row,
+                            onClick = { onOpenLecture(row.id) },
+                            trailing = {
+                                IconButton(onClick = { deleting = row.id }) {
+                                    Icon(Icons.Rounded.Delete, stringResource(R.string.download_delete))
+                                }
+                            },
+                        )
+                    } else {
+                        LectureListItem(
+                            row = row,
+                            onClick = { onOpenLecture(row.id) },
+                            onToggleFavorite = { viewModel.toggleFavorite(row.id) },
+                        )
+                    }
                 }
             }
         }
+    }
+    deleting?.let { id ->
+        DeleteDownloadDialog(
+            onConfirm = {
+                deleting = null
+                viewModel.removeDownload(id)
+            },
+            onDismiss = { deleting = null },
+        )
     }
 }
 

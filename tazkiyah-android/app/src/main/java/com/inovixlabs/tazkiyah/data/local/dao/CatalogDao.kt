@@ -17,11 +17,14 @@ import kotlinx.coroutines.flow.Flow
 const val LECTURE_ROW_SELECT =
     "SELECT l.*, s.name AS speakerName, s.photoUrl AS speakerPhotoUrl, " +
         "p.positionSec AS progressSec, p.durationSec AS knownDurationSec, p.completed AS completed, " +
-        "p.lastPlayedAt AS lastPlayedAt, CASE WHEN f.lectureId IS NULL THEN 0 ELSE 1 END AS isFavorite " +
+        "p.lastPlayedAt AS lastPlayedAt, CASE WHEN f.lectureId IS NULL THEN 0 ELSE 1 END AS isFavorite, " +
+        "d.status AS downloadStatus, d.kind AS downloadKind, d.downloadedBytes AS downloadedBytes, " +
+        "d.totalBytes AS downloadTotalBytes " +
         "FROM lectures l " +
         "LEFT JOIN speakers s ON s.id = l.speakerId " +
         "LEFT JOIN playback_progress p ON p.lectureId = l.id " +
-        "LEFT JOIN favorites f ON f.lectureId = l.id "
+        "LEFT JOIN favorites f ON f.lectureId = l.id " +
+        "LEFT JOIN downloads d ON d.lectureId = l.id "
 
 @Dao
 interface CatalogDao {
@@ -136,6 +139,10 @@ interface CatalogDao {
             "ORDER BY l.addedAt DESC, l.speakerId, l.sortIndex",
     )
     fun lecturesByCategories(categoryIds: List<String>): Flow<List<LectureRow>>
+
+    /** Lectures saved (or being saved) on the phone, newest first. */
+    @Query(LECTURE_ROW_SELECT + "WHERE d.lectureId IS NOT NULL ORDER BY d.createdAt DESC")
+    fun downloaded(): Flow<List<LectureRow>>
 
     @Query(LECTURE_ROW_SELECT + "WHERE l.id IN (:ids)")
     fun lecturesByIds(ids: List<String>): Flow<List<LectureRow>>

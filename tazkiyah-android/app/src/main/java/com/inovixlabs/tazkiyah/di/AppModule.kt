@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.inovixlabs.tazkiyah.BuildConfig
 import com.inovixlabs.tazkiyah.data.local.TazkiyahDatabase
 import com.inovixlabs.tazkiyah.data.local.dao.CatalogDao
+import com.inovixlabs.tazkiyah.data.local.dao.DownloadDao
 import com.inovixlabs.tazkiyah.data.local.dao.UserDao
 import com.inovixlabs.tazkiyah.data.remote.HttpContentSource
 import com.inovixlabs.tazkiyah.data.repository.SettingsRepository
@@ -42,6 +43,9 @@ object AppModule {
 
     @Provides
     fun userDao(db: TazkiyahDatabase): UserDao = db.userDao()
+
+    @Provides
+    fun downloadDao(db: TazkiyahDatabase): DownloadDao = db.downloadDao()
 
     @Provides
     @Singleton

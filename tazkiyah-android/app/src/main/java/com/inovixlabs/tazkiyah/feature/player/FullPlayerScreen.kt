@@ -60,9 +60,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
-import androidx.media3.common.Player
-import androidx.media3.ui.PlayerView
 import com.inovixlabs.tazkiyah.R
 import com.inovixlabs.tazkiyah.core.designsystem.CompletedMark
 import com.inovixlabs.tazkiyah.core.designsystem.FavoriteButton
@@ -75,9 +72,9 @@ import com.inovixlabs.tazkiyah.core.util.formatBanglaDate
 import com.inovixlabs.tazkiyah.core.util.toBanglaDigits
 import com.inovixlabs.tazkiyah.data.local.entity.CategoryEntity
 import com.inovixlabs.tazkiyah.data.local.entity.LectureRow
-import com.inovixlabs.tazkiyah.data.local.entity.MediaType
 import com.inovixlabs.tazkiyah.playback.PlaybackError
 import com.inovixlabs.tazkiyah.playback.PlayerState
+import com.inovixlabs.tazkiyah.playback.PlayerSurface
 import com.inovixlabs.tazkiyah.playback.SleepTimer
 import kotlinx.coroutines.delay
 
@@ -105,7 +102,7 @@ fun FullPlayerScreen(
     sleepTimer: SleepTimer,
     seriesParts: List<LectureRow>,
     categories: List<CategoryEntity>,
-    audioPlayer: Player?,
+    surface: PlayerSurface,
     onVideoSlot: (Rect) -> Unit,
     onCollapse: () -> Unit,
     onPlayPause: () -> Unit,
@@ -120,10 +117,10 @@ fun FullPlayerScreen(
     onOpenLecture: (String) -> Unit,
     onOpenSpeaker: (String) -> Unit,
     onOpenCategory: (String) -> Unit,
+    downloadSection: @Composable () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val months = stringArrayResource(R.array.month_names)
-    val isYouTube = lecture.lecture.mediaType == MediaType.YOUTUBE
     Surface(modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
         Column(Modifier.statusBarsPadding().navigationBarsPadding()) {
             Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 4.dp)) {
@@ -143,11 +140,9 @@ fun FullPlayerScreen(
                     .aspectRatio(16f / 9f)
                     .onGloballyPositioned { onVideoSlot(it.boundsInRoot()) },
             ) {
-                when (lecture.lecture.mediaType) {
-                    MediaType.YOUTUBE -> Box(Modifier.fillMaxSize().background(Color.Black))
-                    MediaType.VIDEO -> VideoSurface(audioPlayer)
-                    else -> AudioArtwork(lecture)
-                }
+                // Videos (YouTube or a file) are drawn over this slot by the app root.
+                if (surface == PlayerSurface.ARTWORK) AudioArtwork(lecture)
+                else Box(Modifier.fillMaxSize().background(Color.Black))
             }
             LazyColumn(Modifier.weight(1f)) {
                 item {
@@ -210,7 +205,7 @@ fun FullPlayerScreen(
                         }
                     }
                 }
-                if (isYouTube) {
+                if (surface != PlayerSurface.ARTWORK) {
                     item {
                         ListItem(
                             headlineContent = { Text(stringResource(R.string.listen_only)) },
@@ -222,6 +217,7 @@ fun FullPlayerScreen(
                         )
                     }
                 }
+                item { downloadSection() }
                 if (categories.isNotEmpty()) {
                     item {
                         FlowRow(
@@ -296,21 +292,6 @@ private fun AudioArtwork(lecture: LectureRow) {
             )
         }
     }
-}
-
-@Composable
-private fun VideoSurface(player: Player?) {
-    AndroidView(
-        factory = { context ->
-            PlayerView(context).apply {
-                useController = false
-                setBackgroundColor(android.graphics.Color.BLACK)
-            }
-        },
-        update = { it.player = player },
-        onRelease = { it.player = null },
-        modifier = Modifier.fillMaxSize(),
-    )
 }
 
 @Composable
