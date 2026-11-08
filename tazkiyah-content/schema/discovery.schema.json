@@ -36,7 +36,7 @@
           "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/text" }
         },
         "defaultCategoryIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/text" } },
-        "minDurationSec": { "description": "Shorter videos from other channels are dropped (default 600; official channels and trusted playlists: 300).", "type": "integer", "minimum": 0 }
+        "minDurationSec": { "description": "Shorter videos from other channels are dropped (default 900; official channels and trusted playlists: 300).", "type": "integer", "minimum": 0 }
       }
     },
     "channel": {
