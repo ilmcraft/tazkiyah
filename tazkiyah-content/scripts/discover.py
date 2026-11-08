@@ -43,7 +43,14 @@ from add_lecture import (  # noqa: E402
     format_lecture_file,
     next_lecture_id,
 )
-from bangla import clean_title, contains_any, guess_categories, part_number, similarity  # noqa: E402
+from bangla import (  # noqa: E402
+    clean_title,
+    contains_any,
+    guess_categories,
+    part_number,
+    shared_topic_words,
+    similarity,
+)
 from youtube_api import QuotaExceeded, YouTubeApiError, YouTubeClient, parse_duration, uploads_playlist  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -62,6 +69,8 @@ TRUSTED_MIN_DURATION = 300
 CLIP_HINT_SEC = 900
 DUPLICATE_SIMILARITY = 0.8
 SAME_LENGTH_SIMILARITY = 0.45
+# Videos about a course, a book or an event rather than a talk.
+NOT_LECTURES = ("intro video", "ইন্ট্রো ভিডিও", "trailer", "ট্রেলার", "promo", "প্রোমো", "teaser", "টিজার")
 SPEAKER_ID_RE = re.compile(r"^speaker-[0-9]{3,}$")
 VIDEO_URL_RE = re.compile(r"(?:[?&]v=|youtu\.be/|/shorts/|/live/|/embed/)([A-Za-z0-9_-]{11})(?![A-Za-z0-9_-])")
 
@@ -71,7 +80,9 @@ DROP_REASONS = {
     "region": "বাংলাদেশে ব্লক",
     "live": "লাইভ বা আসন্ন",
     "short": "খুব ছোট (Shorts / ক্লিপ)",
-    "namesake": "অন্য ব্যক্তি (একই নাম)",
+    "namesake": "অন্য ব্যক্তি (একই নাম) বা অডিওবুক",
+    "not_lecture": "লেকচার নয় (ইন্ট্রো, ট্রেলার, প্রোমো)",
+    "no_topic": "শিরোনামে শুধু বক্তার নাম, বিষয় নেই",
     "no_name": "শিরোনামে বক্তার নাম নেই",
 }
 
@@ -227,6 +238,8 @@ def classify(c: Candidate, item: dict[str, Any] | None, config: dict[str, Any], 
         c.decision = "short"
     elif config.get("exclude") and contains_any(f"{c.title} {c.channel}", config["exclude"]):
         c.decision = "namesake"
+    elif contains_any(c.title, NOT_LECTURES):
+        c.decision = "not_lecture"
     elif c.trusted or contains_any(c.title, config["mustMatch"]):
         c.decision = "add"
     elif contains_any(c.description, config["mustMatch"]):
@@ -253,6 +266,8 @@ def same_lecture(title_a: str, duration_a: int, title_b: str, duration_b: int) -
     longest = max(duration_a, duration_b)
     sim = similarity(title_a, title_b)
     if gap <= 2 and sim >= SAME_LENGTH_SIMILARITY:
+        return True
+    if gap <= 3 and shared_topic_words(title_a, title_b):
         return True
     if gap <= max(3, round(0.01 * longest)) and sim >= DUPLICATE_SIMILARITY:
         return True
@@ -342,7 +357,12 @@ def discover(
         classify(c, details.get(c.video_id), config, official_ids)
         if c.decision in {"add", "low-confidence"}:
             c.app_title = clean_title(c.title, names, c.channel)
-            if contains_any(c.app_title, config["mustMatch"]) or len(c.app_title.split()) < 2:
+            name_only = contains_any(c.app_title, config["mustMatch"]) or (
+                len(c.app_title.split()) < 2 and not re.search("[\u0980-\u09FF]", c.app_title)
+            )
+            if name_only and not c.trusted:
+                c.decision = "no_topic"  # a re-upload titled only with the name says nothing about the talk
+            elif name_only or len(c.app_title.split()) < 2:
                 c.flags.append("শিরোনাম দেখুন")
             c.categories = guess_categories(
                 f"{c.app_title} {c.title}", category_ids, config.get("defaultCategoryIds", [])

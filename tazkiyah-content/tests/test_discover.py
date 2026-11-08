@@ -229,6 +229,23 @@ def test_filters(content, video, reason):
     assert not (content / "discovery/seen/speaker-001.json").read_text().count("CANDIDATE01")
 
 
+def test_reupload_titled_only_with_the_name_is_dropped(content):
+    fake = FakeClient(
+        searches={"প্রথম বক্তা": [["NAMEONLY002"]]},
+        videos={"NAMEONLY002": item("NAMEONLY002", "প্রথম বক্তা")},
+    )
+    result = run(content, fake)
+    assert result.added == [] and result.dropped == {"no_topic": 1}
+
+
+def test_course_intro_is_not_a_lecture(content):
+    fake = FakeClient(
+        playlists={"UUofficial0000000000000a": ["INTROVIDEO1"]},
+        videos={"INTROVIDEO1": item("INTROVIDEO1", "কোর্স কন্টেন্ট ইন্ট্রো ভিডিও", channel_id=OFFICIAL)},
+    )
+    assert run(content, fake).dropped == {"not_lecture": 1}
+
+
 def test_title_that_is_only_the_name_is_flagged(content):
     fake = FakeClient(
         playlists={"UUofficial0000000000000a": ["NAMEONLY001"]},
@@ -313,6 +330,8 @@ def test_two_copies_keep_the_official_one(content):
         ("ক্যারিয়ার ভাবনা", 3600, "ক্যারিয়ার ভাবনা", 3420, True),  # trimmed copy, same title
         ("সীরাত পর্ব ১", 3000, "সীরাত পর্ব ২", 3000, False),  # parts differ
         ("সালাতে খুশু", 1800, "রমজানের প্রস্তুতি", 1801, False),  # same length by chance
+        ("ফিলিস্তিনের মুক্তি ও আরব শাসকদের ব্যর্থতা", 3206, "স্বাধীন ফিলিস্তিনের স্বপ্ন", 3208, True),  # shared topic word
+        ("দুনিয়ার জীবন মুমিনের জন্য কারাগার", 1300, "প্রোডাক্টিভ জীবন গড়ার কৌশল", 1302, False),  # "জীবন" is filler
         ("তাওবা", 0, "তাওবা", 0, False),  # length unknown
     ],
 )
