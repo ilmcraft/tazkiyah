@@ -35,3 +35,6 @@
   files are fontTools-instanced (wdth=100) and subset to Bengali+Latin — keep the APK small when adding fonts.
 - Sharing shares only the download page (`BuildConfig.DOWNLOAD_PAGE_URL`, GitHub Pages from `/docs`), never a
   YouTube link. Every release also uploads the APK as `tazkiyah.apk` (the page's stable link).
+- `/docs` (repo root) is also the web version: plain HTML/CSS/JS, no build, reads `tazkiyah-content/` from
+  raw.githubusercontent.com. Same rules as the app: no link to YouTube, every video in the focused player
+  (`docs/assets/app.js` Player: controls 0, shield, cover card when not playing).

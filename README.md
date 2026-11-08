@@ -1,10 +1,10 @@
 # তাযকিয়া (Tazkiyah)
 
-আত্মশুদ্ধির পথে প্রতিদিন — বাংলা ইসলামিক বক্তাদের ভিডিও ও অডিও লেকচার, বক্তা ও বিষয় অনুযায়ী সাজানো একটি Android অ্যাপ।
+আত্মশুদ্ধির পথে প্রতিদিন — বাংলা ইসলামিক বক্তাদের ভিডিও ও অডিও লেকচার, বক্তা ও বিষয় অনুযায়ী সাজানো একটি Android অ্যাপ ও ওয়েবসাইট।
 
 ## ডাউনলোড ও ইনস্টল
 
-**ডাউনলোড পাতা: https://mdhelaluddin-ctg-bd.github.io/tazkiyah/** — অন্যদের এই লিংকটাই দিন (অ্যাপের "অ্যাপ শেয়ার করুন"-ও এটাই পাঠায়)। সরাসরি সর্বশেষ APK: https://github.com/mdhelaluddin-ctg-bd/tazkiyah/releases/latest/download/tazkiyah.apk (Android 8.0 বা তার পরের ভার্সন লাগবে)।
+**ওয়েবসাইট ও ডাউনলোড পাতা: https://mdhelaluddin-ctg-bd.github.io/tazkiyah/** — ব্রাউজারেই সব লেকচার শোনা যায়, আর এখান থেকেই অ্যাপ নামানো যায়। অন্যদের এই লিংকটাই দিন (অ্যাপের "অ্যাপ শেয়ার করুন"-ও এটাই পাঠায়)। সরাসরি সর্বশেষ APK: https://github.com/mdhelaluddin-ctg-bd/tazkiyah/releases/latest/download/tazkiyah.apk (Android 8.0 বা তার পরের ভার্সন লাগবে)।
 
 1. APK-টি ফোনে খুলুন। প্রথমবার ফোন "অজানা উৎস থেকে ইনস্টল" (Install unknown apps) অনুমতি চাইবে — যে অ্যাপ দিয়ে খুলছেন (Chrome / Files) তাকে অনুমতি দিন।
 2. **Install** চাপুন। Play Protect সতর্ক করলে "More details → Install anyway"।
@@ -19,7 +19,7 @@
 | [`tazkiyah-android/`](tazkiyah-android) | Android অ্যাপ (Kotlin, Jetpack Compose, Room, Media3, android-youtube-player, NewPipeExtractor) |
 | [`tazkiyah-content/`](tazkiyah-content) | লেকচারের তালিকা (JSON), স্কিমা, স্ক্রিপ্ট ও নতুন লেকচার খোঁজার বট — অ্যাপ এখান থেকেই নতুন লেকচার নামায় |
 | [`.github/workflows/`](.github/workflows) | `publish.yml` (কনটেন্ট যাচাই ও manifest), `discover-lectures.yml` (দৈনিক বট), `fill-durations.yml` (সাপ্তাহিক দৈর্ঘ্য), `content-ci.yml`, `android-ci.yml` |
-| [`docs/`](docs) | ডাউনলোড পাতা (GitHub Pages) |
+| [`docs/`](docs) | ওয়েব ভার্সন ও ডাউনলোড পাতা (GitHub Pages, বিল্ড লাগে না) — `tazkiyah-content/` থেকে সরাসরি তালিকা পড়ে, তাই বক্তা আর লেকচারের সংখ্যা সবসময় হালনাগাদ থাকে। লোকালি দেখতে: `python3 -m http.server 8765 --directory docs` |
 
 বিস্তারিত পরিকল্পনা: [`tazkiyah-android/docs/PLAN.md`](tazkiyah-android/docs/PLAN.md)।
 
