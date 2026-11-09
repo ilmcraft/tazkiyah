@@ -2,33 +2,63 @@
 <html lang="bn">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>গোপনীয়তা নীতি — তাযকিয়া</title>
   <meta name="description" content="তাযকিয়া অ্যাপ ও ওয়েবসাইটের গোপনীয়তা নীতি (Privacy Policy)।">
+  <meta name="theme-color" content="#0A0A0A">
   <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+  <!-- Same fonts, colours, header and footer as the website; only this page's layout is below. -->
+  <link rel="stylesheet" href="assets/app.css">
+  <script>
+    // The theme the visitor picked on the website (default: follow the system).
+    try { var t = JSON.parse(localStorage.getItem("tz.theme")); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
   <style>
-    @font-face { font-family: "Noto Sans Bengali"; src: url("assets/NotoSansBengali.ttf") format("truetype"); font-weight: 100 900; font-display: swap; }
-    :root { --bg: #FBF8F1; --text: #1B1C1A; --muted: #5B615E; --primary: #0F5C4D; --line: #E4E2DA; }
-    @media (prefers-color-scheme: dark) { :root { --bg: #111412; --text: #E7E9E6; --muted: #A9B0AC; --primary: #7FD3BE; --line: #2C3330; } }
-    body { margin: 0; background: var(--bg); color: var(--text); font: 17px/1.7 "Noto Sans Bengali", system-ui, sans-serif; }
-    main { max-width: 760px; margin: 0 auto; padding: 32px 16px 56px; }
-    h1 { color: var(--primary); font-size: 30px; line-height: 1.35; margin: 0 0 4px; }
-    h2 { color: var(--primary); font-size: 21px; margin: 28px 0 8px; }
-    .meta { color: var(--muted); font-size: 14px; margin: 0; }
-    hr { border: 0; border-top: 1px solid var(--line); margin: 40px 0; }
-    a { color: var(--primary); }
-    ul { padding-left: 1.3em; }
-    li { margin: 4px 0; }
+    body.doc-page { padding-bottom: 0; }
+    .doc-hero { background: var(--ink) var(--stars); border-bottom: 6px solid var(--accent); padding: 48px var(--gutter) 44px; }
+    .doc-wrap { max-width: 760px; margin: 0 auto; }
+    .doc-hero h1 { margin: 14px 0 12px; font-size: clamp(40px, 7vw, 64px); line-height: 1.1; color: #FFFFFF; }
+    .doc-hero .meta { margin: 0; color: var(--ink-muted); font-size: 15px; }
+    .doc-hero .meta a { color: var(--accent); }
+    main.doc { max-width: calc(760px + 2 * var(--gutter)); padding: 36px var(--gutter) 64px; font-size: 17px; line-height: 1.75; }
+    .doc h2 { display: flex; align-items: center; gap: 12px; margin: 40px 0 10px; font-size: 27px; line-height: 1.25; }
+    .doc h2::before { content: ""; flex: none; width: 10px; height: 10px; background: var(--accent); }
+    .doc p { margin: 0 0 12px; }
+    .doc ul { margin: 0 0 12px; padding-left: 1.25em; }
+    .doc li { margin: 6px 0; }
+    .doc li::marker { color: var(--ochre); }
+    .summary { margin: 0 0 8px; padding: 20px 22px; border-radius: var(--radius); background: var(--soft); color: var(--on-soft); }
+    .summary h2 { margin-top: 0; }
+    .summary h2::before { background: currentColor; }
+    .summary p { margin: 0; }
+    .en { margin-top: 64px; padding-top: 40px; border-top: 1px solid var(--line); }
+    .en h1 { margin: 12px 0 6px; font-size: clamp(34px, 5vw, 48px); line-height: 1.1; }
+    .en .meta { margin: 0; }
   </style>
 </head>
-<body>
-<main>
-  <p class="meta"><a href="./">← তাযকিয়া</a></p>
-  <h1>গোপনীয়তা নীতি</h1>
-  <p class="meta">তাযকিয়া Android অ্যাপ ও ওয়েবসাইট · সর্বশেষ হালনাগাদ: ৯ নভেম্বর ২০২৬</p>
+<body class="doc-page">
+<a class="skip" href="#main">মূল অংশে যান</a>
 
-  <h2>সংক্ষেপে</h2>
-  <p>তাযকিয়া আপনার কোনো ব্যক্তিগত তথ্য সংগ্রহ করে না, কোথাও পাঠায় না, বিক্রিও করে না। অ্যাকাউন্ট লাগে না, বিজ্ঞাপন নেই, অ্যানালিটিক্স বা ট্র্যাকিং নেই।</p>
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="./"><img src="assets/mark.svg" alt="" width="38" height="38"><span>তাযকিয়া</span></a>
+    <a class="pill" href="./#/app">অ্যাপ নিন</a>
+  </div>
+</header>
+
+<section class="doc-hero on-dark">
+  <div class="doc-wrap">
+    <p class="eyebrow">তাযকিয়া Android অ্যাপ ও ওয়েবসাইট</p>
+    <h1>গোপনীয়তা নীতি</h1>
+    <p class="meta">সর্বশেষ হালনাগাদ: ৯ নভেম্বর ২০২৬ · <a href="#en" lang="en">English</a></p>
+  </div>
+</section>
+
+<main id="main" class="doc" tabindex="-1">
+  <div class="summary">
+    <h2>সংক্ষেপে</h2>
+    <p>তাযকিয়া আপনার কোনো ব্যক্তিগত তথ্য সংগ্রহ করে না, কোথাও পাঠায় না, বিক্রিও করে না। অ্যাকাউন্ট লাগে না, বিজ্ঞাপন নেই, অ্যানালিটিক্স বা ট্র্যাকিং নেই।</p>
+  </div>
 
   <h2>যা শুধু আপনার ডিভাইসে থাকে</h2>
   <ul>
@@ -56,11 +86,10 @@
   <h2>পরিবর্তন ও যোগাযোগ</h2>
   <p>এই নীতি বদলালে এই পাতাতেই হালনাগাদ তারিখসহ জানানো হবে। প্রশ্ন থাকলে: <a href="https://github.com/ilmcraft/tazkiyah/issues">github.com/ilmcraft/tazkiyah/issues</a></p>
 
-  <hr>
-
-  <h1 lang="en">Privacy Policy</h1>
-  <p class="meta" lang="en">Tazkiyah Android app and website · Last updated: 9 November 2026</p>
-  <div lang="en">
+  <section class="en" id="en" lang="en">
+    <p class="eyebrow">English</p>
+    <h1>Privacy Policy</h1>
+    <p class="meta">Tazkiyah Android app and website · Last updated: 9 November 2026</p>
     <h2>In short</h2>
     <p>Tazkiyah does not collect, send or sell any personal information. There is no account, no advertising, no analytics and no tracking.</p>
     <h2>What stays on your device</h2>
@@ -73,7 +102,29 @@
     <p>The app is not directed at children under 13 and collects no personal information from anyone.</p>
     <h2>Changes and contact</h2>
     <p>Changes to this policy will be posted on this page with a new date. Questions: <a href="https://github.com/ilmcraft/tazkiyah/issues">github.com/ilmcraft/tazkiyah/issues</a></p>
-  </div>
+  </section>
 </main>
+
+<footer class="foot">
+  <div class="foot-in">
+    <div class="foot-about">
+      <p class="foot-brand">তাযকিয়া</p>
+      <p>লেকচারের স্বত্ব বক্তা ও আপলোডকারীদের; ভিডিও চলে ইউটিউবের প্লেয়ারে। এই সাইট কোনো বক্তা বা ইউটিউবের সাথে সম্পর্কিত নয়।</p>
+    </div>
+    <nav class="foot-nav" aria-label="ফুটার মেনু">
+      <div>
+        <p class="foot-h">ঘুরে দেখুন</p>
+        <a href="./">হোম</a>
+        <a href="./#/speakers">বক্তাগণ</a>
+        <a href="./#/app">Android অ্যাপ</a>
+      </div>
+      <div>
+        <p class="foot-h">যোগাযোগ</p>
+        <a href="https://github.com/ilmcraft/tazkiyah/issues">ইমেইল করুন</a>
+        <a href="https://github.com/ilmcraft/tazkiyah">সোর্স কোড (GPL-3.0)</a>
+      </div>
+    </nav>
+  </div>
+</footer>
 </body>
 </html>
