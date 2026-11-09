@@ -605,8 +605,8 @@
       tapThrough(false);
       spinner.hidden = true;
       const messages = {
-        embed: "এই ভিডিওটি অন্য সাইটে চালানোর অনুমতি নেই। Android অ্যাপে শুনে দেখুন।",
-        gone: "ভিডিওটি সরিয়ে ফেলা হয়েছে বা প্রাইভেট করা হয়েছে।",
+        embed: "ইউটিউবের বাইরে এই ভিডিওটি চালানোর অনুমতি নেই। Android অ্যাপে শুনে দেখুন।",
+        gone: "ভিডিওটি পাওয়া যাচ্ছে না — হয়তো মুছে ফেলা হয়েছে বা প্রাইভেট করা হয়েছে।",
         api: "প্লেয়ার লোড করা যায়নি। ইন্টারনেট সংযোগ দেখে আবার চেষ্টা করুন।",
         other: "ভিডিওটি এখন চালানো যাচ্ছে না। একটু পরে আবার চেষ্টা করুন।",
       };
@@ -669,7 +669,7 @@
     function paintVolume() {
       const silent = muted || volume === 0;
       muteBtn.innerHTML = icon(silent ? "volumeOff" : volume < 50 ? "volumeDown" : "volumeUp");
-      muteBtn.setAttribute("aria-label", silent ? "আওয়াজ চালু করুন" : "আওয়াজ বন্ধ করুন");
+      muteBtn.setAttribute("aria-label", silent ? "শব্দ চালু করুন" : "শব্দ বন্ধ করুন");
       const shown = muted ? 0 : volume;
       volEl.value = String(shown);
       volEl.setAttribute("aria-valuetext", `${bn(shown)}%`);
@@ -875,7 +875,7 @@
     const out = [];
     if (current) out.push(`<span class="badge">এখন শুনছেন</span>`);
     else if (isNew(l)) out.push(`<span class="badge">নতুন</span>`);
-    if (progress[l.id] && progress[l.id].c) out.push(`<span class="badge done">শোনা হয়েছে</span>`);
+    if (progress[l.id] && progress[l.id].c) out.push(`<span class="badge done">শোনা শেষ</span>`);
     return out.length ? `<span class="badges">${out.join("")}</span>` : "";
   }
   /**
@@ -946,16 +946,16 @@
       <span class="topic-mark" aria-hidden="true">${esc(firstLetter(t.name))}</span>
       <span><b>${esc(t.name)}</b><span class="n">${bn(catalog.byCategory.get(t.id).length)}টি লেকচার</span></span></a>`).join("")}</div>`;
   }
-  function downloadButton(cls, label = "Android অ্যাপ ডাউনলোড") {
+  function downloadButton(cls, label = "Android অ্যাপ ডাউনলোড করুন") {
     return `<a class="btn${cls ? ` ${cls}` : ""}" data-apk href="${APK_URL}">${icon("download")}<span>${label}</span></a>`;
   }
   function appBand() {
     return `<section class="app-band" aria-labelledby="app-band-h">
       <div class="app-band-text">
         <p class="eyebrow">Android অ্যাপ · ফ্রি</p>
-        <h2 id="app-band-h">অফলাইনে, আর স্ক্রিন বন্ধ রেখেও শুনুন</h2>
-        <p class="lead">ওয়েবের সব লেকচার, সাথে অফলাইনে সেভ, লক স্ক্রিন থেকে নিয়ন্ত্রণ আর স্লিপ টাইমার। বিজ্ঞাপন নেই, অ্যাকাউন্ট লাগে না।</p>
-        <div class="hero-actions">${downloadButton("dark", "অ্যাপ ডাউনলোড")}<a class="btn ghost" href="#/app">ইনস্টলের নিয়ম</a></div>
+        <h2 id="app-band-h">ইন্টারনেট ছাড়া, স্ক্রিন বন্ধ রেখেও শুনুন</h2>
+        <p class="lead">ওয়েবসাইটের সব লেকচার তো আছেই, সঙ্গে অফলাইনে সেভ, লক স্ক্রিন থেকে নিয়ন্ত্রণ আর স্লিপ টাইমার। বিজ্ঞাপন নেই, অ্যাকাউন্টও লাগে না।</p>
+        <div class="hero-actions">${downloadButton("dark", "অ্যাপ ডাউনলোড করুন")}<a class="btn ghost" href="#/app">ইনস্টল করার নিয়ম</a></div>
         <p class="meta" data-release-meta>ফ্রি · Android ৮.০ বা তার পরের ভার্সন</p>
       </div>
       <div class="app-band-shots" aria-hidden="true">
@@ -977,9 +977,9 @@
       stats = `<ul class="hero-stats">
           <li><b>${bn(c.speakers.length)}</b><span>জন বক্তা</span></li>
           <li><b>${bn(c.lectures.length)}</b><span>টি লেকচার</span></li>
-          ${totalHours ? `<li><b>${bn(totalHours)}</b><span>ঘণ্টা শোনার মতো</span></li>` : ""}
+          ${totalHours ? `<li><b>${bn(totalHours)}</b><span>ঘণ্টার লেকচার</span></li>` : ""}
         </ul>` +
-        (c.manifest.updatedAt ? `<p class="updated">তালিকা হালনাগাদ: ${dateText(c.manifest.updatedAt.slice(0, 10))}</p>` : "");
+        (c.manifest.updatedAt ? `<p class="updated">সর্বশেষ আপডেট: ${dateText(c.manifest.updatedAt.slice(0, 10))}</p>` : "");
     }
     const todayCard = today ? `<article class="today" aria-labelledby="today-title">
         <div class="today-top"><span class="today-badge">আজকের লেকচার</span><span>${esc(kickerOf(today))}</span></div>
@@ -987,7 +987,7 @@
         <div class="today-who">${photo(today.speaker)}<span><b>${esc(today.speaker.name)}</b>
           <span>${[lengthText(today.durationSec), dateText(today.publishedAt)].filter(Boolean).join(" · ")}</span></span></div>
         <div class="today-foot"><a class="today-play" href="#/lecture/${esc(today.id)}" aria-label="আজকের লেকচার শুনুন">${icon("play")}</a>
-          <span>প্রতিদিন একটি — যেগুলো এখনো শোনেননি, তার মধ্য থেকে।</span></div>
+          <span>প্রতিদিন একটি করে, যেগুলো এখনো শোনেননি সেগুলো থেকে।</span></div>
       </article>` : "";
     const hero = `<section class="hero band on-dark${todayCard ? "" : " solo"}">
       <div class="hero-text">
@@ -1073,7 +1073,7 @@
       if (sort === "old") list.reverse();
       const shown = showAll ? list : list.slice(0, PAGE_SIZE);
       body = lectureList(shown, rowOpts) + (shown.length < list.length
-        ? `<div class="list-more"><button type="button" class="btn ghost" data-set="all=1">আরও ${bn(list.length - shown.length)}টি লেকচার দেখান</button></div>` : "");
+        ? `<div class="list-more"><button type="button" class="btn ghost" data-set="all=1">আরও ${bn(list.length - shown.length)}টি লেকচার দেখুন</button></div>` : "");
     }
 
     const sec = all.reduce((sum, l) => sum + (l.durationSec || 0), 0);
@@ -1102,7 +1102,7 @@
             <div><p class="side-h">বিষয় অনুযায়ী দেখুন</p>
               <div class="chips wrap" role="group" aria-label="বিষয়">${chip("", "সব বিষয়", all.length)}${counts.map(([cat, n]) => chip(cat.id, cat.name, n)).join("")}</div></div>
             <div class="list-head"><h2 id="list-h">${esc(label)} · ${bn(list.length)}টি লেকচার</h2>
-              <div class="seg" role="group" aria-label="সাজানো">${sortBtn("new", "নতুন আগে")}${sortBtn("old", "পুরনো আগে")}${hasSeries ? sortBtn("series", "সিরিজ অনুযায়ী") : ""}</div></div>
+              <div class="seg" role="group" aria-label="সাজানোর ধরন">${sortBtn("new", "নতুন আগে")}${sortBtn("old", "পুরোনো আগে")}${hasSeries ? sortBtn("series", "সিরিজ অনুযায়ী") : ""}</div></div>
             ${body}
           </section>
         </div>`,
@@ -1159,7 +1159,7 @@
           <div class="sec-head"><h2 id="series-h">${esc(l.series.title)}</h2><span class="meta" style="margin:0">${bn(parts.length)} পর্ব</span></div>
           ${lectureList(parts, { hideSpeaker: true, partNo: true, current: l.id, noFav: true })}</section>` : "") +
       (more.length ? `<section class="side-box" aria-labelledby="more-h">
-          <div class="sec-head"><h2 id="more-h">${esc(s.name)}-এর আরও</h2><a class="more" href="#/speaker/${esc(s.id)}">সব</a></div>
+          <div class="sec-head"><h2 id="more-h">${esc(s.name)}-এর আরও লেকচার</h2><a class="more" href="#/speaker/${esc(s.id)}">সব</a></div>
           ${lectureList(more, { hideSpeaker: true, showDate: true, noFav: true })}</section>` : "");
     return {
       title: l.title,
@@ -1174,7 +1174,7 @@
             <button type="button" class="btn ghost" data-share="${esc(l.id)}">${icon("share")}শেয়ার</button>
             ${cats.map((k) => `<a class="chip tag-chip" href="#/topic/${esc(k.id)}">${esc(k.name)}</a>`).join("")}</div>
           ${l.description || tags ? `<div class="about-box"><h2>লেকচার সম্পর্কে</h2>${l.description ? `<p class="desc">${esc(l.description)}</p>` : ""}${tags}</div>` : ""}
-          <div class="nudge">${icon("phone")}<p>ইন্টারনেট ছাড়া, বা স্ক্রিন বন্ধ রেখে শুনতে চান? Android অ্যাপে লেকচার সেভ করে রাখা যায় — ফ্রি।</p>
+          <div class="nudge">${icon("phone")}<p>ইন্টারনেট ছাড়া বা স্ক্রিন বন্ধ রেখে শুনতে চান? ফ্রি Android অ্যাপটি ব্যবহার করুন — সেখানে লেকচার সেভ করেও রাখা যায়।</p>
             <a class="btn dark" href="#/app">অ্যাপ দেখুন</a></div>
         </article>`,
     };
@@ -1205,7 +1205,7 @@
     hits.sort((a, b) => b[0] - a[0] || newestFirst(a[1], b[1]));
     const speakerChips = speakers.length ? `<div class="chips wrap">${speakers.map((s) =>
       `<a class="chip spk-link" href="#/speaker/${esc(s.id)}">${photo(s, "")}${esc(s.name)} <span class="n">(${bn(catalog.bySpeaker.get(s.id).length)})</span></a>`).join("")}</div>` : "";
-    if (!hits.length && !speakers.length) return `<p class="empty">"${esc(q.trim())}" দিয়ে কিছু পাওয়া যায়নি</p>`;
+    if (!hits.length && !speakers.length) return `<p class="empty">"${esc(q.trim())}" লিখে কিছু পাওয়া যায়নি। অন্য বানানে বা অন্য শব্দে খুঁজে দেখুন।</p>`;
     const shown = hits.slice(0, 200);
     return `${speakerChips}<p class="result-count">${bn(hits.length)}টি লেকচার${hits.length > shown.length ? ` (প্রথম ${bn(shown.length)}টি দেখানো হচ্ছে)` : ""}</p>
       ${lectureList(shown.map((h) => h[1]), { two: true })}`;
@@ -1247,16 +1247,16 @@
     const lists = {
       fav: [favList, "ফেভারিটে এখনো কিছু নেই। লেকচারের পাশে ♡ চাপুন।"],
       history: [history, "এখনো কিছু শোনা হয়নি।"],
-      done: [done, "শেষ করা লেকচার এখানে দেখা যাবে।"],
+      done: [done, "যেসব লেকচার পুরো শুনেছেন, সেগুলো এখানে থাকবে।"],
     };
     const [list, empty] = lists[tab];
     const tabBtn = (value, label, n) => `<button type="button" data-set="tab=${value}" aria-pressed="${tab === value}">${label} (${bn(n)})</button>`;
     return {
-      title: "আমার",
+      title: "আমার লাইব্রেরি",
       tab: "library",
-      html: `<h1 class="page-title">আমার</h1>
+      html: `<h1 class="page-title">আমার লাইব্রেরি</h1>
         <p class="sub">এই তালিকা শুধু এই ব্রাউজারে থাকে। অ্যাপের তালিকা আলাদা।</p>
-        <div class="seg" role="group" aria-label="তালিকা">${tabBtn("fav", "ফেভারিট", favList.length)}${tabBtn("history", "ইতিহাস", history.length)}${tabBtn("done", "শেষ করা", done.length)}</div>
+        <div class="seg" role="group" aria-label="তালিকা">${tabBtn("fav", "ফেভারিট", favList.length)}${tabBtn("history", "ইতিহাস", history.length)}${tabBtn("done", "শোনা শেষ", done.length)}</div>
         ${list.length ? lectureList(list, { two: true }) : `<p class="empty">${empty}</p>`}`,
     };
   }
@@ -1267,8 +1267,8 @@
     const yes = `<svg class="ic" viewBox="0 0 24 24" role="img" aria-label="আছে"><path d="${ICONS.check}"/></svg>`;
     const rows = [
       ["সব লেকচার, বক্তা ও বিষয় অনুযায়ী", true],
-      ["যেকোনো বানানে বাংলা সার্চ", true],
-      ["ফেভারিট, ইতিহাস, যেখানে থেমেছিলেন", true],
+      ["যেকোনো বানানে বাংলায় খোঁজা", true],
+      ["ফেভারিট, ইতিহাস ও আগের জায়গা থেকে শুরু", true],
       ["শোনার গতি ও ভলিউম", true],
       ["অফলাইনে সেভ", false],
       ["স্ক্রিন বন্ধ রেখে শোনা", false],
@@ -1282,43 +1282,43 @@
           <div class="app-hero-text">
             <p class="eyebrow">Android অ্যাপ · ফ্রি</p>
             <h1>তাযকিয়া, আপনার পকেটে</h1>
-            <p class="lead">ওয়েবের সব লেকচার, সাথে অফলাইনে শোনা আর স্ক্রিন বন্ধ রেখে শোনার সুবিধা। বিজ্ঞাপন নেই, অ্যাকাউন্ট লাগে না।</p>
+            <p class="lead">ওয়েবসাইটের সব লেকচার, সঙ্গে ইন্টারনেট ছাড়া আর স্ক্রিন বন্ধ রেখে শোনার সুবিধা। বিজ্ঞাপন নেই, অ্যাকাউন্টও লাগে না।</p>
             <div class="hero-actions">${downloadButton("big", "ডাউনলোড করুন")}<a class="link" href="${REPO_URL}/releases">সব রিলিজ ও পরিবর্তন</a></div>
             <p class="meta" data-release-meta>ফ্রি · Android ৮.০ বা তার পরের ভার্সন</p>
             <ul class="trust">
               <li>${icon("shield")}কোনো তথ্য সংগ্রহ করে না</li>
-              <li>${icon("code")}খোলা সোর্স কোড (GPL-3.0)</li>
-              <li>${icon("lock")}প্রতিটি রিলিজ একই key-তে সই করা</li>
+              <li>${icon("code")}ওপেন সোর্স (GPL-3.0)</li>
+              <li>${icon("lock")}প্রতিটি রিলিজে একই ডিজিটাল সই</li>
             </ul>
           </div>
           <div class="app-shots" aria-hidden="true">${shots}</div>
         </section>
         ${section("অ্যাপে বাড়তি যা পাবেন", `<div class="cards">
-          ${feature("phone", "অফলাইনে সেভ", "শুধু অডিও বা ভিডিও ফোনে রেখে নেট ছাড়াই শুনুন।")}
-          ${feature("lock", "স্ক্রিন বন্ধ রেখেও", "অ্যাপ মিনিমাইজ করলেও শোনা চলে; লক স্ক্রিন থেকে নিয়ন্ত্রণ।")}
-          ${feature("moon", "স্লিপ টাইমার ও শুধু-অডিও", "ঘুমানোর আগে শুনুন; ডেটা বাঁচাতে শুধু শব্দ।")}
-          ${feature("sync", "নতুন লেকচার নিজে থেকেই", "তালিকা হালনাগাদ হয়; নতুন ভার্সন এলে অ্যাপই জানায়।")}
-          ${feature("font", "পছন্দের বাংলা ফন্ট", "কয়েকটি বাংলা ফন্ট থেকে বেছে নিন; লাইট ও ডার্ক থিম।")}
-          ${feature("clock", "যেখানে থেমেছিলেন", "সেখান থেকেই আবার চালু; ফেভারিট ও ইতিহাস।")}</div>`)}
-        ${section("ওয়েব না অ্যাপ?", `<p class="sub" style="margin:-4px 0 16px">দুই জায়গাতেই সব লেকচার; অ্যাপে শোনার কিছু বাড়তি সুবিধা আছে। দুই জায়গার ফেভারিট ও ইতিহাস আলাদা থাকে।</p>
+          ${feature("phone", "অফলাইনে সেভ", "অডিও বা ভিডিও ফোনে সেভ করে ইন্টারনেট ছাড়াই শুনুন।")}
+          ${feature("lock", "স্ক্রিন বন্ধ রেখেও", "অ্যাপ মিনিমাইজ করলেও শোনা চলতে থাকে; লক স্ক্রিন থেকেই নিয়ন্ত্রণ করুন।")}
+          ${feature("moon", "স্লিপ টাইমার ও শুধু অডিও", "ঘুমানোর আগে নিশ্চিন্তে শুনুন; ডেটা বাঁচাতে শুধু অডিও।")}
+          ${feature("sync", "নতুন লেকচার নিজে থেকেই", "লেকচারের তালিকা নিজে থেকেই আপডেট হয়; নতুন ভার্সন এলে অ্যাপই জানিয়ে দেয়।")}
+          ${feature("font", "পছন্দের বাংলা ফন্ট", "কয়েকটি বাংলা ফন্ট থেকে বেছে নিন; সঙ্গে লাইট ও ডার্ক থিম।")}
+          ${feature("clock", "যেখানে থেমেছিলেন", "সেখান থেকেই আবার শুরু; সঙ্গে ফেভারিট ও ইতিহাস।")}</div>`)}
+        ${section("ওয়েবসাইট না অ্যাপ?", `<p class="sub" style="margin:-4px 0 16px">দুই জায়গাতেই সব লেকচার পাবেন; অ্যাপে শোনার কিছু বাড়তি সুবিধা আছে। তবে দুই জায়গার ফেভারিট ও ইতিহাস আলাদা থাকে।</p>
           <div class="table-box"><table class="compare">
             <thead><tr><th scope="col">সুবিধা</th><th scope="col">ওয়েব</th><th scope="col">অ্যাপ</th></tr></thead>
             <tbody>${rows.map(([name, web]) => `<tr><th scope="row">${name}</th><td>${web ? yes : `<span class="no">নেই</span>`}</td><td>${yes}</td></tr>`).join("")}</tbody>
           </table></div>`)}
-        ${section("ইনস্টল করবেন যেভাবে", `<ol class="steps">
-          <li><span><b>ডাউনলোড</b> বোতাম চাপুন — <code>tazkiyah.apk</code> ফাইল নামবে।</span></li>
-          <li><span>ফাইলটি খুলুন। প্রথমবার ফোন <b>"অজানা উৎস থেকে ইনস্টল"</b> (Install unknown apps) অনুমতি চাইবে — যে অ্যাপ দিয়ে খুলছেন (Chrome বা Files), তাকে অনুমতি দিন।</span></li>
-          <li><span><b>Install</b> চাপুন। নতুন ভার্সন এলে অ্যাপই জানিয়ে দেবে; একইভাবে বসালে আপনার ফেভারিট ও ইতিহাস থেকে যায়।</span></li></ol>
-          <p class="note">${icon("shield")}<span>Play Protect "অজানা অ্যাপ" বলে সতর্ক করতে পারে — অ্যাপটি Play Store-এ নেই বলে এমন বলে। <b>More details → Install anyway</b> চাপলেই হবে।</span></p>`)}
+        ${section("যেভাবে ইনস্টল করবেন", `<ol class="steps">
+          <li><span><b>ডাউনলোড করুন</b> বোতামে চাপুন — <code>tazkiyah.apk</code> ফাইলটি ডাউনলোড হবে।</span></li>
+          <li><span>ফাইলটি খুলুন। প্রথমবার ফোন <b>"অজানা অ্যাপ ইনস্টল"</b> (Install unknown apps) করার অনুমতি চাইবে — যে অ্যাপ দিয়ে ফাইলটি খুলছেন (যেমন Chrome বা Files), সেটিকে অনুমতি দিন।</span></li>
+          <li><span><b>Install</b> চাপুন। নতুন ভার্সন এলে অ্যাপই জানিয়ে দেবে; একইভাবে ইনস্টল করলে আপনার ফেভারিট ও ইতিহাস মুছে যাবে না।</span></li></ol>
+          <p class="note">${icon("shield")}<span>অ্যাপটি Play Store-এ নেই, তাই Play Protect একে "অজানা অ্যাপ" বলে সতর্ক করতে পারে। <b>More details → Install anyway</b> চাপলেই ইনস্টল হবে।</span></p>`)}
         ${section("প্রশ্নোত্তর", `<div class="faq">
           <details open><summary>অ্যাপটি কি নিরাপদ?</summary>
-            <p>অ্যাপের পুরো সোর্স কোড <a href="${REPO_URL}">GitHub-এ খোলা</a>; প্রতিটি রিলিজ একই সাইনিং key-তে সই করা। অ্যাপ কোনো অ্যাকাউন্ট চায় না, আপনার কোনো তথ্য সংগ্রহ করে না।</p>
+            <p>অ্যাপের পুরো সোর্স কোড <a href="${REPO_URL}">GitHub-এ সবার জন্য খোলা</a>, আর প্রতিটি রিলিজে একই ডিজিটাল সই থাকে। অ্যাপে কোনো অ্যাকাউন্ট লাগে না, আর অ্যাপটি আপনার কোনো তথ্য সংগ্রহ করে না।</p>
             <p class="meta">সাইনিং সার্টিফিকেট (SHA-256): <code>A9:22:F5:B1:49:20:60:F8:D3:33:CD:F3:1E:EB:1E:F8:3D:6D:6F:EC:15:A5:DF:B1:7A:82:A3:21:D5:2D:1B:80</code></p>
             <p class="meta" data-checksum></p></details>
           <details><summary>Play Store-এ নেই কেন?</summary>
-            <p>অফলাইন সেভ আর স্ক্রিন বন্ধ রেখে শোনার সুবিধা ইউটিউবের ডেভেলপার নীতির বাইরে, তাই অ্যাপটি ব্যক্তিগতভাবে বিতরণ করা হয়।</p></details>
+            <p>অফলাইনে সেভ আর স্ক্রিন বন্ধ রেখে শোনার সুবিধা ইউটিউবের ডেভেলপার নীতিমালার সঙ্গে মেলে না। তাই অ্যাপটি Play Store-এর বদলে সরাসরি এখান থেকে দেওয়া হয়।</p></details>
           <details><summary>লেকচারগুলো কোথা থেকে আসে?</summary>
-            <p>বক্তাদের অফিশিয়াল ও অন্যান্য ইউটিউব চ্যানেল থেকে বাছাই করা; ভিডিও চলে ইউটিউবের প্লেয়ারেই। লেকচারের স্বত্ব বক্তা ও আপলোডকারীদের; এই অ্যাপ কোনো বক্তা বা ইউটিউবের সাথে সম্পর্কিত নয়।</p></details>
+            <p>বক্তাদের অফিশিয়াল ও অন্যান্য ইউটিউব চ্যানেল থেকে বাছাই করা; ভিডিও চলে ইউটিউবের প্লেয়ারেই। লেকচারের স্বত্ব বক্তা ও আপলোডকারীদের; এই অ্যাপ কোনো বক্তা বা ইউটিউবের সঙ্গে যুক্ত নয়।</p></details>
           <details><summary>আইফোনে চলবে?</summary>
             <p>আইফোনের অ্যাপ এখনো নেই — তবে এই ওয়েবসাইট আইফোনের ব্রাউজারেও চলে।</p></details></div>`)}`,
     };
@@ -1459,7 +1459,7 @@
   function paintThemeButton() {
     const dark = currentTheme() === "dark";
     themeBtn.innerHTML = icon(dark ? "sun" : "moon");
-    themeBtn.setAttribute("aria-label", dark ? "হালকা থিম" : "গাঢ় থিম");
+    themeBtn.setAttribute("aria-label", dark ? "লাইট থিম চালু করুন" : "ডার্ক থিম চালু করুন");
   }
   themeBtn.addEventListener("click", () => {
     const next = currentTheme() === "dark" ? "light" : "dark";

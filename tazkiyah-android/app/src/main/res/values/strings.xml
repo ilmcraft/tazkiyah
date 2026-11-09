@@ -7,24 +7,24 @@
     <string name="tab_home">হোম</string>
     <string name="tab_speakers">বক্তা</string>
     <string name="tab_categories">বিষয়</string>
-    <string name="tab_library">আমার</string>
+    <string name="tab_library">লাইব্রেরি</string>
 
     <!-- Common -->
     <string name="search">খুঁজুন</string>
     <string name="settings">সেটিংস</string>
-    <string name="back">পেছনে</string>
+    <string name="back">ফিরে যান</string>
     <string name="close">বন্ধ করুন</string>
-    <string name="lecture_count">%1$s টি লেকচার</string>
+    <string name="lecture_count">%1$sটি লেকচার</string>
     <string name="minutes_short">%1$s মিনিট</string>
     <string name="hours_minutes">%1$s ঘণ্টা %2$s মিনিট</string>
     <string name="badge_new">নতুন</string>
-    <string name="badge_completed">শেষ হয়েছে</string>
-    <string name="favorite_add">ফেভারিটে যোগ করুন</string>
+    <string name="badge_completed">শোনা শেষ</string>
+    <string name="favorite_add">ফেভারিটে রাখুন</string>
     <string name="favorite_remove">ফেভারিট থেকে সরান</string>
-    <string name="added_on">যোগ হয়েছে %1$s</string>
-    <string name="published_on">প্রকাশ %1$s</string>
+    <string name="added_on">যোগ হয়েছে: %1$s</string>
+    <string name="published_on">প্রকাশ: %1$s</string>
     <string name="series_part">%1$s · পর্ব %2$s</string>
-    <string name="error_generic">কিছু একটা ভুল হয়েছে</string>
+    <string name="error_generic">কিছু একটা সমস্যা হয়েছে। একটু পরে আবার চেষ্টা করুন।</string>
     <string-array name="month_names">
         <item>জানুয়ারি</item>
         <item>ফেব্রুয়ারি</item>
@@ -54,10 +54,10 @@
     <string name="home_new">নতুন যোগ হয়েছে</string>
     <string name="home_today">আজকের লেকচার</string>
     <string name="home_topics">বিষয়ভিত্তিক</string>
-    <string name="home_empty">এখনো কোনো লেকচার নেই। ইন্টারনেট চালু করে নিচে টেনে রিফ্রেশ করুন।</string>
-    <string name="home_all_listened">মাশাআল্লাহ! সব লেকচার একবার করে শোনা হয়েছে।</string>
-    <string name="banner_new_content">নতুন কনটেন্ট এসেছে</string>
-    <string name="banner_app_update">কনটেন্টের নতুন ফরম্যাট এসেছে — নতুন লেকচার পেতে অ্যাপ আপডেট করুন। আগের তালিকা ঠিকই থাকবে।</string>
+    <string name="home_empty">এখনো কোনো লেকচার নেই। ইন্টারনেট চালু করে স্ক্রিনটি নিচের দিকে টেনে রিফ্রেশ করুন।</string>
+    <string name="home_all_listened">মাশাআল্লাহ! সব লেকচারই অন্তত একবার শুনেছেন।</string>
+    <string name="banner_new_content">নতুন যা এসেছে</string>
+    <string name="banner_app_update">নতুন লেকচার পেতে অ্যাপটি আপডেট করুন — এই ভার্সনে সেগুলো দেখা যাবে না। আগের লেকচারগুলো যেমন আছে তেমনই থাকবে।</string>
     <string name="dismiss">ঠিক আছে</string>
 
     <!-- Speakers -->
@@ -65,14 +65,14 @@
     <string name="speakers_empty">এখনো কোনো বক্তা যোগ হয়নি।</string>
     <string name="speaker_all_topics">সব বিষয়</string>
     <string name="sort_newest">নতুন আগে</string>
-    <string name="sort_oldest">পুরনো আগে</string>
+    <string name="sort_oldest">পুরোনো আগে</string>
     <string name="sort_series">সিরিজ অনুযায়ী</string>
-    <string name="no_series">সিরিজের বাইরে</string>
+    <string name="no_series">একক লেকচার</string>
     <string name="lectures_empty">এই তালিকায় কোনো লেকচার নেই।</string>
 
     <!-- Categories -->
-    <string name="categories_title">বিষয়সমূহ</string>
-    <string name="categories_empty">এখনো কোনো বিষয় নেই।</string>
+    <string name="categories_title">বিষয়ভিত্তিক লেকচার</string>
+    <string name="categories_empty">এখনো কোনো বিষয় যোগ হয়নি।</string>
     <string name="category_all_speakers">সব বক্তা</string>
     <string name="subcategories">উপ-বিষয়</string>
 
@@ -80,95 +80,95 @@
     <string name="search_hint">শিরোনাম, বিষয় বা বক্তার নাম</string>
     <string name="search_recent">সাম্প্রতিক খোঁজ</string>
     <string name="search_clear_recent">মুছুন</string>
-    <string name="search_no_result">\"%1$s\" দিয়ে কিছু পাওয়া যায়নি</string>
+    <string name="search_no_result">\"%1$s\" লিখে কিছু পাওয়া যায়নি। অন্য বানানে বা অন্য শব্দে খুঁজে দেখুন।</string>
     <string name="search_prompt">লেকচার খুঁজতে লিখুন — বাংলা বা ইংরেজিতে</string>
-    <string name="search_result_count">%1$s টি ফলাফল</string>
-    <string name="clear">মুছে ফেলুন</string>
+    <string name="search_result_count">%1$sটি ফলাফল</string>
+    <string name="clear">লেখা মুছুন</string>
 
     <!-- Player -->
     <string name="now_playing">এখন চলছে</string>
     <string name="play">চালান</string>
     <string name="pause">থামান</string>
-    <string name="rewind_10">১০ সেকেন্ড পেছনে</string>
-    <string name="forward_10">১০ সেকেন্ড সামনে</string>
+    <string name="rewind_10">১০ সেকেন্ড পিছিয়ে যান</string>
+    <string name="forward_10">১০ সেকেন্ড এগিয়ে যান</string>
     <string name="speed">গতি</string>
     <string name="speed_value">%1$s×</string>
     <string name="volume">ভলিউম</string>
-    <string name="volume_mute">আওয়াজ বন্ধ করুন</string>
-    <string name="volume_unmute">আওয়াজ চালু করুন</string>
+    <string name="volume_mute">শব্দ বন্ধ করুন</string>
+    <string name="volume_unmute">শব্দ চালু করুন</string>
     <string name="fullscreen">ফুলস্ক্রিন</string>
-    <string name="exit_fullscreen">ফুলস্ক্রিন থেকে বের হোন</string>
+    <string name="exit_fullscreen">ফুলস্ক্রিন বন্ধ করুন</string>
     <string name="collapse_player">প্লেয়ার ছোট করুন</string>
     <string name="listen_again">আবার শুনুন</string>
     <string name="next_part">পরের পর্ব</string>
     <string name="listen_only">শুধু শুনুন</string>
-    <string name="listen_only_desc">ভিডিও ঢেকে রেখে শুধু আওয়াজ শুনুন</string>
-    <string name="listen_only_active">শুধু শুনুন মোড চালু</string>
+    <string name="listen_only_desc">ভিডিও ঢেকে রেখে শুধু অডিও শুনুন</string>
+    <string name="listen_only_active">শুধু শুনুন মোড চালু আছে</string>
     <string name="series_other_parts">এই সিরিজের অন্য পর্ব</string>
     <string name="description">বিবরণ</string>
     <string name="sleep_timer">স্লিপ টাইমার</string>
     <string name="sleep_off">বন্ধ</string>
     <string name="sleep_minutes">%1$s মিনিট</string>
-    <string name="sleep_end_of_lecture">এই লেকচার শেষে</string>
+    <string name="sleep_end_of_lecture">লেকচার শেষ হলে</string>
     <string name="sleep_remaining">%1$s মিনিট পর থামবে</string>
-    <string name="sleep_at_end_active">লেকচার শেষে থামবে</string>
+    <string name="sleep_at_end_active">লেকচার শেষ হলে থামবে</string>
     <string name="error_not_embeddable">এই ভিডিওটি অ্যাপের ভেতরে চালানোর অনুমতি নেই।</string>
-    <string name="error_not_found">ভিডিওটি পাওয়া যাচ্ছে না — হয়তো মুছে ফেলা বা প্রাইভেট করা হয়েছে।</string>
-    <string name="error_network">ইন্টারনেট সংযোগ পাওয়া যাচ্ছে না।</string>
-    <string name="error_playback">লেকচারটি চালানো যাচ্ছে না।</string>
+    <string name="error_not_found">ভিডিওটি পাওয়া যাচ্ছে না — হয়তো মুছে ফেলা হয়েছে বা প্রাইভেট করা হয়েছে।</string>
+    <string name="error_network">ইন্টারনেট সংযোগ পাওয়া যাচ্ছে না। সংযোগ দেখে আবার চেষ্টা করুন।</string>
+    <string name="error_playback">লেকচারটি এখন চালানো যাচ্ছে না। একটু পরে আবার চেষ্টা করুন।</string>
     <string name="focus_mode_blocked">ফোকাস মোড: ইউটিউবে যাওয়া বন্ধ</string>
     <string name="audio_badge">অডিও</string>
     <string name="video_badge">ভিডিও</string>
 
     <!-- Library (আমার) -->
-    <string name="library_title">আমার</string>
+    <string name="library_title">আমার লাইব্রেরি</string>
     <string name="library_favorites">ফেভারিট</string>
     <string name="library_history">ইতিহাস</string>
-    <string name="library_completed">শেষ করা</string>
+    <string name="library_completed">শোনা শেষ</string>
     <string name="library_week">এই সপ্তাহে শুনেছেন</string>
     <string name="library_favorites_empty">ফেভারিটে এখনো কিছু নেই। লেকচারের পাশে ♡ চাপুন।</string>
     <string name="library_history_empty">এখনো কিছু শোনা হয়নি।</string>
-    <string name="library_completed_empty">শেষ করা লেকচার এখানে দেখা যাবে।</string>
+    <string name="library_completed_empty">যেসব লেকচার পুরো শুনেছেন, সেগুলো এখানে থাকবে।</string>
 
     <!-- Settings -->
-    <string name="settings_appearance">চেহারা</string>
+    <string name="settings_appearance">থিম ও ফন্ট</string>
     <string name="settings_theme">থিম</string>
-    <string name="theme_system">সিস্টেম অনুযায়ী</string>
+    <string name="theme_system">ফোনের মতো</string>
     <string name="theme_light">লাইট</string>
     <string name="theme_dark">ডার্ক</string>
     <string name="settings_playback">প্লেব্যাক</string>
     <string name="settings_default_speed">ডিফল্ট গতি</string>
-    <string name="settings_updates">কনটেন্ট আপডেট</string>
-    <string name="settings_wifi_only">শুধু Wi-Fi-তে আপডেট</string>
-    <string name="settings_wifi_only_desc">মোবাইল ডেটায় নিজে থেকে আপডেট দেখবে না</string>
-    <string name="settings_check_now">এখনই আপডেট দেখুন</string>
+    <string name="settings_updates">লেকচার আপডেট</string>
+    <string name="settings_wifi_only">শুধু Wi-Fi-তে আপডেট নিন</string>
+    <string name="settings_wifi_only_desc">মোবাইল ডেটায় নিজে থেকে আপডেট খুঁজবে না</string>
+    <string name="settings_check_now">এখনই আপডেট খুঁজুন</string>
     <string name="settings_data_version">ডেটা ভার্সন: %1$s</string>
-    <string name="settings_last_sync">শেষ যাচাই: %1$s</string>
+    <string name="settings_last_sync">সর্বশেষ যাচাই: %1$s</string>
     <string name="settings_never">এখনো হয়নি</string>
     <string name="settings_about">অ্যাপ সম্পর্কে</string>
     <string name="settings_app_version">অ্যাপ ভার্সন: %1$s</string>
-    <string name="settings_catalog_counts">%1$s জন বক্তা · %2$s টি বিষয় · %3$s টি লেকচার</string>
-    <string name="settings_focus_note">ফোকাস মোড: রিলেটেড ভিডিও, কমেন্ট বা ইউটিউবে যাওয়ার কোনো পথ নেই।</string>
+    <string name="settings_catalog_counts">%1$s জন বক্তা · %2$sটি বিষয় · %3$sটি লেকচার</string>
+    <string name="settings_focus_note">ফোকাস মোড: অন্য ভিডিওর সাজেশন, কমেন্ট বা ইউটিউবে যাওয়ার কোনো পথ নেই।</string>
 
     <!-- Sync results -->
     <string name="sync_updated">নতুন লেকচার যোগ হয়েছে</string>
-    <string name="sync_up_to_date">সব আপ-টু-ডেট আছে</string>
-    <string name="sync_offline">ইন্টারনেট সংযোগ নেই বা সার্ভারে পৌঁছানো যায়নি</string>
-    <string name="sync_partial">কিছু ফাইল নামানো যায়নি — পরে আবার চেষ্টা হবে</string>
-    <string name="sync_app_update">নতুন কনটেন্টের জন্য অ্যাপ আপডেট দরকার</string>
-    <string name="syncing">আপডেট দেখা হচ্ছে…</string>
+    <string name="sync_up_to_date">নতুন কিছু নেই, সব আপডেট আছে</string>
+    <string name="sync_offline">ইন্টারনেট সংযোগ নেই, বা সার্ভারে পৌঁছানো যায়নি</string>
+    <string name="sync_partial">কিছু ফাইল ডাউনলোড হয়নি — পরে নিজে থেকেই আবার চেষ্টা করা হবে</string>
+    <string name="sync_app_update">নতুন লেকচার পেতে অ্যাপটি আপডেট করুন</string>
+    <string name="syncing">আপডেট খোঁজা হচ্ছে…</string>
     <!-- Saving lectures for offline use -->
     <string name="download_save">অফলাইনের জন্য সেভ করুন</string>
-    <string name="download_save_desc">নেট ছাড়াও শোনা ও দেখা যাবে</string>
+    <string name="download_save_desc">ইন্টারনেট ছাড়াও শোনা ও দেখা যাবে</string>
     <string name="download_choose_title">কীভাবে সেভ করবেন?</string>
-    <string name="download_loading_options">তথ্য আনা হচ্ছে…</string>
+    <string name="download_loading_options">ফাইলের তথ্য আনা হচ্ছে…</string>
     <string name="download_audio_only">শুধু অডিও</string>
     <string name="download_video_quality">ভিডিও %1$sp</string>
     <string name="download_size_approx">প্রায় %1$s</string>
     <string name="download_size_mb">%1$s এমবি</string>
     <string name="download_size_gb">%1$s জিবি</string>
     <string name="download_saving">সেভ হচ্ছে… %1$s%%</string>
-    <string name="download_waiting">সেভের অপেক্ষায়</string>
+    <string name="download_waiting">সেভ হওয়ার অপেক্ষায়</string>
     <string name="download_waiting_network">ইন্টারনেটের অপেক্ষায়</string>
     <string name="download_progress_bytes">%1$s / %2$s</string>
     <string name="download_saved">ফোনে সেভ করা আছে</string>
@@ -177,25 +177,25 @@
     <string name="download_retry">আবার চেষ্টা</string>
     <string name="download_cancel">বাতিল</string>
     <string name="download_delete">ফোন থেকে মুছুন</string>
-    <string name="download_delete_title">সেভ করা লেকচার মুছবেন?</string>
+    <string name="download_delete_title">সেভ করা লেকচারটি মুছবেন?</string>
     <string name="download_delete_text">ফাইলটি ফোন থেকে মুছে যাবে। পরে আবার সেভ করতে পারবেন।</string>
     <string name="download_delete_confirm">মুছুন</string>
     <string name="download_error_network">ইন্টারনেট সংযোগ পাওয়া যায়নি</string>
     <string name="download_error_unavailable">এই লেকচারটি এখন সেভ করা যাচ্ছে না। পরে আবার চেষ্টা করুন।</string>
-    <string name="download_error_storage">ফোনে যথেষ্ট জায়গা নেই</string>
+    <string name="download_error_storage">ফোনে যথেষ্ট জায়গা নেই — কিছু জায়গা খালি করুন</string>
     <string name="download_error_unknown">সেভ করতে সমস্যা হয়েছে</string>
     <string name="download_channel">লেকচার সেভ</string>
     <string name="download_notification_progress">সেভ হচ্ছে… %1$s%%</string>
-    <string name="download_notification_done">ফোনে সেভ হয়েছে — নেট ছাড়াই চালাতে পারবেন</string>
+    <string name="download_notification_done">ফোনে সেভ হয়েছে — ইন্টারনেট ছাড়াই চালাতে পারবেন</string>
     <string name="badge_saved">সেভ করা</string>
     <string name="badge_saving">সেভ হচ্ছে</string>
     <string name="library_saved">সেভ করা</string>
     <string name="library_saved_empty">কোনো লেকচার সেভ করা নেই। লেকচারের পাতায় \"অফলাইনের জন্য সেভ করুন\" চাপুন।</string>
-    <string name="library_saved_total">ফোনে মোট %1$s</string>
+    <string name="library_saved_total">ফোনে মোট %1$s জায়গা নিচ্ছে</string>
     <!-- App updates (GitHub Releases) and About -->
     <string name="contact_email" translatable="false">https://github.com/ilmcraft/tazkiyah/issues</string>
     <string name="banner_app_update_available">নতুন ভার্সন %1$s এসেছে</string>
-    <string name="banner_app_update_desc">নতুন APK নামিয়ে ইনস্টল করুন — ফেভারিট, ইতিহাস ও সেভ করা লেকচার থেকে যাবে।</string>
+    <string name="banner_app_update_desc">নতুন APK ডাউনলোড করে ইনস্টল করুন — ফেভারিট, ইতিহাস ও সেভ করা লেকচার মুছে যাবে না।</string>
     <string name="download">ডাউনলোড</string>
     <string name="later">পরে</string>
     <string name="settings_open_about">আপডেট, লাইসেন্স ও যোগাযোগ</string>
@@ -206,20 +206,20 @@
     <string name="about_update">অ্যাপ আপডেট</string>
     <string name="about_update_available">নতুন ভার্সন %1$s এসেছে — ডাউনলোড করতে চাপুন</string>
     <string name="about_update_none">সর্বশেষ ভার্সন চলছে</string>
-    <string name="about_update_check">আপডেট দেখুন</string>
-    <string name="update_check_up_to_date">আপনি সর্বশেষ ভার্সন চালাচ্ছেন</string>
+    <string name="about_update_check">আপডেট খুঁজুন</string>
+    <string name="update_check_up_to_date">আপনি সর্বশেষ ভার্সন ব্যবহার করছেন</string>
     <string name="update_check_available">নতুন ভার্সন এসেছে</string>
-    <string name="update_check_failed">আপডেট দেখা যায়নি — ইন্টারনেট সংযোগ দেখুন</string>
+    <string name="update_check_failed">আপডেট খোঁজা যায়নি — ইন্টারনেট সংযোগ দেখে আবার চেষ্টা করুন</string>
     <string name="about_source">সোর্স কোড ও সব রিলিজ</string>
     <string name="about_contact">যোগাযোগ</string>
     <string name="about_privacy_title">গোপনীয়তা</string>
-    <string name="about_privacy">অ্যাপ কোনো অ্যাকাউন্ট চায় না, আপনার কোনো তথ্য সংগ্রহ করে না বা কোথাও পাঠায় না। ফেভারিট, ইতিহাস ও সেভ করা লেকচার শুধু এই ফোনেই থাকে। লেকচারের তালিকা আসে GitHub থেকে, আর ভিডিও চলে ইউটিউবের প্লেয়ারে — সেখানে ইউটিউব ও Google-এর নিজস্ব নীতি প্রযোজ্য।</string>
-    <string name="about_disclaimer">এই অ্যাপ কোনো বক্তা, প্রতিষ্ঠান বা ইউটিউবের সাথে সম্পর্কিত নয়। প্রতিটি লেকচারের স্বত্ব তার বক্তা ও আপলোডকারীর।</string>
+    <string name="about_privacy">এই অ্যাপে কোনো অ্যাকাউন্ট লাগে না। অ্যাপটি আপনার কোনো তথ্য সংগ্রহ করে না, কোথাও পাঠায়ও না। ফেভারিট, ইতিহাস ও সেভ করা লেকচার শুধু এই ফোনেই থাকে। লেকচারের তালিকা আসে GitHub থেকে, আর ভিডিও চলে ইউটিউবের প্লেয়ারে — সেখানে ইউটিউব ও গুগলের নিজস্ব নীতি প্রযোজ্য।</string>
+    <string name="about_disclaimer">এই অ্যাপ কোনো বক্তা, প্রতিষ্ঠান বা ইউটিউবের সঙ্গে যুক্ত নয়। প্রতিটি লেকচারের স্বত্ব সংশ্লিষ্ট বক্তা ও আপলোডকারীর।</string>
     <string name="about_license_title">লাইসেন্স</string>
-    <string name="about_license_app">তাযকিয়া GNU GPL v3.0 লাইসেন্সের মুক্ত সফটওয়্যার: ব্যবহার, পরিবর্তন ও শেয়ার করা যায়; শেয়ার করলে সোর্স কোডও একই লাইসেন্সে দিতে হয়।</string>
-    <string name="about_license_full">পূর্ণ লাইসেন্স (ইংরেজি)</string>
+    <string name="about_license_app">তাযকিয়া GNU GPL v3.0 লাইসেন্সের একটি মুক্ত সফটওয়্যার। এটি ব্যবহার, পরিবর্তন ও শেয়ার করা যায়; তবে শেয়ার করলে সোর্স কোডও একই লাইসেন্সে দিতে হয়।</string>
+    <string name="about_license_full">পুরো লাইসেন্স (ইংরেজিতে)</string>
     <string name="about_libraries">ব্যবহৃত ওপেন-সোর্স লাইব্রেরি ও ফন্ট</string>
-    <string name="no_app_for_link">লিংকটি খোলার মতো অ্যাপ পাওয়া যায়নি</string>
+    <string name="no_app_for_link">এই লিংক খোলার মতো কোনো অ্যাপ ফোনে পাওয়া যায়নি</string>
     <!-- Fonts -->
     <string name="settings_font">ফন্ট</string>
     <string name="font_sample">আত্মশুদ্ধির পথে প্রতিদিন — ১২৩৪৫৬৭৮৯০</string>
@@ -232,7 +232,7 @@
     <!-- Sharing the app -->
     <string name="share_app">অ্যাপ শেয়ার করুন</string>
     <string name="share_app_desc">পরিচিতদের তাযকিয়ার ডাউনলোড লিংক পাঠান</string>
-    <string name="share_app_text">তাযকিয়া — বাছাই করা বাংলা ইসলামিক লেকচার, মনোযোগ ধরে রেখে শোনা ও দেখার জন্য। ওয়েবে শুনুন বা ফ্রি অ্যাপ নামান: %1$s</string>
+    <string name="share_app_text">তাযকিয়া — বাছাই করা বাংলা ইসলামিক লেকচার, মনোযোগ ধরে রেখে শোনা ও দেখার জন্য। ওয়েবসাইটে শুনুন, অথবা ফ্রি অ্যাপটি ডাউনলোড করুন: %1$s</string>
     <string name="about_download_page">ওয়েবসাইট ও ডাউনলোড পাতা</string>
     <string name="chip_with_count">%1$s (%2$s)</string>
 </resources>

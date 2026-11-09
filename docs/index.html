@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>তাযকিয়া — বাংলা ইসলামিক লেকচার</title>
-  <meta name="description" content="বাছাই করা বাংলা ইসলামিক লেকচার — বক্তা ও বিষয় অনুযায়ী সাজানো, মনোযোগ ধরে রেখে শোনা ও দেখার জন্য। ওয়েবেই শুনুন, অথবা ফ্রি Android অ্যাপ নিন।">
+  <meta name="description" content="বাছাই করা বাংলা ইসলামিক লেকচার — বক্তা ও বিষয় অনুযায়ী সাজানো, মনোযোগ ধরে রেখে শোনা ও দেখার জন্য। ওয়েবসাইটেই শুনুন, অথবা ফ্রি Android অ্যাপ ডাউনলোড করুন।">
   <meta property="og:title" content="তাযকিয়া — বাংলা ইসলামিক লেকচার">
-  <meta property="og:description" content="বাছাই করা বাংলা ইসলামিক লেকচার, মনোযোগ ধরে রেখে শোনা ও দেখার জন্য। ওয়েবে শুনুন বা ফ্রি Android অ্যাপ নিন।">
+  <meta property="og:description" content="বাছাই করা বাংলা ইসলামিক লেকচার, মনোযোগ ধরে রেখে শোনা ও দেখার জন্য। ওয়েবসাইটে শুনুন, অথবা ফ্রি Android অ্যাপ ডাউনলোড করুন।">
   <meta property="og:type" content="website">
   <meta name="theme-color" content="#0A0A0A">
   <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
@@ -29,7 +29,7 @@
       <a href="#/" data-tab="home"><span data-icon="home"></span><span>হোম</span></a>
       <a href="#/speakers" data-tab="speakers"><span data-icon="speakers"></span><span>বক্তা</span></a>
       <a href="#/topics" data-tab="topics"><span data-icon="topics"></span><span>বিষয়</span></a>
-      <a href="#/library" data-tab="library"><span data-icon="library"></span><span>আমার</span></a>
+      <a href="#/library" data-tab="library"><span data-icon="library"></span><span>লাইব্রেরি</span></a>
     </nav>
     <a class="search-pill" href="#/search" data-tab-link="search"><span data-icon="search"></span><span>লেকচার, বক্তা বা বিষয় খুঁজুন</span></a>
     <button type="button" class="icon-btn" id="theme-btn" aria-label="থিম বদলান"></button>
@@ -61,19 +61,19 @@
           <div class="spinner" id="spinner" hidden></div>
         </div>
         <div class="controls">
-          <input type="range" class="seek" id="seek" min="0" max="1" step="1" value="0" aria-label="লেকচারের অবস্থান">
+          <input type="range" class="seek" id="seek" min="0" max="1" step="1" value="0" aria-label="লেকচারের অগ্রগতি">
           <div class="ctrl-row">
-            <button type="button" class="ctrl" id="back10" aria-label="১০ সেকেন্ড পিছনে"><span data-icon="replay"></span><small>১০</small></button>
+            <button type="button" class="ctrl" id="back10" aria-label="১০ সেকেন্ড পিছিয়ে যান"><span data-icon="replay"></span><small>১০</small></button>
             <button type="button" class="ctrl main" id="toggle" aria-label="চালান"></button>
-            <button type="button" class="ctrl" id="fwd10" aria-label="১০ সেকেন্ড সামনে"><small>১০</small><span data-icon="forward"></span></button>
+            <button type="button" class="ctrl" id="fwd10" aria-label="১০ সেকেন্ড এগিয়ে যান"><small>১০</small><span data-icon="forward"></span></button>
             <span class="time"><span id="cur">০:০০</span> / <span id="dur">০:০০</span></span>
             <span class="grow"></span>
             <span class="vol-box">
-              <button type="button" class="ctrl" id="mute" aria-label="আওয়াজ বন্ধ করুন"></button>
+              <button type="button" class="ctrl" id="mute" aria-label="শব্দ বন্ধ করুন"></button>
               <input type="range" class="vol" id="vol" min="0" max="100" step="1" value="100" aria-label="ভলিউম">
             </span>
             <button type="button" class="ctrl speed" id="speed" aria-label="শোনার গতি">১x</button>
-            <button type="button" class="ctrl" id="fs" aria-label="পূর্ণ পর্দা"><span data-icon="fullscreen"></span></button>
+            <button type="button" class="ctrl" id="fs" aria-label="ফুলস্ক্রিন"><span data-icon="fullscreen"></span></button>
           </div>
         </div>
         <div class="mini-info">
@@ -88,19 +88,19 @@
     <main id="view" tabindex="-1">
       <p class="loading"><span class="spin"></span>লোড হচ্ছে…</p>
       <noscript>
-        <p>এই পাতা চালাতে JavaScript লাগে। অ্যাপটি সরাসরি নামাতে পারেন:
+        <p>এই পাতাটি দেখতে ব্রাউজারে JavaScript চালু থাকতে হবে। চাইলে অ্যাপটি সরাসরি ডাউনলোড করতে পারেন:
           <a href="https://github.com/ilmcraft/tazkiyah/releases/latest/download/tazkiyah.apk">tazkiyah.apk</a></p>
       </noscript>
     </main>
   </div>
-  <aside class="stage-side" id="side" aria-label="এই লেকচারের সাথে আরও"></aside>
+  <aside class="stage-side" id="side" aria-label="আরও লেকচার"></aside>
 </div>
 
 <footer class="foot">
   <div class="foot-in">
     <div class="foot-about">
       <p class="foot-brand">তাযকিয়া</p>
-      <p>লেকচারের স্বত্ব বক্তা ও আপলোডকারীদের; ভিডিও চলে ইউটিউবের প্লেয়ারে। এই সাইট কোনো বক্তা বা ইউটিউবের সাথে সম্পর্কিত নয়।</p>
+      <p>লেকচারের স্বত্ব বক্তা ও আপলোডকারীদের; ভিডিও চলে ইউটিউবের প্লেয়ারে। এই সাইট কোনো বক্তা বা ইউটিউবের সঙ্গে যুক্ত নয়।</p>
       <p>আপনার ফেভারিট ও ইতিহাস শুধু এই ব্রাউজারেই থাকে — কোথাও পাঠানো হয় না।</p>
     </div>
     <nav class="foot-nav" aria-label="ফুটার মেনু">
