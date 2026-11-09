@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/mdhelaluddin-ctg-bd/tazkiyah/tazkiyah-content/schema/seen.schema.json",
+  "$id": "https://github.com/ilmcraft/tazkiyah/tazkiyah-content/schema/seen.schema.json",
   "title": "Videos the bot has already decided on for one speaker (discovery/seen/<speaker>.json)",
   "type": "object",
   "required": ["speakerId", "videos"],

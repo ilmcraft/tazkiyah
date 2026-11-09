@@ -12,7 +12,7 @@
 ## Local notes
 - Content repo lives next to this one in `../tazkiyah-content`; every build copies a snapshot of it into
   the APK's `assets/seed/` (task `copy<Variant>ContentSeed`), so a fresh offline install still has data.
-- Monorepo `mdhelaluddin-ctg-bd/tazkiyah`: content is synced from its `tazkiyah-content/` folder
+- Monorepo `ilmcraft/tazkiyah`: content is synced from its `tazkiyah-content/` folder
   (`tazkiyah.content*` properties in `gradle.properties`); the content Action is the root `.github/workflows/publish.yml`.
 - Playback never stops when the app is minimized or the screen is off: YouTube runs with
   `enableBackgroundPlayback(true)` (the view is not a lifecycle observer) and always publishes a

@@ -4,7 +4,7 @@
 
 ## ডাউনলোড ও ইনস্টল
 
-**ওয়েবসাইট ও ডাউনলোড পাতা: https://mdhelaluddin-ctg-bd.github.io/tazkiyah/** — ব্রাউজারেই সব লেকচার শোনা যায়, আর এখান থেকেই অ্যাপ নামানো যায়। অন্যদের এই লিংকটাই দিন (অ্যাপের "অ্যাপ শেয়ার করুন"-ও এটাই পাঠায়)। সরাসরি সর্বশেষ APK: https://github.com/mdhelaluddin-ctg-bd/tazkiyah/releases/latest/download/tazkiyah.apk (Android 8.0 বা তার পরের ভার্সন লাগবে)।
+**ওয়েবসাইট ও ডাউনলোড পাতা: https://ilmcraft.github.io/tazkiyah/** — ব্রাউজারেই সব লেকচার শোনা যায়, আর এখান থেকেই অ্যাপ নামানো যায়। অন্যদের এই লিংকটাই দিন (অ্যাপের "অ্যাপ শেয়ার করুন"-ও এটাই পাঠায়)। সরাসরি সর্বশেষ APK: https://github.com/ilmcraft/tazkiyah/releases/latest/download/tazkiyah.apk (Android 8.0 বা তার পরের ভার্সন লাগবে)।
 
 1. APK-টি ফোনে খুলুন। প্রথমবার ফোন "অজানা উৎস থেকে ইনস্টল" (Install unknown apps) অনুমতি চাইবে — যে অ্যাপ দিয়ে খুলছেন (Chrome / Files) তাকে অনুমতি দিন।
 2. **Install** চাপুন। Play Protect সতর্ক করলে "More details → Install anyway"।
@@ -43,7 +43,7 @@ cd tazkiyah-android
 ./gradlew assembleDebug        # app/build/outputs/apk/debug/app-debug.apk
 ```
 
-প্রতিটি বিল্ড `tazkiyah-content/`-এর একটি কপি অ্যাপের ভেতরে রাখে, তাই নেট ছাড়াও প্রথমবার তালিকা দেখা যায়। অ্যাপ কনটেন্ট নামায় `https://raw.githubusercontent.com/mdhelaluddin-ctg-bd/tazkiyah/main/tazkiyah-content/` থেকে (ব্যাকআপ: jsDelivr)।
+প্রতিটি বিল্ড `tazkiyah-content/`-এর একটি কপি অ্যাপের ভেতরে রাখে, তাই নেট ছাড়াও প্রথমবার তালিকা দেখা যায়। অ্যাপ কনটেন্ট নামায় `https://raw.githubusercontent.com/ilmcraft/tazkiyah/main/tazkiyah-content/` থেকে (ব্যাকআপ: jsDelivr)।
 
 ### রিলিজ বানানো (রক্ষণাবেক্ষণকারীর জন্য)
 

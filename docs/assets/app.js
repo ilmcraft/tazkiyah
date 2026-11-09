@@ -11,7 +11,7 @@
   "use strict";
 
   // ------------------------------------------------------------------ settings
-  const OWNER = "mdhelaluddin-ctg-bd";
+  const OWNER = "ilmcraft";
   const REPO = "tazkiyah";
   const CONTENT_BASES = [
     `https://raw.githubusercontent.com/${OWNER}/${REPO}/main/tazkiyah-content/`,

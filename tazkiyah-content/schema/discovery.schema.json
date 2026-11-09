@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/mdhelaluddin-ctg-bd/tazkiyah/tazkiyah-content/schema/discovery.schema.json",
+  "$id": "https://github.com/ilmcraft/tazkiyah/tazkiyah-content/schema/discovery.schema.json",
   "title": "Where the daily bot looks for each speaker's lectures (discovery/sources.json)",
   "type": "object",
   "required": ["speakers"],

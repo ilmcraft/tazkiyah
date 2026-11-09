@@ -16,8 +16,8 @@ certificate SHA-256 `A9:22:F5:B1:49:20:60:F8:D3:33:CD:F3:1E:EB:1E:F8:3D:6D:6F:EC
 | Short description (≤80) | বাছাই করা বাংলা ইসলামিক লেকচার — বক্তা ও বিষয় অনুযায়ী, মনোযোগ ধরে রেখে শুনুন। | Curated Bangla Islamic lectures by speaker and topic, for focused listening. |
 
 Category: **Education** · Tags: Islam, lectures · Contact email: https://github.com/ilmcraft/tazkiyah/issues ·
-Website: https://mdhelaluddin-ctg-bd.github.io/tazkiyah/ ·
-Privacy policy: https://mdhelaluddin-ctg-bd.github.io/tazkiyah/privacy.html
+Website: https://ilmcraft.github.io/tazkiyah/ ·
+Privacy policy: https://ilmcraft.github.io/tazkiyah/privacy.html
 
 ### Full description — Bengali
 
@@ -44,7 +44,7 @@ Privacy policy: https://mdhelaluddin-ctg-bd.github.io/tazkiyah/privacy.html
 
 দ্রষ্টব্য: লেকচারগুলোর স্বত্ব তাদের বক্তা ও আপলোডকারীদের। ভিডিও চলে YouTube-এর প্লেয়ারে। এই অ্যাপ কোনো বক্তা, প্রতিষ্ঠান বা YouTube-এর সাথে সম্পর্কিত নয়।
 
-ওয়েবসাইট: https://mdhelaluddin-ctg-bd.github.io/tazkiyah/
+ওয়েবসাইট: https://ilmcraft.github.io/tazkiyah/
 যোগাযোগ: https://github.com/ilmcraft/tazkiyah/issues
 ```
 
@@ -73,7 +73,7 @@ Privacy: no account, no ads, no personal data collected.
 
 Note: the lectures belong to their speakers and uploaders. Videos play in YouTube's player. This app is not affiliated with any speaker, organisation or YouTube.
 
-Website: https://mdhelaluddin-ctg-bd.github.io/tazkiyah/
+Website: https://ilmcraft.github.io/tazkiyah/
 Contact: https://github.com/ilmcraft/tazkiyah/issues
 ```
 
@@ -89,7 +89,7 @@ Contact: https://github.com/ilmcraft/tazkiyah/issues
 
 | Form | Answer |
 |---|---|
-| Privacy policy | https://mdhelaluddin-ctg-bd.github.io/tazkiyah/privacy.html |
+| Privacy policy | https://ilmcraft.github.io/tazkiyah/privacy.html |
 | App access | All functionality is available without special access (no login). |
 | Ads | No, the app has no ads. |
 | Content rating (IARC) | Category: Reference, News, or Educational. Violence, sexuality, language, drugs, gambling: No. User interaction / user-generated content: No. Shares location: No. Digital purchases: No. |
