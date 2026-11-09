@@ -44,6 +44,15 @@
     moon: "M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.39 5.39 0 0 1-4.4 2.26 5.4 5.4 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z",
     sun: "M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM2 13h2a1 1 0 1 0 0-2H2a1 1 0 1 0 0 2zm18 0h2a1 1 0 1 0 0-2h-2a1 1 0 1 0 0 2zM11 2v2a1 1 0 1 0 2 0V2a1 1 0 1 0-2 0zm0 18v2a1 1 0 1 0 2 0v-2a1 1 0 1 0-2 0zM5.99 4.58a1 1 0 1 0-1.41 1.41l1.06 1.06a1 1 0 1 0 1.41-1.41L5.99 4.58zm12.37 12.37a1 1 0 1 0-1.41 1.41l1.06 1.06a1 1 0 1 0 1.41-1.41l-1.06-1.06zm1.06-10.96a1 1 0 1 0-1.41-1.41l-1.06 1.06a1 1 0 1 0 1.41 1.41l1.06-1.06zM7.05 18.36a1 1 0 1 0-1.41-1.41l-1.06 1.06a1 1 0 1 0 1.41 1.41l1.06-1.06z",
     heart: "M12 20.5l-1.3-1.18C5.6 14.7 2.5 11.9 2.5 8.4 2.5 5.6 4.7 3.5 7.4 3.5c1.6 0 3.1.74 4.1 1.9 1-1.16 2.5-1.9 4.1-1.9 2.7 0 4.9 2.1 4.9 4.9 0 3.5-3.1 6.3-8.2 10.92L12 20.5z",
+    clock: "M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z",
+    phone: "M17 1H7c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zm0 18H7V5h10v14zm-1-6h-3V8h-2v5H8l4 4 4-4z",
+    lock: "M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z",
+    sync: "M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46A7.93 7.93 0 0 0 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74A7.93 7.93 0 0 0 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z",
+    font: "M2.5 4v3h5v12h3V7h5V4h-13zm19 5h-9v3h3v7h3v-7h3V9z",
+    shield: "M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z",
+    code: "M9.4 16.6 4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0 4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z",
+    check: "M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z",
+    chevron: "M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z",
   };
   const icon = (name) => `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="${ICONS[name]}"/></svg>`;
 
@@ -265,6 +274,8 @@
     const frame = $("#frame");
     const cover = $("#cover");
     const coverImg = $("#cover-img");
+    const coverTitle = $("#cover-title");
+    const coverKicker = $("#cover-kicker");
     const coverBtn = $("#cover-btn");
     const coverMsg = $("#cover-msg");
     const coverNext = $("#cover-next");
@@ -516,13 +527,15 @@
       if (!kind) return;
       cover.dataset.kind = kind;
       coverBtn.hidden = kind === "artwork";
-      coverBtn.innerHTML = icon(kind === "ended" || kind === "error" ? "replay" : "play");
-      coverBtn.setAttribute("aria-label", kind === "ended" ? "আবার শুনুন" : kind === "error" ? "আবার চেষ্টা করুন" : "চালান");
+      let label = kind === "ended" ? "আবার শুনুন" : kind === "error" ? "আবার চেষ্টা করুন" : kind === "paused" ? "চালিয়ে যান" : "চালান";
       let text = message || "";
       if (kind === "start") {
         const at = resumeAt(lecture);
-        if (at > ((lecture.media && lecture.media.startSec) || 0) + 5) text = `যেখানে থেমেছিলেন (${clock(at)}), সেখান থেকে চলবে`;
-      } else if (kind === "paused") {
+        if (at > ((lecture.media && lecture.media.startSec) || 0) + 5) label = `${clock(at)} থেকে চালান`;
+      }
+      coverBtn.innerHTML = icon(kind === "ended" || kind === "error" ? "replay" : "play") + `<span>${label}</span>`;
+      coverBtn.removeAttribute("aria-label");
+      if (kind === "paused") {
         text = `থেমে আছে · ${clock(engine ? engine.time() : 0)}`;
       } else if (kind === "ended") {
         text = "লেকচারটি শেষ হয়েছে";
@@ -719,7 +732,11 @@
       status = "idle";
       tapThrough(false);
       spinner.hidden = true;
-      coverImg.src = thumbUrl(l, "hqdefault");
+      coverImg.src = photoUrl(l.speaker) || "assets/mark.svg";
+      coverTitle.textContent = l.title;
+      const kicker = kickerOf(l);
+      coverKicker.textContent = kicker;
+      coverKicker.hidden = !kicker;
       $("#mini-link").href = `#/lecture/${l.id}`;
       $("#mini-title").textContent = l.title;
       $("#mini-speaker").textContent = l.speaker.name;
@@ -813,13 +830,18 @@
   })();
 
   // ------------------------------------------------------------------ building blocks
-  function thumbUrl(l, size = "mqdefault") {
-    if (l.media.type === "youtube") return `https://i.ytimg.com/vi/${l.media.videoId}/${size}.jpg`;
-    return l.speaker.photo ? CONTENT_BASES[0] + l.speaker.photo : "assets/icon.svg";
-  }
+  // ------------------------------------------------------------------ building blocks
+  const photoUrl = (s) => (s && s.photo ? CONTENT_BASES[0] + s.photo : "");
   function photo(s, cls = "spk-photo") {
-    if (s.photo) return `<img class="${cls}" src="${esc(CONTENT_BASES[0] + s.photo)}" alt="" loading="lazy" width="104" height="104">`;
-    return `<span class="${cls} avatar" aria-hidden="true">${esc(Array.from(s.name)[0] || "")}</span>`;
+    if (s.photo) return `<img class="${cls}" src="${esc(photoUrl(s))}" alt="" loading="lazy" width="104" height="104">`;
+    return `<span class="${cls} avatar" aria-hidden="true">${esc(firstLetter(s.name))}</span>`;
+  }
+  /** First letter as the reader sees it ("সী", not "স"). */
+  const graphemes = typeof Intl !== "undefined" && Intl.Segmenter ? new Intl.Segmenter("bn", { granularity: "grapheme" }) : null;
+  function firstLetter(text) {
+    const s = String(text || "");
+    if (graphemes) { for (const g of graphemes.segment(s)) return g.segment; }
+    return Array.from(s)[0] || "";
   }
   function percent(l) {
     const p = progress[l.id];
@@ -828,11 +850,20 @@
     const d = p.d || l.durationSec;
     return d ? Math.min(100, (p.p / d) * 100) : 0;
   }
-  function thumb(l) {
+  /** The lecture's first topic ("" when it has none). */
+  function topicName(l) {
+    const k = l.categoryIds.map((id) => catalog.categoryById.get(id)).find(Boolean);
+    return k ? k.name : "";
+  }
+  /** "ফিরাসাত হালাকাহ · পর্ব ১" for a series part, otherwise the topic. */
+  function kickerOf(l) {
+    if (l.series) return l.series.part ? `${l.series.title} · পর্ব ${bn(l.series.part)}` : l.series.title;
+    return topicName(l);
+  }
+  const playMark = (cls = "") => `<span class="pm${cls ? ` ${cls}` : ""}" aria-hidden="true">${icon("play")}</span>`;
+  function progressLine(l) {
     const pct = percent(l);
-    return `<span class="thumb"><img src="${esc(thumbUrl(l))}" alt="" loading="lazy" width="320" height="180">` +
-      (l.durationSec ? `<span class="dur">${clock(l.durationSec)}</span>` : "") +
-      (pct ? `<span class="bar"><span style="width:${pct.toFixed(1)}%"></span></span>` : "") + `</span>`;
+    return pct && pct < 100 ? `<span class="bar-line" aria-hidden="true"><span style="width:${pct.toFixed(1)}%"></span></span>` : "";
   }
   function favButton(id, labelled) {
     const on = !!favorites[id];
@@ -840,42 +871,64 @@
       `aria-label="${on ? "ফেভারিট থেকে সরান" : "ফেভারিটে রাখুন"}">${icon("heart")}` +
       (labelled ? `<span>${on ? "ফেভারিটে আছে" : "ফেভারিট"}</span>` : "") + `</button>`;
   }
-  function badges(l) {
+  function badges(l, current) {
     const out = [];
-    if (isNew(l)) out.push(`<span class="badge">নতুন</span>`);
+    if (current) out.push(`<span class="badge">এখন শুনছেন</span>`);
+    else if (isNew(l)) out.push(`<span class="badge">নতুন</span>`);
     if (progress[l.id] && progress[l.id].c) out.push(`<span class="badge done">শোনা হয়েছে</span>`);
     return out.length ? `<span class="badges">${out.join("")}</span>` : "";
   }
+  /**
+   * One lecture as a list row: play mark (or part number), title, meta, badges, progress, favourite.
+   * opts: hideSpeaker, showTopic, showDate, showPart, partNo, current, noFav.
+   */
   function lectureRow(l, opts = {}) {
-    const meta = [opts.hideSpeaker ? "" : esc(l.speaker.name), lengthText(l.durationSec)].filter(Boolean).join(" · ");
+    const bits = [];
+    if (!opts.hideSpeaker) bits.push(esc(l.speaker.name));
+    if (opts.showDate && l.publishedAt) bits.push(dateText(l.publishedAt));
+    if (l.durationSec) bits.push(lengthText(l.durationSec));
+    const topic = opts.showTopic ? topicName(l) : "";
+    const meta = (topic ? `<span class="lec-topic">${esc(topic)}</span>${bits.length ? " · " : ""}` : "") + bits.join(" · ");
     const part = opts.showPart && l.series && l.series.part ? `<span class="part">পর্ব ${bn(l.series.part)} · </span>` : "";
-    return `<li class="lec"${opts.current === l.id ? ' aria-current="true"' : ""}>
-      <a class="lec-link" href="#/lecture/${esc(l.id)}">${thumb(l)}
+    const lead = opts.partNo && l.series && l.series.part ? `<span class="part-no" aria-hidden="true">${bn(l.series.part)}</span>` : playMark();
+    const current = opts.current === l.id;
+    return `<li class="lec"${current ? ' aria-current="true"' : ""}>
+      <a class="lec-link" href="#/lecture/${esc(l.id)}">${lead}
         <span class="lec-body"><span class="lec-title">${part}${esc(l.title)}</span>
-        <span class="lec-meta">${meta}</span>${badges(l)}</span></a>${favButton(l.id)}</li>`;
+        ${meta ? `<span class="lec-meta">${meta}</span>` : ""}${badges(l, current)}${progressLine(l)}</span></a>${opts.noFav ? "" : favButton(l.id)}</li>`;
   }
   const lectureList = (list, opts = {}) => `<ul class="lec-list${opts.two ? " two" : ""}">${list.map((l) => lectureRow(l, opts)).join("")}</ul>`;
+  /** Typographic lecture card: topic, length, title, speaker. No video thumbnails anywhere. */
   function lectureCard(l) {
-    return `<li><a class="card-lec" href="#/lecture/${esc(l.id)}">${thumb(l)}
+    const topic = topicName(l);
+    return `<li><a class="card-lec" href="#/lecture/${esc(l.id)}">
+      <span class="card-top">${topic ? `<span class="tag">${esc(topic)}</span>` : "<span></span>"}${l.durationSec ? `<span class="card-len">${icon("clock")}${lengthText(l.durationSec)}</span>` : ""}</span>
       <span class="card-title">${esc(l.title)}</span>
-      <span class="lec-meta">${esc(l.speaker.name)} · ${lengthText(l.durationSec)}</span>${badges(l)}</a></li>`;
+      <span class="card-foot">${photo(l.speaker)}<span class="card-who"><b>${esc(l.speaker.name)}</b><span>${dateText(l.publishedAt)}</span></span>${playMark()}</span></a></li>`;
   }
-  const cardRow = (list) => `<ul class="card-row">${list.map(lectureCard).join("")}</ul>`;
-  function section(title, body, moreHref) {
+  const cardGrid = (list) => `<ul class="card-grid">${list.map(lectureCard).join("")}</ul>`;
+  /** "Continue" card: where the visitor stopped and how much is left. */
+  function contCard(l) {
+    const p = progress[l.id] || {};
+    const d = p.d || l.durationSec || 0;
+    const left = d && p.p ? lengthText(Math.max(60, d - p.p)) : "";
+    const kicker = kickerOf(l);
+    return `<li><a class="cont" href="#/lecture/${esc(l.id)}">${playMark("solid")}
+      <span class="cont-body">${kicker ? `<span class="kicker">${esc(kicker)}</span>` : ""}<b>${esc(l.title)}</b>
+      <span class="lec-meta">${esc(l.speaker.name)}${left ? ` · বাকি ${left}` : ""}</span>${progressLine(l)}</span></a></li>`;
+  }
+  function section(title, body, moreHref, moreLabel = "সব দেখুন") {
     return `<section class="sec"><div class="sec-head"><h2>${title}</h2>` +
-      (moreHref ? `<a class="more" href="${moreHref}">সব দেখুন</a>` : "") + `</div>${body}</section>`;
+      (moreHref ? `<a class="more" href="${moreHref}">${moreLabel}</a>` : "") + `</div>${body}</section>`;
   }
-  function speakerCard(s, withTopics) {
+  function speakerCard(s, full) {
     const lectures = catalog.bySpeaker.get(s.id);
-    let topics = "";
-    if (withTopics) {
-      const top = topicCounts(lectures).slice(0, 3).map(([c, n]) => `${esc(c.name)} (${bn(n)})`);
-      if (top.length) topics = `<span class="spk-topics">${top.join(" · ")}</span>`;
-    }
+    const top = topicCounts(lectures).slice(0, full ? 3 : 2).map(([c, n]) => (full ? `${esc(c.name)} (${bn(n)})` : esc(c.name)));
+    const hours = hoursText(lectures);
     return `<a class="spk" href="#/speaker/${esc(s.id)}">${photo(s)}<span class="spk-text">
-      <span class="spk-name">${esc(s.name)}</span>${s.nameEn ? `<span class="spk-en">${esc(s.nameEn)}</span>` : ""}
-      <span class="spk-count">${bn(lectures.length)}টি লেকচার · ${hoursText(lectures)}</span>
-      ${s.bio ? `<span class="spk-bio">${esc(s.bio)}</span>` : ""}${topics}</span></a>`;
+      <span class="spk-name">${esc(s.name)}</span>${full && s.nameEn ? `<span class="spk-en">${esc(s.nameEn)}</span>` : ""}
+      <span class="spk-count">${bn(lectures.length)}টি লেকচার${hours ? ` · ${hours}` : ""}</span>
+      ${full && s.bio ? `<span class="spk-bio">${esc(s.bio)}</span>` : ""}${top.length ? `<span class="spk-topics">${top.join(" · ")}</span>` : ""}</span></a>`;
   }
   function hoursText(list) {
     const sec = list.reduce((sum, l) => sum + (l.durationSec || 0), 0);
@@ -888,8 +941,27 @@
     list.forEach((l) => l.categoryIds.forEach((id) => counts.set(id, (counts.get(id) || 0) + 1)));
     return catalog.categories.filter((c) => counts.has(c.id)).map((c) => [c, counts.get(c.id)]).sort((a, b) => b[1] - a[1]);
   }
-  function downloadButton(big) {
-    return `<a class="btn${big ? " big" : ""}" data-apk href="${APK_URL}">${icon("download")}<span>Android অ্যাপ ডাউনলোড</span></a>`;
+  function topicTiles(list) {
+    return `<div class="topic-tiles">${list.map((t) => `<a class="tile" href="#/topic/${esc(t.id)}">
+      <span class="topic-mark" aria-hidden="true">${esc(firstLetter(t.name))}</span>
+      <span><b>${esc(t.name)}</b><span class="n">${bn(catalog.byCategory.get(t.id).length)}টি লেকচার</span></span></a>`).join("")}</div>`;
+  }
+  function downloadButton(cls, label = "Android অ্যাপ ডাউনলোড") {
+    return `<a class="btn${cls ? ` ${cls}` : ""}" data-apk href="${APK_URL}">${icon("download")}<span>${label}</span></a>`;
+  }
+  function appBand() {
+    return `<section class="app-band" aria-labelledby="app-band-h">
+      <div class="app-band-text">
+        <p class="eyebrow">Android অ্যাপ · ফ্রি</p>
+        <h2 id="app-band-h">অফলাইনে, আর স্ক্রিন বন্ধ রেখেও শুনুন</h2>
+        <p class="lead">ওয়েবের সব লেকচার, সাথে অফলাইনে সেভ, লক স্ক্রিন থেকে নিয়ন্ত্রণ আর স্লিপ টাইমার। বিজ্ঞাপন নেই, অ্যাকাউন্ট লাগে না।</p>
+        <div class="hero-actions">${downloadButton("dark", "অ্যাপ ডাউনলোড")}<a class="btn ghost" href="#/app">ইনস্টলের নিয়ম</a></div>
+        <p class="meta" data-release-meta>ফ্রি · Android ৮.০ বা তার পরের ভার্সন</p>
+      </div>
+      <div class="app-band-shots" aria-hidden="true">
+        <img src="assets/shot-1.webp" alt="" loading="lazy" width="200" height="433"><img src="assets/shot-2.webp" alt="" loading="lazy" width="200" height="433">
+      </div>
+    </section>`;
   }
   const loadingBox = () => `<p class="loading"><span class="spin"></span>লেকচারের তালিকা আনা হচ্ছে…</p>`;
   const errorBox = () => `<div class="empty"><p>লেকচারের তালিকা আনা যায়নি। ইন্টারনেট সংযোগ দেখে আবার চেষ্টা করুন।</p>
@@ -897,41 +969,52 @@
 
   // ------------------------------------------------------------------ pages
   function pageHome() {
-    const hero = `<section class="hero">
-      <img class="hero-icon" src="assets/icon.svg" alt="" width="92" height="92">
-      <div>
-        <h1>তাযকিয়া</h1>
-        <p class="tagline">আত্মশুদ্ধির পথে প্রতিদিন</p>
-        <p class="lead">বাছাই করা বাংলা ইসলামিক লেকচার — বক্তা ও বিষয় অনুযায়ী সাজানো, মনোযোগ ধরে রেখে শোনার জন্য। এখানেই শুনুন, অথবা অফলাইনে আর স্ক্রিন বন্ধ রেখে শুনতে Android অ্যাপ নিন।</p>
-        <div class="hero-actions">${downloadButton()}<a class="btn ghost" href="#/app">ইনস্টলের নিয়ম</a></div>
-        <p class="meta" data-release-meta>ফ্রি · Android ৮.০ বা তার পরের ভার্সন</p>
-      </div></section>`;
-    if (!catalog) return { html: hero + (contentState === "error" ? errorBox() : loadingBox()), tab: "home" };
-
     const c = catalog;
-    const topics = c.categories.filter((k) => !k.parentId && c.byCategory.get(k.id).length);
-    const totalHours = Math.round(c.lectures.reduce((s, l) => s + (l.durationSec || 0), 0) / 3600);
+    const today = c ? todayPick() : null;
+    let stats = "";
+    if (c) {
+      const totalHours = Math.round(c.lectures.reduce((s, l) => s + (l.durationSec || 0), 0) / 3600);
+      stats = `<ul class="hero-stats">
+          <li><b>${bn(c.speakers.length)}</b><span>জন বক্তা</span></li>
+          <li><b>${bn(c.lectures.length)}</b><span>টি লেকচার</span></li>
+          ${totalHours ? `<li><b>${bn(totalHours)}</b><span>ঘণ্টা শোনার মতো</span></li>` : ""}
+        </ul>` +
+        (c.manifest.updatedAt ? `<p class="updated">তালিকা হালনাগাদ: ${dateText(c.manifest.updatedAt.slice(0, 10))}</p>` : "");
+    }
+    const todayCard = today ? `<article class="today" aria-labelledby="today-title">
+        <div class="today-top"><span class="today-badge">আজকের লেকচার</span><span>${esc(kickerOf(today))}</span></div>
+        <h2 class="today-title" id="today-title"><a href="#/lecture/${esc(today.id)}">${esc(today.title)}</a></h2>
+        <div class="today-who">${photo(today.speaker)}<span><b>${esc(today.speaker.name)}</b>
+          <span>${[lengthText(today.durationSec), dateText(today.publishedAt)].filter(Boolean).join(" · ")}</span></span></div>
+        <div class="today-foot"><a class="today-play" href="#/lecture/${esc(today.id)}" aria-label="আজকের লেকচার শুনুন">${icon("play")}</a>
+          <span>প্রতিদিন একটি — যেগুলো এখনো শোনেননি, তার মধ্য থেকে।</span></div>
+      </article>` : "";
+    const hero = `<section class="hero band on-dark${todayCard ? "" : " solo"}">
+      <div class="hero-text">
+        <p class="eyebrow">আত্মশুদ্ধির পথে প্রতিদিন</p>
+        <h1>বাছাই করা বাংলা লেকচার, <em>মনোযোগ ধরে রেখে শোনার জন্য</em></h1>
+        <p class="lead">বক্তা ও বিষয় অনুযায়ী সাজানো। সাজেশন নেই, কমেন্ট নেই, অন্য ভিডিওতে চলে যাওয়ার টান নেই — শুধু লেকচার।</p>
+        <div class="hero-actions">
+          ${today ? `<a class="btn accent big" href="#/lecture/${esc(today.id)}">${icon("play")}আজকের লেকচার শুনুন</a>` : ""}
+          <a class="btn ghost big" href="#/speakers">বক্তাদের দেখুন</a>
+        </div>
+        ${stats}
+      </div>${todayCard}
+    </section>`;
+    if (!c) return { html: hero + (contentState === "error" ? errorBox() : loadingBox()), tab: "home" };
+
+    const topics = c.categories.filter((k) => !k.parentId && c.byCategory.get(k.id).length)
+      .sort((a, b) => c.byCategory.get(b.id).length - c.byCategory.get(a.id).length);
     const cont = Object.entries(progress)
       .filter(([id, p]) => p && !p.c && p.p > 15 && c.lectureById.has(id))
-      .sort((a, b) => b[1].t - a[1].t).slice(0, 10).map(([id]) => c.lectureById.get(id));
-    const today = todayPick();
-    const recent = c.lectures.slice().sort(recentlyAdded).slice(0, 8);
-    const updated = c.manifest.updatedAt ? `<p class="updated">তালিকা হালনাগাদ: ${dateText(c.manifest.updatedAt.slice(0, 10))}</p>` : "";
-
+      .sort((a, b) => b[1].t - a[1].t).slice(0, 6).map(([id]) => c.lectureById.get(id));
+    const recent = c.lectures.slice().sort(recentlyAdded).slice(0, 6);
     const html = hero +
-      `<div class="stats">
-        <a class="stat" href="#/speakers" style="text-decoration:none"><b>${bn(c.speakers.length)}</b><span>জন বক্তা</span></a>
-        <div class="stat"><b>${bn(c.lectures.length)}</b><span>টি লেকচার</span></div>
-        <div class="stat"><b>${bn(totalHours)}</b><span>ঘণ্টা</span></div>
-      </div>${updated}` +
-      (cont.length ? section("চালিয়ে যান", cardRow(cont)) : "") +
-      (today ? section("আজকের লেকচার", `<a class="today" href="#/lecture/${esc(today.id)}">${thumb(today)}
-          <span class="today-body"><b>${esc(today.title)}</b><span>${esc(today.speaker.name)} · ${lengthText(today.durationSec)}</span>
-          <span class="btn">${icon("play")}শুনুন</span></span></a>`) : "") +
-      section("বক্তাগণ", `<div class="spk-grid">${c.speakers.map((s) => speakerCard(s, false)).join("")}</div>`, "#/speakers") +
-      section("নতুন যোগ হয়েছে", cardRow(recent)) +
-      section("বিষয়ভিত্তিক", `<div class="chips wrap">${topics.map((t) =>
-        `<a class="chip" href="#/topic/${esc(t.id)}">${esc(t.name)} <span class="n">(${bn(c.byCategory.get(t.id).length)})</span></a>`).join("")}</div>`, "#/topics");
+      (cont.length ? section("চালিয়ে যান", `<ul class="cont-grid">${cont.map(contCard).join("")}</ul>`, "#/library?tab=history", "ইতিহাস") : "") +
+      section("বক্তাগণ", `<div class="spk-grid">${c.speakers.map((s) => speakerCard(s, false)).join("")}</div>`, "#/speakers", "সব বক্তা") +
+      section("নতুন যোগ হয়েছে", cardGrid(recent)) +
+      section("বিষয়ভিত্তিক", topicTiles(topics), "#/topics", "সব বিষয়") +
+      appBand();
     return { html, tab: "home" };
   }
 
@@ -952,21 +1035,24 @@
       tab: "speakers",
       html: `<h1 class="page-title">বক্তাগণ</h1>
         <p class="sub">${bn(c.speakers.length)} জন বক্তা · মোট ${bn(c.lectures.length)}টি লেকচার</p>
-        <div class="spk-grid" style="margin-top:16px">${c.speakers.map((s) => speakerCard(s, true)).join("")}</div>`,
+        <div class="spk-grid rows" style="margin-top:24px">${c.speakers.map((s) => speakerCard(s, true)).join("")}</div>`,
     };
   }
 
+  const PAGE_SIZE = 40;
   function pageSpeaker(id, params) {
     const c = catalog;
     const s = c.speakerById.get(id);
     if (!s) return pageMissing("বক্তা পাওয়া যায়নি");
     const all = c.bySpeaker.get(id);
-    const counts = topicCounts(all).sort((a, b) => (a[0].order ?? 1e9) - (b[0].order ?? 1e9));
+    const counts = topicCounts(all);
     const topic = c.categoryById.has(params.get("topic")) ? params.get("topic") : "";
     const hasSeries = all.some((l) => l.series);
     let sort = params.get("sort") || "new";
     if (sort === "series" && !hasSeries) sort = "new";
+    const showAll = params.get("all") === "1";
     const list = topic ? all.filter((l) => l.categoryIds.includes(topic)) : all.slice();
+    const rowOpts = { hideSpeaker: true, showTopic: !topic, showDate: true };
 
     let body;
     if (!list.length) body = `<p class="empty">এই বিষয়ে কোনো লেকচার নেই।</p>`;
@@ -980,26 +1066,46 @@
       });
       body = Array.from(groups.values()).map((parts) => {
         parts.sort(byPart);
-        return `<h2 class="group-title">${esc(parts[0].series.title)} (${bn(parts.length)} পর্ব)</h2>${lectureList(parts, { hideSpeaker: true, showPart: true, two: true })}`;
-      }).join("") + (single.length ? `<h2 class="group-title">একক লেকচার</h2>${lectureList(single.sort(newestFirst), { hideSpeaker: true, two: true })}` : "");
+        return `<h3 class="group-title">${esc(parts[0].series.title)} (${bn(parts.length)} পর্ব)</h3>${lectureList(parts, { ...rowOpts, partNo: true })}`;
+      }).join("") + (single.length ? `<h3 class="group-title">একক লেকচার</h3>${lectureList(single.sort(newestFirst), rowOpts)}` : "");
     } else {
       list.sort(newestFirst);
       if (sort === "old") list.reverse();
-      body = lectureList(list, { hideSpeaker: true, two: true });
+      const shown = showAll ? list : list.slice(0, PAGE_SIZE);
+      body = lectureList(shown, rowOpts) + (shown.length < list.length
+        ? `<div class="list-more"><button type="button" class="btn ghost" data-set="all=1">আরও ${bn(list.length - shown.length)}টি লেকচার দেখান</button></div>` : "");
     }
 
-    const chip = (value, label, n) => `<button type="button" class="chip" data-set="topic=${esc(value)}" aria-pressed="${topic === value}">${esc(label)} <span class="n">(${bn(n)})</span></button>`;
-    const sortBtn = (value, label) => `<button type="button" data-set="sort=${value}" aria-pressed="${sort === value}">${label}</button>`;
+    const sec = all.reduce((sum, l) => sum + (l.durationSec || 0), 0);
+    const time = sec >= 3600 ? [bn(Math.round(sec / 3600)), "ঘণ্টা"] : sec ? [bn(Math.round(sec / 60)), "মিনিট"] : null;
+    const latest = all.reduce((m, l) => (l.publishedAt && l.publishedAt > m ? l.publishedAt : m), "");
+    const others = c.speakers.filter((x) => x.id !== id);
+    const label = topic ? c.categoryById.get(topic).name : "সব বিষয়";
+    const chip = (value, name, n) => `<button type="button" class="chip" data-set="topic=${esc(value)}" aria-pressed="${topic === value}">${esc(name)} <span class="n">(${bn(n)})</span></button>`;
+    const sortBtn = (value, name) => `<button type="button" data-set="sort=${value}" aria-pressed="${sort === value}">${name}</button>`;
     return {
       title: s.name,
       tab: "speakers",
-      html: `<div class="profile">${photo(s)}<div>
-          <h1>${esc(s.name)}</h1>${s.nameEn ? `<p class="en">${esc(s.nameEn)}</p>` : ""}
-          <p class="count">${bn(all.length)}টি লেকচার · ${hoursText(all)}</p></div></div>
-        ${s.bio ? `<p class="bio">${esc(s.bio)}</p>` : ""}
-        <div class="chips" role="group" aria-label="বিষয়">${chip("", "সব বিষয়", all.length)}${counts.map(([cat, n]) => chip(cat.id, cat.name, n)).join("")}</div>
-        <div class="seg" role="group" aria-label="সাজানো">${sortBtn("new", "নতুন আগে")}${sortBtn("old", "পুরনো আগে")}${hasSeries ? sortBtn("series", "সিরিজ অনুযায়ী") : ""}</div>
-        ${body}`,
+      html: `<nav class="crumbs" aria-label="অবস্থান"><a href="#/">হোম</a><span aria-hidden="true">/</span><a href="#/speakers">বক্তাগণ</a><span aria-hidden="true">/</span><span aria-current="page">${esc(s.name)}</span></nav>
+        <div class="spk-page">
+          <aside class="spk-side" aria-label="বক্তার পরিচয়">
+            <div class="profile-card">${photo(s)}
+              <h1>${esc(s.name)}</h1>${s.nameEn ? `<p class="en">${esc(s.nameEn)}</p>` : ""}
+              <div class="profile-stats"><div><b>${bn(all.length)}</b><span>লেকচার</span></div>${time ? `<div><b>${time[0]}</b><span>${time[1]}</span></div>` : ""}</div>
+              ${latest ? `<p class="profile-latest">সর্বশেষ লেকচার: ${dateText(latest)}</p>` : ""}
+            </div>
+            ${s.bio ? `<p class="bio">${esc(s.bio)}</p>` : ""}
+            <button type="button" class="btn ghost" data-share-speaker="${esc(s.id)}">${icon("share")}পাতাটি শেয়ার করুন</button>
+            ${others.length ? `<div class="others"><p class="side-h">অন্য বক্তাগণ</p>${others.map((o) => `<a class="other" href="#/speaker/${esc(o.id)}">${photo(o)}<span><b>${esc(o.name)}</b><small>${bn(c.bySpeaker.get(o.id).length)}টি লেকচার</small></span>${icon("chevron")}</a>`).join("")}</div>` : ""}
+          </aside>
+          <section class="spk-main" aria-labelledby="list-h">
+            <div><p class="side-h">বিষয় অনুযায়ী দেখুন</p>
+              <div class="chips wrap" role="group" aria-label="বিষয়">${chip("", "সব বিষয়", all.length)}${counts.map(([cat, n]) => chip(cat.id, cat.name, n)).join("")}</div></div>
+            <div class="list-head"><h2 id="list-h">${esc(label)} · ${bn(list.length)}টি লেকচার</h2>
+              <div class="seg" role="group" aria-label="সাজানো">${sortBtn("new", "নতুন আগে")}${sortBtn("old", "পুরনো আগে")}${hasSeries ? sortBtn("series", "সিরিজ অনুযায়ী") : ""}</div></div>
+            ${body}
+          </section>
+        </div>`,
     };
   }
 
@@ -1008,11 +1114,11 @@
     const parents = c.categories.filter((k) => !k.parentId && c.byCategory.get(k.id).length);
     const cards = parents.map((k) => {
       const kids = (c.children.get(k.id) || []).filter((ch) => c.byCategory.get(ch.id).length);
-      return `<div class="topic"><a href="#/topic/${esc(k.id)}"><span class="topic-mark" aria-hidden="true">${esc(Array.from(k.name)[0])}</span>
+      return `<div class="topic"><a href="#/topic/${esc(k.id)}"><span class="topic-mark" aria-hidden="true">${esc(firstLetter(k.name))}</span>
         <span><b>${esc(k.name)}</b><span class="n">${bn(c.byCategory.get(k.id).length)}টি লেকচার</span></span></a>
         ${kids.length ? `<div class="chips wrap">${kids.map((ch) => `<a class="chip" href="#/topic/${esc(ch.id)}">${esc(ch.name)} <span class="n">(${bn(c.byCategory.get(ch.id).length)})</span></a>`).join("")}</div>` : ""}</div>`;
     }).join("");
-    return { title: "বিষয়", tab: "topics", html: `<h1 class="page-title">বিষয়ভিত্তিক লেকচার</h1><p class="sub">${bn(parents.length)}টি বিষয়</p><div class="topic-grid" style="margin-top:16px">${cards}</div>` };
+    return { title: "বিষয়", tab: "topics", html: `<h1 class="page-title">বিষয়ভিত্তিক লেকচার</h1><p class="sub">${bn(parents.length)}টি বিষয়</p><div class="topic-grid" style="margin-top:24px">${cards}</div>` };
   }
 
   function pageTopic(id, params) {
@@ -1029,11 +1135,11 @@
     return {
       title: k.name,
       tab: "topics",
-      html: `${parent ? `<a class="more" href="#/topic/${esc(parent.id)}">${esc(parent.name)}</a>` : ""}
-        <h1 class="page-title">${esc(k.name)}</h1><p class="sub">${bn(all.length)}টি লেকচার · ${hoursText(all)}</p>
-        ${kids.length ? `<div class="chips wrap">${kids.map((ch) => `<a class="chip" href="#/topic/${esc(ch.id)}">${esc(ch.name)} <span class="n">(${bn(c.byCategory.get(ch.id).length)})</span></a>`).join("")}</div>` : ""}
-        ${speakerCounts.length > 1 ? `<div class="chips" role="group" aria-label="বক্তা">${chip("", "সব বক্তা", all.length)}${speakerCounts.map(([s, n]) => chip(s.id, s.name, n)).join("")}</div>` : ""}
-        <div style="margin-top:12px">${list.length ? lectureList(list, { two: true }) : `<p class="empty">এই বিষয়ে এখনো কোনো লেকচার নেই।</p>`}</div>`,
+      html: `<nav class="crumbs" aria-label="অবস্থান"><a href="#/topics">বিষয়</a>${parent ? `<span aria-hidden="true">/</span><a href="#/topic/${esc(parent.id)}">${esc(parent.name)}</a>` : ""}<span aria-hidden="true">/</span><span aria-current="page">${esc(k.name)}</span></nav>
+        <h1 class="page-title">${esc(k.name)}</h1><p class="sub">${bn(all.length)}টি লেকচার${hoursText(all) ? ` · ${hoursText(all)}` : ""}</p>
+        ${kids.length ? `<div class="chips wrap" style="margin-top:16px">${kids.map((ch) => `<a class="chip" href="#/topic/${esc(ch.id)}">${esc(ch.name)} <span class="n">(${bn(c.byCategory.get(ch.id).length)})</span></a>`).join("")}</div>` : ""}
+        ${speakerCounts.length > 1 ? `<div class="chips" role="group" aria-label="বক্তা" style="margin-top:16px">${chip("", "সব বক্তা", all.length)}${speakerCounts.map(([s, n]) => chip(s.id, s.name, n)).join("")}</div>` : ""}
+        <div style="margin-top:16px">${list.length ? lectureList(list, { two: true, showDate: true }) : `<p class="empty">এই বিষয়ে এখনো কোনো লেকচার নেই।</p>`}</div>`,
     };
   }
 
@@ -1044,26 +1150,33 @@
     const s = l.speaker;
     const parts = seriesOf(l);
     const inSeries = new Set(parts.map((x) => x.id));
-    const more = c.bySpeaker.get(l.speakerId).filter((x) => x.id !== l.id && !inSeries.has(x.id)).sort(newestFirst).slice(0, 8);
-    const cats = l.categoryIds.map((cid) => c.categoryById.get(cid));
+    const more = c.bySpeaker.get(l.speakerId).filter((x) => x.id !== l.id && !inSeries.has(x.id)).sort(newestFirst).slice(0, 6);
+    const cats = l.categoryIds.map((cid) => c.categoryById.get(cid)).filter(Boolean);
     const meta = [lengthText(l.durationSec), l.publishedAt ? `প্রকাশ: ${dateText(l.publishedAt)}` : ""].filter(Boolean).join(" · ");
+    const kicker = kickerOf(l);
+    const tags = l.tags && l.tags.length ? `<p class="tags">${l.tags.map((t) => `#${esc(t)}`).join(" ")}</p>` : "";
+    const side = (parts.length > 1 ? `<section class="side-box" aria-labelledby="series-h">
+          <div class="sec-head"><h2 id="series-h">${esc(l.series.title)}</h2><span class="meta" style="margin:0">${bn(parts.length)} পর্ব</span></div>
+          ${lectureList(parts, { hideSpeaker: true, partNo: true, current: l.id, noFav: true })}</section>` : "") +
+      (more.length ? `<section class="side-box" aria-labelledby="more-h">
+          <div class="sec-head"><h2 id="more-h">${esc(s.name)}-এর আরও</h2><a class="more" href="#/speaker/${esc(s.id)}">সব</a></div>
+          ${lectureList(more, { hideSpeaker: true, showDate: true, noFav: true })}</section>` : "");
     return {
       title: l.title,
       tab: "",
       lecture: l,
-      html: `<article>
-          <h1 class="lecture-title">${l.series && l.series.part ? `<span class="part">পর্ব ${bn(l.series.part)} · </span>` : ""}${esc(l.title)}</h1>
-          <a class="speaker-chip" href="#/speaker/${esc(s.id)}">${photo(s)}<span>${esc(s.name)}</span></a>
-          ${meta ? `<p class="meta">${meta}</p>` : ""}
+      side,
+      html: `<article class="lecture">
+          ${kicker ? `<p class="kicker">${esc(kicker)}</p>` : ""}
+          <h1 class="lecture-title">${esc(l.title)}</h1>
+          <div class="lecture-by"><a class="speaker-chip" href="#/speaker/${esc(s.id)}">${photo(s)}<span>${esc(s.name)}</span></a>${meta ? `<p class="meta">${meta}</p>` : ""}</div>
           <div class="actions-row">${favButton(l.id, true)}
-            <button type="button" class="btn ghost" data-share="${esc(l.id)}">${icon("share")}শেয়ার</button></div>
-          ${cats.length ? `<div class="chips wrap">${cats.map((k) => `<a class="chip" href="#/topic/${esc(k.id)}">${esc(k.name)}</a>`).join("")}</div>` : ""}
-          ${l.description ? `<p class="desc">${esc(l.description)}</p>` : ""}
-          ${l.tags && l.tags.length ? `<p class="tags">${l.tags.map((t) => `#${esc(t)}`).join(" ")}</p>` : ""}
-          <p class="nudge">ইন্টারনেট ছাড়া শুনতে, বা স্ক্রিন বন্ধ রেখে শুনতে <a href="#/app">Android অ্যাপটি</a> নিন — ফ্রি।</p>
-        </article>
-        ${parts.length > 1 ? section(`সিরিজ: ${esc(l.series.title)}`, lectureList(parts, { hideSpeaker: true, showPart: true, current: l.id })) : ""}
-        ${more.length ? section("এই বক্তার আরও লেকচার", lectureList(more, { hideSpeaker: true, two: true }), `#/speaker/${esc(s.id)}`) : ""}`,
+            <button type="button" class="btn ghost" data-share="${esc(l.id)}">${icon("share")}শেয়ার</button>
+            ${cats.map((k) => `<a class="chip tag-chip" href="#/topic/${esc(k.id)}">${esc(k.name)}</a>`).join("")}</div>
+          ${l.description || tags ? `<div class="about-box"><h2>লেকচার সম্পর্কে</h2>${l.description ? `<p class="desc">${esc(l.description)}</p>` : ""}${tags}</div>` : ""}
+          <div class="nudge">${icon("phone")}<p>ইন্টারনেট ছাড়া, বা স্ক্রিন বন্ধ রেখে শুনতে চান? Android অ্যাপে লেকচার সেভ করে রাখা যায় — ফ্রি।</p>
+            <a class="btn dark" href="#/app">অ্যাপ দেখুন</a></div>
+        </article>`,
     };
   }
 
@@ -1149,42 +1262,65 @@
   }
 
   function pageApp() {
-    const shots = [1, 2, 3, 4].map((n) => `<img src="assets/shot-${n}.webp" alt="অ্যাপের স্ক্রিনশট ${bn(n)}" loading="lazy" width="200" height="433">`).join("");
+    const shots = [3, 1, 4].map((n) => `<img src="assets/shot-${n}.webp" alt="" loading="lazy" width="200" height="433">`).join("");
+    const feature = (ic, title, text) => `<div class="card"><span class="icon-tile" aria-hidden="true">${icon(ic)}</span><h3>${title}</h3><p>${text}</p></div>`;
+    const yes = `<svg class="ic" viewBox="0 0 24 24" role="img" aria-label="আছে"><path d="${ICONS.check}"/></svg>`;
+    const rows = [
+      ["সব লেকচার, বক্তা ও বিষয় অনুযায়ী", true],
+      ["যেকোনো বানানে বাংলা সার্চ", true],
+      ["ফেভারিট, ইতিহাস, যেখানে থেমেছিলেন", true],
+      ["শোনার গতি ও ভলিউম", true],
+      ["অফলাইনে সেভ", false],
+      ["স্ক্রিন বন্ধ রেখে শোনা", false],
+      ["লক স্ক্রিন থেকে নিয়ন্ত্রণ", false],
+      ["স্লিপ টাইমার", false],
+    ];
     return {
       title: "Android অ্যাপ",
       tab: "",
-      html: `<section class="hero">
-          <img class="hero-icon" src="assets/icon.svg" alt="" width="92" height="92">
-          <div><h1>তাযকিয়া Android অ্যাপ</h1>
-            <p class="lead">ফ্রি, বিজ্ঞাপন নেই, অ্যাকাউন্ট লাগে না। ওয়েবের সব লেকচার, সাথে অফলাইনে শোনা আর স্ক্রিন বন্ধ রেখে শোনার সুবিধা।</p>
-            <div class="hero-actions">${downloadButton(true)}</div>
-            <p class="meta" data-release-meta>ফ্রি · Android ৮.০ বা তার পরের ভার্সন</p></div>
+      html: `<section class="app-hero">
+          <div class="app-hero-text">
+            <p class="eyebrow">Android অ্যাপ · ফ্রি</p>
+            <h1>তাযকিয়া, আপনার পকেটে</h1>
+            <p class="lead">ওয়েবের সব লেকচার, সাথে অফলাইনে শোনা আর স্ক্রিন বন্ধ রেখে শোনার সুবিধা। বিজ্ঞাপন নেই, অ্যাকাউন্ট লাগে না।</p>
+            <div class="hero-actions">${downloadButton("big", "ডাউনলোড করুন")}<a class="link" href="${REPO_URL}/releases">সব রিলিজ ও পরিবর্তন</a></div>
+            <p class="meta" data-release-meta>ফ্রি · Android ৮.০ বা তার পরের ভার্সন</p>
+            <ul class="trust">
+              <li>${icon("shield")}কোনো তথ্য সংগ্রহ করে না</li>
+              <li>${icon("code")}খোলা সোর্স কোড (GPL-3.0)</li>
+              <li>${icon("lock")}প্রতিটি রিলিজ একই key-তে সই করা</li>
+            </ul>
+          </div>
+          <div class="app-shots" aria-hidden="true">${shots}</div>
         </section>
         ${section("অ্যাপে বাড়তি যা পাবেন", `<div class="cards">
-          <div class="card"><b>অফলাইনে সেভ</b><span>শুধু অডিও বা ভিডিও ফোনে রেখে নেট ছাড়াই শুনুন।</span></div>
-          <div class="card"><b>স্ক্রিন বন্ধ রেখেও</b><span>অ্যাপ মিনিমাইজ করলেও শোনা চলে; লক স্ক্রিন থেকে নিয়ন্ত্রণ।</span></div>
-          <div class="card"><b>স্লিপ টাইমার ও শুধু-অডিও মোড</b><span>ঘুমানোর আগে শুনুন; ডেটা বাঁচাতে শুধু শব্দ।</span></div>
-          <div class="card"><b>নতুন লেকচার নিজে থেকেই</b><span>তালিকা হালনাগাদ হয়, নতুন ভার্সন এলে অ্যাপই জানায়।</span></div>
-          <div class="card"><b>পছন্দের বাংলা ফন্ট</b><span>কয়েকটি বাংলা ফন্ট থেকে বেছে নিন।</span></div>
-          <div class="card"><b>যেখানে থেমেছিলেন</b><span>সেখান থেকেই আবার চালু; ফেভারিট ও ইতিহাস।</span></div></div>`)}
-        ${section("দেখতে যেমন", `<div class="shots">${shots}</div>`)}
+          ${feature("phone", "অফলাইনে সেভ", "শুধু অডিও বা ভিডিও ফোনে রেখে নেট ছাড়াই শুনুন।")}
+          ${feature("lock", "স্ক্রিন বন্ধ রেখেও", "অ্যাপ মিনিমাইজ করলেও শোনা চলে; লক স্ক্রিন থেকে নিয়ন্ত্রণ।")}
+          ${feature("moon", "স্লিপ টাইমার ও শুধু-অডিও", "ঘুমানোর আগে শুনুন; ডেটা বাঁচাতে শুধু শব্দ।")}
+          ${feature("sync", "নতুন লেকচার নিজে থেকেই", "তালিকা হালনাগাদ হয়; নতুন ভার্সন এলে অ্যাপই জানায়।")}
+          ${feature("font", "পছন্দের বাংলা ফন্ট", "কয়েকটি বাংলা ফন্ট থেকে বেছে নিন; লাইট ও ডার্ক থিম।")}
+          ${feature("clock", "যেখানে থেমেছিলেন", "সেখান থেকেই আবার চালু; ফেভারিট ও ইতিহাস।")}</div>`)}
+        ${section("ওয়েব না অ্যাপ?", `<p class="sub" style="margin:-4px 0 16px">দুই জায়গাতেই সব লেকচার; অ্যাপে শোনার কিছু বাড়তি সুবিধা আছে। দুই জায়গার ফেভারিট ও ইতিহাস আলাদা থাকে।</p>
+          <div class="table-box"><table class="compare">
+            <thead><tr><th scope="col">সুবিধা</th><th scope="col">ওয়েব</th><th scope="col">অ্যাপ</th></tr></thead>
+            <tbody>${rows.map(([name, web]) => `<tr><th scope="row">${name}</th><td>${web ? yes : `<span class="no">নেই</span>`}</td><td>${yes}</td></tr>`).join("")}</tbody>
+          </table></div>`)}
         ${section("ইনস্টল করবেন যেভাবে", `<ol class="steps">
-          <li>ওপরের <b>ডাউনলোড</b> বোতাম চাপুন, <code>tazkiyah.apk</code> ফাইল নামবে।</li>
-          <li>ফাইলটি খুলুন। প্রথমবার ফোন <b>"অজানা উৎস থেকে ইনস্টল"</b> (Install unknown apps) অনুমতি চাইবে — যে অ্যাপ দিয়ে খুলছেন (Chrome/Files), তাকে অনুমতি দিন।</li>
-          <li><b>Install</b> চাপুন। নতুন ভার্সন এলে অ্যাপই জানিয়ে দেবে; একইভাবে বসালে আপনার ফেভারিট ও ইতিহাস থেকে যায়।</li></ol>
-          <p class="note">Play Protect "অজানা অ্যাপ" বলে সতর্ক করতে পারে — অ্যাপটি Play Store-এ নেই বলে এমন বলে। <b>More details → Install anyway</b> চাপলেই হবে।</p>`)}
-        ${section("প্রশ্নোত্তর", `
-          <details><summary>অ্যাপটি কি নিরাপদ?</summary>
+          <li><span><b>ডাউনলোড</b> বোতাম চাপুন — <code>tazkiyah.apk</code> ফাইল নামবে।</span></li>
+          <li><span>ফাইলটি খুলুন। প্রথমবার ফোন <b>"অজানা উৎস থেকে ইনস্টল"</b> (Install unknown apps) অনুমতি চাইবে — যে অ্যাপ দিয়ে খুলছেন (Chrome বা Files), তাকে অনুমতি দিন।</span></li>
+          <li><span><b>Install</b> চাপুন। নতুন ভার্সন এলে অ্যাপই জানিয়ে দেবে; একইভাবে বসালে আপনার ফেভারিট ও ইতিহাস থেকে যায়।</span></li></ol>
+          <p class="note">${icon("shield")}<span>Play Protect "অজানা অ্যাপ" বলে সতর্ক করতে পারে — অ্যাপটি Play Store-এ নেই বলে এমন বলে। <b>More details → Install anyway</b> চাপলেই হবে।</span></p>`)}
+        ${section("প্রশ্নোত্তর", `<div class="faq">
+          <details open><summary>অ্যাপটি কি নিরাপদ?</summary>
             <p>অ্যাপের পুরো সোর্স কোড <a href="${REPO_URL}">GitHub-এ খোলা</a>; প্রতিটি রিলিজ একই সাইনিং key-তে সই করা। অ্যাপ কোনো অ্যাকাউন্ট চায় না, আপনার কোনো তথ্য সংগ্রহ করে না।</p>
+            <p class="meta">সাইনিং সার্টিফিকেট (SHA-256): <code>A9:22:F5:B1:49:20:60:F8:D3:33:CD:F3:1E:EB:1E:F8:3D:6D:6F:EC:15:A5:DF:B1:7A:82:A3:21:D5:2D:1B:80</code></p>
             <p class="meta" data-checksum></p></details>
           <details><summary>Play Store-এ নেই কেন?</summary>
             <p>অফলাইন সেভ আর স্ক্রিন বন্ধ রেখে শোনার সুবিধা ইউটিউবের ডেভেলপার নীতির বাইরে, তাই অ্যাপটি ব্যক্তিগতভাবে বিতরণ করা হয়।</p></details>
-          <details><summary>ওয়েব আর অ্যাপে পার্থক্য কী?</summary>
-            <p>ওয়েবে ব্রাউজার থেকেই সব লেকচার শোনা যায়। অ্যাপে এর সাথে অফলাইন সেভ, স্ক্রিন বন্ধ রেখে শোনা, লক স্ক্রিন নিয়ন্ত্রণ আর স্লিপ টাইমার আছে। দুই জায়গার ফেভারিট ও ইতিহাস আলাদা।</p></details>
           <details><summary>লেকচারগুলো কোথা থেকে আসে?</summary>
             <p>বক্তাদের অফিশিয়াল ও অন্যান্য ইউটিউব চ্যানেল থেকে বাছাই করা; ভিডিও চলে ইউটিউবের প্লেয়ারেই। লেকচারের স্বত্ব বক্তা ও আপলোডকারীদের; এই অ্যাপ কোনো বক্তা বা ইউটিউবের সাথে সম্পর্কিত নয়।</p></details>
           <details><summary>আইফোনে চলবে?</summary>
-            <p>আইফোনের অ্যাপ এখনো নেই — তবে এই ওয়েবসাইট আইফোনের ব্রাউজারেও চলে।</p></details>`)}`,
+            <p>আইফোনের অ্যাপ এখনো নেই — তবে এই ওয়েবসাইট আইফোনের ব্রাউজারেও চলে।</p></details></div>`)}`,
     };
   }
 
@@ -1194,6 +1330,7 @@
 
   // ------------------------------------------------------------------ router
   const view = $("#view");
+  const side = $("#side");
   const navStack = [];
   const scrollMemory = new Map();
 
@@ -1235,6 +1372,8 @@
     else page = pageMissing();
 
     view.innerHTML = page.html;
+    side.innerHTML = page.side || "";
+    document.body.classList.toggle("is-lecture", !!page.lecture);
     document.title = page.title ? `${page.title} — তাযকিয়া` : DEFAULT_TITLE;
     $$(".tabs a").forEach((a) => (a.dataset.tab === page.tab ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current")));
     const searchLink = $("[data-tab-link='search']");
@@ -1273,12 +1412,18 @@
     if (path === "/library") render({ keepScroll: true });
   }
 
-  async function shareLecture(id) {
+  function shareLecture(id) {
     const l = catalog && catalog.lectureById.get(id);
-    if (!l) return;
-    const url = `${location.origin}${location.pathname}#/lecture/${id}`;
+    if (l) shareLink(l.title, `${l.title} — ${l.speaker.name}`, `#/lecture/${id}`);
+  }
+  function shareSpeaker(id) {
+    const s = catalog && catalog.speakerById.get(id);
+    if (s) shareLink(s.name, `${s.name} — তাযকিয়া`, `#/speaker/${id}`);
+  }
+  async function shareLink(title, text, hash) {
+    const url = `${location.origin}${location.pathname}${hash}`;
     if (navigator.share) {
-      try { await navigator.share({ title: l.title, text: `${l.title} — ${l.speaker.name}`, url }); } catch (e) { /* cancelled */ }
+      try { await navigator.share({ title, text, url }); } catch (e) { /* cancelled */ }
       return;
     }
     try {
@@ -1290,10 +1435,11 @@
   }
 
   document.addEventListener("click", (e) => {
-    const target = e.target.closest("[data-fav], [data-share], [data-set], [data-q], [data-clear-recent], [data-retry]");
+    const target = e.target.closest("[data-fav], [data-share], [data-share-speaker], [data-set], [data-q], [data-clear-recent], [data-retry]");
     if (!target) return;
     if (target.dataset.fav) { e.preventDefault(); toggleFavorite(target.dataset.fav); }
     else if (target.dataset.share) shareLecture(target.dataset.share);
+    else if (target.dataset.shareSpeaker) shareSpeaker(target.dataset.shareSpeaker);
     else if (target.dataset.set) {
       const i = target.dataset.set.indexOf("=");
       setParams({ [target.dataset.set.slice(0, i)]: target.dataset.set.slice(i + 1) });

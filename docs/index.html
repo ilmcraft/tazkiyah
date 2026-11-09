@@ -8,12 +8,11 @@
   <meta property="og:title" content="তাযকিয়া — বাংলা ইসলামিক লেকচার">
   <meta property="og:description" content="বাছাই করা বাংলা ইসলামিক লেকচার, মনোযোগ ধরে রেখে শোনা ও দেখার জন্য। ওয়েবে শুনুন বা ফ্রি Android অ্যাপ নিন।">
   <meta property="og:type" content="website">
-  <meta name="theme-color" content="#FBF8F1" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#111412" media="(prefers-color-scheme: dark)">
-  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#0A0A0A">
+  <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
-  <link rel="preconnect" href="https://i.ytimg.com">
   <link rel="preload" href="assets/NotoSansBengali.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="assets/fonts/anek-bangla-condensed-800.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/app.css">
   <script>
     // Apply a theme the visitor picked before first paint (default: follow the system).
@@ -25,77 +24,105 @@
 
 <header class="topbar">
   <div class="topbar-in">
-    <a class="brand" href="#/"><img src="assets/icon.svg" alt="" width="34" height="34"><span>তাযকিয়া</span></a>
+    <a class="brand" href="#/"><img src="assets/mark.svg" alt="" width="38" height="38"><span>তাযকিয়া</span></a>
     <nav class="tabs" aria-label="প্রধান মেনু">
       <a href="#/" data-tab="home"><span data-icon="home"></span><span>হোম</span></a>
       <a href="#/speakers" data-tab="speakers"><span data-icon="speakers"></span><span>বক্তা</span></a>
       <a href="#/topics" data-tab="topics"><span data-icon="topics"></span><span>বিষয়</span></a>
       <a href="#/library" data-tab="library"><span data-icon="library"></span><span>আমার</span></a>
     </nav>
-    <a class="icon-btn" href="#/search" aria-label="খুঁজুন" data-tab-link="search"><span data-icon="search"></span></a>
+    <a class="search-pill" href="#/search" data-tab-link="search"><span data-icon="search"></span><span>লেকচার, বক্তা বা বিষয় খুঁজুন</span></a>
     <button type="button" class="icon-btn" id="theme-btn" aria-label="থিম বদলান"></button>
     <a class="pill" href="#/app"><span data-icon="download"></span><span>অ্যাপ নিন</span></a>
   </div>
 </header>
 
-<section id="player" class="player" hidden aria-label="প্লেয়ার">
-  <div class="player-in">
-    <div class="frame" id="frame">
-      <!-- The video (YouTube iframe or <video>) is inserted here, under the shield. -->
-      <div class="shield" id="shield" aria-hidden="true"></div>
-      <div class="edge t" aria-hidden="true"><p class="tap-hint">ভিডিও চালু করতে মাঝখানে আরেকবার চাপুন</p></div>
-      <div class="edge b" aria-hidden="true"></div>
-      <div class="edge l" aria-hidden="true"></div>
-      <div class="edge r" aria-hidden="true"></div>
-      <div class="cover" id="cover">
-        <img id="cover-img" alt="">
-        <div class="cover-body">
-          <button type="button" class="big-play" id="cover-btn" aria-label="চালান"></button>
-          <p class="cover-msg" id="cover-msg" hidden></p>
-          <a class="cover-next" id="cover-next" href="#/" hidden></a>
+<div class="stage">
+  <div class="stage-main">
+    <section id="player" class="player" hidden aria-label="প্লেয়ার">
+      <div class="player-in">
+        <div class="frame" id="frame">
+          <!-- The video (YouTube iframe or <video>) is inserted here, under the shield. -->
+          <div class="shield" id="shield" aria-hidden="true"></div>
+          <div class="edge t" aria-hidden="true"><p class="tap-hint">ভিডিও চালু করতে মাঝখানে আরেকবার চাপুন</p></div>
+          <div class="edge b" aria-hidden="true"></div>
+          <div class="edge l" aria-hidden="true"></div>
+          <div class="edge r" aria-hidden="true"></div>
+          <div class="cover" id="cover">
+            <img class="cover-photo" id="cover-img" alt="">
+            <div class="cover-body">
+              <p class="cover-kicker" id="cover-kicker" hidden></p>
+              <p class="cover-title" id="cover-title"></p>
+              <button type="button" class="big-play" id="cover-btn" aria-label="চালান"></button>
+              <p class="cover-msg" id="cover-msg" hidden></p>
+              <a class="cover-next" id="cover-next" href="#/" hidden></a>
+            </div>
+          </div>
+          <div class="spinner" id="spinner" hidden></div>
+        </div>
+        <div class="controls">
+          <input type="range" class="seek" id="seek" min="0" max="1" step="1" value="0" aria-label="লেকচারের অবস্থান">
+          <div class="ctrl-row">
+            <button type="button" class="ctrl" id="back10" aria-label="১০ সেকেন্ড পিছনে"><span data-icon="replay"></span><small>১০</small></button>
+            <button type="button" class="ctrl main" id="toggle" aria-label="চালান"></button>
+            <button type="button" class="ctrl" id="fwd10" aria-label="১০ সেকেন্ড সামনে"><small>১০</small><span data-icon="forward"></span></button>
+            <span class="time"><span id="cur">০:০০</span> / <span id="dur">০:০০</span></span>
+            <span class="grow"></span>
+            <span class="vol-box">
+              <button type="button" class="ctrl" id="mute" aria-label="আওয়াজ বন্ধ করুন"></button>
+              <input type="range" class="vol" id="vol" min="0" max="100" step="1" value="100" aria-label="ভলিউম">
+            </span>
+            <button type="button" class="ctrl speed" id="speed" aria-label="শোনার গতি">১x</button>
+            <button type="button" class="ctrl" id="fs" aria-label="পূর্ণ পর্দা"><span data-icon="fullscreen"></span></button>
+          </div>
+        </div>
+        <div class="mini-info">
+          <a class="mini-text" id="mini-link" href="#/"><b id="mini-title"></b><span id="mini-speaker"></span></a>
+          <button type="button" class="ctrl" id="mini-toggle" aria-label="চালান"></button>
+          <button type="button" class="ctrl" id="mini-close" aria-label="প্লেয়ার বন্ধ করুন"><span data-icon="close"></span></button>
+          <span class="mini-bar" aria-hidden="true"><span id="mini-bar"></span></span>
         </div>
       </div>
-      <div class="spinner" id="spinner" hidden></div>
-    </div>
-    <div class="controls">
-      <input type="range" class="seek" id="seek" min="0" max="1" step="1" value="0" aria-label="লেকচারের অবস্থান">
-      <div class="ctrl-row">
-        <button type="button" class="ctrl" id="back10" aria-label="১০ সেকেন্ড পিছনে"><span data-icon="replay"></span><small>১০</small></button>
-        <button type="button" class="ctrl main" id="toggle" aria-label="চালান"></button>
-        <button type="button" class="ctrl" id="fwd10" aria-label="১০ সেকেন্ড সামনে"><small>১০</small><span data-icon="forward"></span></button>
-        <span class="time"><span id="cur">০:০০</span> / <span id="dur">০:০০</span></span>
-        <span class="grow"></span>
-        <span class="vol-box">
-          <button type="button" class="ctrl" id="mute" aria-label="আওয়াজ বন্ধ করুন"></button>
-          <input type="range" class="vol" id="vol" min="0" max="100" step="1" value="100" aria-label="ভলিউম">
-        </span>
-        <button type="button" class="ctrl speed" id="speed" aria-label="শোনার গতি">১x</button>
-        <button type="button" class="ctrl" id="fs" aria-label="পূর্ণ পর্দা"><span data-icon="fullscreen"></span></button>
-      </div>
-    </div>
-    <div class="mini-info">
-      <a class="mini-text" id="mini-link" href="#/"><b id="mini-title"></b><span id="mini-speaker"></span></a>
-      <button type="button" class="ctrl" id="mini-toggle" aria-label="চালান"></button>
-      <button type="button" class="ctrl" id="mini-close" aria-label="প্লেয়ার বন্ধ করুন"><span data-icon="close"></span></button>
-      <span class="mini-bar" aria-hidden="true"><span id="mini-bar"></span></span>
-    </div>
-  </div>
-</section>
+    </section>
 
-<main id="view" tabindex="-1">
-  <p class="loading"><span class="spin"></span>লোড হচ্ছে…</p>
-  <noscript>
-    <p>এই পাতা চালাতে JavaScript লাগে। অ্যাপটি সরাসরি নামাতে পারেন:
-      <a href="https://github.com/ilmcraft/tazkiyah/releases/latest/download/tazkiyah.apk">tazkiyah.apk</a></p>
-  </noscript>
-</main>
+    <main id="view" tabindex="-1">
+      <p class="loading"><span class="spin"></span>লোড হচ্ছে…</p>
+      <noscript>
+        <p>এই পাতা চালাতে JavaScript লাগে। অ্যাপটি সরাসরি নামাতে পারেন:
+          <a href="https://github.com/ilmcraft/tazkiyah/releases/latest/download/tazkiyah.apk">tazkiyah.apk</a></p>
+      </noscript>
+    </main>
+  </div>
+  <aside class="stage-side" id="side" aria-label="এই লেকচারের সাথে আরও"></aside>
+</div>
 
 <footer class="foot">
-  <p>লেকচারের স্বত্ব বক্তা ও আপলোডকারীদের; ভিডিও চলে ইউটিউবের প্লেয়ারে। এই সাইট কোনো বক্তা বা ইউটিউবের সাথে সম্পর্কিত নয়।</p>
-  <p>আপনার ফেভারিট ও ইতিহাস শুধু এই ব্রাউজারেই থাকে — কোথাও পাঠানো হয় না।</p>
-  <p>যোগাযোগ: <a href="https://github.com/ilmcraft/tazkiyah/issues">github.com/ilmcraft/tazkiyah/issues</a> ·
-    <a href="https://github.com/ilmcraft/tazkiyah/releases">সব রিলিজ</a> ·
-    <a href="https://github.com/ilmcraft/tazkiyah">সোর্স কোড (GPL-3.0)</a></p>
+  <div class="foot-in">
+    <div class="foot-about">
+      <p class="foot-brand">তাযকিয়া</p>
+      <p>লেকচারের স্বত্ব বক্তা ও আপলোডকারীদের; ভিডিও চলে ইউটিউবের প্লেয়ারে। এই সাইট কোনো বক্তা বা ইউটিউবের সাথে সম্পর্কিত নয়।</p>
+      <p>আপনার ফেভারিট ও ইতিহাস শুধু এই ব্রাউজারেই থাকে — কোথাও পাঠানো হয় না।</p>
+    </div>
+    <nav class="foot-nav" aria-label="ফুটার মেনু">
+      <div>
+        <p class="foot-h">ঘুরে দেখুন</p>
+        <a href="#/speakers">বক্তাগণ</a>
+        <a href="#/topics">বিষয়</a>
+        <a href="#/library">আমার লাইব্রেরি</a>
+      </div>
+      <div>
+        <p class="foot-h">অ্যাপ</p>
+        <a href="#/app">Android অ্যাপ</a>
+        <a href="https://github.com/ilmcraft/tazkiyah/releases">সব রিলিজ</a>
+        <a href="privacy.html">গোপনীয়তা নীতি</a>
+      </div>
+      <div>
+        <p class="foot-h">যোগাযোগ</p>
+        <a href="https://github.com/ilmcraft/tazkiyah/issues">ইমেইল করুন</a>
+        <a href="https://github.com/ilmcraft/tazkiyah">সোর্স কোড (GPL-3.0)</a>
+      </div>
+    </nav>
+  </div>
 </footer>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
