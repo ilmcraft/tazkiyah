@@ -80,6 +80,7 @@ import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.ZoneId
 import javax.inject.Inject
+import com.inovixlabs.tazkiyah.core.designsystem.BrandShape
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
@@ -155,7 +156,7 @@ fun SettingsScreen(
                             SegmentedButton(
                                 selected = s.themeMode == mode,
                                 onClick = { viewModel.setTheme(mode) },
-                                shape = SegmentedButtonDefaults.itemShape(index, options.size),
+                                shape = SegmentedButtonDefaults.itemShape(index, options.size, baseShape = BrandShape),
                             ) { Text(stringResource(label), maxLines = 1) }
                         }
                     }
@@ -198,7 +199,7 @@ fun SettingsScreen(
             }
             item {
                 Column(Modifier.padding(horizontal = 16.dp)) {
-                    Button(onClick = viewModel::checkNow, enabled = !syncing) {
+                    Button(onClick = viewModel::checkNow, enabled = !syncing, shape = BrandShape) {
                         if (syncing) {
                             CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp, color = MaterialTheme.colorScheme.onPrimary)
                         } else {

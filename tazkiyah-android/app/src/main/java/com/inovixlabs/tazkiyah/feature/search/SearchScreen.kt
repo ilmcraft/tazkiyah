@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -29,7 +28,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -50,6 +48,10 @@ import com.inovixlabs.tazkiyah.R
 import com.inovixlabs.tazkiyah.core.designsystem.EmptyState
 import com.inovixlabs.tazkiyah.core.designsystem.LectureListItem
 import com.inovixlabs.tazkiyah.core.util.toBanglaDigits
+import com.inovixlabs.tazkiyah.core.designsystem.BrandShape
+import com.inovixlabs.tazkiyah.core.designsystem.SignalYellow
+import com.inovixlabs.tazkiyah.core.designsystem.MutedOnDark
+import com.inovixlabs.tazkiyah.core.designsystem.brandTopBarColors
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -89,17 +91,27 @@ fun SearchScreen(
                             viewModel.rememberQuery()
                             keyboard?.hide()
                         }),
-                        shape = RoundedCornerShape(28.dp),
+                        shape = BrandShape,
+                        // A dark field in the charcoal top bar, like the website's search box.
                         colors = TextFieldDefaults.colors(
-                            focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-                            unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                            focusedContainerColor = Color(0xFF27272A),
+                            unfocusedContainerColor = Color(0xFF27272A),
+                            focusedTextColor = Color.White,
+                            unfocusedTextColor = Color.White,
+                            cursorColor = SignalYellow,
                             focusedIndicatorColor = Color.Transparent,
                             unfocusedIndicatorColor = Color.Transparent,
+                            focusedLeadingIconColor = MutedOnDark,
+                            unfocusedLeadingIconColor = MutedOnDark,
+                            focusedTrailingIconColor = Color.White,
+                            unfocusedTrailingIconColor = Color.White,
+                            focusedPlaceholderColor = MutedOnDark,
+                            unfocusedPlaceholderColor = MutedOnDark,
                         ),
                         modifier = Modifier.fillMaxWidth().padding(end = 12.dp).focusRequester(focusRequester),
                     )
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.background),
+                colors = brandTopBarColors(),
             )
         },
         containerColor = MaterialTheme.colorScheme.background,

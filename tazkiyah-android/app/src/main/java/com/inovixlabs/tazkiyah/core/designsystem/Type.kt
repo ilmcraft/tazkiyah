@@ -54,18 +54,27 @@ fun AppFont.family(): FontFamily = when (this) {
     AppFont.SYSTEM -> FontFamily.Default
 }
 
+/**
+ * The brand's heading face, as on the website: Anek Bangla at its narrowest width (wdth 75) and
+ * ExtraBold, a static instance subset to Bengali (Latin falls back to the system font). Headings,
+ * screen titles and section titles use it whatever reading font is chosen in Settings.
+ */
+val BrandHeading = FontFamily(Font(R.font.anek_bangla_condensed_extrabold, FontWeight.ExtraBold))
+
 // Bengali matras rise and fall, so line height is ~1.45x the font size.
 private fun style(family: FontFamily, weight: FontWeight, size: Int, lineHeight: TextUnit = (size * 1.45f).sp) =
     TextStyle(fontFamily = family, fontWeight = weight, fontSize = size.sp, lineHeight = lineHeight)
 
+private fun heading(size: Int) = style(BrandHeading, FontWeight.ExtraBold, size, (size * 1.3f).sp)
+
 private fun typographyFor(f: FontFamily) = Typography(
-    displayLarge = style(f, FontWeight.SemiBold, 52),
-    displayMedium = style(f, FontWeight.SemiBold, 42),
-    displaySmall = style(f, FontWeight.SemiBold, 34),
-    headlineLarge = style(f, FontWeight.SemiBold, 30),
-    headlineMedium = style(f, FontWeight.SemiBold, 26),
+    displayLarge = heading(54),
+    displayMedium = heading(44),
+    displaySmall = heading(36),
+    headlineLarge = heading(32),
+    headlineMedium = heading(28),
     headlineSmall = style(f, FontWeight.SemiBold, 23),
-    titleLarge = style(f, FontWeight.SemiBold, 21),
+    titleLarge = heading(23),
     titleMedium = style(f, FontWeight.SemiBold, 17),
     titleSmall = style(f, FontWeight.Medium, 15),
     bodyLarge = style(f, FontWeight.Normal, 16),

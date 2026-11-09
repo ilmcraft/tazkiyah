@@ -22,7 +22,6 @@ import androidx.compose.material.icons.rounded.Fullscreen
 import androidx.compose.material.icons.rounded.FullscreenExit
 import androidx.compose.material.icons.rounded.Headphones
 import androidx.compose.material.icons.rounded.SkipNext
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -38,7 +37,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.blur
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
@@ -61,6 +59,11 @@ import com.inovixlabs.tazkiyah.feature.player.errorText
 import com.inovixlabs.tazkiyah.playback.PlayerState
 import com.inovixlabs.tazkiyah.playback.youTubeThumbnail
 import kotlinx.coroutines.delay
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import com.inovixlabs.tazkiyah.core.designsystem.BrandShape
+import com.inovixlabs.tazkiyah.core.designsystem.Charcoal
+import com.inovixlabs.tazkiyah.core.designsystem.SignalYellow
 
 /**
  * Everything drawn over a video (docs/PLAN.md, "ইউটিউব প্লেয়ার"), shared by streaming YouTube and
@@ -206,11 +209,7 @@ private fun BoxScope.CoverCard(
     Box(
         Modifier
             .matchParentSize()
-            .background(
-                Brush.verticalGradient(
-                    listOf(MaterialTheme.colorScheme.primaryContainer, MaterialTheme.colorScheme.primary),
-                ),
-            )
+            .background(Charcoal)
             // Swallow taps that land on the card itself.
             .pointerInput(Unit) { detectTapGestures { } },
     ) {
@@ -245,10 +244,11 @@ private fun BoxScope.CoverCard(
                         overflow = TextOverflow.Ellipsis,
                     )
                     Spacer(Modifier.height(12.dp))
+                    val onCover = ButtonDefaults.buttonColors(containerColor = SignalYellow, contentColor = Charcoal)
                     Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                        FilledTonalButton(onClick = onReplay) { Text(stringResource(R.string.listen_again)) }
+                        Button(onClick = onReplay, shape = BrandShape, colors = onCover) { Text(stringResource(R.string.listen_again)) }
                         if (nextInSeries != null) {
-                            FilledTonalButton(onClick = { onPlayNext(nextInSeries) }) {
+                            Button(onClick = { onPlayNext(nextInSeries) }, shape = BrandShape, colors = onCover) {
                                 Icon(Icons.Rounded.SkipNext, contentDescription = null, modifier = Modifier.size(18.dp))
                                 Text(stringResource(R.string.next_part))
                             }

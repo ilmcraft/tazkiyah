@@ -70,6 +70,11 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import java.time.LocalDate
 import javax.inject.Inject
+import com.inovixlabs.tazkiyah.core.designsystem.Panel
+import com.inovixlabs.tazkiyah.core.designsystem.BrandShape
+import com.inovixlabs.tazkiyah.core.designsystem.SignalYellow
+import com.inovixlabs.tazkiyah.core.designsystem.MutedOnDark
+import androidx.compose.ui.graphics.Color
 
 data class DayListen(val date: LocalDate, val seconds: Long)
 
@@ -218,15 +223,16 @@ private fun WeekCard(week: List<DayListen>) {
     val max = (week.maxOfOrNull { it.seconds } ?: 0).coerceAtLeast(60)
     Card(
         modifier = Modifier.fillMaxWidth().padding(16.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
-        shape = RoundedCornerShape(16.dp),
+        // A charcoal panel in both themes, like the website's dark bands.
+        colors = CardDefaults.cardColors(containerColor = Panel, contentColor = Color.White),
+        shape = BrandShape,
     ) {
         Column(Modifier.padding(16.dp)) {
-            Text(stringResource(R.string.library_week), style = MaterialTheme.typography.titleSmall)
+            Text(stringResource(R.string.library_week), style = MaterialTheme.typography.titleSmall, color = MutedOnDark)
             Text(
                 durationLabel(total) ?: stringResource(R.string.minutes_short, 0.toBanglaDigits()),
                 style = MaterialTheme.typography.headlineMedium,
-                color = MaterialTheme.colorScheme.primary,
+                color = SignalYellow,
             )
             Row(
                 Modifier.fillMaxWidth().height(96.dp).padding(top = 12.dp),
@@ -241,16 +247,14 @@ private fun WeekCard(week: List<DayListen>) {
                                 Modifier
                                     .fillMaxWidth()
                                     .fillMaxHeight(fraction)
-                                    .clip(RoundedCornerShape(topStart = 6.dp, topEnd = 6.dp))
-                                    .background(
-                                        if (day.seconds > 0) MaterialTheme.colorScheme.secondary
-                                        else MaterialTheme.colorScheme.outlineVariant,
-                                    ),
+                                    .clip(RoundedCornerShape(topStart = 2.dp, topEnd = 2.dp))
+                                    .background(if (day.seconds > 0) SignalYellow else Color(0xFF333333)),
                             )
                         }
                         Text(
                             weekdays.getOrElse(day.date.dayOfWeek.value - 1) { "" },
                             style = MaterialTheme.typography.labelSmall,
+                            color = MutedOnDark,
                         )
                     }
                 }

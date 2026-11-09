@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Groups
 import androidx.compose.material.icons.rounded.Search
@@ -49,6 +48,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
+import com.inovixlabs.tazkiyah.core.designsystem.BrandShape
 
 @HiltViewModel
 class SpeakersViewModel @Inject constructor(catalog: CatalogRepository) : ViewModel() {
@@ -90,7 +90,7 @@ fun SpeakerGrid(speakers: List<SpeakerWithCount>, onOpenSpeaker: (String) -> Uni
         items(speakers, key = { it.speaker.id }) { item ->
             Card(
                 modifier = Modifier.fillMaxWidth().clickable { onOpenSpeaker(item.speaker.id) },
-                shape = RoundedCornerShape(16.dp),
+                shape = BrandShape,
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                 elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
             ) {

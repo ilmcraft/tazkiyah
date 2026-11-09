@@ -58,6 +58,9 @@ import com.inovixlabs.tazkiyah.playback.SPEED_OPTIONS
 import com.inovixlabs.tazkiyah.playback.VolumeLevel
 import com.inovixlabs.tazkiyah.playback.volumeLevel
 import kotlin.math.roundToInt
+import com.inovixlabs.tazkiyah.core.designsystem.BrandShape
+import com.inovixlabs.tazkiyah.core.designsystem.Charcoal
+import com.inovixlabs.tazkiyah.core.designsystem.SignalYellow
 
 fun speedLabel(speed: Float): String {
     val text = if (speed % 1f == 0f) speed.toInt().toString() else speed.toString().trimEnd('0')
@@ -91,8 +94,8 @@ fun SeekBar(
             valueRange = 0f..(duration.coerceAtLeast(1).toFloat()),
             enabled = duration > 0,
             colors = SliderDefaults.colors(
-                thumbColor = MaterialTheme.colorScheme.secondary,
-                activeTrackColor = MaterialTheme.colorScheme.secondary,
+                thumbColor = if (onDark) SignalYellow else MaterialTheme.colorScheme.secondary,
+                activeTrackColor = if (onDark) SignalYellow else MaterialTheme.colorScheme.secondary,
                 inactiveTrackColor = if (onDark) Color.White.copy(alpha = 0.3f) else MaterialTheme.colorScheme.surfaceVariant,
             ),
             modifier = Modifier.fillMaxWidth(),
@@ -135,26 +138,30 @@ fun TransportRow(
             Icon(Icons.Rounded.Replay10, stringResource(R.string.rewind_10), tint = tint, modifier = Modifier.size(if (big) 34.dp else 28.dp))
         }
         Box(contentAlignment = Alignment.Center) {
+            // The website's play mark: a square yellow tile with a charcoal icon, in both themes.
             FilledIconButton(
                 onClick = onPlayPause,
                 modifier = Modifier.size(if (big) 72.dp else 56.dp),
+                shape = BrandShape,
                 colors = IconButtonDefaults.filledIconButtonColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = MaterialTheme.colorScheme.onPrimary,
+                    containerColor = SignalYellow,
+                    contentColor = Charcoal,
                 ),
             ) {
-                Icon(
-                    playPauseIcon(state),
-                    contentDescription = stringResource(if (state.isPlaying) R.string.pause else R.string.play),
-                    modifier = Modifier.size(if (big) 40.dp else 32.dp),
-                )
-            }
-            if (state.isBuffering) {
-                CircularProgressIndicator(
-                    modifier = Modifier.size(if (big) 78.dp else 62.dp),
-                    color = MaterialTheme.colorScheme.secondary,
-                    strokeWidth = 3.dp,
-                )
+                Box(contentAlignment = Alignment.Center) {
+                    Icon(
+                        playPauseIcon(state),
+                        contentDescription = stringResource(if (state.isPlaying) R.string.pause else R.string.play),
+                        modifier = Modifier.size(if (big) 40.dp else 32.dp),
+                    )
+                    if (state.isBuffering) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(if (big) 58.dp else 46.dp),
+                            color = Charcoal,
+                            strokeWidth = 3.dp,
+                        )
+                    }
+                }
             }
         }
         IconButton(onClick = { onSeekBy(10) }) {
@@ -237,8 +244,8 @@ fun VolumeControl(
             },
             valueRange = 0f..volume.max.toFloat(),
             colors = SliderDefaults.colors(
-                thumbColor = MaterialTheme.colorScheme.secondary,
-                activeTrackColor = MaterialTheme.colorScheme.secondary,
+                thumbColor = if (onDark) SignalYellow else MaterialTheme.colorScheme.secondary,
+                activeTrackColor = if (onDark) SignalYellow else MaterialTheme.colorScheme.secondary,
                 inactiveTrackColor = if (onDark) Color.White.copy(alpha = 0.3f) else MaterialTheme.colorScheme.surfaceVariant,
             ),
             modifier = Modifier

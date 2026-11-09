@@ -16,11 +16,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -60,7 +62,7 @@ fun AppScreen(
                     Text(
                         title,
                         style = if (largeTitle) MaterialTheme.typography.headlineMedium else MaterialTheme.typography.titleLarge,
-                        color = if (largeTitle) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
+                        color = if (largeTitle) SignalYellow else Color.White,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
@@ -73,7 +75,7 @@ fun AppScreen(
                     }
                 },
                 actions = actions,
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.background),
+                colors = brandTopBarColors(),
             )
         },
         containerColor = MaterialTheme.colorScheme.background,
@@ -81,6 +83,20 @@ fun AppScreen(
         content = content,
     )
 }
+
+/**
+ * Every top bar is charcoal in both themes, like the website's header, so the status bar icons
+ * are always light (see SystemBarIconsFollowTheme).
+ */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun brandTopBarColors(): TopAppBarColors = TopAppBarDefaults.topAppBarColors(
+    containerColor = HeaderInk,
+    scrolledContainerColor = HeaderInk,
+    navigationIconContentColor = Color.White,
+    titleContentColor = Color.White,
+    actionIconContentColor = Color.White,
+)
 
 @Composable
 fun <T> UiStateContent(

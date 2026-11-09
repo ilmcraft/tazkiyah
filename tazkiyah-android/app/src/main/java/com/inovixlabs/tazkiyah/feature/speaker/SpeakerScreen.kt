@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.inovixlabs.tazkiyah.R
+import com.inovixlabs.tazkiyah.core.designsystem.BrandShape
 import com.inovixlabs.tazkiyah.core.designsystem.AppScreen
 import com.inovixlabs.tazkiyah.core.designsystem.EmptyState
 import com.inovixlabs.tazkiyah.core.designsystem.LectureListItem
@@ -92,7 +93,7 @@ fun SpeakerScreen(
                             SegmentedButton(
                                 selected = page.sort == sort,
                                 onClick = { viewModel.setSort(sort) },
-                                shape = SegmentedButtonDefaults.itemShape(index, options.size),
+                                shape = SegmentedButtonDefaults.itemShape(index, options.size, baseShape = BrandShape),
                             ) { Text(stringResource(label), maxLines = 1) }
                         }
                     }

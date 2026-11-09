@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.MenuBook
@@ -100,7 +99,7 @@ fun SpeakerAvatar(name: String, photoUrl: String?, size: Dp, modifier: Modifier 
     Box(
         modifier
             .size(size)
-            .clip(CircleShape)
+            .clip(BrandShape)
             .background(MaterialTheme.colorScheme.primaryContainer),
         contentAlignment = Alignment.Center,
     ) {
@@ -130,7 +129,7 @@ fun LectureThumbnail(
 ) {
     Box(
         modifier
-            .clip(RoundedCornerShape(12.dp))
+            .clip(BrandShape)
             .background(MaterialTheme.colorScheme.primaryContainer),
     ) {
         val icon = if (row.lecture.mediaType == MediaType.VIDEO) Icons.Rounded.Videocam else Icons.Rounded.Headphones
@@ -152,9 +151,9 @@ fun LectureThumbnail(
         if (showDuration && duration != null) {
             // Length on the picture, as on YouTube ("৪৫:১২").
             Surface(
-                color = Color.Black.copy(alpha = 0.72f),
+                color = Charcoal.copy(alpha = 0.8f),
                 contentColor = Color.White,
-                shape = RoundedCornerShape(4.dp),
+                shape = RoundedCornerShape(2.dp),
                 modifier = Modifier.align(Alignment.BottomEnd).padding(4.dp),
             ) {
                 Text(
@@ -168,8 +167,8 @@ fun LectureThumbnail(
             LinearProgressIndicator(
                 progress = { row.progressFraction },
                 modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth().height(3.dp),
-                color = MaterialTheme.colorScheme.secondary,
-                trackColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.6f),
+                color = SignalYellow,
+                trackColor = Charcoal.copy(alpha = 0.6f),
                 strokeCap = StrokeCap.Butt,
                 drawStopIndicator = {},
             )
@@ -181,9 +180,9 @@ fun LectureThumbnail(
 fun Badge(text: String, modifier: Modifier = Modifier, gold: Boolean = true) {
     Surface(
         modifier = modifier,
-        shape = RoundedCornerShape(6.dp),
-        color = if (gold) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.primaryContainer,
-        contentColor = if (gold) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onPrimaryContainer,
+        shape = RoundedCornerShape(2.dp),
+        color = if (gold) SignalYellow else MaterialTheme.colorScheme.surfaceVariant,
+        contentColor = if (gold) Charcoal else MaterialTheme.colorScheme.onSurfaceVariant,
     ) {
         Text(text, style = MaterialTheme.typography.labelSmall, modifier = Modifier.padding(horizontal = 6.dp, vertical = 1.dp))
     }
@@ -248,12 +247,16 @@ fun LectureListItem(
 }
 
 @Composable
-fun FavoriteButton(isFavorite: Boolean, onToggle: () -> Unit, modifier: Modifier = Modifier) {
+fun FavoriteButton(isFavorite: Boolean, onToggle: () -> Unit, modifier: Modifier = Modifier, onDark: Boolean = false) {
     IconButton(onClick = onToggle, modifier = modifier) {
         Icon(
             if (isFavorite) Icons.Rounded.Favorite else Icons.Rounded.FavoriteBorder,
             contentDescription = stringResource(if (isFavorite) R.string.favorite_remove else R.string.favorite_add),
-            tint = if (isFavorite) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurfaceVariant,
+            tint = when {
+                onDark -> if (isFavorite) SignalYellow else MutedOnDark
+                isFavorite -> MaterialTheme.colorScheme.secondary
+                else -> MaterialTheme.colorScheme.onSurfaceVariant
+            },
         )
     }
 }
@@ -261,7 +264,7 @@ fun FavoriteButton(isFavorite: Boolean, onToggle: () -> Unit, modifier: Modifier
 /** Card for horizontal rows on Home. */
 @Composable
 fun LectureCard(row: LectureRow, onClick: () -> Unit, modifier: Modifier = Modifier) {
-    Column(modifier.width(220.dp).clip(RoundedCornerShape(12.dp)).clickable(onClick = onClick)) {
+    Column(modifier.width(220.dp).clip(BrandShape).clickable(onClick = onClick)) {
         LectureThumbnail(row, Modifier.fillMaxWidth().aspectRatio(16f / 9f))
         Text(
             row.lecture.title,
@@ -309,7 +312,7 @@ fun EmptyState(text: String, modifier: Modifier = Modifier, icon: ImageVector = 
         modifier.fillMaxWidth().padding(32.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Icon(icon, contentDescription = null, tint = BrightGold, modifier = Modifier.size(48.dp))
+        Icon(icon, contentDescription = null, tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(48.dp))
         Spacer(Modifier.height(12.dp))
         Text(
             text,

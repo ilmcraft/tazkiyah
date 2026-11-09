@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.Settings
@@ -61,6 +60,8 @@ import com.inovixlabs.tazkiyah.core.util.toBanglaDigits
 import com.inovixlabs.tazkiyah.feature.about.rememberLinkOpener
 import com.inovixlabs.tazkiyah.data.repository.AppSettings
 import com.inovixlabs.tazkiyah.data.sync.SyncResult
+import com.inovixlabs.tazkiyah.core.designsystem.BrandShape
+import androidx.compose.material3.ButtonDefaults
 
 fun syncResultRes(result: SyncResult): Int = when (result) {
     SyncResult.Updated -> R.string.sync_updated
@@ -172,7 +173,7 @@ private fun Banners(settings: AppSettings?, onDismiss: () -> Unit, onDismissAppU
             Surface(
                 color = MaterialTheme.colorScheme.primaryContainer,
                 contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                shape = RoundedCornerShape(12.dp),
+                shape = BrandShape,
                 modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
             ) {
                 Column(Modifier.padding(start = 16.dp, top = 12.dp, end = 8.dp)) {
@@ -183,8 +184,10 @@ private fun Banners(settings: AppSettings?, onDismiss: () -> Unit, onDismissAppU
                     Text(stringResource(R.string.banner_app_update_desc), style = MaterialTheme.typography.bodyMedium)
                     Row {
                         Spacer(Modifier.weight(1f))
-                        TextButton(onClick = { onDismissAppUpdate(update.versionName) }) { Text(stringResource(R.string.later)) }
-                        TextButton(onClick = { openLink(update.url) }) { Text(stringResource(R.string.download)) }
+                        // On yellow, text buttons take the banner's charcoal (primary is yellow in dark mode).
+                        val onBanner = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onPrimaryContainer)
+                        TextButton(onClick = { onDismissAppUpdate(update.versionName) }, colors = onBanner) { Text(stringResource(R.string.later)) }
+                        TextButton(onClick = { openLink(update.url) }, colors = onBanner) { Text(stringResource(R.string.download)) }
                     }
                 }
             }
@@ -193,7 +196,7 @@ private fun Banners(settings: AppSettings?, onDismiss: () -> Unit, onDismissAppU
             Surface(
                 color = MaterialTheme.colorScheme.errorContainer,
                 contentColor = MaterialTheme.colorScheme.onErrorContainer,
-                shape = RoundedCornerShape(12.dp),
+                shape = BrandShape,
                 modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
             ) {
                 Text(stringResource(R.string.banner_app_update), Modifier.padding(16.dp), style = MaterialTheme.typography.bodyMedium)
@@ -203,7 +206,7 @@ private fun Banners(settings: AppSettings?, onDismiss: () -> Unit, onDismissAppU
             Surface(
                 color = MaterialTheme.colorScheme.secondaryContainer,
                 contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                shape = RoundedCornerShape(12.dp),
+                shape = BrandShape,
                 modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
             ) {
                 Column(Modifier.padding(start = 16.dp, top = 12.dp, end = 8.dp)) {
@@ -234,7 +237,7 @@ private fun TodayCard(row: LectureRow, onClick: () -> Unit) {
     Card(
         modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp).clickable(onClick = onClick),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
-        shape = RoundedCornerShape(16.dp),
+        shape = BrandShape,
     ) {
         LectureThumbnail(row, Modifier.fillMaxWidth().aspectRatio(16f / 9f))
         Column(Modifier.padding(16.dp)) {

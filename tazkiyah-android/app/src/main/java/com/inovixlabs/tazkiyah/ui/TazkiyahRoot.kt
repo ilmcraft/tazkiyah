@@ -385,14 +385,17 @@ private fun AppNavHost(
     }
 }
 
-/** Status/navigation bar icons follow the app theme (which can differ from the system's). */
+/**
+ * Status bar icons are always light: every screen's top bar is charcoal (brandTopBarColors).
+ * Navigation bar icons follow the app theme (which can differ from the system's).
+ */
 @Composable
 private fun SystemBarIconsFollowTheme() {
     val activity = LocalActivity.current ?: return
     val dark = isAppInDarkTheme()
     SideEffect {
         val controller = WindowCompat.getInsetsController(activity.window, activity.window.decorView)
-        controller.isAppearanceLightStatusBars = !dark
+        controller.isAppearanceLightStatusBars = false
         controller.isAppearanceLightNavigationBars = !dark
     }
 }

@@ -49,7 +49,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Rect
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.layout.boundsInRoot
@@ -61,8 +60,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.inovixlabs.tazkiyah.R
+import com.inovixlabs.tazkiyah.core.designsystem.Charcoal
 import com.inovixlabs.tazkiyah.core.designsystem.CompletedMark
 import com.inovixlabs.tazkiyah.core.designsystem.FavoriteButton
+import com.inovixlabs.tazkiyah.core.designsystem.HeaderInk
+import com.inovixlabs.tazkiyah.core.designsystem.MutedOnDark
+import com.inovixlabs.tazkiyah.core.designsystem.SignalYellow
 import com.inovixlabs.tazkiyah.core.designsystem.LectureListItem
 import com.inovixlabs.tazkiyah.core.designsystem.LectureThumbnail
 import com.inovixlabs.tazkiyah.core.designsystem.SpeakerAvatar
@@ -122,17 +125,22 @@ fun FullPlayerScreen(
 ) {
     val months = stringArrayResource(R.array.month_names)
     Surface(modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-        Column(Modifier.statusBarsPadding().navigationBarsPadding()) {
-            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 4.dp)) {
+        Column(Modifier.navigationBarsPadding()) {
+            // Charcoal like every top bar (and the video below it), status bar area included.
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth().background(HeaderInk).statusBarsPadding().padding(horizontal = 4.dp),
+            ) {
                 IconButton(onClick = onCollapse) {
-                    Icon(Icons.Rounded.KeyboardArrowDown, stringResource(R.string.collapse_player))
+                    Icon(Icons.Rounded.KeyboardArrowDown, stringResource(R.string.collapse_player), tint = Color.White)
                 }
                 Text(
                     stringResource(R.string.now_playing),
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.titleLarge,
+                    color = Color.White,
                     modifier = Modifier.weight(1f),
                 )
-                FavoriteButton(lecture.isFavorite, onToggleFavorite)
+                FavoriteButton(lecture.isFavorite, onToggleFavorite, onDark = true)
             }
             Box(
                 Modifier
@@ -259,7 +267,7 @@ fun FullPlayerScreen(
                             onClick = { onOpenLecture(part.id) },
                             showSpeaker = false,
                             modifier = if (part.id == lecture.id) {
-                                Modifier.background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f))
+                                Modifier.background(MaterialTheme.colorScheme.secondaryContainer)
                             } else {
                                 Modifier
                             },
@@ -277,9 +285,7 @@ private fun AudioArtwork(lecture: LectureRow) {
     Box(
         Modifier
             .fillMaxSize()
-            .background(
-                Brush.verticalGradient(listOf(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.primaryContainer)),
-            ),
+            .background(Charcoal),
         contentAlignment = Alignment.Center,
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(16.dp)) {
@@ -288,7 +294,7 @@ private fun AudioArtwork(lecture: LectureRow) {
             Text(
                 lecture.speakerName.orEmpty(),
                 style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onPrimary,
+                color = Color.White,
                 textAlign = TextAlign.Center,
             )
         }
@@ -363,14 +369,15 @@ fun MiniPlayer(
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Surface(modifier.fillMaxWidth(), color = MaterialTheme.colorScheme.surface, tonalElevation = 3.dp, shadowElevation = 6.dp) {
+    // Charcoal in both themes, like the website's mini player.
+    Surface(modifier.fillMaxWidth(), color = HeaderInk, contentColor = Color.White, shadowElevation = 6.dp) {
         Column {
             val fraction = if (state.durationSec > 0) (state.positionSec.toFloat() / state.durationSec).coerceIn(0f, 1f) else 0f
             LinearProgressIndicator(
                 progress = { fraction },
-                modifier = Modifier.fillMaxWidth().height(2.dp),
-                color = MaterialTheme.colorScheme.secondary,
-                trackColor = MaterialTheme.colorScheme.surfaceVariant,
+                modifier = Modifier.fillMaxWidth().height(3.dp),
+                color = SignalYellow,
+                trackColor = Color(0xFF333333),
                 strokeCap = StrokeCap.Butt,
                 drawStopIndicator = {},
             )
@@ -385,7 +392,7 @@ fun MiniPlayer(
                     Text(
                         lecture.speakerName.orEmpty(),
                         style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        color = MutedOnDark,
                         maxLines = 1,
                     )
                 }
@@ -393,12 +400,12 @@ fun MiniPlayer(
                     Icon(
                         playPauseIcon(state),
                         contentDescription = stringResource(if (state.isPlaying) R.string.pause else R.string.play),
-                        tint = MaterialTheme.colorScheme.primary,
+                        tint = SignalYellow,
                         modifier = Modifier.size(32.dp),
                     )
                 }
                 IconButton(onClick = onClose) {
-                    Icon(Icons.Rounded.Close, contentDescription = stringResource(R.string.close))
+                    Icon(Icons.Rounded.Close, contentDescription = stringResource(R.string.close), tint = MutedOnDark)
                 }
             }
         }
