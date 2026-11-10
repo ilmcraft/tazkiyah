@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "minAppVersionCode": 1,
-  "dataVersion": 7,
-  "updatedAt": "2026-11-10T08:45:35Z",
-  "changelog": "নতুন লেকচার: ডা. শামসুল আরেফীন শক্তি (৫টি)",
+  "dataVersion": 8,
+  "updatedAt": "2026-11-10T09:18:11Z",
+  "changelog": "লেকচারের তালিকা হালনাগাদ হয়েছে",
   "files": [
     {
       "path": "data/speakers.json",
@@ -17,33 +17,33 @@
     },
     {
       "path": "data/lectures/speaker-001.json",
-      "sha256": "4cbcf5b501e56cfb07ec879fc48f418aec7c31f5c39965a73681e4438b7f82e0",
-      "size": 21152,
-      "lectures": 49
+      "sha256": "498f58ef4363100f2d3d1dffa58cdbc157d99e5fef4a9de3ca5ebb35f80f6c4c",
+      "size": 16474,
+      "lectures": 36
     },
     {
       "path": "data/lectures/speaker-002.json",
-      "sha256": "c139c1125f51489d15fd88322adc64d7c4a06b0b8fc7e1d48454c554780d2ed8",
-      "size": 23327,
-      "lectures": 60
+      "sha256": "aa2e737fca2b4c8075585e48840d02ba5bccef31e44c1a6c58fc66c226b65ff3",
+      "size": 15028,
+      "lectures": 37
     },
     {
       "path": "data/lectures/speaker-003.json",
-      "sha256": "8db23add12013346a560920ab800056326d3bb3a3110d3d2975e5d7361ed7b67",
-      "size": 27073,
-      "lectures": 63
+      "sha256": "a019ee550cac69a2bbdca74dd48df66041b34f93e287aa3f3df2011af5a1ca50",
+      "size": 18810,
+      "lectures": 41
     },
     {
       "path": "data/lectures/speaker-004.json",
-      "sha256": "a7b532a7201d0534e4ec607841adda2a776c7bc62e4164cb45503af9164b9069",
-      "size": 2309,
-      "lectures": 5
+      "sha256": "2ab69449536a7834adac9dc354c0fc1d76cd0391c9850b7149999f1874009362",
+      "size": 1951,
+      "lectures": 4
     },
     {
       "path": "data/lectures/speaker-005.json",
-      "sha256": "da87e2141ef1fb3afca5281417a706a50667a353bd513c13c77942fb0490a355",
-      "size": 146523,
-      "lectures": 389
+      "sha256": "1c97a9211d8a3d9be1c3672923cad53aa59b220403ab796ccbcab4eb23904426",
+      "size": 94937,
+      "lectures": 248
     }
   ]
 }
