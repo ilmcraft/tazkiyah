@@ -719,3 +719,14 @@ def test_sweep_all_keeps_finished_speakers_when_the_quota_runs_out(content):
 def test_sweep_needs_a_speaker_or_all(content, capsys):
     assert discover.main(["sweep", "--root", str(content)], client=FakeClient()) == 1
     assert "--all" in capsys.readouterr().err
+
+
+def test_id_of_a_removed_lecture_is_not_reused(content):
+    seen = read_json(content, "discovery/seen/speaker-001.json")
+    seen["videos"]["REMOVED0001"] = {"status": "rejected", "date": "2026-11-07", "lectureId": "spk001-0009"}
+    write_json(content, "discovery/seen/speaker-001.json", seen)
+    fake = FakeClient(
+        playlists={"UUofficial0000000000000a": ["OFFICIALTK1"]},
+        videos={"OFFICIALTK1": item("OFFICIALTK1", "তাওবার শর্ত", channel_id=OFFICIAL)},
+    )
+    assert [c.lecture_id for c in run(content, fake).added] == ["spk001-0010"]

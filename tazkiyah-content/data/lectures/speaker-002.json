@@ -185,168 +185,6 @@
       "addedAt": "2026-11-08"
     },
     {
-      "id": "spk002-0021",
-      "title": "যেই কথা আমাদের কলিজায় আঘাত করে",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "RDXsi-rw6A8", "startSec": 0 },
-      "durationSec": 1522,
-      "publishedAt": "2024-11-12",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk002-0024",
-      "title": "শেখ হাসিনা ও ফ্যাসিবাদী চরিত্র",
-      "categoryIds": ["akhlaq"],
-      "media": { "type": "youtube", "videoId": "HzHETracHME", "startSec": 0 },
-      "durationSec": 2935,
-      "publishedAt": "2024-11-25",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk002-0027",
-      "title": "ধর্ম উপদেষ্টাকে নিয়ে বক্তব্য",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "R1-q_dgYdG4", "startSec": 0 },
-      "durationSec": 1617,
-      "publishedAt": "2025-01-15",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk002-0030",
-      "title": "জিহাদ নিয়ে আলোচনা",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "swdtLh2U-LI", "startSec": 0 },
-      "durationSec": 3933,
-      "publishedAt": "2025-01-24",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk002-0035",
-      "title": "হাতপাখা সমাবেশের পর বক্তব্য",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "NuAV3BH6liI", "startSec": 0 },
-      "durationSec": 1901,
-      "publishedAt": "2025-07-03",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk002-0036",
-      "title": "হাটহাজারীর ছাত্র-জনতার মঞ্চে বক্তব্য",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "p2pB5fEXz5I", "startSec": 0 },
-      "durationSec": 2644,
-      "publishedAt": "2025-07-18",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk002-0039",
-      "title": "আল আমিন সংস্থার মাহফিলে বয়ান ২০২৫",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "_rf3JU046lM", "startSec": 0 },
-      "durationSec": 2786,
-      "publishedAt": "2025-10-30",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk002-0040",
-      "title": "কোরআন ও বিজ্ঞান: বানর থেকে মানুষ সৃষ্টির দাবি",
-      "categoryIds": ["quran-tafsir"],
-      "media": { "type": "youtube", "videoId": "RFqaNRpy9cg", "startSec": 0 },
-      "durationSec": 3972,
-      "publishedAt": "2025-10-31",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk002-0044",
-      "title": "বর্তমান দেশের পরিস্থিতি নিয়ে বক্তব্য",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "jQDhtE237YY", "startSec": 0 },
-      "durationSec": 1516,
-      "publishedAt": "2025-12-16",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk002-0046",
-      "title": "গণতন্ত্র নিয়ে বক্তব্য ও হুঁশিয়ারি",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "3xjcrhlILMg", "startSec": 0 },
-      "durationSec": 3060,
-      "publishedAt": "2026-01-28",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk002-0047",
-      "title": "বিএনপির নেতাদের পড়াশোনার পরামর্শ",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "9wqaa5DOx_E", "startSec": 0 },
-      "durationSec": 1690,
-      "publishedAt": "2026-05-01",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk002-0048",
-      "title": "আকাবিরদের পক্ষে বক্তব্য",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "PFt8eKRRNLE", "startSec": 0 },
-      "durationSec": 3352,
-      "publishedAt": "2026-07-22",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk002-0049",
-      "title": "জামায়াত নেতাদের কর্মকাণ্ড নিয়ে বক্তব্য",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "TEc9X6CXneE", "startSec": 0 },
-      "durationSec": 1664,
-      "publishedAt": "2026-07-23",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk002-0051",
-      "title": "ভারতের আধিপত্য থেকে বাঁচতে আমেরিকার আধিপত্য মেনে নিবো না",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "Vz4tkrsJ5pk", "startSec": 0 },
-      "durationSec": 1166,
-      "publishedAt": "2026-08-09",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk002-0052",
-      "title": "সালাফের পদ্ধতি বনাম বিদআতে হাসানাহ",
-      "categoryIds": ["dawah"],
-      "media": { "type": "youtube", "videoId": "Juk657sOOOQ", "startSec": 0 },
-      "durationSec": 3494,
-      "publishedAt": "2026-08-11",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk002-0053",
-      "title": "একদিন এই দুনিয়া থেকে কুরআন উঠে যাবে",
-      "categoryIds": ["quran-tafsir"],
-      "media": { "type": "youtube", "videoId": "0ZOL2OqfuTs", "startSec": 0 },
-      "durationSec": 1697,
-      "publishedAt": "2026-08-16",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk002-0054",
-      "title": "ইসলামী সমাজ বিনির্মাণে সীরাতের ভূমিকা",
-      "categoryIds": ["seerah"],
-      "media": { "type": "youtube", "videoId": "-qzIVWGPF-8", "startSec": 0 },
-      "durationSec": 1942,
-      "publishedAt": "2026-08-17",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk002-0055",
-      "title": "ইসলামের বিজয় আসবেই",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "8E1NFRl6Mmg", "startSec": 0 },
-      "durationSec": 1806,
-      "publishedAt": "2026-08-19",
-      "addedAt": "2026-11-08"
-    },
-    {
       "id": "spk002-0056",
       "title": "সূরা ইসরার আলোকে ভূ-রাজনৈতিক বার্তা",
       "categoryIds": ["quran-tafsir"],
@@ -379,15 +217,6 @@
       "categoryIds": ["contemporary"],
       "media": { "type": "youtube", "videoId": "e8gGF_-9AyE", "startSec": 0 },
       "durationSec": 2032,
-      "publishedAt": "2026-08-24",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk002-0062",
-      "title": "আওয়ামী লীগের স্বপ্ন যেভাবে ভাঙল",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "qfoNdo5x67U", "startSec": 0 },
-      "durationSec": 1669,
       "publishedAt": "2026-08-24",
       "addedAt": "2026-11-08"
     },
@@ -428,15 +257,6 @@
       "addedAt": "2026-11-08"
     },
     {
-      "id": "spk002-0068",
-      "title": "ন্যায়বিচার ও ক্ষমার ভারসাম্য",
-      "categoryIds": ["quran-tafsir"],
-      "media": { "type": "youtube", "videoId": "jplyp80Czps", "startSec": 0 },
-      "durationSec": 1391,
-      "publishedAt": "2026-09-14",
-      "addedAt": "2026-11-08"
-    },
-    {
       "id": "spk002-0069",
       "title": "সি আর বি চট্টগ্রাম সিরাত প্রোগ্রাম ২০২৬",
       "categoryIds": ["seerah"],
@@ -452,15 +272,6 @@
       "media": { "type": "youtube", "videoId": "CdWIqZ2zNFE", "startSec": 0 },
       "durationSec": 982,
       "publishedAt": "2026-09-22",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk002-0072",
-      "title": "শাইখ জসিমুদ্দীন রহমানি সম্পর্কে",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "gT6DJGfNqD8", "startSec": 0 },
-      "durationSec": 1288,
-      "publishedAt": "2026-09-25",
       "addedAt": "2026-11-08"
     },
     {
@@ -488,15 +299,6 @@
       "media": { "type": "youtube", "videoId": "WeqMVcf5-UI", "startSec": 0 },
       "durationSec": 3423,
       "publishedAt": "2026-10-08",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk002-0080",
-      "title": "সম্পত্তি হস্তান্তর আইন নিয়ে দালিলিক আলোচনা",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "oROMgEYIVww", "startSec": 0 },
-      "durationSec": 1210,
-      "publishedAt": "2026-10-13",
       "addedAt": "2026-11-08"
     },
     {
@@ -533,15 +335,6 @@
       "media": { "type": "youtube", "videoId": "2vG3TsOj1-0", "startSec": 0 },
       "durationSec": 2797,
       "publishedAt": "2026-10-25",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk002-0095",
-      "title": "আল্লাহ মানুষকে অতিরিক্ত জ্ঞান দিয়েছেন",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "rU1ToKqEvrM", "startSec": 0 },
-      "durationSec": 3968,
-      "publishedAt": "2026-10-29",
       "addedAt": "2026-11-08"
     },
     {

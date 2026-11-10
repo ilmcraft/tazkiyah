@@ -17,6 +17,24 @@
           "handle": "@jakariamasudofficial",
           "name": "Jakaria Masud Official",
           "official": true
+        },
+        {
+          "id": "UCyxC4e499ZU1sUZkK9GU66w",
+          "handle": "@sabiqun_narrative",
+          "name": "THE SABIQUN NARRATIVE",
+          "official": false
+        },
+        {
+          "id": "UC6VgwUiyAiDxD2IAR3bCNwQ",
+          "handle": "@sondiponprokashon",
+          "name": "Sondipon Prokashon",
+          "official": false
+        },
+        {
+          "id": "UCbpkSJtQ6yXkCuW358RTzdA",
+          "handle": "@MuftiMediaBangla",
+          "name": "Mufti Media",
+          "official": false
         }
       ],
       "playlists": [],
@@ -53,7 +71,26 @@
     },
     {
       "speakerId": "speaker-002",
-      "channels": [],
+      "channels": [
+        {
+          "id": "UCPijCgB0BaR6VbM_p5deojw",
+          "handle": "@AlQuranerDars1",
+          "name": "Al Quraner Dars - আল কুরআনের দারস",
+          "official": false
+        },
+        {
+          "id": "UC5tWuwzLfPlZA915Qie1Eww",
+          "handle": "@MashwaraOfficial",
+          "name": "Mashwara Official",
+          "official": false
+        },
+        {
+          "id": "UCOFLiblcMvfPLW4anRWWcxQ",
+          "handle": "@DawahMovementBD",
+          "name": "Dawah Movement",
+          "official": false
+        }
+      ],
       "playlists": [
         {
           "id": "PLgdxQlGUmz8qoBMLt2jMN0AQF22vUs0ju",
@@ -111,6 +148,28 @@
           "id": "UCxqJPPSAal9vHvvwdHInpvA",
           "handle": "@seanpublicationltd",
           "name": "SEAN Publication",
+          "official": false
+        },
+        {
+          "id": "UCyxC4e499ZU1sUZkK9GU66w",
+          "handle": "@sabiqun_narrative",
+          "name": "THE SABIQUN NARRATIVE",
+          "official": false
+        },
+        {
+          "id": "UC5jQVTnx1-RT9JiaqBCdeCQ",
+          "name": "Voice of Deen দ্বীনের কণ্ঠস্বর",
+          "official": false
+        },
+        {
+          "id": "UCC9_TTBWgfvMZ8Qt_8vbEjg",
+          "name": "ইনকিলাব",
+          "official": false
+        },
+        {
+          "id": "UCKDfhL-B-OKYq8sHbXfIDCg",
+          "handle": "@BongoRevolt",
+          "name": "Bongo Revolt",
           "official": false
         }
       ],
@@ -201,6 +260,114 @@
           "id": "UC5tWuwzLfPlZA915Qie1Eww",
           "handle": "@MashwaraOfficial",
           "name": "Mashwara Official",
+          "official": false
+        },
+        {
+          "id": "UC_g6PTZKnKkRzm_YHemaOHg",
+          "handle": "@ghoroyakabbo20",
+          "name": "ঘরোয়া  কাব্য  ২০",
+          "official": false
+        },
+        {
+          "id": "UCyxC4e499ZU1sUZkK9GU66w",
+          "handle": "@sabiqun_narrative",
+          "name": "THE SABIQUN NARRATIVE",
+          "official": false
+        },
+        {
+          "id": "UCPifJ4g5D-n3RUPeVMlCXSQ",
+          "handle": "@mahshihab",
+          "name": "The Chaotic Paradox",
+          "official": false
+        },
+        {
+          "id": "UCJ_ic0FoKi2h6Pnw7KZVLjg",
+          "handle": "@Sukoon4M",
+          "name": "Sukoon",
+          "official": false
+        },
+        {
+          "id": "UCHOPQpxRV0esIJ0UrniZ7CQ",
+          "handle": "@themuslimmindsbd",
+          "name": "The Muslim Minds",
+          "official": false
+        },
+        {
+          "id": "UCWYmKYDfHGG5gX-55pzjJNQ",
+          "handle": "@HolyTv26",
+          "name": "Holy Tv",
+          "official": false
+        },
+        {
+          "id": "UCI3VYHsStlusINO2x7JJL5w",
+          "handle": "@OneUmmahMinds",
+          "name": "One Ummah Minds",
+          "official": false
+        },
+        {
+          "id": "UC_yOCi9oIJOupuYiI2-l_Ig",
+          "handle": "@KNOWISLAM617",
+          "name": "KNOW ISLAM",
+          "official": false
+        },
+        {
+          "id": "UCgWCu8Pb_PGVEgEQc6OHjzQ",
+          "handle": "@islamzonebd",
+          "name": "Islam Zone",
+          "official": false
+        },
+        {
+          "id": "UC5ykqscfZngeqpxAhj5j5rg",
+          "handle": "@cottageofislamofficial-2022",
+          "name": "Cottage of Islam Official",
+          "official": false
+        },
+        {
+          "id": "UCPo33VrhuGGEW6EJuEsA9aQ",
+          "handle": "@LeadofIslamictv",
+          "name": "Lead of Islamic tv",
+          "official": false
+        },
+        {
+          "id": "UCpW1TOBo7CBeoI7vlWkXMew",
+          "handle": "@muhsineen011",
+          "name": "Muhsineen",
+          "official": false
+        },
+        {
+          "id": "UC0RHlDLFKyRLkQh5YHho0YQ",
+          "handle": "@muslimummah17",
+          "name": "Muslim Ummah মুসলিম উম্মাহ",
+          "official": false
+        },
+        {
+          "id": "UCGEgErVpE-zQBk8oO68iYEA",
+          "handle": "@SaltanatYouth",
+          "name": "Saltanat Youth",
+          "official": false
+        },
+        {
+          "id": "UCxqJPPSAal9vHvvwdHInpvA",
+          "handle": "@seanpublicationltd",
+          "name": "SEAN Publication",
+          "official": false
+        },
+        {
+          "id": "UCHhLm43wqsEoqSYlndE0qYA",
+          "handle": "@missionislamofficial",
+          "name": "Mission Islam | মিশন ইসলাম",
+          "official": false
+        },
+        {
+          "id": "UCpKLsOiTA9c9eDmgIYdYPwA",
+          "handle": "@p2a",
+          "name": "P2A",
+          "official": false
+        },
+        {
+          "id": "UCUzSLPxiHmB-RI3EpDosamw",
+          "handle": "@muslimbongo70",
+          "name": "Muslim Bongo Foundation",
           "official": false
         }
       ],

@@ -2,9 +2,10 @@
   "speakerId": "speaker-001",
   "videos": {
     "-YP1Ztn7hrg": {
-      "status": "proposed",
-      "date": "2026-11-08",
-      "lectureId": "spk001-0064"
+      "status": "rejected",
+      "date": "2026-11-10",
+      "lectureId": "spk001-0064",
+      "note": "চ্যানেল তালিকায় নেই: Voice of Deen দ্বীনের কণ্ঠস্বর"
     },
     "0EFB08_Ji9M": {
       "status": "proposed",
@@ -17,9 +18,10 @@
       "note": "সম্ভবত একই নামের অন্য বক্তা (মুফতি জাকারিয়া)"
     },
     "6WVJMcbuRRo": {
-      "status": "proposed",
-      "date": "2026-11-08",
-      "lectureId": "spk001-0080"
+      "status": "rejected",
+      "date": "2026-11-10",
+      "lectureId": "spk001-0080",
+      "note": "চ্যানেল তালিকায় নেই: Sunnah Flow"
     },
     "6Zm0EsGvaHU": {
       "status": "proposed",
@@ -132,9 +134,10 @@
       "lectureId": "spk001-0061"
     },
     "K1W41kS2Kzw": {
-      "status": "proposed",
-      "date": "2026-11-08",
-      "lectureId": "spk001-0081"
+      "status": "rejected",
+      "date": "2026-11-10",
+      "lectureId": "spk001-0081",
+      "note": "চ্যানেল তালিকায় নেই: IN THE QALB"
     },
     "KRROI6JWLpo": {
       "status": "proposed",
@@ -227,9 +230,10 @@
       "note": "রি-কাট/হাইপ শিরোনাম"
     },
     "_-YLngHJ0Tw": {
-      "status": "proposed",
-      "date": "2026-11-08",
-      "lectureId": "spk001-0019"
+      "status": "rejected",
+      "date": "2026-11-10",
+      "lectureId": "spk001-0019",
+      "note": "চ্যানেল তালিকায় নেই: Waz Media Point"
     },
     "bPOR8oDgSbc": {
       "status": "proposed",
@@ -262,9 +266,10 @@
       "lectureId": "spk001-0062"
     },
     "gNmREIx9zVs": {
-      "status": "proposed",
-      "date": "2026-11-08",
-      "lectureId": "spk001-0054"
+      "status": "rejected",
+      "date": "2026-11-10",
+      "lectureId": "spk001-0054",
+      "note": "চ্যানেল তালিকায় নেই: Islamick seerat"
     },
     "gOj93NHgbKA": {
       "status": "duplicate",
@@ -292,9 +297,10 @@
       "note": "oEmbed দুবার ব্যর্থ — এমবেড বন্ধ, মুছে ফেলা বা প্রাইভেট; অ্যাপের প্লেয়ারে চলবে না"
     },
     "hmLXnIV12Uo": {
-      "status": "proposed",
-      "date": "2026-11-08",
-      "lectureId": "spk001-0059"
+      "status": "rejected",
+      "date": "2026-11-10",
+      "lectureId": "spk001-0059",
+      "note": "চ্যানেল তালিকায় নেই: Justice Self"
     },
     "jDtEOGeA3yk": {
       "status": "proposed",
@@ -302,9 +308,10 @@
       "lectureId": "spk001-0014"
     },
     "jIBL4SCm4YI": {
-      "status": "proposed",
-      "date": "2026-11-08",
-      "lectureId": "spk001-0009"
+      "status": "rejected",
+      "date": "2026-11-10",
+      "lectureId": "spk001-0009",
+      "note": "চ্যানেল তালিকায় নেই: Kathgolap Record And Films"
     },
     "jPxl9kJmC74": {
       "status": "rejected",
@@ -322,9 +329,10 @@
       "note": "ক্লিপ: 13 মিনিট"
     },
     "l1cSeIRxvqQ": {
-      "status": "proposed",
-      "date": "2026-11-08",
-      "lectureId": "spk001-0051"
+      "status": "rejected",
+      "date": "2026-11-10",
+      "lectureId": "spk001-0051",
+      "note": "চ্যানেল তালিকায় নেই: Islamick seerat"
     },
     "lgv7ypmPtGU": {
       "status": "duplicate",
@@ -362,9 +370,10 @@
       "note": "একই কারণ"
     },
     "o81w2SSGvl0": {
-      "status": "proposed",
-      "date": "2026-11-08",
-      "lectureId": "spk001-0073"
+      "status": "rejected",
+      "date": "2026-11-10",
+      "lectureId": "spk001-0073",
+      "note": "চ্যানেল তালিকায় নেই: Islamic Vibe's"
     },
     "oM1LsTM13Go": {
       "status": "proposed",
@@ -372,9 +381,10 @@
       "lectureId": "spk001-0032"
     },
     "oxgoPBsxD30": {
-      "status": "proposed",
-      "date": "2026-11-08",
-      "lectureId": "spk001-0010"
+      "status": "rejected",
+      "date": "2026-11-10",
+      "lectureId": "spk001-0010",
+      "note": "চ্যানেল তালিকায় নেই: The Muslim Minds"
     },
     "pJvp-SgkCdg": {
       "status": "rejected",
@@ -392,9 +402,10 @@
       "note": "একই লেকচার: t5QeXzB9UpM"
     },
     "rlPFFr8zw4M": {
-      "status": "proposed",
-      "date": "2026-11-08",
-      "lectureId": "spk001-0018"
+      "status": "rejected",
+      "date": "2026-11-10",
+      "lectureId": "spk001-0018",
+      "note": "চ্যানেল তালিকায় নেই: Waz Media Point"
     },
     "svmcdX0vd6c": {
       "status": "duplicate",
@@ -402,9 +413,10 @@
       "note": "একই লেকচার: KRROI6JWLpo"
     },
     "syb8bdLz0BY": {
-      "status": "proposed",
-      "date": "2026-11-08",
-      "lectureId": "spk001-0040"
+      "status": "rejected",
+      "date": "2026-11-10",
+      "lectureId": "spk001-0040",
+      "note": "চ্যানেল তালিকায় নেই: AIF - Al Ihsan Foundation"
     },
     "t5QeXzB9UpM": {
       "status": "rejected",
@@ -412,9 +424,10 @@
       "note": "সম্ভবত spk001-0077-এর কাটা অংশ"
     },
     "tdl0ULiFsn4": {
-      "status": "proposed",
-      "date": "2026-11-08",
-      "lectureId": "spk001-0077"
+      "status": "rejected",
+      "date": "2026-11-10",
+      "lectureId": "spk001-0077",
+      "note": "চ্যানেল তালিকায় নেই: Muhsineen"
     },
     "tp7uUtjL8t0": {
       "status": "proposed",

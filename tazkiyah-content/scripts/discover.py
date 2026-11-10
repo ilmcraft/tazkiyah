@@ -502,7 +502,8 @@ def discover(
     added, duplicates = mark_duplicates(accepted, existing)
 
     added.sort(key=lambda x: (x.published or "9999", x.video_id))
-    all_ids = [lec.get("id") for _, lec in lectures]
+    # Ids of lectures that were removed again stay in `seen`: never hand one out a second time.
+    all_ids = [lec.get("id") for _, lec in lectures] + [v.get("lectureId") for v in seen["videos"].values()]
     for c in added:
         c.lecture_id = next_lecture_id(speaker_id, all_ids)
         all_ids.append(c.lecture_id)

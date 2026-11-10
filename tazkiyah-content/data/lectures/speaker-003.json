@@ -226,66 +226,12 @@
       "addedAt": "2026-11-08"
     },
     {
-      "id": "spk003-0031",
-      "title": "ইনসাফের আড্ডা: পড়াশোনা, রাজনীতি, দেশ-বিদেশ ও বিপ্লব",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "i3FmONhAnRI", "startSec": 0 },
-      "durationSec": 5445,
-      "publishedAt": "2025-04-11",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk003-0033",
-      "title": "প্রজন্মের চিন্তার বিনির্মাণ",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "ZF1COhVsNVI", "startSec": 0 },
-      "durationSec": 1610,
-      "publishedAt": "2025-05-18",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk003-0035",
-      "title": "শিক্ষা ব্যবস্থায় সাম্রাজ্যবাদ",
-      "categoryIds": ["aqidah"],
-      "media": { "type": "youtube", "videoId": "ROrElFBpnw4", "startSec": 0 },
-      "durationSec": 3265,
-      "publishedAt": "2025-05-28",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk003-0037",
-      "title": "কুরবানী নিয়ে গুরুত্বপূর্ণ কিছু প্রশ্নোত্তর",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "a9xN5ZXKvtA", "startSec": 0 },
-      "durationSec": 1252,
-      "publishedAt": "2025-06-11",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk003-0039",
-      "title": "সভ্যতার উত্থান ও পতন",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "x-_BtKPygtA", "startSec": 0 },
-      "durationSec": 3751,
-      "publishedAt": "2025-07-17",
-      "addedAt": "2026-11-08"
-    },
-    {
       "id": "spk003-0042",
       "title": "জীবনের উদ্দেশ্য কী?",
       "categoryIds": ["seerah"],
       "media": { "type": "youtube", "videoId": "A6o7EEc2eG8", "startSec": 0 },
       "durationSec": 3159,
       "publishedAt": "2025-08-29",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk003-0043",
-      "title": "মৃত্যু ও আখিরাত",
-      "categoryIds": ["akhirah", "dawah"],
-      "media": { "type": "youtube", "videoId": "xY1eAYullIw", "startSec": 0 },
-      "durationSec": 3119,
-      "publishedAt": "2025-09-12",
       "addedAt": "2026-11-08"
     },
     {
@@ -298,102 +244,12 @@
       "addedAt": "2026-11-08"
     },
     {
-      "id": "spk003-0046",
-      "title": "সেক্যুলারিজম বা ধর্মনিরপেক্ষতাবাদের ইতিহাস ও বাস্তবতা",
-      "categoryIds": ["history"],
-      "media": { "type": "youtube", "videoId": "Qk8Kuy5HAww", "startSec": 0 },
-      "durationSec": 5679,
-      "publishedAt": "2025-12-04",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk003-0047",
-      "title": "পাঠ্যপুস্তক ও সাংস্কৃতিক জমিদারি",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "Vj3ADBdhgg8", "startSec": 0 },
-      "durationSec": 5470,
-      "publishedAt": "2025-12-06",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk003-0048",
-      "title": "ফুটনোট: মুসলিমবঙ্গ — ইরফান সাদিকের সাথে আলাপ",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "T-FYF71Q9nU", "startSec": 0 },
-      "durationSec": 1462,
-      "publishedAt": "2026-04-07",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk003-0049",
-      "title": "ভবিষ্যৎ প্রজন্মের জন্য নিরাপদ ভূখণ্ড: আদর্শিক উত্তরণই কেন একমাত্র পথ?",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "Way-5bbq0Zo", "startSec": 0 },
-      "durationSec": 5209,
-      "publishedAt": "2026-05-03",
-      "addedAt": "2026-11-08"
-    },
-    {
       "id": "spk003-0050",
       "title": "২০৫৬ সালের বাংলাদেশ: আমাদের সামনে কি ভয়াবহ সংকট অপেক্ষা করছে?",
       "categoryIds": ["contemporary"],
       "media": { "type": "youtube", "videoId": "yjgL7_-4lHk", "startSec": 0 },
       "durationSec": 5247,
       "publishedAt": "2026-05-09",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk003-0051",
-      "title": "গ্রন্থালোচনা: মুসলিমবঙ্গ",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "y-FDrYO4PyY", "startSec": 0 },
-      "durationSec": 5701,
-      "publishedAt": "2026-05-11",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk003-0052",
-      "title": "মানুষের যে শূন্যতা কখনোই পূরণ হয় না",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "1mTCqBzvq3Y", "startSec": 0 },
-      "durationSec": 1859,
-      "publishedAt": "2026-05-27",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk003-0055",
-      "title": "বাংলাদেশের ভূ-রাজনৈতিক সংকট এবং হিন্দুত্ববাদের আগ্রাসন",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "oNwjFSlwnyE", "startSec": 0 },
-      "durationSec": 3921,
-      "publishedAt": "2026-06-21",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk003-0057",
-      "title": "হে পথিক, তুমি কোন পথে হাঁটছ?",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "Z8uK9U6xYfc", "startSec": 0 },
-      "durationSec": 1994,
-      "publishedAt": "2026-07-09",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk003-0061",
-      "title": "১৯৭১ সালের ইতিহাস নিয়ে গুরুত্বপূর্ণ আলোচনা",
-      "categoryIds": ["history"],
-      "media": { "type": "youtube", "videoId": "L6Ep6TnC9hA", "startSec": 0 },
-      "durationSec": 3945,
-      "publishedAt": "2026-07-19",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk003-0076",
-      "title": "ট্রান্সহিউম্যানিজম, মডার্নিটি ও ইসলাম (ঢাকা বিশ্ববিদ্যালয়)",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "hZPfiDzezyk", "startSec": 0 },
-      "durationSec": 2380,
-      "publishedAt": "2026-08-23",
       "addedAt": "2026-11-08"
     },
     {
@@ -421,15 +277,6 @@
       "media": { "type": "youtube", "videoId": "DeqzfQjar84", "startSec": 0 },
       "durationSec": 6512,
       "publishedAt": "2026-09-14",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk003-0081",
-      "title": "দ্বীন কায়েমের দায়িত্ব কাদের?",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "SlqZcVt6Mjw", "startSec": 0 },
-      "durationSec": 4274,
-      "publishedAt": "2026-09-16",
       "addedAt": "2026-11-08"
     },
     {
@@ -505,30 +352,12 @@
       "addedAt": "2026-11-08"
     },
     {
-      "id": "spk003-0099",
-      "title": "ওয়ার্ল্ডভিউয়ের লড়াই: ইসলাম ও আধুনিকতা",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "9n-7cqmMa-Q", "startSec": 0 },
-      "durationSec": 2833,
-      "publishedAt": "2026-10-15",
-      "addedAt": "2026-11-08"
-    },
-    {
       "id": "spk003-0101",
       "title": "আধুনিক রাষ্ট্র পরিচালনার প্রাতিষ্ঠানিক ভিত্তি",
       "categoryIds": ["contemporary"],
       "media": { "type": "youtube", "videoId": "qhfpkQAq5NE", "startSec": 0 },
       "durationSec": 1551,
       "publishedAt": "2026-10-16",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk003-0105",
-      "title": "সেক্যুলার ব্যবস্থা কি সত্যিই নিরপেক্ষ? (পর্ব ১)",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "B24nhyTpcJc", "startSec": 0 },
-      "durationSec": 1172,
-      "publishedAt": "2026-10-20",
       "addedAt": "2026-11-08"
     },
     {
@@ -550,39 +379,12 @@
       "addedAt": "2026-11-08"
     },
     {
-      "id": "spk003-0111",
-      "title": "বাংলাদেশ গণপ্রজাতন্ত্রী হওয়ার ইতিহাস",
-      "categoryIds": ["history"],
-      "media": { "type": "youtube", "videoId": "Kzz578V-Gcw", "startSec": 0 },
-      "durationSec": 1878,
-      "publishedAt": "2026-10-31",
-      "addedAt": "2026-11-08"
-    },
-    {
       "id": "spk003-0112",
       "title": "ইসলাম ধর্ম নাকি দ্বীন?",
       "categoryIds": ["contemporary"],
       "media": { "type": "youtube", "videoId": "c10pakSg9yE", "startSec": 0 },
       "durationSec": 1303,
       "publishedAt": "2026-10-31",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk003-0113",
-      "title": "কাবা শরীফের সামনে বসে কারা দোয়া করেছিলেন?",
-      "categoryIds": ["dua-dhikr"],
-      "media": { "type": "youtube", "videoId": "rH8GmDLz1fs", "startSec": 0 },
-      "durationSec": 1316,
-      "publishedAt": "2026-10-31",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk003-0116",
-      "title": "মানচিত্রের আড়ালে লুকানো ক্ষমতার রাজনীতি",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "5IH4z2O7KpU", "startSec": 0 },
-      "durationSec": 2841,
-      "publishedAt": "2026-11-03",
       "addedAt": "2026-11-08"
     },
     {
