@@ -926,6 +926,11 @@
       "date": "2026-11-08",
       "lectureId": "spk005-0276"
     },
+    "NXZJ8uU9BL4": {
+      "status": "duplicate",
+      "date": "2026-11-09",
+      "note": "একই লেকচার: spk005-0145"
+    },
     "NXyjo-3pLIs": {
       "status": "duplicate",
       "date": "2026-11-08",
@@ -1096,6 +1101,11 @@
       "date": "2026-11-08",
       "note": "একই লেকচার: 8TXbvbUlejo"
     },
+    "Rhdf2HjPdeE": {
+      "status": "proposed",
+      "date": "2026-11-09",
+      "lectureId": "spk005-0388"
+    },
     "RmVbVYeQr4o": {
       "status": "proposed",
       "date": "2026-11-08",
@@ -1165,6 +1175,11 @@
       "status": "proposed",
       "date": "2026-11-08",
       "lectureId": "spk005-0226"
+    },
+    "TiaRojm8vFo": {
+      "status": "duplicate",
+      "date": "2026-11-09",
+      "note": "একই লেকচার: spk005-0115"
     },
     "TszurIW5P2s": {
       "status": "proposed",
@@ -1296,6 +1311,11 @@
       "date": "2026-11-08",
       "lectureId": "spk005-0349"
     },
+    "Wfqwx_OJMDk": {
+      "status": "proposed",
+      "date": "2026-11-09",
+      "lectureId": "spk005-0386"
+    },
     "Wna9b9n5AZA": {
       "status": "proposed",
       "date": "2026-11-08",
@@ -1376,6 +1396,11 @@
       "date": "2026-11-08",
       "lectureId": "spk005-0362"
     },
+    "Z5N3q9H5Gag": {
+      "status": "proposed",
+      "date": "2026-11-09",
+      "lectureId": "spk005-0387"
+    },
     "ZCT0q9f0z5E": {
       "status": "proposed",
       "date": "2026-11-08",
@@ -1455,6 +1480,11 @@
       "status": "duplicate",
       "date": "2026-11-08",
       "note": "একই লেকচার: esuw7afEcbA"
+    },
+    "aCoKgVDHeiw": {
+      "status": "duplicate",
+      "date": "2026-11-09",
+      "note": "একই লেকচার: Z5N3q9H5Gag"
     },
     "aVRJQR0_QeA": {
       "status": "proposed",
@@ -1550,6 +1580,11 @@
       "status": "duplicate",
       "date": "2026-11-08",
       "note": "একই লেকচার: BBQ5i-uoUAs"
+    },
+    "c8c50vU4kgw": {
+      "status": "proposed",
+      "date": "2026-11-09",
+      "lectureId": "spk005-0385"
     },
     "cFGrUf3Ym9E": {
       "status": "proposed",
@@ -1985,6 +2020,11 @@
       "status": "proposed",
       "date": "2026-11-08",
       "lectureId": "spk005-0090"
+    },
+    "oHWGDPM5GEc": {
+      "status": "proposed",
+      "date": "2026-11-09",
+      "lectureId": "spk005-0389"
     },
     "oZHD-P5saCU": {
       "status": "proposed",

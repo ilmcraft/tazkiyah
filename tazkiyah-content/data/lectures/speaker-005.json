@@ -3488,6 +3488,51 @@
       "durationSec": 2144,
       "publishedAt": "2026-11-06",
       "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk005-0385",
+      "title": "ইসলামী শরীয়া প্রতিষ্ঠার গুরুত্ব ও পদ্ধতি। সীরাত কনফারেন্স",
+      "categoryIds": ["seerah"],
+      "media": { "type": "youtube", "videoId": "c8c50vU4kgw", "startSec": 0 },
+      "durationSec": 1252,
+      "publishedAt": "2024-03-05",
+      "addedAt": "2026-11-09"
+    },
+    {
+      "id": "spk005-0386",
+      "title": "কঠিন কথা বললেন ডাক্তার",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "Wfqwx_OJMDk", "startSec": 0 },
+      "durationSec": 2439,
+      "publishedAt": "2024-10-04",
+      "addedAt": "2026-11-09"
+    },
+    {
+      "id": "spk005-0387",
+      "title": "মুমিনের ক্যারিয়ার ভাবনা",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "Z5N3q9H5Gag", "startSec": 0 },
+      "durationSec": 5920,
+      "publishedAt": "2024-12-03",
+      "addedAt": "2026-11-09"
+    },
+    {
+      "id": "spk005-0388",
+      "title": "UNPROTECTED-- আনপ্রোটেক্টেড",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "Rhdf2HjPdeE", "startSec": 0 },
+      "durationSec": 1280,
+      "publishedAt": "2025-01-16",
+      "addedAt": "2026-11-09"
+    },
+    {
+      "id": "spk005-0389",
+      "title": "লাঞ্ছনার শতাব্দী এবং বিজয়ের শতাব্দী",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "oHWGDPM5GEc", "startSec": 0 },
+      "durationSec": 2987,
+      "publishedAt": "2025-01-22",
+      "addedAt": "2026-11-09"
     }
   ]
 }
