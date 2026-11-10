@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "minAppVersionCode": 1,
-  "dataVersion": 9,
-  "updatedAt": "2026-11-10T09:27:41Z",
-  "changelog": "লেকচারের তালিকা হালনাগাদ হয়েছে",
+  "dataVersion": 10,
+  "updatedAt": "2026-11-10T10:37:18Z",
+  "changelog": "নতুন লেকচার: জাকারিয়া মাসুদ (৫টি), মুফতি হারুন ইজহার (৮টি), আসিফ আদনান (৩৮টি), ডা. শামসুল আরেফীন শক্তি (১৫টি)",
   "files": [
     {
       "path": "data/speakers.json",
@@ -17,21 +17,21 @@
     },
     {
       "path": "data/lectures/speaker-001.json",
-      "sha256": "498f58ef4363100f2d3d1dffa58cdbc157d99e5fef4a9de3ca5ebb35f80f6c4c",
-      "size": 16474,
-      "lectures": 36
+      "sha256": "c9e106bbe58393f30baf78f2045e9337a9cefb5e7a0430b2c938552b3341d83c",
+      "size": 18265,
+      "lectures": 41
     },
     {
       "path": "data/lectures/speaker-002.json",
-      "sha256": "aa2e737fca2b4c8075585e48840d02ba5bccef31e44c1a6c58fc66c226b65ff3",
-      "size": 15028,
-      "lectures": 37
+      "sha256": "a80ed9de36a18463d00e1b0a3d1a5d51ac2f40eaae13812ceb5247ff03830bc3",
+      "size": 18102,
+      "lectures": 45
     },
     {
       "path": "data/lectures/speaker-003.json",
-      "sha256": "a019ee550cac69a2bbdca74dd48df66041b34f93e287aa3f3df2011af5a1ca50",
-      "size": 18810,
-      "lectures": 41
+      "sha256": "bee745f469ef811a6d2bdbff5e9628f5a4cc35252529269640151c3bd14ffe34",
+      "size": 33121,
+      "lectures": 79
     },
     {
       "path": "data/lectures/speaker-004.json",
@@ -41,9 +41,9 @@
     },
     {
       "path": "data/lectures/speaker-005.json",
-      "sha256": "fefe05bf1a4969f0a3eb7953c735e87af5d879a2f5226a6bd24c19ce1b84159f",
-      "size": 94020,
-      "lectures": 245
+      "sha256": "afe9c1e598925a64d29f7ded4b860ee5bc275d965e7db9ad6e27ca246f25511d",
+      "size": 99507,
+      "lectures": 260
     }
   ]
 }
