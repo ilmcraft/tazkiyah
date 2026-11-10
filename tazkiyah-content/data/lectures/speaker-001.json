@@ -459,24 +459,6 @@
       "addedAt": "2026-11-08"
     },
     {
-      "id": "spk001-0082",
-      "title": "Ringku Live Stream",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "Z3IJ0yuCC6o", "startSec": 0 },
-      "durationSec": 1573,
-      "publishedAt": "2016-04-11",
-      "addedAt": "2026-11-10"
-    },
-    {
-      "id": "spk001-0083",
-      "title": "পান্ডে VS ছাত্র সংসদ স্পোর্টিং ক্লাব",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "bI0DtKPhJ-0", "startSec": 0 },
-      "durationSec": 946,
-      "publishedAt": "2020-09-20",
-      "addedAt": "2026-11-10"
-    },
-    {
       "id": "spk001-0084",
       "title": "থার্টি ফার্স্ট নাইটে প্রাণ জুরানো বয়ান",
       "categoryIds": ["contemporary"],
