@@ -730,3 +730,20 @@ def test_id_of_a_removed_lecture_is_not_reused(content):
         videos={"OFFICIALTK1": item("OFFICIALTK1", "তাওবার শর্ত", channel_id=OFFICIAL)},
     )
     assert [c.lecture_id for c in run(content, fake).added] == ["spk001-0010"]
+
+
+def test_series_parts_keep_their_number_when_cleaning_drops_it(content):
+    assert discover.with_part("পাশ্চাত্যবাদ", "পর্ব: ০৪ | পাশ্চাত্যবাদ | প্রথম বক্তা") == "পাশ্চাত্যবাদ — পর্ব ৪"
+    assert discover.with_part("তুলনামূলক পর্যালোচনাঃ পর্ব", "তুলনামূলক পর্যালোচনাঃ পর্ব - ০২ || প্রথম বক্তা") == "তুলনামূলক পর্যালোচনা — পর্ব ২"
+    assert discover.with_part("সীরাত পর্ব ১", "সীরাত পর্ব ১ | প্রথম বক্তা") == "সীরাত পর্ব ১"
+    assert discover.with_part("সবর", "সবর | প্রথম বক্তা") == "সবর"
+    fake = FakeClient(
+        searches={"প্রথম বক্তা": [["SERIESPART4", "SERIESPART5"]]},
+        videos={
+            "SERIESPART4": item("SERIESPART4", "পর্ব: ০৪ | পাশ্চাত্যবাদ ও চিন্তাবিনির্মাণ | প্রথম বক্তা", duration="PT37M44S"),
+            "SERIESPART5": item("SERIESPART5", "পর্ব: ০৫ | পাশ্চাত্যবাদ ও চিন্তাবিনির্মাণ | প্রথম বক্তা", duration="PT36M37S"),
+        },
+    )
+    result = run(content, fake)
+    assert [c.app_title for c in result.added] == ["পাশ্চাত্যবাদ ও চিন্তাবিনির্মাণ — পর্ব ৪", "পাশ্চাত্যবাদ ও চিন্তাবিনির্মাণ — পর্ব ৫"]
+    assert result.duplicates == []

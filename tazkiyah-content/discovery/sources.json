@@ -359,12 +359,6 @@
           "official": false
         },
         {
-          "id": "UCpKLsOiTA9c9eDmgIYdYPwA",
-          "handle": "@p2a",
-          "name": "P2A",
-          "official": false
-        },
-        {
           "id": "UCUzSLPxiHmB-RI3EpDosamw",
           "handle": "@muslimbongo70",
           "name": "Muslim Bongo Foundation",
@@ -386,6 +380,9 @@
         "আরেফিন শক্তি",
         "shamsul arefin",
         "arefin shakti"
+      ],
+      "excludeChannels": [
+        "UCpKLsOiTA9c9eDmgIYdYPwA"
       ],
       "exclude": [
         "আরেফিন সিদ্দিক",

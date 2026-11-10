@@ -1681,30 +1681,12 @@
       "addedAt": "2026-11-08"
     },
     {
-      "id": "spk005-0303",
-      "title": "Histology For Special BCS",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "Zyn0fCW2Auo", "startSec": 0 },
-      "durationSec": 9347,
-      "publishedAt": "2026-06-19",
-      "addedAt": "2026-11-08"
-    },
-    {
       "id": "spk005-0305",
       "title": "গণতন্ত্রের একাডেমিক সমালোচনা (পর্ব:১)",
       "categoryIds": ["contemporary"],
       "media": { "type": "youtube", "videoId": "23tkGTLo4J0", "startSec": 0 },
       "durationSec": 2298,
       "publishedAt": "2026-06-20",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk005-0307",
-      "title": "CVS & Respiratory Physiology Preparation For Special BCS",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "vufYS9rvTKA", "startSec": 0 },
-      "durationSec": 8168,
-      "publishedAt": "2026-06-21",
       "addedAt": "2026-11-08"
     },
     {
@@ -1732,15 +1714,6 @@
       "media": { "type": "youtube", "videoId": "EPoaXrDlMvg", "startSec": 0 },
       "durationSec": 3816,
       "publishedAt": "2026-06-30",
-      "addedAt": "2026-11-08"
-    },
-    {
-      "id": "spk005-0314",
-      "title": "Special BCS Orientation Class",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "zMs-xn9Gb6E", "startSec": 0 },
-      "durationSec": 4174,
-      "publishedAt": "2026-07-07",
       "addedAt": "2026-11-08"
     },
     {

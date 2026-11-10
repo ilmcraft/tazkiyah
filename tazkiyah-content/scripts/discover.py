@@ -303,6 +303,18 @@ def classify(c: Candidate, item: dict[str, Any] | None, config: dict[str, Any], 
         c.flags.append("ক্লিপ হতে পারে (১৫ মিনিটের কম)")
 
 
+_TRAILING_PART_WORD = re.compile(r"[\s:ঃ|\-–—]*(?:পর্ব|পার্ট|part)?[\s:ঃ|\-–—]*$", re.IGNORECASE)
+
+
+def with_part(app_title: str, title: str) -> str:
+    """Keeps a series part in the cleaned title: cleaning can drop a "পর্ব: ০৪ |" segment, which
+    would leave every part of a series with the same title (and looking like re-uploads)."""
+    part = part_number(title)
+    if part is None or part_number(app_title) is not None:
+        return app_title
+    return f"{_TRAILING_PART_WORD.sub('', app_title)} — পর্ব {bn(part)}"
+
+
 def looks_clickbait(title: str, duration: int) -> bool:
     """A hype or reaction re-cut: a clickbait phrase, or emojis/hype on an upload too short to be a talk."""
     if contains_any(title, CLICKBAIT):
@@ -469,7 +481,7 @@ def discover(
             # channel for a person to look at.
             c.decision = "unlisted-channel" if c.decision == "add" else "no_name"
         if c.decision in {"add", "low-confidence"}:
-            c.app_title = clean_title(c.title, names, c.channel)
+            c.app_title = with_part(clean_title(c.title, names, c.channel), c.title)
             name_only = contains_any(c.app_title, config["mustMatch"]) or (
                 len(c.app_title.split()) < 2 and not re.search("[\u0980-\u09FF]", c.app_title)
             )
