@@ -1133,7 +1133,7 @@
     },
     {
       "id": "spk005-0205",
-      "title": "ইসলামী ও সেক্যুলার আইনঃ তুলনামূলক পর্যালোচনাঃ পর্ব",
+      "title": "ইসলামী ও সেক্যুলার আইনঃ তুলনামূলক পর্যালোচনা — পর্ব ১",
       "categoryIds": ["contemporary"],
       "media": { "type": "youtube", "videoId": "bhrdYFOzjiA", "startSec": 0 },
       "durationSec": 3721,
@@ -2237,6 +2237,141 @@
       "durationSec": 2987,
       "publishedAt": "2025-01-22",
       "addedAt": "2026-11-09"
+    },
+    {
+      "id": "spk005-0391",
+      "title": "ফিতনায় প্রজন্মের করণীয়",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "Qg2tvhBJMIo", "startSec": 0 },
+      "durationSec": 2483,
+      "publishedAt": "2023-08-08",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk005-0392",
+      "title": "আমার সবাই জ্বলছি ঠিকই, কিন্তু সমাধানের কথা কী ভেবেছি?",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "YfA2ObVY-nU", "startSec": 0 },
+      "durationSec": 2264,
+      "publishedAt": "2024-01-15",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk005-0393",
+      "title": "সংশয়বাদ ও নাস্তিকতা নিয়ে তরুণদের মাঝে তথ্যবহুল আলোচনা",
+      "categoryIds": ["youth", "contemporary"],
+      "media": { "type": "youtube", "videoId": "ABtvwQrG56w", "startSec": 0 },
+      "durationSec": 910,
+      "publishedAt": "2024-06-08",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk005-0394",
+      "title": "সমকামিতাঃ বাস্তবতার নিরিখে",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "EM29yXViOIM", "startSec": 0 },
+      "durationSec": 6911,
+      "publishedAt": "2024-06-14",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk005-0395",
+      "title": "পাশ্চাত্যবাদ",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "R_bii3ZI53M", "startSec": 0 },
+      "durationSec": 4533,
+      "publishedAt": "2024-06-18",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk005-0396",
+      "title": "কুরবানি দেখলে কি বাচ্চাদের মানসিক সমস্যা হয়?",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "OiVcNQZAShM", "startSec": 0 },
+      "durationSec": 2947,
+      "publishedAt": "2024-06-19",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk005-0397",
+      "title": "মুসলমানদের কেন ব্যবসা করা উচিত? প্রথম প্রজন্মের মুসলিমদের ব্যবসা কেমন ছিল?",
+      "categoryIds": ["halal-rizq"],
+      "media": { "type": "youtube", "videoId": "b-Kz6MkRvSM", "startSec": 0 },
+      "durationSec": 2374,
+      "publishedAt": "2024-07-12",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk005-0398",
+      "title": "মুমিনের ক্যারিয়ার ভাবনা",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "XKhT8YkylBU", "startSec": 0 },
+      "durationSec": 5920,
+      "publishedAt": "2024-12-05",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk005-0399",
+      "title": "ইসলাম কি আরব সংস্কৃতি? (পডকাস্ট)",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "1ymRgqlKSJw", "startSec": 0 },
+      "durationSec": 1285,
+      "publishedAt": "2024-12-19",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk005-0400",
+      "title": "নারীবাদের ইসলামিকরণ",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "Ghq8n4KWmO4", "startSec": 0 },
+      "durationSec": 6825,
+      "publishedAt": "2024-12-19",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk005-0401",
+      "title": "পরিপূর্ন দাঁড়ি কি জঙ্গল? ডাবল স্ট্যার্ন্ডাড",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "6_9rOzP_1yk", "startSec": 0 },
+      "durationSec": 1033,
+      "publishedAt": "2024-12-23",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk005-0402",
+      "title": "ইসলামী ও সেক্যুলার আইনঃ তুলনামূলক পর্যালোচনা — পর্ব ২",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "jAmAeg-NwVk", "startSec": 0 },
+      "durationSec": 4776,
+      "publishedAt": "2025-05-03",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk005-0403",
+      "title": "সবখানে ধর্ম টেনে আনবেন না",
+      "categoryIds": ["history"],
+      "media": { "type": "youtube", "videoId": "hwwFz9VKyn0", "startSec": 0 },
+      "durationSec": 7102,
+      "publishedAt": "2025-08-21",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk005-0404",
+      "title": "পথিক তুমি পথ হারিয়েছো",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "BTkv67YgOvg", "startSec": 0 },
+      "durationSec": 1546,
+      "publishedAt": "2026-08-30",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk005-0405",
+      "title": "ক্যারিয়ার ডেভেলপমেন্ট",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "2gPyVgnDN1g", "startSec": 0 },
+      "durationSec": 3002,
+      "publishedAt": "2026-09-28",
+      "addedAt": "2026-11-10"
     }
   ]
 }
