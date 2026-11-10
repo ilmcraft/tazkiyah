@@ -1306,9 +1306,9 @@
         <div class="link-label"><label for="magic-link">আপনার লিংক</label>${v.t ? `<span>ভিডিওটি ${clock(v.t)} থেকে শুরু হবে</span>` : ""}</div>
         <div class="link-row">
           <input id="magic-link" class="link-field" type="text" readonly value="${esc(url)}" aria-describedby="magic-help">
-          <button type="button" class="btn accent" data-copy-url="${esc(url)}">${icon("copy")}<span>কপি করুন</span></button>
+          <button type="button" class="btn accent" data-copy-url="${esc(url)}" data-copy-video="${esc(v.id)}">${icon("copy")}<span>কপি করুন</span></button>
         </div>
-        <p class="meta" id="magic-help">লিংকটি যাকে পাঠাবেন, তিনি ভিডিওটি এই সাইটেই দেখবেন।</p>
+        <p class="meta" id="magic-help">ভিডিওর শিরোনামসহ লিংক কপি হবে। যাকে পাঠাবেন, তিনি ভিডিওটি এই সাইটেই দেখবেন।</p>
         <div class="actions-row">
           ${navigator.share ? `<button type="button" class="btn ghost" data-share-video="${esc(v.id)}" data-t="${v.t}">${icon("share")}শেয়ার করুন</button>` : ""}
           <a class="btn ghost" href="${hash}">${icon("play")}খুলে দেখুন</a>
@@ -1420,7 +1420,7 @@
           ${known && v.speaker.name ? `<div class="lecture-by"><p class="meta">ইউটিউব চ্যানেল: ${esc(v.speaker.name)}</p></div>` : ""}
           ${problemNote}
           <div class="actions-row">
-            <button type="button" class="btn ghost" data-copy-url="${esc(url)}">${icon("copy")}<span>লিংক কপি করুন</span></button>
+            <button type="button" class="btn ghost" data-copy-url="${esc(url)}" data-copy-video="${esc(id)}">${icon("copy")}<span>লিংক কপি করুন</span></button>
             ${navigator.share ? `<button type="button" class="btn ghost" data-share-video="${esc(id)}" data-t="${t}">${icon("share")}শেয়ার</button>` : ""}
             <a class="btn ghost" href="#/share">${icon("link")}নিজেও লিংক বানান</a>
           </div>
@@ -1684,9 +1684,13 @@
     const s = catalog && catalog.speakerById.get(id);
     if (s) shareLink(s.name, `${s.name} — তাযকিয়া`, `#/speaker/${id}`);
   }
+  /** A shared video's title once YouTube has sent it, otherwise "". */
+  function videoTitle(id) {
+    const info = id && videoMeta.get(id);
+    return info && info.ok ? info.title : "";
+  }
   function shareVideo(id, t) {
-    const info = videoMeta.get(id);
-    const title = info && info.ok && info.title ? info.title : "ইউটিউব ভিডিও";
+    const title = videoTitle(id) || "ইউটিউব ভিডিও";
     shareLink(title, title, sharedHash(id, t));
   }
   async function shareLink(title, text, hash) {
@@ -1698,15 +1702,19 @@
     copyLink(url);
   }
 
-  /** Copies a link; the button (if any) shows "কপি হয়েছে" for a moment. */
-  async function copyLink(url, button) {
+  /**
+   * Copies a link — with the title on the line above when there is one, so the message shows what the video is
+   * (chat apps only preview the site itself). The button (if any) shows "কপি হয়েছে" for a moment.
+   */
+  async function copyLink(url, button, title) {
+    const text = title ? `${title}\n${url}` : url;
     let ok = false;
     try {
-      await navigator.clipboard.writeText(url);
+      await navigator.clipboard.writeText(text);
       ok = true;
     } catch (e) { // older browsers: copy through a hidden field
       const field = document.createElement("textarea");
-      field.value = url;
+      field.value = text;
       field.setAttribute("readonly", "");
       field.style.cssText = "position:fixed;top:0;left:0;opacity:0";
       document.body.appendChild(field);
@@ -1720,7 +1728,7 @@
       else toast(url);
       return;
     }
-    toast("লিংক কপি হয়েছে");
+    toast(title ? "শিরোনামসহ লিংক কপি হয়েছে" : "লিংক কপি হয়েছে");
     const label = button && $("span", button);
     if (!label) return;
     if (!button.dataset.label) button.dataset.label = label.textContent;
@@ -1740,7 +1748,7 @@
     else if (target.dataset.share) shareLecture(target.dataset.share);
     else if (target.dataset.shareSpeaker) shareSpeaker(target.dataset.shareSpeaker);
     else if (target.dataset.shareVideo) shareVideo(target.dataset.shareVideo, Number(target.dataset.t) || 0);
-    else if (target.dataset.copyUrl) copyLink(target.dataset.copyUrl, target);
+    else if (target.dataset.copyUrl) copyLink(target.dataset.copyUrl, target, videoTitle(target.dataset.copyVideo));
     else if (target.dataset.set) {
       const i = target.dataset.set.indexOf("=");
       setParams({ [target.dataset.set.slice(0, i)]: target.dataset.set.slice(i + 1) });
