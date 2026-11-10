@@ -395,6 +395,285 @@
       "durationSec": 10436,
       "publishedAt": "2026-11-05",
       "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk003-0119",
+      "title": "নব্য জাহিলিয়্যাহঃ ইসলাম ও আধুনিক ওয়ার্ল্ডভিউ এর দ্বন্দ্ব",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "LgT3tiby_bQ", "startSec": 0 },
+      "durationSec": 3207,
+      "publishedAt": "2024-11-09",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk003-0120",
+      "title": "আম্বিয়ায়ে কেরামের দাওয়াহ থেকে শিক্ষা",
+      "categoryIds": ["dawah"],
+      "media": { "type": "youtube", "videoId": "UPznRV25ufM", "startSec": 0 },
+      "durationSec": 1940,
+      "publishedAt": "2024-11-09",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk003-0121",
+      "title": "চোখ খুলে যাওয়ার মতো একটি ভিডিও",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "eKh5bDgOh5c", "startSec": 0 },
+      "durationSec": 1265,
+      "publishedAt": "2024-11-26",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk003-0122",
+      "title": "জামাত ক্ষমতা পেলেও খিলাফত হবেনা?",
+      "categoryIds": ["history"],
+      "media": { "type": "youtube", "videoId": "dvAOATBGc-E", "startSec": 0 },
+      "durationSec": 1100,
+      "publishedAt": "2024-11-30",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk003-0123",
+      "title": "বাংলায় ইসলামপন্থা আমাদের আযাদীর আন্দোলনের ইতিহাস ও শাপলার যোগসূত্র",
+      "categoryIds": ["history"],
+      "media": { "type": "youtube", "videoId": "-Ujd6GsGHvY", "startSec": 0 },
+      "durationSec": 4035,
+      "publishedAt": "2025-07-16",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk003-0124",
+      "title": "আধুনিক বিশ্বব্যবস্থা: আমাদের বাস্তবতা কি?",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "JaXQG7wXoPQ", "startSec": 0 },
+      "durationSec": 1610,
+      "publishedAt": "2025-07-16",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk003-0125",
+      "title": "জ্ঞান, শিক্ষা ও ক্ষমতার আন্তসম্পর্ক",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "PJe3CrM-cgc", "startSec": 0 },
+      "durationSec": 2828,
+      "publishedAt": "2025-07-16",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk003-0126",
+      "title": "সেক্যুলারিজমের সাথে ইসলামের দ্বন্দ্ব",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "XygvDGIaQ_4", "startSec": 0 },
+      "durationSec": 1669,
+      "publishedAt": "2025-07-16",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk003-0127",
+      "title": "Life, Studies, Politics & Revolution",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "DigeMM9axxs", "startSec": 0 },
+      "durationSec": 5445,
+      "publishedAt": "2025-07-29",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk003-0128",
+      "title": "শরিয়াহঃ বাস্তবতা বনাম ভুল ধারনা",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "-I-6VbRMt_0", "startSec": 0 },
+      "durationSec": 4119,
+      "publishedAt": "2025-08-29",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk003-0129",
+      "title": "মৃত্যু ও আখিরাত",
+      "categoryIds": ["akhirah", "youth"],
+      "media": { "type": "youtube", "videoId": "fk_qChsNBLY", "startSec": 0 },
+      "durationSec": 3119,
+      "publishedAt": "2025-09-16",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk003-0130",
+      "title": "আমাদের সংগ্রামের সূচনা: দাওয়াহ, মেরুকরণ ও সামাজিক শক্তি",
+      "categoryIds": ["dawah"],
+      "media": { "type": "youtube", "videoId": "DGFFu1ZgE0E", "startSec": 0 },
+      "durationSec": 4253,
+      "publishedAt": "2025-09-25",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk003-0131",
+      "title": "বাইতুল মাক্বদীস ও মুসলিমবঙ্গ",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "GBaj2RFPD0s", "startSec": 0 },
+      "durationSec": 2305,
+      "publishedAt": "2025-11-22",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk003-0132",
+      "title": "পাশ্চাত্যবাদ ও চিন্তাবিনির্মাণ",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "4oOauWsf7Bs", "startSec": 0 },
+      "durationSec": 2158,
+      "publishedAt": "2026-01-17",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk003-0133",
+      "title": "পাশ্চাত্যবাদ ও চিন্তাবিনির্মাণ",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "b6Eup8L8K78", "startSec": 0 },
+      "durationSec": 1619,
+      "publishedAt": "2026-01-20",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk003-0134",
+      "title": "পাশ্চাত্যবাদ ও চিন্তাবিনির্মাণ",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "Vj-WuMP9i-Y", "startSec": 0 },
+      "durationSec": 2684,
+      "publishedAt": "2026-01-21",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk003-0135",
+      "title": "পাশ্চাত্যবাদ ও চিন্তাবিনির্মাণ",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "IAhcS74qe_o", "startSec": 0 },
+      "durationSec": 3679,
+      "publishedAt": "2026-02-10",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk003-0136",
+      "title": "পাশ্চাত্যবাদ ও চিন্তাবিনির্মাণ",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "u1EqHTUjQHk", "startSec": 0 },
+      "durationSec": 1892,
+      "publishedAt": "2026-02-10",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk003-0137",
+      "title": "ওরা ভাবতো মুসলিম আর হিন্দুর মধ্যে যু*দ্ধ লেগেছে",
+      "categoryIds": ["history"],
+      "media": { "type": "youtube", "videoId": "8BahARnoFF0", "startSec": 0 },
+      "durationSec": 1052,
+      "publishedAt": "2026-02-21",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk003-0138",
+      "title": "Colonial Law to War on Terror : The Architecture of Repression in Bangladesh",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "uJNc-8GmTMA", "startSec": 0 },
+      "durationSec": 1091,
+      "publishedAt": "2026-03-24",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk003-0139",
+      "title": "পাশ্চাত্যবাদ ও চিন্তাবিনির্মাণ",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "e7Q4Aam0W64", "startSec": 0 },
+      "durationSec": 3209,
+      "publishedAt": "2026-03-25",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk003-0140",
+      "title": "আমাদের অতীত, বর্তমান ও ভবিষ্যৎ নিয়ে বুদ্ধিবৃত্তিক আলোচনা",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "H8Q6Qg5rd44", "startSec": 0 },
+      "durationSec": 2596,
+      "publishedAt": "2026-08-15",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk003-0141",
+      "title": "ট্রান্সহিউম্যানিজম জিনিসটা আসলে কি?",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "rJflDxiG_jg", "startSec": 0 },
+      "durationSec": 2266,
+      "publishedAt": "2026-09-02",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk003-0142",
+      "title": "শরীয়াহর আকাঙ্ক্ষা কেন অপরাধ.? ঔপনিবেশিক ধারাবাহিকতা",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "3QPk5YToj3w", "startSec": 0 },
+      "durationSec": 2108,
+      "publishedAt": "2026-09-25",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk003-0143",
+      "title": "এখন আমাদের করণীয় কি ?!",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "4xL46hz7jbI", "startSec": 0 },
+      "durationSec": 1883,
+      "publishedAt": "2026-10-09",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk003-0144",
+      "title": "ইসলামের ইতিহাস ও স্বাধীনতার সংগ্রাম",
+      "categoryIds": ["history"],
+      "media": { "type": "youtube", "videoId": "fIFBdG7NzMc", "startSec": 0 },
+      "durationSec": 2777,
+      "publishedAt": "2026-10-10",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk003-0145",
+      "title": "আধুনিক রাষ্ট্র ব্যবস্থার ইতিহাস",
+      "categoryIds": ["history", "contemporary"],
+      "media": { "type": "youtube", "videoId": "IVjKlezHB5Q", "startSec": 0 },
+      "durationSec": 1130,
+      "publishedAt": "2026-10-13",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk003-0146",
+      "title": "আধুনিক রাষ্ট্র ব্যবস্থার উত্থানের ইতিহাস !!",
+      "categoryIds": ["history", "contemporary"],
+      "media": { "type": "youtube", "videoId": "kiGcFon4sHQ", "startSec": 0 },
+      "durationSec": 1643,
+      "publishedAt": "2026-10-13",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk003-0147",
+      "title": "কালিমা ! দর্শন ! আদর্শ !",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "2L5iJjnD3fw", "startSec": 0 },
+      "durationSec": 3084,
+      "publishedAt": "2026-10-14",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk003-0148",
+      "title": "দ্বীন কায়েমে আমাদের দায়িত্ব কী?",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "7tEpNpAzt6Q", "startSec": 0 },
+      "durationSec": 4171,
+      "publishedAt": "2026-10-14",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk003-0149",
+      "title": "ধর্মের জন্য যে যে বৈশিষ্ট্য লাগে তার সবকিছুই জাতীয়তাবাদের মাঝে পাওয়া যায়",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "WairNigq1eE", "startSec": 0 },
+      "durationSec": 1195,
+      "publishedAt": "2026-10-27",
+      "addedAt": "2026-11-10"
     }
   ]
 }

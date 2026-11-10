@@ -345,6 +345,78 @@
       "durationSec": 3697,
       "publishedAt": "2026-11-02",
       "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk002-0099",
+      "title": "তারা ডিজিটাল বাংলাদেশের স্বপ্ন দেখিয়ে সিরাত মুক্ত বাংলাদেশ গড়তে চেয়েছিলো",
+      "categoryIds": ["seerah"],
+      "media": { "type": "youtube", "videoId": "eqUvfyr8Ef0", "startSec": 0 },
+      "durationSec": 3800,
+      "publishedAt": "2026-08-20",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk002-0100",
+      "title": "ইসলামী সমাজ বিনির্মাণে সীরাতের ভুমিকা",
+      "categoryIds": ["seerah"],
+      "media": { "type": "youtube", "videoId": "xMT6rmY0FFc", "startSec": 0 },
+      "durationSec": 1941,
+      "publishedAt": "2026-08-23",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk002-0101",
+      "title": "আল-কুরআনের বয়ানে: অসিয়ত",
+      "categoryIds": ["quran-tafsir"],
+      "media": { "type": "youtube", "videoId": "jQa6TisSjqU", "startSec": 0 },
+      "durationSec": 1127,
+      "publishedAt": "2026-10-02",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk002-0102",
+      "title": "উম্মাহর ঐক্য ও বায়াত",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "bOhgiz15LPQ", "startSec": 0 },
+      "durationSec": 2601,
+      "publishedAt": "2026-10-08",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk002-0103",
+      "title": "সোজা কথা'র আজকের বিষয়বস্তু; সম্পত্তি হস্তান্তর আইনে সংশোধনী বিল / Amendment",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "0o4t1x_5pEA", "startSec": 0 },
+      "durationSec": 1241,
+      "publishedAt": "2026-10-14",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk002-0104",
+      "title": "সূরা কাহাফের আলোকে, বস্তুবাদের সাথে ইসলামের লড়াই",
+      "categoryIds": ["quran-tafsir"],
+      "media": { "type": "youtube", "videoId": "cjNsK1zj_tk", "startSec": 0 },
+      "durationSec": 2041,
+      "publishedAt": "2026-10-16",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk002-0105",
+      "title": "বোনদের আল কুরআনের দারস",
+      "categoryIds": ["quran-tafsir"],
+      "media": { "type": "youtube", "videoId": "JDMPvFH1tjA", "startSec": 0 },
+      "durationSec": 3841,
+      "publishedAt": "2026-10-19",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk002-0106",
+      "title": "মুসলমানরা কেন পিছিয়ে পড়ল? ইতিহাসের শিক্ষা ও ভবিষ্যৎ প্রজন্মের করণীয়?",
+      "categoryIds": ["history"],
+      "media": { "type": "youtube", "videoId": "I7-p_RaY074", "startSec": 0 },
+      "durationSec": 3148,
+      "publishedAt": "2026-11-09",
+      "addedAt": "2026-11-10"
     }
   ]
 }
