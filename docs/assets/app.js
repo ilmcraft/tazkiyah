@@ -53,6 +53,9 @@
     code: "M9.4 16.6 4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0 4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z",
     check: "M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z",
     chevron: "M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z",
+    link: "M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z",
+    copy: "M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z",
+    paste: "M19 2h-4.18C14.4.84 13.3 0 12 0c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm7 18H5V4h2v3h10V4h2v16z",
   };
   const icon = (name) => `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="${ICONS[name]}"/></svg>`;
 
@@ -230,6 +233,91 @@
     const parts = seriesOf(l);
     const i = parts.findIndex((x) => x.id === l.id);
     return i >= 0 && i < parts.length - 1 ? parts[i + 1] : null;
+  }
+
+  // ------------------------------------------------------------------ shared YouTube videos
+  // Any YouTube video can be shared as a link to this site (#/v/<videoId>, plus ?t=<seconds> for a start
+  // time); it then plays in the same focused player as the lectures. The link carries only the video id —
+  // nothing is stored anywhere.
+  const VIDEO_ID = /^[\w-]{11}$/;
+
+  /** "90", "90s", "1m30s", "1h2m3s" -> seconds. */
+  function parseStart(value) {
+    const v = String(value || "").trim();
+    if (/^\d+$/.test(v)) return Number(v);
+    const m = /^(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s?)?$/.exec(v);
+    return m ? Number(m[1] || 0) * 3600 + Number(m[2] || 0) * 60 + Number(m[3] || 0) : 0;
+  }
+
+  /**
+   * Finds a YouTube video in pasted text (a bare link, or a share message with a link in it):
+   * youtube.com/watch?v=, youtu.be/, /shorts/, /live/, /embed/, m. and music. links, and this site's own links.
+   * Returns { id, t } or null.
+   */
+  function parseYouTube(text) {
+    const s = String(text || "").trim();
+    if (VIDEO_ID.test(s)) return { id: s, t: 0 };
+    const own = /#\/v\/([\w-]{11})(?:\?t=(\d+))?/.exec(s);
+    if (own) return { id: own[1], t: Number(own[2] || 0) };
+    const found = /(?:https?:\/\/)?(?:[\w-]+\.)*(?:youtube\.com|youtube-nocookie\.com|youtu\.be)\/[^\s<>"']*/i.exec(s);
+    if (!found) return null;
+    let url;
+    try { url = new URL(/^https?:/i.test(found[0]) ? found[0] : `https://${found[0]}`); } catch (e) { return null; }
+    const host = url.hostname.toLowerCase().replace(/^(?:www|m|music)\./, "");
+    let id = "";
+    if (host === "youtu.be") id = url.pathname.split("/")[1] || "";
+    else if (host === "youtube.com" || host === "youtube-nocookie.com") {
+      id = url.searchParams.get("v") || "";
+      const path = /^\/(?:shorts|live|embed|v|e)\/([\w-]{11})/.exec(url.pathname);
+      if (!id && path) id = path[1];
+    }
+    if (!VIDEO_ID.test(id)) return null;
+    const hashT = /(?:^|[#&])t=([^&]+)/.exec(url.hash);
+    return { id, t: parseStart(url.searchParams.get("t") || url.searchParams.get("start") || (hashT && hashT[1])) };
+  }
+
+  const sharedHash = (id, t) => `#/v/${id}${t ? `?t=${t}` : ""}`;
+  const siteUrl = (hash) => `${location.origin}${location.pathname}${hash}`;
+
+  // Title and channel from YouTube's oEmbed (no API key; it answers browsers directly).
+  // Resolved results are kept for the visit: id -> { ok, title, author } or { ok: false, problem }.
+  const videoMeta = new Map();
+  const videoMetaPending = new Map();
+  function videoInfo(id) {
+    if (videoMeta.has(id)) return Promise.resolve(videoMeta.get(id));
+    if (!videoMetaPending.has(id)) {
+      const watch = `https://www.youtube.com/watch?v=${id}`;
+      const p = fetch(`https://www.youtube.com/oembed?format=json&url=${encodeURIComponent(watch)}`)
+        .then((r) => {
+          if (r.ok) return r.json().then((j) => ({ ok: true, title: String(j.title || ""), author: String(j.author_name || "") }));
+          // 401/403: embedding turned off (or a private video); 400/404: no such video.
+          return { ok: false, problem: r.status === 401 || r.status === 403 ? "embed" : r.status === 400 || r.status === 404 ? "gone" : "other" };
+        })
+        .catch(() => ({ ok: false, problem: "network" }))
+        .then((info) => {
+          videoMetaPending.delete(id);
+          if (info.problem !== "network") videoMeta.set(id, info); // a network failure may be retried later
+          return info;
+        });
+      videoMetaPending.set(id, p);
+    }
+    return videoMetaPending.get(id);
+  }
+
+  /** One stable "lecture" object per shared video, so the player keeps playing across re-renders. */
+  const sharedVideos = new Map();
+  function sharedVideo(id) {
+    let v = sharedVideos.get(id);
+    if (!v) {
+      v = { id: `yt-${id}`, shared: true, href: sharedHash(id, 0), title: "ইউটিউব ভিডিও", speaker: { name: "" }, categoryIds: [], media: { type: "youtube", videoId: id, startSec: 0 } };
+      sharedVideos.set(id, v);
+    }
+    const info = videoMeta.get(id);
+    if (info && info.ok) {
+      v.title = info.title || v.title;
+      v.speaker.name = info.author;
+    }
+    return v;
   }
 
   // ------------------------------------------------------------------ app release (download button)
@@ -489,17 +577,19 @@
       store.set("progress", progress);
     }
 
+    /** Length before the player knows it: the catalog's, or (for a shared video) the one saved last time. */
+    const knownLength = (l) => l.durationSec || (progress[l.id] && progress[l.id].d) || 0;
     function showTime(t, d) {
       if (!lecture) return;
       if (t === undefined) t = started && engine ? engine.time() : resumeAt(lecture);
-      if (d === undefined) d = (engine && engine.duration()) || lecture.durationSec || 0;
+      if (d === undefined) d = (engine && engine.duration()) || knownLength(lecture);
       const shown = seeking ? Number(seek.value) : t;
       if (!seeking) {
         seek.max = String(Math.max(1, Math.floor(d)));
-        seek.value = String(Math.floor(t));
+        seek.value = d ? String(Math.floor(t)) : "0"; // unknown length: an empty bar, not a full one
       }
       curEl.textContent = clock(shown);
-      durEl.textContent = clock(d);
+      durEl.textContent = d ? clock(d) : "–:––";
       seek.setAttribute("aria-valuetext", `${clock(shown)} / ${clock(d)}`);
       $("#mini-bar").style.width = d ? `${Math.min(100, (shown / d) * 100)}%` : "0";
     }
@@ -522,7 +612,8 @@
       speedBtn.setAttribute("aria-label", `শোনার গতি ${bn(rate)}x`);
     }
 
-    function setCover(kind, message) {
+    /** link: an extra link under the message, { href, text, external } (the next part takes its place at the end). */
+    function setCover(kind, message, link) {
       cover.hidden = !kind;
       if (!kind) return;
       cover.dataset.kind = kind;
@@ -543,11 +634,13 @@
       coverMsg.textContent = text;
       coverMsg.hidden = !text;
       const next = kind === "ended" ? nextPart(lecture) : null;
-      coverNext.hidden = !next;
-      if (next) {
-        coverNext.href = `#/lecture/${next.id}`;
-        coverNext.textContent = `পরের পর্ব: ${next.title}`;
-        coverNext.dataset.id = next.id;
+      const extra = next ? { href: `#/lecture/${next.id}`, text: `পরের পর্ব: ${next.title}`, id: next.id } : link || null;
+      coverNext.hidden = !extra;
+      if (extra) {
+        coverNext.href = extra.href;
+        coverNext.textContent = extra.text;
+        if (extra.id) coverNext.dataset.id = extra.id; else delete coverNext.dataset.id;
+        if (extra.external) { coverNext.target = "_blank"; coverNext.rel = "noopener"; } else { coverNext.removeAttribute("target"); coverNext.removeAttribute("rel"); }
       }
     }
 
@@ -610,7 +703,14 @@
         api: "প্লেয়ার লোড করা যায়নি। ইন্টারনেট সংযোগ দেখে আবার চেষ্টা করুন।",
         other: "ভিডিওটি এখন চালানো যাচ্ছে না। একটু পরে আবার চেষ্টা করুন।",
       };
-      setCover("error", messages[kind] || messages.other);
+      let message = messages[kind] || messages.other;
+      let link = null;
+      if (lecture.shared && kind === "embed") {
+        // Not in the app either, so the only way left is YouTube itself.
+        message = "ভিডিওটির মালিক ইউটিউবের বাইরে এটি চালানোর অনুমতি দেননি, তাই এখানে চালানো যাচ্ছে না।";
+        link = { href: `https://www.youtube.com/watch?v=${lecture.media.videoId}`, text: "ইউটিউবে দেখুন", external: true };
+      }
+      setCover("error", message, link);
       updateButtons();
     }
 
@@ -714,12 +814,27 @@
       document.body.classList.toggle("has-mini", next === "mini");
     }
 
+    /** Title, kicker, photo and mini-player text (a shared video's title arrives after it opens). */
+    function describe(l) {
+      const src = photoUrl(l.speaker) || "assets/mark.svg";
+      if (coverImg.getAttribute("src") !== src) coverImg.src = src;
+      coverTitle.textContent = l.title;
+      const kicker = kickerOf(l);
+      coverKicker.textContent = kicker;
+      coverKicker.hidden = !kicker;
+      $("#mini-link").href = pageHref(l);
+      $("#mini-title").textContent = l.title;
+      $("#mini-speaker").textContent = l.speaker.name;
+    }
+    const pageHref = (l) => l.href || `#/lecture/${l.id}`;
+
     /** Shows the player on a lecture page; keeps playing if it is already the lecture in the player. */
     function open(l) {
       setMode("full");
       const autoplay = autoplayId === l.id;
       autoplayId = null;
       if (lecture && lecture.id === l.id) {
+        describe(l);
         if (autoplay && status !== "playing") play();
         return;
       }
@@ -732,16 +847,9 @@
       status = "idle";
       tapThrough(false);
       spinner.hidden = true;
-      coverImg.src = photoUrl(l.speaker) || "assets/mark.svg";
-      coverTitle.textContent = l.title;
-      const kicker = kickerOf(l);
-      coverKicker.textContent = kicker;
-      coverKicker.hidden = !kicker;
-      $("#mini-link").href = `#/lecture/${l.id}`;
-      $("#mini-title").textContent = l.title;
-      $("#mini-speaker").textContent = l.speaker.name;
+      describe(l);
       setCover("start");
-      showTime(resumeAt(l), l.durationSec || 0);
+      showTime(resumeAt(l), knownLength(l));
       engine = engineFor(l);
       load();
       if (autoplay) play();
@@ -824,7 +932,7 @@
     window.addEventListener("pagehide", saveProgress);
     document.addEventListener("visibilitychange", () => { if (document.hidden) saveProgress(); });
 
-    function openPage() { if (lecture) location.hash = `#/lecture/${lecture.id}`; }
+    function openPage() { if (lecture) location.hash = pageHref(lecture); }
 
     return { open, leave, close, current: () => lecture };
   })();
@@ -857,6 +965,7 @@
   }
   /** "ফিরাসাত হালাকাহ · পর্ব ১" for a series part, otherwise the topic. */
   function kickerOf(l) {
+    if (l.shared) return l.speaker.name; // the YouTube channel
     if (l.series) return l.series.part ? `${l.series.title} · পর্ব ${bn(l.series.part)}` : l.series.title;
     return topicName(l);
   }
@@ -1180,6 +1289,159 @@
     };
   }
 
+  // ---- share a YouTube video: paste a link, get a link to this site ----
+  let shareDraft = ""; // survives re-renders and a trip to the video and back
+
+  function shareResult(text) {
+    if (!text.trim()) return "";
+    const v = parseYouTube(text);
+    if (!v) {
+      return `<p class="share-err" role="alert">এটি ইউটিউব ভিডিওর লিংক মনে হচ্ছে না। ইউটিউবে ভিডিওর নিচে <b>শেয়ার</b> চেপে <b>কপি</b> বেছে নিন, তারপর লিংকটি এখানে পেস্ট করুন।</p>`;
+    }
+    const hash = sharedHash(v.id, v.t);
+    const url = siteUrl(hash);
+    return `<div class="share-card">
+        <div class="share-video">${playMark("solid")}<span class="share-video-text"><b id="share-title">ভিডিওর তথ্য আনা হচ্ছে…</b><span id="share-channel"></span></span></div>
+        <p class="share-warn" id="share-warn" hidden></p>
+        <div class="link-label"><label for="magic-link">আপনার লিংক</label>${v.t ? `<span>ভিডিওটি ${clock(v.t)} থেকে শুরু হবে</span>` : ""}</div>
+        <div class="link-row">
+          <input id="magic-link" class="link-field" type="text" readonly value="${esc(url)}" aria-describedby="magic-help">
+          <button type="button" class="btn accent" data-copy-url="${esc(url)}">${icon("copy")}<span>কপি করুন</span></button>
+        </div>
+        <p class="meta" id="magic-help">লিংকটি যাকে পাঠাবেন, তিনি ভিডিওটি এই সাইটেই দেখবেন।</p>
+        <div class="actions-row">
+          ${navigator.share ? `<button type="button" class="btn ghost" data-share-video="${esc(v.id)}" data-t="${v.t}">${icon("share")}শেয়ার করুন</button>` : ""}
+          <a class="btn ghost" href="${hash}">${icon("play")}খুলে দেখুন</a>
+        </div>
+      </div>`;
+  }
+
+  /** Fills the title, channel and any warning once YouTube answers. */
+  function fillShareInfo(id) {
+    videoInfo(id).then((info) => {
+      const out = $("#share-out");
+      const v = out && parseYouTube(shareDraft);
+      if (!v || v.id !== id) return; // the visitor pasted something else meanwhile
+      const title = $("#share-title");
+      const channel = $("#share-channel");
+      const warn = $("#share-warn");
+      if (info.ok) {
+        title.textContent = info.title || "ইউটিউব ভিডিও";
+        channel.textContent = info.author;
+        return;
+      }
+      title.textContent = "ইউটিউব ভিডিও";
+      const warnings = {
+        embed: "এই ভিডিওটি হয়তো এখানে চলবে না: ভিডিওটির মালিক ইউটিউবের বাইরে চালানোর অনুমতি দেননি, অথবা এটি প্রাইভেট।",
+        gone: "ভিডিওটি পাওয়া যাচ্ছে না — হয়তো মুছে ফেলা হয়েছে, প্রাইভেট করা হয়েছে, অথবা লিংকটি ভুল।",
+      };
+      if (warnings[info.problem]) { warn.textContent = warnings[info.problem]; warn.hidden = false; }
+    });
+  }
+
+  function pageShare() {
+    const canPaste = !!(navigator.clipboard && navigator.clipboard.readText);
+    return {
+      title: "ইউটিউব ভিডিও শেয়ার",
+      tab: "share",
+      html: `<section class="share-page">
+          <p class="eyebrow">ইউটিউব লিংক থেকে</p>
+          <h1 class="page-title">ভিডিও শেয়ার করুন, মনোযোগ ধরে রেখে দেখার জন্য</h1>
+          <p class="sub">ইউটিউব ভিডিওর লিংক এখানে পেস্ট করুন — নতুন একটি লিংক তৈরি হবে। সেটি যাকে পাঠাবেন, তিনি ভিডিওটি ইউটিউবে না গিয়ে এই সাইটেই দেখবেন: সাজেশন, কমেন্ট বা অন্য ভিডিওতে চলে যাওয়ার টান ছাড়া।</p>
+          <div class="paste-row">
+            <div class="search-box">${icon("link")}<input id="yt-url" type="url" inputmode="url" value="${esc(shareDraft)}" placeholder="https://youtu.be/…"
+              autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" aria-label="ইউটিউব ভিডিওর লিংক"></div>
+            ${canPaste ? `<button type="button" class="btn" id="paste-btn">${icon("paste")}<span>পেস্ট করুন</span></button>` : ""}
+          </div>
+          <div id="share-out" aria-live="polite">${shareResult(shareDraft)}</div>
+          ${section("যেভাবে কাজ করে", `<ol class="steps">
+            <li><span>ইউটিউবে ভিডিওর নিচে <b>শেয়ার</b> চেপে লিংকটি <b>কপি</b> করুন।</span></li>
+            <li><span>এই পাতায় এসে লিংকটি <b>পেস্ট</b> করুন — সঙ্গে সঙ্গে নতুন লিংক তৈরি হবে।</span></li>
+            <li><span>নতুন লিংকটি <b>কপি</b> করে পাঠান। যিনি খুলবেন, ভিডিওটি এই সাইটের প্লেয়ারেই চলবে।</span></li></ol>
+            <p class="note">${icon("shield")}<span>লিংকে শুধু ভিডিওর আইডি থাকে; কোনো তথ্য কোথাও জমা হয় না। কিছু ভিডিওর মালিক ইউটিউবের বাইরে চালানোর অনুমতি দেন না — সেগুলো এখানে চলবে না।</span></p>`)}
+        </section>`,
+      after() {
+        const input = $("#yt-url");
+        const out = $("#share-out");
+        const update = () => {
+          if (input.value === shareDraft) return;
+          shareDraft = input.value;
+          out.innerHTML = shareResult(shareDraft);
+          const v = parseYouTube(shareDraft);
+          if (v) fillShareInfo(v.id);
+        };
+        if (!shareDraft) input.focus();
+        else { const v = parseYouTube(shareDraft); if (v) fillShareInfo(v.id); }
+        input.addEventListener("input", update);
+        input.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); update(); input.blur(); } });
+        const pasteBtn = $("#paste-btn");
+        if (pasteBtn) {
+          pasteBtn.addEventListener("click", async () => {
+            try {
+              input.value = (await navigator.clipboard.readText()).trim();
+              update();
+            } catch (e) {
+              input.focus();
+              toast("পেস্ট করা যায়নি — বক্সে চেপে ধরে পেস্ট করুন");
+            }
+          });
+        }
+      },
+    };
+  }
+
+  /** The page a shared link opens: the video in the focused player, with its title and channel. */
+  function pageShared(id, params) {
+    const v = sharedVideo(id);
+    const t = parseStart(params.get("t"));
+    v.media.startSec = t;
+    v.href = sharedHash(id, t);
+    const info = videoMeta.get(id);
+    const known = info && info.ok;
+    const listed = catalog && catalog.lectures.find((l) => l.media.type === "youtube" && l.media.videoId === id);
+    const recent = catalog ? catalog.lectures.slice().sort(recentlyAdded).slice(0, 5) : [];
+    const url = siteUrl(v.href);
+    const problem = info && !info.ok ? info.problem : "";
+    const problemNote = problem === "gone"
+      ? `<p class="share-err">ভিডিওটি পাওয়া যাচ্ছে না — হয়তো মুছে ফেলা হয়েছে, প্রাইভেট করা হয়েছে, অথবা লিংকটি ভুল।</p>`
+      : problem === "embed"
+        ? `<p class="share-err">এই ভিডিওটি হয়তো এখানে চলবে না: ভিডিওটির মালিক ইউটিউবের বাইরে চালানোর অনুমতি দেননি, অথবা এটি প্রাইভেট। <a href="https://www.youtube.com/watch?v=${esc(id)}" target="_blank" rel="noopener">ইউটিউবে দেখুন</a></p>`
+        : "";
+    return {
+      title: known ? v.title : "শেয়ার করা ভিডিও",
+      tab: "",
+      lecture: v,
+      side: recent.length ? `<section class="side-box" aria-labelledby="new-h">
+          <div class="sec-head"><h2 id="new-h">তাযকিয়ার নতুন লেকচার</h2><a class="more" href="#/">সব</a></div>
+          ${lectureList(recent, { showDate: true, noFav: true })}</section>` : "",
+      html: `<article class="lecture">
+          <p class="kicker">শেয়ার করা ভিডিও</p>
+          <h1 class="lecture-title">${known ? esc(v.title) : info ? "ইউটিউব ভিডিও" : "ভিডিওর তথ্য আনা হচ্ছে…"}</h1>
+          ${known && v.speaker.name ? `<div class="lecture-by"><p class="meta">ইউটিউব চ্যানেল: ${esc(v.speaker.name)}</p></div>` : ""}
+          ${problemNote}
+          <div class="actions-row">
+            <button type="button" class="btn ghost" data-copy-url="${esc(url)}">${icon("copy")}<span>লিংক কপি করুন</span></button>
+            ${navigator.share ? `<button type="button" class="btn ghost" data-share-video="${esc(id)}" data-t="${t}">${icon("share")}শেয়ার</button>` : ""}
+            <a class="btn ghost" href="#/share">${icon("link")}নিজেও লিংক বানান</a>
+          </div>
+          ${listed ? `<p class="note">${icon("check")}<span>এই লেকচারটি তাযকিয়ার তালিকায় আছে। <a href="#/lecture/${esc(listed.id)}">লেকচারের পাতায় দেখুন</a> — সেখানে ${esc(listed.speaker.name)}-এর আরও লেকচারও পাবেন।</span></p>`
+            : `<p class="note">${icon("shield")}<span>এই ভিডিওটি তাযকিয়ার বাছাই করা তালিকার অংশ নয় — কেউ ইউটিউবের লিংক থেকে এটি বানিয়ে আপনাকে পাঠিয়েছেন। ভিডিওর স্বত্ব এর আপলোডকারীর।</span></p>`}
+        </article>`,
+      after() {
+        if (info) return;
+        videoInfo(id).then((got) => {
+          if (parseHash().path !== `/v/${id}`) return;
+          if (got.problem === "network") { // not remembered, so re-rendering would ask again: just drop the placeholder
+            const h = $(".lecture-title");
+            if (h) h.textContent = "ইউটিউব ভিডিও";
+            return;
+          }
+          render({ keepScroll: true });
+        });
+      },
+    };
+  }
+
   function rememberSearch(q) {
     const v = String(q || "").trim();
     if (!v) return;
@@ -1369,6 +1631,8 @@
     else if (path === "/search") page = withCatalog(() => pageSearch(params), "search");
     else if (path === "/library") page = withCatalog(() => pageLibrary(params), "library");
     else if (path === "/app") page = pageApp();
+    else if (path === "/share") page = pageShare();
+    else if ((m = /^\/v\/([\w-]{11})$/.exec(path))) page = pageShared(m[1], params);
     else page = pageMissing();
 
     view.innerHTML = page.html;
@@ -1420,26 +1684,63 @@
     const s = catalog && catalog.speakerById.get(id);
     if (s) shareLink(s.name, `${s.name} — তাযকিয়া`, `#/speaker/${id}`);
   }
+  function shareVideo(id, t) {
+    const info = videoMeta.get(id);
+    const title = info && info.ok && info.title ? info.title : "ইউটিউব ভিডিও";
+    shareLink(title, title, sharedHash(id, t));
+  }
   async function shareLink(title, text, hash) {
-    const url = `${location.origin}${location.pathname}${hash}`;
+    const url = siteUrl(hash);
     if (navigator.share) {
       try { await navigator.share({ title, text, url }); } catch (e) { /* cancelled */ }
       return;
     }
+    copyLink(url);
+  }
+
+  /** Copies a link; the button (if any) shows "কপি হয়েছে" for a moment. */
+  async function copyLink(url, button) {
+    let ok = false;
     try {
       await navigator.clipboard.writeText(url);
-      toast("লিংক কপি হয়েছে");
-    } catch (e) {
-      toast(url);
+      ok = true;
+    } catch (e) { // older browsers: copy through a hidden field
+      const field = document.createElement("textarea");
+      field.value = url;
+      field.setAttribute("readonly", "");
+      field.style.cssText = "position:fixed;top:0;left:0;opacity:0";
+      document.body.appendChild(field);
+      field.select();
+      try { ok = document.execCommand("copy"); } catch (e2) { ok = false; }
+      field.remove();
     }
+    if (!ok) {
+      const field = $("#magic-link");
+      if (field && field.value === url) { field.focus(); field.select(); toast("লিংকটি সিলেক্ট করা আছে — নিজে কপি করে নিন"); }
+      else toast(url);
+      return;
+    }
+    toast("লিংক কপি হয়েছে");
+    const label = button && $("span", button);
+    if (!label) return;
+    if (!button.dataset.label) button.dataset.label = label.textContent;
+    label.textContent = "কপি হয়েছে";
+    button.classList.add("copied");
+    clearTimeout(Number(button.dataset.timer));
+    button.dataset.timer = String(setTimeout(() => {
+      label.textContent = button.dataset.label;
+      button.classList.remove("copied");
+    }, 2000));
   }
 
   document.addEventListener("click", (e) => {
-    const target = e.target.closest("[data-fav], [data-share], [data-share-speaker], [data-set], [data-q], [data-clear-recent], [data-retry]");
+    const target = e.target.closest("[data-fav], [data-share], [data-share-speaker], [data-share-video], [data-copy-url], [data-set], [data-q], [data-clear-recent], [data-retry]");
     if (!target) return;
     if (target.dataset.fav) { e.preventDefault(); toggleFavorite(target.dataset.fav); }
     else if (target.dataset.share) shareLecture(target.dataset.share);
     else if (target.dataset.shareSpeaker) shareSpeaker(target.dataset.shareSpeaker);
+    else if (target.dataset.shareVideo) shareVideo(target.dataset.shareVideo, Number(target.dataset.t) || 0);
+    else if (target.dataset.copyUrl) copyLink(target.dataset.copyUrl, target);
     else if (target.dataset.set) {
       const i = target.dataset.set.indexOf("=");
       setParams({ [target.dataset.set.slice(0, i)]: target.dataset.set.slice(i + 1) });
