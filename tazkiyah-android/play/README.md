@@ -15,7 +15,7 @@ certificate SHA-256 `A9:22:F5:B1:49:20:60:F8:D3:33:CD:F3:1E:EB:1E:F8:3D:6D:6F:EC
 | App name (≤30) | তাযকিয়া: বাংলা ইসলামিক লেকচার | Tazkiyah: Islamic Lectures |
 | Short description (≤80) | বাছাই করা বাংলা ইসলামিক লেকচার — বক্তা ও বিষয় অনুযায়ী, মনোযোগ ধরে রেখে শুনুন। | Curated Bangla Islamic lectures by speaker and topic, for focused listening. |
 
-Category: **Education** · Tags: Islam, lectures · Contact email: https://github.com/ilmcraft/tazkiyah/issues ·
+Category: **Education** · Tags: Islam, lectures · Contact email: set in Play Console only (kept out of this public repo) ·
 Website: https://ilmcraft.github.io/tazkiyah/ ·
 Privacy policy: https://ilmcraft.github.io/tazkiyah/privacy.html
 

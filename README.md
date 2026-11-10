@@ -59,4 +59,4 @@ cd tazkiyah-android
 
 > ব্যক্তিগত ব্যবহারের অ্যাপ: ব্যাকগ্রাউন্ডে ইউটিউব চালানো ও ইউটিউব থেকে অফলাইন সেভ ইউটিউবের শর্তের বাইরে, তাই এটি Play Store-এ দেওয়া হয়নি।
 
-যোগাযোগ: https://github.com/ilmcraft/tazkiyah/issues
+যোগাযোগ: [GitHub Issues](https://github.com/ilmcraft/tazkiyah/issues)

@@ -13,7 +13,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Code
 import androidx.compose.material.icons.rounded.Description
-import androidx.compose.material.icons.rounded.Email
+import androidx.compose.material.icons.rounded.Forum
 import androidx.compose.material.icons.rounded.Language
 import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material.icons.rounded.SystemUpdate
@@ -122,7 +122,8 @@ fun AboutScreen(
     val openLink = rememberLinkOpener()
     var showLicense by rememberSaveable { mutableStateOf(false) }
     val repoUrl = "https://github.com/${BuildConfig.GITHUB_REPO}"
-    val email = stringResource(R.string.contact_email)
+    // Contact goes through GitHub Issues, so no personal email address ships in the app.
+    val contactUrl = "$repoUrl/issues"
 
     LaunchedEffect(viewModel) {
         viewModel.results.collect { result ->
@@ -181,7 +182,7 @@ fun AboutScreen(
                 LinkRow(Icons.Rounded.Code, stringResource(R.string.about_source), repoUrl.removePrefix("https://")) { openLink(repoUrl) }
             }
             item {
-                LinkRow(Icons.Rounded.Email, stringResource(R.string.about_contact), email) { openLink("mailto:$email") }
+                LinkRow(Icons.Rounded.Forum, stringResource(R.string.about_contact), stringResource(R.string.about_contact_desc)) { openLink(contactUrl) }
             }
             item { Section(stringResource(R.string.about_privacy_title), stringResource(R.string.about_privacy)) }
             item { Section(null, stringResource(R.string.about_disclaimer)) }

@@ -34,8 +34,8 @@ jobs:
       run:
         working-directory: tazkiyah-content
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-python@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: "3.12"
           cache: pip
@@ -77,7 +77,7 @@ jobs:
 
       - name: Open the review pull request
         if: steps.discover.outputs.changed == 'true'
-        uses: peter-evans/create-pull-request@v8
+        uses: peter-evans/create-pull-request@15733dbdfeedb4f7fdb73d13c6f5ac83b710fab8 # v8.1.2
         with:
           branch: bot/lectures-${{ steps.pick.outputs.speaker }}
           delete-branch: true

@@ -193,7 +193,6 @@
     <string name="library_saved_empty">কোনো লেকচার সেভ করা নেই। লেকচারের পাতায় \"অফলাইনের জন্য সেভ করুন\" চাপুন।</string>
     <string name="library_saved_total">ফোনে মোট %1$s জায়গা নিচ্ছে</string>
     <!-- App updates (GitHub Releases) and About -->
-    <string name="contact_email" translatable="false">https://github.com/ilmcraft/tazkiyah/issues</string>
     <string name="banner_app_update_available">নতুন ভার্সন %1$s এসেছে</string>
     <string name="banner_app_update_desc">নতুন APK ডাউনলোড করে ইনস্টল করুন — ফেভারিট, ইতিহাস ও সেভ করা লেকচার মুছে যাবে না।</string>
     <string name="download">ডাউনলোড</string>
@@ -212,6 +211,7 @@
     <string name="update_check_failed">আপডেট খোঁজা যায়নি — ইন্টারনেট সংযোগ দেখে আবার চেষ্টা করুন</string>
     <string name="about_source">সোর্স কোড ও সব রিলিজ</string>
     <string name="about_contact">যোগাযোগ</string>
+    <string name="about_contact_desc">প্রশ্ন বা মতামত GitHub-এ লিখুন</string>
     <string name="about_privacy_title">গোপনীয়তা</string>
     <string name="about_privacy">এই অ্যাপে কোনো অ্যাকাউন্ট লাগে না। অ্যাপটি আপনার কোনো তথ্য সংগ্রহ করে না, কোথাও পাঠায়ও না। ফেভারিট, ইতিহাস ও সেভ করা লেকচার শুধু এই ফোনেই থাকে। লেকচারের তালিকা আসে GitHub থেকে, আর ভিডিও চলে ইউটিউবের প্লেয়ারে — সেখানে ইউটিউব ও গুগলের নিজস্ব নীতি প্রযোজ্য।</string>
     <string name="about_disclaimer">এই অ্যাপ কোনো বক্তা, প্রতিষ্ঠান বা ইউটিউবের সঙ্গে যুক্ত নয়। প্রতিটি লেকচারের স্বত্ব সংশ্লিষ্ট বক্তা ও আপলোডকারীর।</string>
