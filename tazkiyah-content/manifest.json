@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "minAppVersionCode": 1,
-  "dataVersion": 8,
-  "updatedAt": "2026-11-10T09:18:11Z",
+  "dataVersion": 9,
+  "updatedAt": "2026-11-10T09:27:41Z",
   "changelog": "লেকচারের তালিকা হালনাগাদ হয়েছে",
   "files": [
     {
@@ -41,9 +41,9 @@
     },
     {
       "path": "data/lectures/speaker-005.json",
-      "sha256": "1c97a9211d8a3d9be1c3672923cad53aa59b220403ab796ccbcab4eb23904426",
-      "size": 94937,
-      "lectures": 248
+      "sha256": "fefe05bf1a4969f0a3eb7953c735e87af5d879a2f5226a6bd24c19ce1b84159f",
+      "size": 94020,
+      "lectures": 245
     }
   ]
 }
