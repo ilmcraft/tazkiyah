@@ -1,6 +1,20 @@
 {
   "speakerId": "speaker-003",
   "videos": {
+    "-I-6VbRMt_0": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0128",
+      "channelId": "UCKDfhL-B-OKYq8sHbXfIDCg",
+      "channel": "Bongo Revolt"
+    },
+    "-Ujd6GsGHvY": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0123",
+      "channelId": "UCKDfhL-B-OKYq8sHbXfIDCg",
+      "channel": "Bongo Revolt"
+    },
     "007vGmsufYo": {
       "status": "duplicate",
       "date": "2026-11-08",
@@ -20,6 +34,11 @@
       "status": "proposed",
       "date": "2026-11-08",
       "lectureId": "spk003-0079"
+    },
+    "1YHn263PO5I": {
+      "status": "low-confidence",
+      "date": "2026-11-10",
+      "note": "নাম শুধু বিবরণে"
     },
     "1mTCqBzvq3Y": {
       "status": "rejected",
@@ -42,15 +61,55 @@
       "date": "2026-11-08",
       "note": "মোটিভেশনাল রি-কাট চ্যানেল"
     },
+    "2L5iJjnD3fw": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0156",
+      "channelId": "UCyxC4e499ZU1sUZkK9GU66w",
+      "channel": "THE SABIQUN NARRATIVE "
+    },
+    "2TC4K4DO4rw": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0144",
+      "channelId": "UCKDfhL-B-OKYq8sHbXfIDCg",
+      "channel": "Bongo Revolt"
+    },
+    "35EIra5LSKs": {
+      "status": "low-confidence",
+      "date": "2026-11-10",
+      "note": "নাম শুধু বিবরণে"
+    },
+    "3QPk5YToj3w": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0151",
+      "channelId": "UC5jQVTnx1-RT9JiaqBCdeCQ",
+      "channel": "Voice of Deen দ্বীনের কণ্ঠস্বর "
+    },
     "3r_XZPiX2ZY": {
       "status": "rejected",
       "date": "2026-11-08",
       "note": "একই লেকচার: spk003-0042 (দৈর্ঘ্য হুবহু এক)"
     },
+    "4oOauWsf7Bs": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0132",
+      "channelId": "UCKDfhL-B-OKYq8sHbXfIDCg",
+      "channel": "Bongo Revolt"
+    },
     "4qUUIoM6y0w": {
       "status": "rejected",
       "date": "2026-11-08",
       "note": "ক্লিপ: 10 মিনিট"
+    },
+    "4xL46hz7jbI": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0152",
+      "channelId": "UCyxC4e499ZU1sUZkK9GU66w",
+      "channel": "THE SABIQUN NARRATIVE "
     },
     "59RRIpsf-rA": {
       "status": "rejected",
@@ -83,6 +142,13 @@
       "date": "2026-11-08",
       "note": "রি-কাট/হাইপ শিরোনাম"
     },
+    "7W_4ZdvlOKM": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0136",
+      "channelId": "UCKDfhL-B-OKYq8sHbXfIDCg",
+      "channel": "Bongo Revolt"
+    },
     "7ZCXyu_6Bcw": {
       "status": "rejected",
       "date": "2026-11-08",
@@ -98,15 +164,50 @@
       "date": "2026-11-08",
       "note": "মোটিভেশনাল রি-কাট চ্যানেল"
     },
+    "7tEpNpAzt6Q": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0157",
+      "channelId": "UCyxC4e499ZU1sUZkK9GU66w",
+      "channel": "THE SABIQUN NARRATIVE "
+    },
+    "8BahARnoFF0": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0142",
+      "channelId": "UCC9_TTBWgfvMZ8Qt_8vbEjg",
+      "channel": "ইনকিলাব"
+    },
+    "8PAfagwar7M": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0145",
+      "channelId": "UCKDfhL-B-OKYq8sHbXfIDCg",
+      "channel": "Bongo Revolt"
+    },
     "8QNIJ7l14bI": {
       "status": "rejected",
       "date": "2026-11-08",
       "note": "ক্লিপ (১৬ মিনিট)"
     },
+    "8_FAAFYeU_8": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0135",
+      "channelId": "UCKDfhL-B-OKYq8sHbXfIDCg",
+      "channel": "Bongo Revolt"
+    },
     "9PhZzRdZnfs": {
       "status": "proposed",
       "date": "2026-11-08",
       "lectureId": "spk003-0094"
+    },
+    "9f5GsEOfCcY": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0146",
+      "channelId": "UCKDfhL-B-OKYq8sHbXfIDCg",
+      "channel": "Bongo Revolt"
     },
     "9n-7cqmMa-Q": {
       "status": "rejected",
@@ -119,6 +220,11 @@
       "date": "2026-11-08",
       "lectureId": "spk003-0109"
     },
+    "A0F2g2FVYAg": {
+      "status": "low-confidence",
+      "date": "2026-11-10",
+      "note": "নাম শুধু বিবরণে"
+    },
     "A6o7EEc2eG8": {
       "status": "proposed",
       "date": "2026-11-08",
@@ -128,6 +234,11 @@
       "status": "rejected",
       "date": "2026-11-08",
       "note": "মোটিভেশনাল রি-কাট চ্যানেল"
+    },
+    "AgcroPK6pbw": {
+      "status": "low-confidence",
+      "date": "2026-11-10",
+      "note": "নাম শুধু বিবরণে"
     },
     "B24nhyTpcJc": {
       "status": "rejected",
@@ -145,6 +256,13 @@
       "date": "2026-11-08",
       "lectureId": "spk003-0025"
     },
+    "CldHT6Itmgo": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0137",
+      "channelId": "UCKDfhL-B-OKYq8sHbXfIDCg",
+      "channel": "Bongo Revolt"
+    },
     "Cs3mIz1yUvE": {
       "status": "duplicate",
       "date": "2026-11-08",
@@ -154,6 +272,13 @@
       "status": "rejected",
       "date": "2026-11-08",
       "note": "মোটিভেশনাল রি-কাট চ্যানেল"
+    },
+    "DGFFu1ZgE0E": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0130",
+      "channelId": "UCKDfhL-B-OKYq8sHbXfIDCg",
+      "channel": "Bongo Revolt"
     },
     "DJOgDYUkb6w": {
       "status": "proposed",
@@ -165,15 +290,55 @@
       "date": "2026-11-08",
       "lectureId": "spk003-0080"
     },
+    "DigeMM9axxs": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0127",
+      "channelId": "UCKDfhL-B-OKYq8sHbXfIDCg",
+      "channel": "Bongo Revolt"
+    },
+    "Do1qXEDJABg": {
+      "status": "duplicate",
+      "date": "2026-11-10",
+      "note": "একই লেকচার: spk003-0024"
+    },
+    "DvYUvY3Dll0": {
+      "status": "duplicate",
+      "date": "2026-11-10",
+      "note": "একই লেকচার: spk003-0025"
+    },
     "EcW9B_XsMnk": {
       "status": "rejected",
       "date": "2026-11-08",
       "note": "একই লেকচার: spk003-0012 (দৈর্ঘ্য হুবহু এক)"
     },
+    "G-D9Z8jja1E": {
+      "status": "low-confidence",
+      "date": "2026-11-10",
+      "note": "নাম শুধু বিবরণে"
+    },
+    "G5ply1xXFDU": {
+      "status": "unlisted-channel",
+      "date": "2026-11-10",
+      "channelId": "UC_gVXOcODzh3XvelfuGAbZQ",
+      "channel": "The Islamic lecturer"
+    },
+    "GBaj2RFPD0s": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0131",
+      "channelId": "UCKDfhL-B-OKYq8sHbXfIDCg",
+      "channel": "Bongo Revolt"
+    },
     "GCTOsL6bGrQ": {
       "status": "proposed",
       "date": "2026-11-08",
       "lectureId": "spk003-0023"
+    },
+    "Ggd9ZfDcfXQ": {
+      "status": "low-confidence",
+      "date": "2026-11-10",
+      "note": "নাম শুধু বিবরণে"
     },
     "Gs_fWkAkF74": {
       "status": "rejected",
@@ -185,6 +350,20 @@
       "date": "2026-11-08",
       "lectureId": "spk003-0091"
     },
+    "H8Q6Qg5rd44": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0149",
+      "channelId": "UCyxC4e499ZU1sUZkK9GU66w",
+      "channel": "THE SABIQUN NARRATIVE "
+    },
+    "IAhcS74qe_o": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0138",
+      "channelId": "UCKDfhL-B-OKYq8sHbXfIDCg",
+      "channel": "Bongo Revolt"
+    },
     "ICOG0Km3htQ": {
       "status": "proposed",
       "date": "2026-11-08",
@@ -194,6 +373,20 @@
       "status": "duplicate",
       "date": "2026-11-08",
       "note": "একই লেকচার: arMRLOz0loo"
+    },
+    "IVjKlezHB5Q": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0154",
+      "channelId": "UCyxC4e499ZU1sUZkK9GU66w",
+      "channel": "THE SABIQUN NARRATIVE "
+    },
+    "JaXQG7wXoPQ": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0124",
+      "channelId": "UCKDfhL-B-OKYq8sHbXfIDCg",
+      "channel": "Bongo Revolt"
     },
     "KCaW30KoMRc": {
       "status": "rejected",
@@ -222,20 +415,42 @@
       "date": "2026-11-08",
       "note": "একই লেকচার: 6lswI9HLcr0"
     },
+    "LgT3tiby_bQ": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0119",
+      "channelId": "UCKDfhL-B-OKYq8sHbXfIDCg",
+      "channel": "Bongo Revolt"
+    },
     "LqFEWx45DPw": {
       "status": "rejected",
       "date": "2026-11-07",
       "note": "oEmbed 403 — এমবেড বন্ধ, অ্যাপে চলবে না"
+    },
+    "MCCvxI5_Wvw": {
+      "status": "low-confidence",
+      "date": "2026-11-10",
+      "note": "নাম শুধু বিবরণে"
     },
     "Mv9Ij7T9rr4": {
       "status": "rejected",
       "date": "2026-11-08",
       "note": "রি-কাট/হাইপ শিরোনাম"
     },
+    "N6Tucgmma2Q": {
+      "status": "duplicate",
+      "date": "2026-11-10",
+      "note": "একই লেকচার: spk003-0023"
+    },
     "NYwEDK4ZVAM": {
       "status": "proposed",
       "date": "2026-11-08",
       "lectureId": "spk003-0118"
+    },
+    "NtOaGvQZrzk": {
+      "status": "low-confidence",
+      "date": "2026-11-10",
+      "note": "নাম শুধু বিবরণে"
     },
     "NwhJx1PMtj0": {
       "status": "rejected",
@@ -262,6 +477,13 @@
       "date": "2026-11-08",
       "note": "রি-কাট/হাইপ শিরোনাম"
     },
+    "PJe3CrM-cgc": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0125",
+      "channelId": "UCKDfhL-B-OKYq8sHbXfIDCg",
+      "channel": "Bongo Revolt"
+    },
     "PlZ9aE3GUJ8": {
       "status": "rejected",
       "date": "2026-11-07",
@@ -278,6 +500,11 @@
       "lectureId": "spk003-0046",
       "note": "চ্যানেল তালিকায় নেই: মুসলিমবঙ্গ-MuslimBongo"
     },
+    "R1aujzJs1xI": {
+      "status": "duplicate",
+      "date": "2026-11-10",
+      "note": "একই লেকচার: spk003-0013"
+    },
     "ROrElFBpnw4": {
       "status": "rejected",
       "date": "2026-11-10",
@@ -288,6 +515,11 @@
       "status": "rejected",
       "date": "2026-11-08",
       "note": "ক্লিপ: 13 মিনিট"
+    },
+    "SXHVIsTPPHg": {
+      "status": "duplicate",
+      "date": "2026-11-10",
+      "note": "একই লেকচার: spk003-0021"
     },
     "SlqZcVt6Mjw": {
       "status": "rejected",
@@ -311,6 +543,13 @@
       "date": "2026-11-08",
       "note": "একই লেকচার: spk003-0002"
     },
+    "UPznRV25ufM": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0120",
+      "channelId": "UCKDfhL-B-OKYq8sHbXfIDCg",
+      "channel": "Bongo Revolt"
+    },
     "UtaGkaJNWNo": {
       "status": "proposed",
       "date": "2026-11-08",
@@ -320,6 +559,18 @@
       "status": "duplicate",
       "date": "2026-11-08",
       "note": "একই লেকচার: KCaW30KoMRc"
+    },
+    "VK7CQEITZa0": {
+      "status": "low-confidence",
+      "date": "2026-11-10",
+      "note": "নাম শুধু বিবরণে"
+    },
+    "Vj-WuMP9i-Y": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0134",
+      "channelId": "UCKDfhL-B-OKYq8sHbXfIDCg",
+      "channel": "Bongo Revolt"
     },
     "Vj3ADBdhgg8": {
       "status": "rejected",
@@ -347,6 +598,13 @@
       "date": "2026-11-08",
       "note": "ক্লিপ: 10 মিনিট"
     },
+    "WairNigq1eE": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0158",
+      "channelId": "UCyxC4e499ZU1sUZkK9GU66w",
+      "channel": "THE SABIQUN NARRATIVE "
+    },
     "Way-5bbq0Zo": {
       "status": "rejected",
       "date": "2026-11-10",
@@ -367,6 +625,18 @@
       "status": "duplicate",
       "date": "2026-11-08",
       "note": "একই লেকচার: y-IrbQ4-Pcw"
+    },
+    "XygvDGIaQ_4": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0126",
+      "channelId": "UCKDfhL-B-OKYq8sHbXfIDCg",
+      "channel": "Bongo Revolt"
+    },
+    "Y0rvmmYwGIg": {
+      "status": "low-confidence",
+      "date": "2026-11-10",
+      "note": "নাম শুধু বিবরণে"
     },
     "YOlo3B5ca2E": {
       "status": "proposed",
@@ -395,6 +665,13 @@
       "date": "2026-11-08",
       "note": "ক্লিপ: 13 মিনিট"
     },
+    "_UQHNytyvbs": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0139",
+      "channelId": "UCKDfhL-B-OKYq8sHbXfIDCg",
+      "channel": "Bongo Revolt"
+    },
     "a9xN5ZXKvtA": {
       "status": "rejected",
       "date": "2026-11-10",
@@ -420,6 +697,13 @@
       "status": "proposed",
       "date": "2026-11-08",
       "lectureId": "spk003-0090"
+    },
+    "b6Eup8L8K78": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0133",
+      "channelId": "UCKDfhL-B-OKYq8sHbXfIDCg",
+      "channel": "Bongo Revolt"
     },
     "b6PV7DlyXbk": {
       "status": "proposed",
@@ -466,20 +750,60 @@
       "date": "2026-11-08",
       "note": "ক্লিপ: 12 মিনিট"
     },
+    "dvAOATBGc-E": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0122",
+      "channelId": "UCC9_TTBWgfvMZ8Qt_8vbEjg",
+      "channel": "ইনকিলাব"
+    },
     "e1P_8MtfToo": {
       "status": "duplicate",
       "date": "2026-11-08",
       "note": "একই লেকচার: SlqZcVt6Mjw"
+    },
+    "e7Q4Aam0W64": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0147",
+      "channelId": "UCKDfhL-B-OKYq8sHbXfIDCg",
+      "channel": "Bongo Revolt"
+    },
+    "eKh5bDgOh5c": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0121",
+      "channelId": "UCC9_TTBWgfvMZ8Qt_8vbEjg",
+      "channel": "ইনকিলাব"
+    },
+    "fIFBdG7NzMc": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0153",
+      "channelId": "UC5jQVTnx1-RT9JiaqBCdeCQ",
+      "channel": "Voice of Deen দ্বীনের কণ্ঠস্বর "
     },
     "fLmtA7NMURY": {
       "status": "rejected",
       "date": "2026-11-08",
       "note": "শিরোনামে বিষয় নেই"
     },
+    "fk_qChsNBLY": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0129",
+      "channelId": "UCKDfhL-B-OKYq8sHbXfIDCg",
+      "channel": "Bongo Revolt"
+    },
     "gNFi_2JRNqI": {
       "status": "rejected",
       "date": "2026-11-08",
       "note": "ক্লিপ: 12 মিনিট"
+    },
+    "gbcnPw6RNnw": {
+      "status": "low-confidence",
+      "date": "2026-11-10",
+      "note": "নাম শুধু বিবরণে"
     },
     "gecR1QYpp7w": {
       "status": "rejected",
@@ -490,6 +814,11 @@
       "status": "rejected",
       "date": "2026-11-08",
       "note": "মোটিভেশনাল রি-কাট চ্যানেল"
+    },
+    "hB9GS0pQ4rI": {
+      "status": "low-confidence",
+      "date": "2026-11-10",
+      "note": "নাম শুধু বিবরণে"
     },
     "hZPfiDzezyk": {
       "status": "rejected",
@@ -518,6 +847,13 @@
       "date": "2026-11-08",
       "note": "ক্লিপ: 10 মিনিট"
     },
+    "iQaOknViTv0": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0148",
+      "channelId": "UCKDfhL-B-OKYq8sHbXfIDCg",
+      "channel": "Bongo Revolt"
+    },
     "iUxDMvuroJo": {
       "status": "rejected",
       "date": "2026-11-08",
@@ -543,6 +879,11 @@
       "date": "2026-11-08",
       "note": "ক্লিপ: 10 মিনিট"
     },
+    "kGfSolb2Beg": {
+      "status": "duplicate",
+      "date": "2026-11-10",
+      "note": "একই লেকচার: spk003-0020"
+    },
     "kSDzT5Mo1fA": {
       "status": "duplicate",
       "date": "2026-11-08",
@@ -552,6 +893,13 @@
       "status": "proposed",
       "date": "2026-11-08",
       "lectureId": "spk003-0083"
+    },
+    "kiGcFon4sHQ": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0155",
+      "channelId": "UCyxC4e499ZU1sUZkK9GU66w",
+      "channel": "THE SABIQUN NARRATIVE "
     },
     "kw990jR16gw": {
       "status": "rejected",
@@ -572,6 +920,11 @@
       "status": "duplicate",
       "date": "2026-11-08",
       "note": "একই লেকচার: KCaW30KoMRc"
+    },
+    "lh6Z9Zo9zwg": {
+      "status": "low-confidence",
+      "date": "2026-11-10",
+      "note": "নাম শুধু বিবরণে"
     },
     "m35G61y_CvU": {
       "status": "rejected",
@@ -614,6 +967,11 @@
       "date": "2026-11-07",
       "note": "সংবাদ প্রতিবেদন, লেকচার নয় (জাকারিয়া মাসুদের তালিকা থেকেও একই কারণে বাদ)"
     },
+    "pYFA7uSjff0": {
+      "status": "duplicate",
+      "date": "2026-11-10",
+      "note": "একই লেকচার: spk003-0022"
+    },
     "pd6DcbhioOc": {
       "status": "rejected",
       "date": "2026-11-08",
@@ -635,6 +993,18 @@
       "lectureId": "spk003-0113",
       "note": "চ্যানেল তালিকায় নেই: The Islamic lecturer"
     },
+    "rJflDxiG_jg": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0150",
+      "channelId": "UC5jQVTnx1-RT9JiaqBCdeCQ",
+      "channel": "Voice of Deen দ্বীনের কণ্ঠস্বর "
+    },
+    "rdqycVLNRbw": {
+      "status": "duplicate",
+      "date": "2026-11-10",
+      "note": "একই লেকচার: spk003-0010"
+    },
     "rs8zrk6fjdw": {
       "status": "rejected",
       "date": "2026-11-08",
@@ -650,10 +1020,36 @@
       "date": "2026-11-08",
       "note": "একই লেকচার: lcaBWuWbtr8"
     },
+    "tmYreZgXQBg": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0140",
+      "channelId": "UCKDfhL-B-OKYq8sHbXfIDCg",
+      "channel": "Bongo Revolt"
+    },
     "tqt4W71ksPo": {
       "status": "rejected",
       "date": "2026-11-08",
       "note": "রি-কাট/হাইপ শিরোনাম"
+    },
+    "u1EqHTUjQHk": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0141",
+      "channelId": "UCKDfhL-B-OKYq8sHbXfIDCg",
+      "channel": "Bongo Revolt"
+    },
+    "uJNc-8GmTMA": {
+      "status": "proposed",
+      "date": "2026-11-10",
+      "lectureId": "spk003-0143",
+      "channelId": "UCKDfhL-B-OKYq8sHbXfIDCg",
+      "channel": "Bongo Revolt"
+    },
+    "u_7dkzE1eV0": {
+      "status": "low-confidence",
+      "date": "2026-11-10",
+      "note": "নাম শুধু বিবরণে"
     },
     "vA0oW-mELbg": {
       "status": "rejected",

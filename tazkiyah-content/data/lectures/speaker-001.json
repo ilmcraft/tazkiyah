@@ -340,6 +340,51 @@
       "durationSec": 3046,
       "publishedAt": "2026-10-30",
       "addedAt": "2026-11-08"
+    },
+    {
+      "id": "spk001-0082",
+      "title": "কেনো এই প্রজন্ম ধ্বংসের দিকে যাচ্ছে?!",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "TSu2hCiMN-Q", "startSec": 0 },
+      "durationSec": 3259,
+      "publishedAt": "2026-09-11",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk001-0083",
+      "title": "এই দুনিয়ার বাস্তবতা !!",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "FE60s4l9L0s", "startSec": 0 },
+      "durationSec": 4385,
+      "publishedAt": "2026-09-16",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk001-0084",
+      "title": "বাংলা ! কলকাতা ! সংস্কৃতি !",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "IslUp92g7DU", "startSec": 0 },
+      "durationSec": 2485,
+      "publishedAt": "2026-09-16",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk001-0085",
+      "title": "কেমন ছিল উত্তম মানুষদের উত্তম মৃ*ত্যুগুলো?!",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "9mdPbIzmXpM", "startSec": 0 },
+      "durationSec": 2065,
+      "publishedAt": "2026-10-15",
+      "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk001-0086",
+      "title": "হাদিস শাস্ত্রের মূলনীতি সম্পর্কে চমৎকার আলোচনা",
+      "categoryIds": ["hadith"],
+      "media": { "type": "youtube", "videoId": "1PTGYpucUxs", "startSec": 0 },
+      "durationSec": 3796,
+      "publishedAt": "2026-11-10",
+      "addedAt": "2026-11-10"
     }
   ]
 }
