@@ -415,15 +415,6 @@
       "addedAt": "2026-11-10"
     },
     {
-      "id": "spk003-0121",
-      "title": "চোখ খুলে যাওয়ার মতো একটি ভিডিও",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "eKh5bDgOh5c", "startSec": 0 },
-      "durationSec": 1265,
-      "publishedAt": "2024-11-26",
-      "addedAt": "2026-11-10"
-    },
-    {
       "id": "spk003-0122",
       "title": "জামাত ক্ষমতা পেলেও খিলাফত হবেনা?",
       "categoryIds": ["history"],
@@ -605,7 +596,7 @@
     },
     {
       "id": "spk003-0142",
-      "title": "ওরা ভাবতো মুসলিম আর হিন্দুর মধ্যে যু*দ্ধ লেগেছে",
+      "title": "ওরা ভাবতো মুসলিম আর হিন্দুর মধ্যে যুদ্ধ লেগেছে",
       "categoryIds": ["history"],
       "media": { "type": "youtube", "videoId": "8BahARnoFF0", "startSec": 0 },
       "durationSec": 1052,
@@ -686,20 +677,11 @@
     },
     {
       "id": "spk003-0151",
-      "title": "শরীয়াহর আকাঙ্ক্ষা কেন অপরাধ.? ঔপনিবেশিক ধারাবাহিকতা",
+      "title": "শরীয়াহর আকাঙ্ক্ষা কেন অপরাধ? ঔপনিবেশিক ধারাবাহিকতা",
       "categoryIds": ["contemporary"],
       "media": { "type": "youtube", "videoId": "3QPk5YToj3w", "startSec": 0 },
       "durationSec": 2108,
       "publishedAt": "2026-09-25",
-      "addedAt": "2026-11-10"
-    },
-    {
-      "id": "spk003-0152",
-      "title": "এখন আমাদের করণীয় কি ?!",
-      "categoryIds": ["contemporary"],
-      "media": { "type": "youtube", "videoId": "4xL46hz7jbI", "startSec": 0 },
-      "durationSec": 1883,
-      "publishedAt": "2026-10-09",
       "addedAt": "2026-11-10"
     },
     {
@@ -722,7 +704,7 @@
     },
     {
       "id": "spk003-0155",
-      "title": "আধুনিক রাষ্ট্র ব্যবস্থার উত্থানের ইতিহাস !!",
+      "title": "আধুনিক রাষ্ট্র ব্যবস্থার উত্থানের ইতিহাস",
       "categoryIds": ["history", "contemporary"],
       "media": { "type": "youtube", "videoId": "kiGcFon4sHQ", "startSec": 0 },
       "durationSec": 1643,
@@ -731,7 +713,7 @@
     },
     {
       "id": "spk003-0156",
-      "title": "কালিমা ! দর্শন ! আদর্শ !",
+      "title": "কালিমা, দর্শন, আদর্শ",
       "categoryIds": ["contemporary"],
       "media": { "type": "youtube", "videoId": "2L5iJjnD3fw", "startSec": 0 },
       "durationSec": 3084,
