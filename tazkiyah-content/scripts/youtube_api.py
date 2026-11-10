@@ -123,8 +123,12 @@ class YouTubeClient:
                 break
         return ids
 
-    def search_video_ids(self, query: str, order: str, max_pages: int) -> list[str]:
-        """Embeddable videos matching a query, up to max_pages × 50 (search bucket: 1 per page)."""
+    def search_video_ids(
+        self, query: str, order: str, max_pages: int, published_after: str | None = None
+    ) -> list[str]:
+        """Embeddable videos matching a query, up to max_pages × 50 (search bucket: 1 per page).
+
+        `published_after` (YYYY-MM-DD) keeps only videos uploaded on or after that day."""
         ids: list[str] = []
         token: str | None = None
         for _ in range(max_pages):
@@ -138,6 +142,8 @@ class YouTubeClient:
                 "relevanceLanguage": "bn",
                 "videoEmbeddable": "true",
             }
+            if published_after:
+                params["publishedAfter"] = f"{published_after}T00:00:00Z"
             if token:
                 params["pageToken"] = token
             page = self._get("search", params)

@@ -7,6 +7,10 @@
   "additionalProperties": false,
   "properties": {
     "speakerId": { "type": "string", "pattern": "^speaker-[0-9]{3,}$" },
+    "lastSearch": {
+      "description": "Day of the last complete search sweep; the next one only looks at uploads from two weeks before it.",
+      "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$", "format": "date"
+    },
     "videos": {
       "type": "object",
       "propertyNames": { "pattern": "^[A-Za-z0-9_-]{11}$" },
@@ -16,11 +20,13 @@
         "required": ["status", "date"],
         "properties": {
           "status": {
-            "description": "proposed: added to a review PR. duplicate / low-confidence: only listed in the PR. rejected: excluded by a person.",
-            "enum": ["proposed", "duplicate", "low-confidence", "rejected"]
+            "description": "proposed: added to a review PR. duplicate / low-confidence: only listed in the PR. unlisted-channel: a good match on a channel that is not in sources.json — not added; looked at again once that channel is listed. rejected: excluded by a person.",
+            "enum": ["proposed", "duplicate", "low-confidence", "unlisted-channel", "rejected"]
           },
           "date": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$", "format": "date" },
           "lectureId": { "type": "string", "pattern": "^spk[0-9]{3,}-[0-9]{4,}$" },
+          "channelId": { "type": "string", "pattern": "^UC[A-Za-z0-9_-]{22}$" },
+          "channel": { "description": "The channel's name when the video was found.", "type": "string" },
           "note": { "type": "string" }
         }
       }

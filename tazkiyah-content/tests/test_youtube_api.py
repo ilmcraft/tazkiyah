@@ -95,6 +95,14 @@ def test_search_uses_search_bucket_and_stops_at_max_pages():
     assert api.usage.searches == 2 and api.usage.units == 0
     query = parse_qs(urlparse(transport.requests[0].full_url).query)
     assert query["videoEmbeddable"] == ["true"] and query["type"] == ["video"] and query["order"] == ["date"]
+    assert "publishedAfter" not in query
+
+
+def test_search_can_be_limited_to_recent_uploads():
+    api, transport = client({"items": []})
+    api.search_video_ids("হারুন ইজহার", "date", 1, published_after="2026-10-25")
+    query = parse_qs(urlparse(transport.requests[0].full_url).query)
+    assert query["publishedAfter"] == ["2026-10-25T00:00:00Z"]
 
 
 def test_videos_are_fetched_fifty_at_a_time():

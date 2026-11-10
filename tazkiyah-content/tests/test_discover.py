@@ -15,13 +15,17 @@ from youtube_api import QuotaExceeded, Usage
 
 TODAY = date(2026, 11, 8)
 OFFICIAL = "UCofficial0000000000000a"
-OTHER = "UCother000000000000000aa"
+OTHER = "UCother000000000000000aa"  # a listed host channel: the speaker's name must be in the title
+STRANGER = "UCstranger0000000000000a"  # not in sources.json
 
 SOURCES = {
     "speakers": [
         {
             "speakerId": "speaker-001",
-            "channels": [{"id": OFFICIAL, "handle": "@first", "name": "First Official", "official": True}],
+            "channels": [
+                {"id": OFFICIAL, "handle": "@first", "name": "First Official", "official": True},
+                {"id": OTHER, "name": "অন্য চ্যানেল", "official": False},
+            ],
             "playlists": [{"id": "PLtrusted00000", "name": "বিশ্বস্ত প্লেলিস্ট", "trusted": True}],
             "queries": ["প্রথম বক্তা", "First Speaker", "প্রথম বক্তা লেকচার"],
             "mustMatch": ["প্রথম বক্তা", "first speaker"],
@@ -90,10 +94,11 @@ class FakeClient:
         self.usage.units += 1
         return list(self.playlists.get(playlist_id, []))
 
-    def search_video_ids(self, query, order, max_pages):
+    def search_video_ids(self, query, order, max_pages, published_after=None):
         if self.fail_search:
             raise QuotaExceeded("search: quotaExceeded")
         self.search_calls.append((query, order, max_pages))
+        self.published_after = published_after
         found = []
         for page in self.searches.get(query, [[]])[:max_pages]:
             self.usage.searches += 1
@@ -189,7 +194,10 @@ def test_sweep_adds_new_lectures_and_skips_known(content):
     }
     assert new["OFFICIAL001"]["categoryIds"] == ["salah"]
     seen = read_json(content, "discovery/seen/speaker-001.json")["videos"]
-    assert seen["SEARCHHIT01"] == {"status": "proposed", "date": "2026-11-08", "lectureId": "spk001-0004"}
+    assert seen["SEARCHHIT01"] == {
+        "status": "proposed", "date": "2026-11-08", "lectureId": "spk001-0004",
+        "channelId": OTHER, "channel": "অন্য চ্যানেল",
+    }
     assert seen["SEENSEEN001"]["status"] == "rejected"
 
     # What the bot wrote is a valid catalog, in the hand-written file style.
@@ -568,3 +576,146 @@ def test_excluded_channels_are_skipped_for_every_speaker(content):
     result = run(content, fake)
     assert [c.video_id for c in result.added] == ["OTHERCHAN01"]
     assert result.dropped == {"clickbait": 1}
+
+
+# ------------------------------------------------------------------ listed channels only, new uploads only
+
+
+def stranger(vid, title="প্রথম বক্তা | সবরের ফজিলত", **kwargs):
+    return item(vid, title, channel="Waz Mirror", channel_id=STRANGER, **kwargs)
+
+
+def test_name_match_on_an_unlisted_channel_is_reported_not_added(content):
+    before = (content / LECTURE_FILE).read_text()
+    fake = FakeClient(
+        searches={"প্রথম বক্তা": [["STRANGER001", "STRANGER002", "STRANGER003"]]},
+        videos={
+            "STRANGER001": stranger("STRANGER001"),
+            "STRANGER002": stranger("STRANGER002", "প্রথম বক্তা | তাওবার দরজা", duration="PT50M"),
+            "STRANGER003": stranger("STRANGER003", "ঈমানের দাবি", description="আলোচক: প্রথম বক্তা"),
+        },
+    )
+    result = run(content, fake)
+    assert result.added == [] and result.low_confidence == []
+    assert [c.video_id for c in result.unlisted] == ["STRANGER001", "STRANGER002"]
+    assert result.dropped == {"no_name": 1}
+    assert (content / LECTURE_FILE).read_text() == before
+    seen = read_json(content, "discovery/seen/speaker-001.json")
+    assert seen["videos"]["STRANGER001"] == {
+        "status": "unlisted-channel", "date": "2026-11-08", "channelId": STRANGER, "channel": "Waz Mirror",
+    }
+    assert validate.validate_repo(content)[0] == []
+    report = discover.render_report(result, TODAY)
+    assert "তালিকার বাইরের চ্যানেল" in report
+    assert f"| [Waz Mirror](https://www.youtube.com/channel/{STRANGER}) | `{STRANGER}` | ২টি |" in report
+    # Decided: the same search result does not come back.
+    again = run(content, fake)
+    assert again.unlisted == [] and again.files_changed == []
+
+
+def test_listing_the_channel_brings_its_set_aside_lectures_in(content):
+    fake = FakeClient(searches={"প্রথম বক্তা": [["STRANGER001"]]}, videos={"STRANGER001": stranger("STRANGER001")})
+    assert run(content, fake).added == []
+    sources = read_json(content, "discovery/sources.json")
+    sources["speakers"][0]["channels"].append({"id": STRANGER, "name": "Waz Mirror", "official": False})
+    write_json(content, "discovery/sources.json", sources)
+    fake.playlists = {"UU" + STRANGER[2:]: ["STRANGER001"]}
+    fake.searches = {}
+    result = run(content, fake)
+    assert [c.video_id for c in result.added] == ["STRANGER001"]
+    assert read_json(content, "discovery/seen/speaker-001.json")["videos"]["STRANGER001"]["status"] == "proposed"
+
+
+def test_import_does_not_add_from_unlisted_channels(content, tmp_path):
+    research = tmp_path / "research.md"
+    research.write_text("https://youtu.be/STRANGER001", encoding="utf-8")
+    fake = FakeClient(videos={"STRANGER001": stranger("STRANGER001")})
+    result = run(content, fake, imported_ids=discover.research_ids(research.read_text()))
+    assert result.added == [] and [c.video_id for c in result.unlisted] == ["STRANGER001"]
+
+
+def test_daily_search_only_looks_at_uploads_since_the_last_one(content):
+    # The newest entry in `seen` is 2026-11-07: two weeks of overlap before it.
+    fake = FakeClient(searches={"প্রথম বক্তা": [["SEARCHHIT01"]]}, videos={"SEARCHHIT01": item("SEARCHHIT01", "প্রথম বক্তা: সবর")})
+    result = run(content, fake)
+    assert fake.published_after == "2026-10-24" and result.since == "2026-10-24"
+    assert {order for _, order, _ in fake.search_calls} == {"date"}
+    seen = read_json(content, "discovery/seen/speaker-001.json")
+    assert seen["lastSearch"] == "2026-11-08" and list(seen) == ["speakerId", "lastSearch", "videos"]
+    assert discover.search_since(seen) == "2026-10-25"
+    assert "২০২৬-১০-২৪ থেকে আপলোড হওয়া ভিডিও" in discover.render_report(result, TODAY)
+
+
+def test_backfill_and_a_first_sweep_search_everything(content):
+    fake = FakeClient()
+    assert run(content, fake, backfill=True).since is None and fake.published_after is None
+    assert discover.search_since({"speakerId": "speaker-002", "videos": {}}) is None
+    code = discover.main(["sweep", "--root", str(content), "--speaker", "speaker-001", "--backfill"], client=fake)
+    assert code == 0 and fake.published_after is None
+
+
+def test_cut_short_search_does_not_move_the_date(content):
+    fake = FakeClient(
+        playlists={"UUofficial0000000000000a": ["OFFICIALTK1"]},
+        videos={"OFFICIALTK1": item("OFFICIALTK1", "তাওবার শর্ত", channel_id=OFFICIAL)},
+        fail_search=True,
+    )
+    assert len(run(content, fake).added) == 1
+    assert "lastSearch" not in read_json(content, "discovery/seen/speaker-001.json")
+
+
+def test_official_copy_of_an_existing_lecture_is_pointed_out(content):
+    # spk001-0001 is "তাওবার শর্ত ও পদ্ধতি", durationSec 2730.
+    fake = FakeClient(
+        playlists={"UUofficial0000000000000a": ["OFFICIALCPY"]},
+        videos={"OFFICIALCPY": item("OFFICIALCPY", "তাওবার শর্ত ও পদ্ধতি", channel_id=OFFICIAL, duration="PT45M30S")},
+    )
+    assert "`spk001-0001` — এটি অফিশিয়াল কপি" in discover.render_report(run(content, fake), TODAY)
+
+
+def test_sweep_all_covers_every_speaker_in_one_report(content, tmp_path):
+    fake = FakeClient(
+        playlists={"UUofficial0000000000000a": ["OFFICIALTK1"]},
+        searches={"প্রথম বক্তা": [["X0000000001"]] * 9, "দ্বিতীয় বক্তা": [["STRANGER001"]]},
+        videos={
+            "OFFICIALTK1": item("OFFICIALTK1", "তাওবার শর্ত", channel_id=OFFICIAL),
+            "STRANGER001": stranger("STRANGER001", "দ্বিতীয় বক্তা | সবরের ফজিলত"),
+        },
+    )
+    report, out = tmp_path / "report.md", tmp_path / "out.txt"
+    code = discover.main(
+        ["sweep", "--root", str(content), "--all", "--date", "2026-11-08", "--search-budget", "8",
+         "--report", str(report), "--github-output", str(out)],
+        client=fake,
+    )
+    assert code == 0
+    assert "added=1\n" in out.read_text() and "name=২ জন বক্তা\n" in out.read_text()
+    text = report.read_text()
+    assert "১টি যোগ, ২ জন বক্তা" in text and "প্রথম বক্তা" in text and "দ্বিতীয় বক্তা" in text
+    assert "Waz Mirror" in text and text.count("কীভাবে রিভিউ করবেন") == 1
+    assert "সার্চ ৪/১০০" in text  # 3 queries of the first speaker (at most half of the 8) + 1 of the second
+    assert read_json(content, "discovery/seen/speaker-002.json")["videos"]["STRANGER001"]["status"] == "unlisted-channel"
+    assert validate.validate_repo(content)[0] == []
+
+
+def test_sweep_all_keeps_finished_speakers_when_the_quota_runs_out(content):
+    class Flaky(FakeClient):
+        def videos(self, ids):
+            ids = list(ids)
+            if "STRANGER001" in ids:
+                raise QuotaExceeded("videos: quotaExceeded")
+            return super().videos(ids)
+
+    fake = Flaky(
+        playlists={"UUofficial0000000000000a": ["OFFICIALTK1"]},
+        searches={"দ্বিতীয় বক্তা": [["STRANGER001"]]},
+        videos={"OFFICIALTK1": item("OFFICIALTK1", "তাওবার শর্ত", channel_id=OFFICIAL)},
+    )
+    results, stopped_at = discover.sweep_all(content, fake, TODAY)
+    assert [len(r.added) for r in results] == [1] and stopped_at == "speaker-002"
+    assert "`speaker-002` থেকে বাকি বক্তাদের দেখা হয়নি" in discover.render_all_report(results, stopped_at, TODAY)
+
+
+def test_sweep_needs_a_speaker_or_all(content, capsys):
+    assert discover.main(["sweep", "--root", str(content)], client=FakeClient()) == 1
+    assert "--all" in capsys.readouterr().err

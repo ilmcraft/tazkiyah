@@ -1,6 +1,10 @@
-# Daily lecture finder: sweeps ONE speaker per day (rotation in tazkiyah-content/discovery/sources.json),
-# so the free YouTube quota (100 searches/day) is spent deeply on that speaker. New lectures arrive as a
-# pull request for review; nothing reaches the app until it is merged (publish.yml then ships it).
+# Weekly lecture finder: sweeps EVERY speaker (tazkiyah-content/discovery/sources.json) in one run, sharing the
+# free YouTube quota (100 searches/day) between them. New lectures arrive as ONE pull request for review;
+# nothing reaches the app until it is merged (publish.yml then ships it).
+#
+# Lectures are added only from the channels and playlists listed in sources.json; name matches on other
+# channels are reported in the pull request for a person to list or refuse. Searches look only at videos
+# uploaded since the last search; run by hand with "backfill" to search older uploads too.
 #
 # Needs the repository secret YOUTUBE_API_KEY, and Settings → Actions → General →
 # "Allow GitHub Actions to create and approve pull requests".
@@ -9,17 +13,22 @@
 name: discover-lectures
 on:
   schedule:
-    - cron: "17 1 * * *" # 07:17 Bangladesh time
+    - cron: "17 1 * * 5" # Fridays, 07:17 Bangladesh time
   workflow_dispatch:
     inputs:
       speaker:
-        description: "Speaker id such as speaker-002 (empty: today's speaker in the rotation)"
+        description: "Speaker id such as speaker-002 (empty: every speaker)"
         required: false
         default: ""
       search_budget:
         description: "Searches this run may use (empty: 90). The 100 searches/day are shared by every run that day."
         required: false
         default: ""
+      backfill:
+        description: "Also search old uploads (all of YouTube's history), not only those since the last search"
+        type: boolean
+        required: false
+        default: false
 permissions:
   contents: write
   pull-requests: write
@@ -42,22 +51,29 @@ jobs:
           cache-dependency-path: tazkiyah-content/requirements-dev.txt
       - run: pip install -r requirements-dev.txt
 
-      - name: Pick the speaker
+      - name: Pick who to sweep
         id: pick
         env:
           REQUESTED: ${{ inputs.speaker }}
-        run: python scripts/discover.py pick --speaker "$REQUESTED" --github-output "$GITHUB_OUTPUT"
+        run: |
+          if [ -n "$REQUESTED" ]; then
+            speaker=$(python scripts/discover.py pick --speaker "$REQUESTED")
+            echo "args=--speaker $speaker" >> "$GITHUB_OUTPUT"
+            echo "branch=bot/lectures-$speaker" >> "$GITHUB_OUTPUT"
+          else
+            echo "args=--all" >> "$GITHUB_OUTPUT"
+            echo "branch=bot/lectures-weekly" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Skip while a review is open
         id: open
         env:
           GH_TOKEN: ${{ github.token }}
-          SPEAKER: ${{ steps.pick.outputs.speaker }}
         run: |
-          count=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "bot/lectures-$SPEAKER" --state open --json number --jq length)
+          count=$(gh pr list --repo "$GITHUB_REPOSITORY" --label new-lectures --state open --json number --jq length)
           echo "count=$count" >> "$GITHUB_OUTPUT"
           if [ "$count" != "0" ]; then
-            echo "::notice::$SPEAKER already has an open review pull request; it is skipped until that one is merged or closed."
+            echo "::notice::A new-lectures pull request is still open; this run is skipped until it is merged or closed."
           fi
 
       - name: Find new lectures
@@ -65,10 +81,11 @@ jobs:
         if: steps.open.outputs.count == '0'
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
-          SPEAKER: ${{ steps.pick.outputs.speaker }}
+          SWEEP_ARGS: ${{ steps.pick.outputs.args }}
           SEARCH_BUDGET: ${{ inputs.search_budget }}
+          BACKFILL_FLAG: ${{ inputs.backfill == true && '--backfill' || '' }}
         run: >-
-          python scripts/discover.py sweep --speaker "$SPEAKER" --search-budget "${SEARCH_BUDGET:-90}"
+          python scripts/discover.py sweep $SWEEP_ARGS --search-budget "${SEARCH_BUDGET:-90}" $BACKFILL_FLAG
           --report "$RUNNER_TEMP/report.md" --github-output "$GITHUB_OUTPUT"
 
       - name: Validate
@@ -79,12 +96,12 @@ jobs:
         if: steps.discover.outputs.changed == 'true'
         uses: peter-evans/create-pull-request@15733dbdfeedb4f7fdb73d13c6f5ac83b710fab8 # v8.1.2
         with:
-          branch: bot/lectures-${{ steps.pick.outputs.speaker }}
+          branch: ${{ steps.pick.outputs.branch }}
           delete-branch: true
           add-paths: |
             tazkiyah-content/data/lectures/*.json
             tazkiyah-content/discovery/seen/*.json
-          commit-message: "content: new lectures for ${{ steps.pick.outputs.speaker }} (bot)"
+          commit-message: "content: new lectures (bot)"
           title: "নতুন লেকচার: ${{ steps.discover.outputs.name }} (${{ steps.discover.outputs.added }}টি)"
           body-path: ${{ runner.temp }}/report.md
           labels: new-lectures

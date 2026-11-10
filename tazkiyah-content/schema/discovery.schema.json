@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ilmcraft/tazkiyah/tazkiyah-content/schema/discovery.schema.json",
-  "title": "Where the daily bot looks for each speaker's lectures (discovery/sources.json)",
+  "title": "Where the weekly bot looks for each speaker's lectures (discovery/sources.json)",
   "type": "object",
   "required": ["speakers"],
   "additionalProperties": false,
@@ -11,7 +11,7 @@
       "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/text" }
     },
     "speakers": {
-      "description": "Rotation order: the bot sweeps one speaker per day, in this order.",
+      "description": "The bot sweeps every speaker once a week, in this order.",
       "type": "array",
       "minItems": 1,
       "items": { "$ref": "#/$defs/speaker" }
@@ -25,7 +25,10 @@
       "required": ["speakerId", "channels", "playlists", "queries", "mustMatch", "exclude", "defaultCategoryIds"],
       "properties": {
         "speakerId": { "type": "string", "pattern": "^speaker-[0-9]{3,}$" },
-        "channels": { "type": "array", "items": { "$ref": "#/$defs/channel" } },
+        "channels": {
+          "description": "The only channels lectures are added from (with the playlists). A search hit on any other channel is reported for a person to list here or refuse, never added.",
+          "type": "array", "items": { "$ref": "#/$defs/channel" }
+        },
         "playlists": { "type": "array", "items": { "$ref": "#/$defs/playlist" } },
         "queries": {
           "description": "YouTube search queries: every spelling of the name in Bengali and English.",

@@ -18,14 +18,14 @@
 | --- | --- |
 | [`tazkiyah-android/`](tazkiyah-android) | Android অ্যাপ (Kotlin, Jetpack Compose, Room, Media3, android-youtube-player, NewPipeExtractor) |
 | [`tazkiyah-content/`](tazkiyah-content) | লেকচারের তালিকা (JSON), স্কিমা, স্ক্রিপ্ট ও নতুন লেকচার খোঁজার বট — অ্যাপ এখান থেকেই নতুন লেকচার নামায় |
-| [`.github/workflows/`](.github/workflows) | `publish.yml` (কনটেন্ট যাচাই ও manifest), `discover-lectures.yml` (দৈনিক বট), `fill-durations.yml` (সাপ্তাহিক দৈর্ঘ্য), `content-ci.yml`, `android-ci.yml` |
+| [`.github/workflows/`](.github/workflows) | `publish.yml` (কনটেন্ট যাচাই ও manifest), `discover-lectures.yml` (সাপ্তাহিক বট), `fill-durations.yml` (সাপ্তাহিক দৈর্ঘ্য), `content-ci.yml`, `android-ci.yml` |
 | [`docs/`](docs) | ওয়েব ভার্সন ও ডাউনলোড পাতা (GitHub Pages, বিল্ড লাগে না) — `tazkiyah-content/` থেকে সরাসরি তালিকা পড়ে, তাই বক্তা আর লেকচারের সংখ্যা সবসময় আপডেট থাকে। লোকালি দেখতে: `python3 -m http.server 8765 --directory docs` |
 
 বিস্তারিত পরিকল্পনা: [`tazkiyah-android/docs/PLAN.md`](tazkiyah-android/docs/PLAN.md)।
 
 ## নতুন লেকচার
 
-- **নিজে থেকে:** বট প্রতিদিন একজন বক্তার নতুন লেকচার খুঁজে একটি Pull Request খোলে; রিভিউ করে Merge করলেই অ্যাপে চলে যায়।
+- **নিজে থেকে:** বট সপ্তাহে একবার সব বক্তার নতুন লেকচার খুঁজে একটি Pull Request খোলে; রিভিউ করে Merge করলেই অ্যাপে চলে যায়।
 - **হাতে বা AI রিসার্চ দিয়ে:** [`tazkiyah-content/README.md`](tazkiyah-content/README.md) দেখুন। সংক্ষেপে:
 
 ```bash

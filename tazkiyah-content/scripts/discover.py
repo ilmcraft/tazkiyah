@@ -1,17 +1,24 @@
 #!/usr/bin/env python3
 """Find a speaker's new YouTube lectures and add them to the catalog for review.
 
-Run daily by .github/workflows/discover-lectures.yml, one speaker per day (rotation), which then
-opens a pull request; nothing reaches the app until a person merges it.
+Run weekly by .github/workflows/discover-lectures.yml for every speaker at once (`sweep --all`),
+which then opens one pull request; nothing reaches the app until a person merges it.
 
     python scripts/discover.py pick [--speaker speaker-002] [--date 2026-11-08]
-    python scripts/discover.py sweep --speaker speaker-002 [--search-budget 90] [--report r.md] [--dry-run]
+    python scripts/discover.py sweep --all [--backfill] [--search-budget 90] [--report r.md] [--dry-run]
+    python scripts/discover.py sweep --speaker speaker-002 [--backfill] [--search-budget 90] [--report r.md] [--dry-run]
     python scripts/discover.py import --speaker speaker-002 --file research.md [--report r.md] [--dry-run]
     python scripts/discover.py prompt --speaker speaker-002 [--out prompt.md]
 
 sweep   reads the speaker's channels and playlists (discovery/sources.json) completely and runs
-        every search query, within the free daily quota.
+        every search query, within the free daily quota. Searches only look at videos uploaded
+        since the last search (two weeks of overlap); --backfill searches all of YouTube's history.
 import  takes the YouTube links from a research result (see `prompt`) through the same checks.
+
+Lectures are only ever added from the channels and playlists listed in discovery/sources.json.
+A search or research hit on any other channel is never added: it is recorded as
+"unlisted-channel" and the report lists those channels, so a person can approve a channel once
+(add it to the speaker's `channels`) or refuse it (`excludeChannels`).
 prompt  prints the deep-research prompt for one speaker, with the lectures already in the catalog.
 
 Every candidate goes through the same checks: not already in the catalog or in
@@ -30,7 +37,7 @@ import re
 import sys
 import unicodedata
 from dataclasses import dataclass, field
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 from typing import Any, Iterable
 
@@ -84,6 +91,8 @@ HYPE = (
     "সেরা", "শুনেননি", "মূল্যবান", "হীরার", "হৃদয় ছুঁয়ে", "জীবন পরিবর্তন", "জীবন বদলে", "জীবন পাল্টে",
     "কলিজায়", "অগ্নিঝরা", "কঠিন বক্তব্য", "মুখ খুল", "একবার হলেও", "মন কাড়বে", "!!", "‼",
 )
+# Searches look this far back before the last search, so a late-indexed upload is not missed.
+SEARCH_OVERLAP_DAYS = 14
 SAME_LENGTH_DAYS = 120  # equal length (±2 s) uploaded this close together: the same recording
 SPEAKER_ID_RE = re.compile(r"^speaker-[0-9]{3,}$")
 VIDEO_URL_RE = re.compile(r"(?:[?&]v=|youtu\.be/|/shorts/|/live/|/embed/)([A-Za-z0-9_-]{11})(?![A-Za-z0-9_-])")
@@ -96,6 +105,7 @@ DROP_REASONS = {
     "short": "খুব ছোট (Shorts / ক্লিপ)",
     "namesake": "অন্য ব্যক্তি (একই নাম) বা অডিওবুক",
     "not_lecture": "লেকচার নয় (ইন্ট্রো, ট্রেলার, প্রোমো)",
+    "clickbait": "রি-কাট/হাইপ ক্লিপ বা বাদ দেওয়া চ্যানেল",
     "no_topic": "শিরোনামে শুধু বক্তার নাম, বিষয় নেই",
     "no_name": "শিরোনামে বক্তার নাম নেই",
 }
@@ -110,6 +120,7 @@ class Candidate:
     video_id: str
     sources: list[str] = field(default_factory=list)
     trusted: bool = False
+    listed: bool = False  # found in a channel or playlist of sources.json, not only by a search
     title: str = ""
     channel: str = ""
     channel_id: str = ""
@@ -140,10 +151,12 @@ class Result:
     searches: int
     files_changed: list[str]
     search_cut: bool = False  # the daily search quota ran out part-way; channels and playlists were still read
+    unlisted: list[Candidate] = field(default_factory=list)  # good matches on channels not in sources.json
+    since: str | None = None  # searches were limited to uploads from this day on (None: no limit)
 
     @property
     def listed(self) -> int:
-        return len(self.duplicates) + len(self.low_confidence)
+        return len(self.duplicates) + len(self.low_confidence) + len(self.unlisted)
 
 
 # ---------------------------------------------------------------------------
@@ -200,7 +213,11 @@ def load_seen(root: Path, speaker_id: str) -> dict[str, Any]:
 
 
 def save_seen(root: Path, doc: dict[str, Any]) -> None:
-    doc["videos"] = dict(sorted(doc["videos"].items()))
+    ordered = {"speakerId": doc["speakerId"]}
+    if doc.get("lastSearch"):
+        ordered["lastSearch"] = doc["lastSearch"]
+    ordered["videos"] = dict(sorted(doc["videos"].items()))
+    doc = ordered
     _write_atomic(seen_path(root, doc["speakerId"]), json.dumps(doc, ensure_ascii=False, indent=2) + "\n")
 
 
@@ -216,6 +233,16 @@ def rotation_speaker(sources: list[dict[str, Any]], today: date) -> str:
 def search_order(today: date) -> str:
     """Alternate weekly: newest uploads one week, YouTube's relevance ranking (older talks) the next."""
     return "date" if (today.toordinal() // 7) % 2 == 0 else "relevance"
+
+
+def search_since(seen: dict[str, Any]) -> str | None:
+    """The day searches start from: the last search (else the newest entry in `seen`) minus the
+    overlap. None for a speaker that was never swept, whose first search has no limit."""
+    last = seen.get("lastSearch") or max((v.get("date", "") for v in seen["videos"].values()), default="")
+    try:
+        return (date.fromisoformat(last) - timedelta(days=SEARCH_OVERLAP_DAYS)).isoformat()
+    except ValueError:
+        return None
 
 
 def pick_speaker(root: Path, requested: str | None, today: date) -> str:
@@ -364,6 +391,7 @@ def discover(
     order: str | None = None,
     imported_ids: list[str] | None = None,
     dry_run: bool = False,
+    backfill: bool = False,
 ) -> Result:
     config = source_for(root, speaker_id)
     speaker = speaker_info(root, speaker_id)
@@ -371,26 +399,32 @@ def discover(
     lectures = _all_lectures(root)
     seen = load_seen(root, speaker_id)
     official_ids = {ch["id"] for ch in config.get("channels", []) if ch.get("official")}
+    listed_ids = {ch["id"] for ch in config.get("channels", [])}
     mode = "import" if imported_ids is not None else "sweep"
-    order = order or search_order(today)
+    # A scheduled sweep searches only what was uploaded since the last one, newest first; old talks are
+    # searched for only on request (--backfill), in the weekly alternating order.
+    since = None if backfill or mode == "import" else search_since(seen)
+    order = order or ("date" if since else search_order(today))
 
     candidates: dict[str, Candidate] = {}
     search_cut = False
+    searched_all = False
 
-    def add(ids: Iterable[str], label: str, trusted: bool) -> None:
+    def add(ids: Iterable[str], label: str, trusted: bool, listed: bool = False) -> None:
         for vid in ids:
             c = candidates.setdefault(vid, Candidate(vid))
             if label not in c.sources:
                 c.sources.append(label)
             c.trusted = c.trusted or trusted
+            c.listed = c.listed or listed
 
     if imported_ids is not None:
         add(imported_ids, "রিসার্চ ফাইল", trusted=False)
     else:
         for ch in config.get("channels", []):
-            add(client.playlist_video_ids(uploads_playlist(ch["id"])), f"চ্যানেল: {ch['name']}", ch.get("official", False))
+            add(client.playlist_video_ids(uploads_playlist(ch["id"])), f"চ্যানেল: {ch['name']}", ch.get("official", False), listed=True)
         for pl in config.get("playlists", []):
-            add(client.playlist_video_ids(pl["id"]), f"প্লেলিস্ট: {pl['name']}", pl.get("trusted", False))
+            add(client.playlist_video_ids(pl["id"]), f"প্লেলিস্ট: {pl['name']}", pl.get("trusted", False), listed=True)
         queries = config.get("queries", [])
         for i, query in enumerate(queries):
             remaining = search_budget - client.usage.searches
@@ -398,27 +432,42 @@ def discover(
                 break
             share = max(1, remaining // (len(queries) - i))
             try:
-                add(client.search_video_ids(query, order, share), f"সার্চ: {query}", trusted=False)
+                add(client.search_video_ids(query, order, share, since), f"সার্চ: {query}", trusted=False)
             except QuotaExceeded:
                 # The search bucket (100/day) is separate from the units pool: keep what the channels and
                 # playlists found and finish the run; tomorrow's searches pick up the rest.
                 search_cut = True
                 break
+        else:
+            searched_all = True
 
     known = {
         lec.get("media", {}).get("videoId")
         for _, lec in lectures
         if isinstance(lec.get("media"), dict)
     }
-    fresh = [c for c in candidates.values() if c.video_id not in known and c.video_id not in seen["videos"]]
+
+    def undecided(c: Candidate) -> bool:
+        """Not decided on before — or set aside for its channel, which has been listed since."""
+        entry = seen["videos"].get(c.video_id)
+        if entry is None:
+            return True
+        return entry.get("status") == "unlisted-channel" and (c.listed or entry.get("channelId") in listed_ids)
+
+    fresh = [c for c in candidates.values() if c.video_id not in known and undecided(c)]
     details = client.videos(c.video_id for c in fresh) if fresh else {}
 
     names = [speaker["name"], speaker["nameEn"], *config.get("queries", []), *config.get("mustMatch", [])]
     dropped: dict[str, int] = {}
     accepted: list[Candidate] = []
     low: list[Candidate] = []
+    unlisted: list[Candidate] = []
     for c in fresh:
         classify(c, details.get(c.video_id), config, official_ids)
+        if c.decision in {"add", "low-confidence"} and not (c.listed or c.channel_id in listed_ids):
+            # Only listed channels and playlists add lectures; a name match elsewhere is at most a
+            # channel for a person to look at.
+            c.decision = "unlisted-channel" if c.decision == "add" else "no_name"
         if c.decision in {"add", "low-confidence"}:
             c.app_title = clean_title(c.title, names, c.channel)
             name_only = contains_any(c.app_title, config["mustMatch"]) or (
@@ -435,6 +484,8 @@ def discover(
             accepted.append(c)
         elif c.decision == "low-confidence":
             low.append(c)
+        elif c.decision == "unlisted-channel":
+            unlisted.append(c)
         else:
             dropped[c.decision] = dropped.get(c.decision, 0) + 1
 
@@ -478,12 +529,21 @@ def discover(
             _write_atomic(path, format_lecture_file(doc))
             files_changed.append(rel)
         for c in added:
-            seen["videos"][c.video_id] = {"status": "proposed", "date": stamp, "lectureId": c.lecture_id}
+            seen["videos"][c.video_id] = {
+                "status": "proposed", "date": stamp, "lectureId": c.lecture_id,
+                "channelId": c.channel_id, "channel": c.channel,
+            }
         for c in duplicates:
             seen["videos"][c.video_id] = {"status": "duplicate", "date": stamp, "note": f"একই লেকচার: {c.duplicate_of}"}
         for c in low:
             seen["videos"][c.video_id] = {"status": "low-confidence", "date": stamp, "note": "নাম শুধু বিবরণে"}
-        if added or duplicates or low:
+        for c in unlisted:
+            seen["videos"][c.video_id] = {
+                "status": "unlisted-channel", "date": stamp, "channelId": c.channel_id, "channel": c.channel,
+            }
+        if added or duplicates or low or unlisted:
+            if mode == "sweep" and searched_all:
+                seen["lastSearch"] = stamp
             save_seen(root, seen)
             files_changed.append(f"{SEEN_DIR}/{speaker_id}.json")
 
@@ -502,7 +562,40 @@ def discover(
         searches=client.usage.searches,
         files_changed=files_changed,
         search_cut=search_cut,
+        unlisted=unlisted,
+        since=since,
     )
+
+
+def sweep_all(
+    root: Path,
+    client: YouTubeClient,
+    today: date,
+    *,
+    search_budget: int = DEFAULT_SEARCH_BUDGET,
+    order: str | None = None,
+    dry_run: bool = False,
+    backfill: bool = False,
+) -> tuple[list[Result], str | None]:
+    """Every speaker of sources.json in one run, the search budget shared equally between them.
+
+    Returns the results and, when the quota ran out on a lookup, which speaker it stopped at
+    (the speakers before it are complete and written)."""
+    ids = [s["speakerId"] for s in load_sources(root)]
+    results: list[Result] = []
+    for i, speaker_id in enumerate(ids):
+        units, searches = client.usage.units, client.usage.searches
+        share = max(0, (search_budget - searches) // (len(ids) - i))
+        try:
+            result = discover(
+                root, speaker_id, client, today,
+                search_budget=searches + share, order=order, dry_run=dry_run, backfill=backfill,
+            )
+        except QuotaExceeded:
+            return results, speaker_id
+        result.units, result.searches = client.usage.units - units, client.usage.searches - searches
+        results.append(result)
+    return results, None
 
 
 # ---------------------------------------------------------------------------
@@ -573,13 +666,51 @@ def _cell(text: str) -> str:
     return text.replace("|", "\\|").replace("\n", " ").strip() or "—"
 
 
-def render_report(result: Result, today: date) -> str:
+def render_all_report(results: list[Result], stopped_at: str | None, today: date) -> str:
+    """One pull request text for a run over every speaker."""
+    busy = [r for r in results if r.added or r.listed or r.dropped]
+    quiet = [r for r in results if r not in busy]
+    lines = [
+        f"# নতুন লেকচার — {bn(sum(len(r.added) for r in results))}টি যোগ, {bn(len(results))} জন বক্তা",
+        "",
+        f"{bn(today.isoformat())} · কোটা: সার্চ {bn(sum(r.searches for r in results))}/১০০, "
+        f"অন্যান্য {bn(sum(r.units for r in results))}/১০,০০০ ইউনিট",
+        "",
+    ]
+    if stopped_at:
+        lines += [f"> কোটা শেষ হয়ে যাওয়ায় `{stopped_at}` থেকে বাকি বক্তাদের দেখা হয়নি; পরের রানে দেখা হবে।", ""]
+    for r in busy:
+        lines += [render_report(r, today, footer=False), ""]
+    if quiet:
+        lines += ["**নতুন কিছু পাওয়া যায়নি:** " + ", ".join(r.speaker_name for r in quiet), ""]
+    lines += _review_steps("speaker-00N", "এই PR খোলা থাকা অবস্থায় বট নতুন PR খুলবে না।")
+    return "\n".join(lines) + "\n"
+
+
+def _review_steps(speaker_id: str, closing: str) -> list[str]:
+    return [
+        "### কীভাবে রিভিউ করবেন",
+        "",
+        "1. **Files changed**-এ গিয়ে প্রতিটা লেকচারের শিরোনাম আর ক্যাটাগরি দেখে ঠিক করুন (✏️ Edit file)।",
+        f"2. কোনো লেকচার না চাইলে `data/lectures/{speaker_id}.json` থেকে সেটা মুছে দিন, কিন্তু "
+        f"`discovery/seen/{speaker_id}.json`-এর এন্ট্রি রেখে দিন — তাহলে বট আর কখনো সেটা আনবে না।",
+        "3. **Merge** করলে publish workflow চলবে আর অ্যাপে আপডেট চলে যাবে।",
+        "",
+        f"_{closing}_",
+    ]
+
+
+def render_report(result: Result, today: date, footer: bool = True) -> str:
     r = result
     lines = [
         f"## নতুন লেকচার: {r.speaker_name} — {bn(len(r.added))}টি যোগ, {bn(r.listed)}টি শুধু তালিকায়",
         "",
         f"`{r.speaker_id}` · {bn(today.isoformat())} · "
-        + ("রিসার্চ ফাইল থেকে আমদানি" if r.mode == "import" else f"চ্যানেল, প্লেলিস্ট ও সার্চ (order: {r.order})")
+        + (
+            "রিসার্চ ফাইল থেকে আমদানি" if r.mode == "import"
+            else "চ্যানেল, প্লেলিস্ট ও সার্চ ("
+            + (f"{bn(r.since)} থেকে আপলোড হওয়া ভিডিও" if r.since else "সব সময়ের ভিডিও") + f", order: {r.order})"
+        )
         + f" · দেখা হয়েছে {bn(r.looked_at)}টি ভিডিও, আগে থেকেই জানা {bn(r.already_known)}টি"
         + f" · কোটা: সার্চ {bn(r.searches)}/১০০, অন্যান্য {bn(r.units)}/১০,০০০ ইউনিট",
         "",
@@ -603,8 +734,35 @@ def render_report(result: Result, today: date) -> str:
     if r.duplicates:
         lines += ["### সম্ভাব্য ডুপ্লিকেট — যোগ হয়নি", "", "| ভিডিও | চ্যানেল | দৈর্ঘ্য | একই লেকচার |", "|---|---|---|---|"]
         for c in r.duplicates:
+            official = " — এটি অফিশিয়াল কপি, চাইলে পুরোনোটির জায়গায় বসান" if c.trusted else ""
             lines.append(
-                f"| [{_cell(c.title)}](https://youtu.be/{c.video_id}) | {_cell(c.channel)} | {clock(c.duration)} | `{c.duplicate_of}` |"
+                f"| [{_cell(c.title)}](https://youtu.be/{c.video_id}) | {_cell(c.channel)} | {clock(c.duration)} "
+                f"| `{c.duplicate_of}`{official} |"
+            )
+        lines.append("")
+    if r.unlisted:
+        by_channel: dict[str, list[Candidate]] = {}
+        for c in r.unlisted:
+            by_channel.setdefault(c.channel_id, []).append(c)
+        lines += [
+            "### তালিকার বাইরের চ্যানেল — যোগ হয়নি, আপনার সিদ্ধান্ত দরকার",
+            "",
+            "বট শুধু `discovery/sources.json`-এ থাকা চ্যানেল ও প্লেলিস্ট থেকে লেকচার যোগ করে। নিচের চ্যানেলগুলোতে "
+            "শিরোনামে বক্তার নামসহ ভিডিও পাওয়া গেছে:",
+            "",
+            f"- **চ্যানেলটি রাখতে চাইলে** `sources.json`-এ `{r.speaker_id}`-এর `channels`-এ যোগ করুন: "
+            '`{ "id": "<চ্যানেল আইডি>", "name": "<নাম>", "official": false }` — পরের রানে ওই চ্যানেলের লেকচারগুলো প্রস্তাব হবে।',
+            "- **বাদ দিতে চাইলে** চ্যানেল আইডিটি `excludeChannels`-এ দিন, অথবা কিছুই করবেন না — এই ভিডিওগুলো আর আসবে না।",
+            f"- **শুধু একটি ভিডিও চাইলে:** `python scripts/add_lecture.py --speaker {r.speaker_id} --category <id> <link>`",
+            "",
+            "| চ্যানেল | চ্যানেল আইডি | ভিডিও | উদাহরণ |",
+            "|---|---|---|---|",
+        ]
+        for channel_id, group in sorted(by_channel.items(), key=lambda kv: (-len(kv[1]), kv[1][0].channel)):
+            examples = " · ".join(f"[{_cell(c.title)}](https://youtu.be/{c.video_id})" for c in group[:2])
+            lines.append(
+                f"| [{_cell(group[0].channel)}](https://www.youtube.com/channel/{channel_id}) | `{channel_id}` "
+                f"| {bn(len(group))}টি | {examples} |"
             )
         lines.append("")
     if r.low_confidence:
@@ -624,16 +782,8 @@ def render_report(result: Result, today: date) -> str:
         lines += ["### বাদ পড়েছে", ""]
         lines += [f"- {DROP_REASONS.get(k, k)}: {bn(v)}টি" for k, v in sorted(r.dropped.items(), key=lambda kv: -kv[1])]
         lines.append("")
-    lines += [
-        "### কীভাবে রিভিউ করবেন",
-        "",
-        "1. **Files changed**-এ গিয়ে প্রতিটা লেকচারের শিরোনাম আর ক্যাটাগরি দেখে ঠিক করুন (✏️ Edit file)।",
-        f"2. কোনো লেকচার না চাইলে `data/lectures/{r.speaker_id}.json` থেকে সেটা মুছে দিন, কিন্তু "
-        f"`discovery/seen/{r.speaker_id}.json`-এর এন্ট্রি রেখে দিন — তাহলে বট আর কখনো সেটা আনবে না।",
-        "3. **Merge** করলে publish workflow চলবে আর অ্যাপে আপডেট চলে যাবে।",
-        "",
-        "_এই PR খোলা থাকা অবস্থায় বট এই বক্তার জন্য নতুন PR খুলবে না।_",
-    ]
+    if footer:
+        lines += _review_steps(r.speaker_id, "এই PR খোলা থাকা অবস্থায় বট নতুন PR খুলবে না।")
     return "\n".join(lines) + "\n"
 
 
@@ -641,7 +791,8 @@ def summary(result: Result) -> str:
     r = result
     return (
         f"{r.speaker_id}: added {len(r.added)}, duplicates {len(r.duplicates)}, "
-        f"low-confidence {len(r.low_confidence)}, dropped {sum(r.dropped.values())}, "
+        f"low-confidence {len(r.low_confidence)}, on unlisted channels {len(r.unlisted)}, "
+        f"dropped {sum(r.dropped.values())}, "
         f"looked at {r.looked_at} ({r.already_known} already known); "
         f"quota used: search {r.searches}/100, units {r.units}/10000"
         + ("; search quota ran out, searches stopped early" if r.search_cut else "")
@@ -737,12 +888,17 @@ def main(argv: list[str] | None = None, client: YouTubeClient | None = None) -> 
     for name in ("sweep", "import"):
         p = sub.add_parser(name)
         common(p)
-        p.add_argument("--speaker", required=True)
+        p.add_argument("--speaker", required=name == "import")
         p.add_argument("--report", type=Path, default=None, help="write the pull request text here")
         p.add_argument("--dry-run", action="store_true", help="check everything but write no files")
         if name == "sweep":
             p.add_argument("--search-budget", type=int, default=DEFAULT_SEARCH_BUDGET)
+            p.add_argument("--all", action="store_true", help="every speaker in sources.json, in one run")
             p.add_argument("--order", choices=["date", "relevance"], default=None)
+            p.add_argument(
+                "--backfill", action="store_true",
+                help="search all of YouTube's history, not only uploads since the last search",
+            )
         else:
             p.add_argument("--file", type=Path, required=True, help="research result with YouTube links")
 
@@ -789,6 +945,33 @@ def main(argv: list[str] | None = None, client: YouTubeClient | None = None) -> 
                 print(text)
             return 0
 
+        if args.command == "sweep" and args.all:
+            if args.speaker:
+                raise DiscoverError("give --speaker or --all, not both")
+            api = client or _client()
+            results, stopped_at = sweep_all(
+                args.root, api, today,
+                search_budget=args.search_budget, order=args.order, dry_run=args.dry_run, backfill=args.backfill,
+            )
+            for r in results:
+                print(summary(r))
+            if stopped_at:
+                print(f"STOPPED at {stopped_at}: the daily quota is used up; the next run continues.", file=sys.stderr)
+            if args.report:
+                args.report.write_text(render_all_report(results, stopped_at, today), encoding="utf-8")
+            _write_outputs(
+                args.github_output,
+                {
+                    "speaker": "all",
+                    "name": f"{bn(len(results))} জন বক্তা",
+                    "added": sum(len(r.added) for r in results),
+                    "listed": sum(r.listed for r in results),
+                    "changed": "true" if any(r.files_changed for r in results) else "false",
+                },
+            )
+            return 0 if results or not stopped_at else 3
+        if args.command == "sweep" and not args.speaker:
+            raise DiscoverError("give --speaker speaker-00N or --all")
         speaker_id = pick_speaker(args.root, args.speaker, today)
         imported = None
         if args.command == "import":
@@ -805,6 +988,7 @@ def main(argv: list[str] | None = None, client: YouTubeClient | None = None) -> 
             order=getattr(args, "order", None),
             imported_ids=imported,
             dry_run=args.dry_run,
+            backfill=getattr(args, "backfill", False),
         )
     except DiscoverError as exc:
         print(f"ERROR {exc}", file=sys.stderr)
