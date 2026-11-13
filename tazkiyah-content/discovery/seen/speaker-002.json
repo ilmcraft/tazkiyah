@@ -1,5 +1,6 @@
 {
   "speakerId": "speaker-002",
+  "lastSearch": "2026-11-13",
   "videos": {
     "-3c6jJvQYgI": {
       "status": "proposed",
@@ -22,6 +23,12 @@
       "status": "rejected",
       "date": "2026-11-08",
       "note": "ক্লিপ: 11 মিনিট"
+    },
+    "0lHB8qWqokM": {
+      "status": "unlisted-channel",
+      "date": "2026-11-13",
+      "channelId": "UCrymTyY4PmrXaF19DLnhKPA",
+      "channel": "ISMAIL WAZ BD"
     },
     "0o4t1x_5pEA": {
       "status": "proposed",
@@ -87,6 +94,12 @@
       "status": "rejected",
       "date": "2026-11-07",
       "note": "একই (404)"
+    },
+    "Bk0x7u7bl7M": {
+      "status": "unlisted-channel",
+      "date": "2026-11-13",
+      "channelId": "UCXkCAQxaZe6g7W4eK_qIa6w",
+      "channel": "Today islamic Video"
     },
     "CYE7RA9Q32k": {
       "status": "rejected",
@@ -435,10 +448,22 @@
       "lectureId": "spk002-0068",
       "note": "চ্যানেল তালিকায় নেই: Nahid Shaikh"
     },
+    "kTk-26dIz4s": {
+      "status": "unlisted-channel",
+      "date": "2026-11-13",
+      "channelId": "UCH9qxSsK2AXlC3hTBWRyepA",
+      "channel": "Mamun Short Story.1"
+    },
     "kiSXWTWHV1M": {
       "status": "rejected",
       "date": "2026-11-08",
       "note": "শিরোনামে বিষয় নেই"
+    },
+    "l2VHihz03Lo": {
+      "status": "unlisted-channel",
+      "date": "2026-11-13",
+      "channelId": "UCyxC4e499ZU1sUZkK9GU66w",
+      "channel": "THE SABIQUN NARRATIVE "
     },
     "l55yknrmbXc": {
       "status": "proposed",
@@ -581,6 +606,12 @@
       "status": "rejected",
       "date": "2026-11-08",
       "note": "ক্লিপ: 10 মিনিট"
+    },
+    "ylQiEaNYEoo": {
+      "status": "unlisted-channel",
+      "date": "2026-11-13",
+      "channelId": "UCXkCAQxaZe6g7W4eK_qIa6w",
+      "channel": "Today islamic Video"
     },
     "z0SDPzxLqVY": {
       "status": "low-confidence",

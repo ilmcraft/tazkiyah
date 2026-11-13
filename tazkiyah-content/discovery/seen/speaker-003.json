@@ -1,5 +1,6 @@
 {
   "speakerId": "speaker-003",
+  "lastSearch": "2026-11-13",
   "videos": {
     "-I-6VbRMt_0": {
       "status": "proposed",
@@ -7,6 +8,12 @@
       "lectureId": "spk003-0128",
       "channelId": "UCKDfhL-B-OKYq8sHbXfIDCg",
       "channel": "Bongo Revolt"
+    },
+    "-PdQZHqcDLo": {
+      "status": "unlisted-channel",
+      "date": "2026-11-13",
+      "channelId": "UCF-1yUGCSGG7B6M0XpIoqlQ",
+      "channel": "The Muslim Thinker"
     },
     "-Ujd6GsGHvY": {
       "status": "proposed",

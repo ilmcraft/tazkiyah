@@ -1,6 +1,13 @@
 {
   "speakerId": "speaker-004",
+  "lastSearch": "2026-11-13",
   "videos": {
+    "2CZfTzuZNiU": {
+      "status": "unlisted-channel",
+      "date": "2026-11-13",
+      "channelId": "UCHLab85rBtNo95hF3JWayLw",
+      "channel": "ASAR Urdu"
+    },
     "8kEKcg1VQNU": {
       "status": "low-confidence",
       "date": "2026-11-08",
@@ -22,6 +29,12 @@
       "date": "2026-11-08",
       "note": "নাম শুধু বিবরণে"
     },
+    "gB_6BczDO50": {
+      "status": "unlisted-channel",
+      "date": "2026-11-13",
+      "channelId": "UCdzvG0aofGvTF3xdUaYoeLQ",
+      "channel": "Sabih Sumair Updates"
+    },
     "jxD-ONMULAs": {
       "status": "low-confidence",
       "date": "2026-11-08",
@@ -31,6 +44,12 @@
       "status": "proposed",
       "date": "2026-11-08",
       "lectureId": "spk004-0004"
+    },
+    "wcgq2J3yJAc": {
+      "status": "unlisted-channel",
+      "date": "2026-11-13",
+      "channelId": "UCCgDOVk1Z225J2TKO1uWy1w",
+      "channel": "Muhammad Sajjad Khan"
     },
     "wqsD_e_C3Hs": {
       "status": "rejected",
