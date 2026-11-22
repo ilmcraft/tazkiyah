@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>তাযকিয়া ডাউনলোডার — Windows</title>
+  <meta name="description" content="ইউটিউবের ভিডিও বা পুরো প্লেলিস্ট এক ক্লিকে কম্পিউটারে ডাউনলোড করার ফ্রি Windows অ্যাপ। বাংলা ইন্টারফেস, ভিডিও (MP4) বা শুধু অডিও (MP3)।">
+  <meta property="og:title" content="তাযকিয়া ডাউনলোডার — Windows">
+  <meta property="og:description" content="ইউটিউবের ভিডিও বা পুরো প্লেলিস্ট কম্পিউটারে ডাউনলোড করুন — ভিডিও (MP4) বা শুধু অডিও (MP3)।">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/downloader/found.webp">
+  <meta name="theme-color" content="#0A0A0A">
+  <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+  <!-- Same fonts, colours, header and footer as the website; only this page's layout is below. -->
+  <link rel="stylesheet" href="assets/app.css">
+  <script>
+    // The theme the visitor picked on the website (default: follow the system).
+    try { var t = JSON.parse(localStorage.getItem("tz.theme")); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+  <style>
+    body.doc-page { padding-bottom: 0; }
+    .ic { width: 20px; height: 20px; fill: currentColor; flex: none; }
+
+    /* ---------- hero ---------- */
+    .dl-hero { background: var(--ink) var(--stars); border-bottom: 6px solid var(--accent); padding: 48px var(--gutter) 52px; }
+    .dl-hero-in { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 48px; align-items: center; }
+    .dl-hero h1 { margin: 14px 0 14px; font-size: clamp(40px, 6vw, 60px); line-height: 1.1; color: #FFFFFF; }
+    .dl-hero .lead { margin-bottom: 26px; }
+    .dl-hero .meta { color: var(--ink-muted); margin-top: 14px; }
+    .dl-hero .meta a { color: var(--accent); }
+    .dl-hero .btn.ghost { color: var(--ink-text); }
+    .dl-hero .btn.ghost:hover { background: var(--ink-3); }
+    .dl-hero .btn small { font-size: 14px; font-weight: 600; opacity: .75; }
+    .hero-shot { margin: 0; }
+
+    /* App screenshots get a window frame so they read as a desktop app, not part of this page. */
+    .win { border-radius: 8px; overflow: hidden; background: #0A0A0A; border: 1px solid var(--line-2); box-shadow: var(--shadow); }
+    .on-dark .win { border-color: #3F3F46; box-shadow: 0 20px 50px rgba(0, 0, 0, .55); }
+    .win-bar { display: flex; align-items: center; gap: 10px; height: 34px; padding: 0 12px; background: #1C1C1F; color: #A1A1AA; font-size: 12.5px; }
+    .win-bar img { width: 16px; height: 16px; border-radius: 3px; }
+    .win-bar span { flex: 1; }
+    .win-bar i { width: 10px; height: 1.5px; background: #71717A; display: block; }
+    .win-bar i + i { width: 9px; height: 9px; background: none; border: 1.5px solid #71717A; }
+    .win img.shot { display: block; width: 100%; height: auto; }
+
+    /* ---------- body ---------- */
+    main.dl { max-width: calc(1000px + 2 * var(--gutter)); margin: 0 auto; padding: 8px var(--gutter) 64px; font-size: 17px; line-height: 1.75; }
+    .dl h2 { display: flex; align-items: center; gap: 12px; margin: 56px 0 14px; font-size: 30px; line-height: 1.25; }
+    .dl h2::before { content: ""; flex: none; width: 10px; height: 10px; background: var(--accent); }
+    .dl p { margin: 0 0 12px; }
+    .dl .sub { color: var(--muted); margin-top: -4px; }
+
+    .features { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr)); gap: 14px; }
+    .features li { padding: 20px 22px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); line-height: 1.65; }
+    .features b { display: block; font-size: 18px; margin-bottom: 4px; }
+    .features span { color: var(--muted); font-size: 15.5px; }
+
+    .walk { list-style: none; margin: 0; padding: 0; counter-reset: walk; display: flex; flex-direction: column; gap: 44px; }
+    .walk > li { counter-increment: walk; display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 32px; align-items: start; }
+    .walk h3 { display: flex; align-items: center; gap: 14px; margin: 0 0 10px; font-size: 23px; line-height: 1.3; }
+    .walk h3::before { content: counter(walk, bengali); flex: none; width: 44px; height: 44px; display: grid; place-items: center; border-radius: var(--radius); background: var(--primary); color: var(--on-primary); font-family: var(--font-head); font-weight: 800; font-size: 24px; }
+    .walk ul { margin: 0; padding-left: 1.2em; }
+    .walk li li { margin: 4px 0; }
+    .walk li li::marker { color: var(--ochre); }
+    .walk figure { margin: 0; }
+    .walk figcaption { margin-top: 8px; color: var(--muted); font-size: 14px; }
+
+    .files { margin: 14px 0 0; padding: 16px 18px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); font-size: 14.5px; line-height: 1.9; overflow-x: auto; }
+    .files code { background: none; padding: 0; font-size: 14.5px; white-space: pre; word-break: normal; }
+
+    .install { list-style: none; margin: 0; padding: 0; counter-reset: ins; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr)); gap: 14px; }
+    .install li { counter-increment: ins; padding: 20px 22px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); line-height: 1.7; font-size: 16px; }
+    .install li::before { content: counter(ins, bengali); display: grid; place-items: center; width: 38px; height: 38px; margin-bottom: 12px; border-radius: var(--radius); background: var(--primary); color: var(--on-primary); font-family: var(--font-head); font-weight: 800; font-size: 21px; }
+    /* A drawn copy of Windows' SmartScreen box, so people recognise it when it appears. */
+    .smartscreen { margin-top: 16px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 22px; align-items: center; }
+    .ss { background: #0B5CAD; color: #FFFFFF; border-radius: 6px; padding: 22px 24px 18px; font-family: "Segoe UI", system-ui, sans-serif; line-height: 1.45; box-shadow: var(--shadow); }
+    .ss b { display: block; font-size: 22px; font-weight: 600; margin-bottom: 10px; }
+    .ss p { margin: 0 0 6px; font-size: 13.5px; color: #E3EEF9; }
+    .ss u { color: #FFFFFF; }
+    .ss .ss-btns { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; }
+    .ss .ss-btns span { border: 1px solid #FFFFFF; padding: 4px 18px; font-size: 13px; }
+    .ss .ss-btns .hl { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+    .faq details { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+    .faq summary { cursor: pointer; padding: 16px 20px; font-weight: 600; font-size: 17px; }
+    .faq details > *:not(summary) { margin: 0 20px 14px; }
+    .faq ul { padding-left: 1.2em; }
+
+    .bottom-cta { margin-top: 56px; padding: 30px 28px; border-radius: var(--radius); background: var(--ink) var(--stars); border-bottom: 6px solid var(--accent); display: flex; flex-wrap: wrap; gap: 18px 28px; align-items: center; justify-content: space-between; }
+    .bottom-cta h2 { margin: 0; color: #FFFFFF; font-size: 28px; }
+    .bottom-cta h2::before { display: none; }
+    .bottom-cta p { margin: 4px 0 0; color: var(--ink-muted); font-size: 15px; }
+    .fineprint { margin-top: 28px; color: var(--muted); font-size: 14px; line-height: 1.7; }
+
+    @media (max-width: 860px) {
+      .dl-hero-in, .walk > li, .smartscreen { grid-template-columns: 1fr; gap: 24px; }
+      .walk > li figure { order: 2; }
+    }
+  </style>
+</head>
+<body class="doc-page">
+<a class="skip" href="#main">মূল অংশে যান</a>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="./"><img src="assets/mark.svg" alt="" width="38" height="38"><span>তাযকিয়া</span></a>
+    <a class="pill" href="./#/app">Android অ্যাপ</a>
+  </div>
+</header>
+
+<section class="dl-hero on-dark">
+  <div class="dl-hero-in">
+    <div>
+      <p class="eyebrow">Windows কম্পিউটারের জন্য · ফ্রি</p>
+      <h1>তাযকিয়া ডাউনলোডার</h1>
+      <p class="lead">ইউটিউবের একটি ভিডিও বা পুরো প্লেলিস্ট এক ক্লিকে কম্পিউটারে ডাউনলোড করুন — ভিডিও (MP4) অথবা শুধু অডিও (MP3)। লিংক পেস্ট করুন, বেছে নিন, ডাউনলোড শুরু করুন।</p>
+      <div class="hero-actions">
+        <a class="btn accent big" href="https://github.com/ilmcraft/tazkiyah-downloader/releases/latest/download/TazkiyahDownloader-Setup.exe" download>
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 3h2v10.17l3.59-3.58L18 11l-6 6-6-6 1.41-1.41L11 13.17V3zM5 19h14v2H5z"/></svg>
+          <span>ডাউনলোড করুন <small>(Windows)</small></span></a>
+        <a class="btn ghost" href="#install">ইনস্টল করার নিয়ম</a>
+      </div>
+      <p class="meta">Windows ১০ বা ১১ (৬৪-বিট) · ফাইলের আকার প্রায় ১৪০ MB · ইনস্টল ছাড়া চালাতে চাইলে <a href="https://github.com/ilmcraft/tazkiyah-downloader/releases/latest/download/TazkiyahDownloader-portable.zip">পোর্টেবল zip</a></p>
+    </div>
+    <figure class="hero-shot">
+      <div class="win" aria-hidden="true">
+        <div class="win-bar"><img src="assets/mark.svg" alt=""><span>তাযকিয়া ডাউনলোডার</span><i></i><i></i></div>
+        <img class="shot" src="assets/downloader/found.webp" alt="" width="1200" height="1004">
+      </div>
+    </figure>
+  </div>
+</section>
+
+<main id="main" class="dl" tabindex="-1">
+
+  <h2>যা যা করতে পারবেন</h2>
+  <ul class="features">
+    <li><b>পুরো প্লেলিস্ট একবারে</b><span>প্লেলিস্টের লিংক দিলে সব ভিডিওর তালিকা আসে; যেগুলো লাগবে টিক দিয়ে বেছে নিন।</span></li>
+    <li><b>ভিডিও বা শুধু অডিও</b><span>ভিডিও 360p থেকে 1080p বা সবচেয়ে ভালো মানে (MP4); লেকচার শুনতে শুধু অডিও (MP3 বা M4A)।</span></li>
+    <li><b>গুছিয়ে সেভ</b><span>প্লেলিস্ট তার নিজের নামে আলাদা ফোল্ডারে, ক্রমিক নম্বরসহ সেভ হয় — যে ক্রমে শুনবেন, সেই ক্রমেই।</span></li>
+    <li><b>অগ্রগতি চোখের সামনে</b><span>প্রতিটি ফাইলের অগ্রগতি, গতি আর বাকি সময়; একটা বাদ দেওয়া বা সব বাতিল করা যায়।</span></li>
+    <li><b>থামলেও সমস্যা নেই</b><span>ইন্টারনেট কেটে গেলে যেখানে থেমেছিল সেখান থেকেই আবার চলে; আগে ডাউনলোড হওয়া ফাইল আবার ডাউনলোড হয় না।</span></li>
+    <li><b>বাংলায়, ঝামেলা ছাড়া</b><span>পুরো অ্যাপ বাংলায়। অ্যাকাউন্ট লাগে না, বিজ্ঞাপন নেই, আলাদা কিছু ইনস্টলও করতে হয় না।</span></li>
+  </ul>
+
+  <h2 id="install">যেভাবে ইনস্টল করবেন</h2>
+  <ol class="install">
+    <li>ওপরের <b>ডাউনলোড করুন</b> বোতামে চাপুন — <code>TazkiyahDownloader-Setup.exe</code> ফাইলটি ডাউনলোড হবে।</li>
+    <li>ডাউনলোড শেষ হলে ফাইলটি খুলুন (ব্রাউজারের ডাউনলোড তালিকা বা <b>Downloads</b> ফোল্ডার থেকে)।</li>
+    <li>Windows নীল রঙের সতর্কবার্তা দেখালে <b>More info</b> চাপুন, তারপর <b>Run anyway</b>।</li>
+    <li><b>Next → Install → Finish</b>। স্টার্ট মেনু আর ডেস্কটপে <b>Tazkiyah Downloader</b> পাবেন। অ্যাডমিন পাসওয়ার্ড লাগে না।</li>
+  </ol>
+  <div class="smartscreen">
+    <div class="ss" role="img" aria-label="Windows SmartScreen-এর সতর্কবার্তার নমুনা: More info চেপে Run anyway চাপতে হয়">
+      <b>Windows protected your PC</b>
+      <p>Microsoft Defender SmartScreen prevented an unrecognized app from starting. Running this app might put your PC at risk.</p>
+      <p><u>More info</u></p>
+      <div class="ss-btns"><span class="hl">Run anyway</span><span>Don't run</span></div>
+    </div>
+    <p class="note"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3zm-1 14-4-4 1.41-1.41L11 13.17l5.59-5.58L18 9l-7 7z"/></svg>
+      <span>এই বার্তাটা আসে কারণ অ্যাপটি কোনো কোম্পানির কেনা সার্টিফিকেটে সই করা নয় — ক্ষতিকর কিছু পাওয়া গেছে বলে নয়। প্রথমে <b>More info</b> চাপলে তবেই <b>Run anyway</b> বোতাম দেখা যায়। অ্যাপের পুরো সোর্স কোড <a href="https://github.com/ilmcraft/tazkiyah-downloader">GitHub-এ সবার জন্য খোলা</a>।</span></p>
+  </div>
+
+  <h2>যেভাবে ব্যবহার করবেন</h2>
+  <p class="sub">নিচের ছবিগুলো অ্যাপেরই। উদাহরণ হিসেবে একটি লেকচারের প্লেলিস্ট নেওয়া হয়েছে।</p>
+  <ol class="walk">
+    <li>
+      <div>
+        <h3>লিংক কপি করে পেস্ট করুন</h3>
+        <ul>
+          <li>ইউটিউবে যে ভিডিও বা প্লেলিস্ট চান সেটি খুলুন, ব্রাউজারের ঠিকানা (লিংক) কপি করুন। ফোনের ইউটিউব অ্যাপে <b>Share → Copy link</b>।</li>
+          <li>অ্যাপের ওপরের ঘরে পেস্ট করুন (<b>Ctrl + V</b> বা <b>পেস্ট</b> বোতাম)। পেস্ট করলেই নিজে থেকে খোঁজা শুরু হয়, না হলে <b>খুঁজুন</b> চাপুন।</li>
+          <li>ভিডিও, প্লেলিস্ট, শর্টস বা চ্যানেলের লিংক — সবই চলে।</li>
+        </ul>
+      </div>
+      <figure>
+        <div class="win"><div class="win-bar"><img src="assets/mark.svg" alt=""><span>তাযকিয়া ডাউনলোডার</span><i></i><i></i></div>
+          <img class="shot" src="assets/downloader/home.webp" alt="অ্যাপের শুরুর পাতা: ওপরে লিংক দেওয়ার ঘর, পেস্ট আর খুঁজুন বোতাম" width="1200" height="673" loading="lazy"></div>
+        <figcaption>অ্যাপ খুললে প্রথমে এই পাতা আসে।</figcaption>
+      </figure>
+    </li>
+    <li>
+      <div>
+        <h3>তালিকা দেখে বেছে নিন</h3>
+        <ul>
+          <li>প্লেলিস্টের নাম, কয়টি ভিডিও আর মোট কত সময় — সব দেখাবে।</li>
+          <li>নিচের তালিকায় সবগুলো আগে থেকেই টিক দেওয়া; যেগুলো লাগবে না সেগুলোর টিক তুলে দিন, বা <b>কোনোটাই না</b> চেপে নিজে বাছুন।</li>
+          <li><b>ভিডিওর মান</b>: কম ডেটায় 360p বা 480p, সাধারণত 720p (HD)-ই যথেষ্ট।</li>
+          <li>প্লেলিস্টের ভেতরের কোনো একটা ভিডিওর লিংক দিলে <b>পুরো প্লেলিস্ট</b> নাকি <b>শুধু এই ভিডিও</b> — দুটোর একটা বেছে নেওয়ার বোতাম আসে।</li>
+        </ul>
+      </div>
+      <figure>
+        <div class="win"><div class="win-bar"><img src="assets/mark.svg" alt=""><span>তাযকিয়া ডাউনলোডার</span><i></i><i></i></div>
+          <img class="shot" src="assets/downloader/found.webp" alt="প্লেলিস্ট পাওয়া গেছে: ৮টি ভিডিও, ভিডিও বা শুধু অডিও বাছাই, ভিডিওর মান 720p, ফোল্ডার আর ডাউনলোড শুরু করুন বোতাম, নিচে ভিডিওর তালিকা" width="1200" height="1004" loading="lazy"></div>
+        <figcaption>প্লেলিস্টের লিংক দেওয়ার পর: অপশন আর ভিডিওর তালিকা।</figcaption>
+      </figure>
+    </li>
+    <li>
+      <div>
+        <h3>লেকচার শুনবেন? শুধু অডিও নিন</h3>
+        <ul>
+          <li><b>শুধু অডিও</b> বাছলে ভিডিওর বদলে অডিও ফাইল হবে — আকারে ভিডিওর চেয়ে অনেক ছোট, ফোনে বা গাড়িতে শোনার জন্য ভালো।</li>
+          <li><b>MP3</b> সব ফোন, কম্পিউটার আর স্পিকারে চলে; <b>M4A</b> আরও ছোট আর দ্রুত হয়।</li>
+          <li>ফাইল কোথায় যাবে বদলাতে <b>ফোল্ডার বদলান</b> চাপুন। পরের বার অ্যাপ এই সব পছন্দ মনে রাখে।</li>
+        </ul>
+      </div>
+      <figure>
+        <div class="win"><div class="win-bar"><img src="assets/mark.svg" alt=""><span>তাযকিয়া ডাউনলোডার</span><i></i><i></i></div>
+          <img class="shot" src="assets/downloader/audio.webp" alt="শুধু অডিও বাছাই করা: অডিও ফরম্যাট MP3, ফোল্ডার আর ডাউনলোড শুরু করুন বোতাম" width="1200" height="814" loading="lazy"></div>
+        <figcaption>শুধু অডিও বাছাই করলে ফরম্যাটের অপশন আসে।</figcaption>
+      </figure>
+    </li>
+    <li>
+      <div>
+        <h3>ডাউনলোড শুরু করুন</h3>
+        <ul>
+          <li><b>ডাউনলোড শুরু করুন</b> চাপলে একটার পর একটা ডাউনলোড হতে থাকে। প্রতিটির পাশে অগ্রগতি, গতি আর বাকি সময় দেখায়।</li>
+          <li>কোনোটা লাগবে না মনে হলে <b>এটা বাদ দিন</b>; সব থামাতে <b>সব বাতিল করুন</b>।</li>
+          <li>ভিডিও শেষে "ফাইল তৈরি হচ্ছে" লেখা আসে — তখন ভিডিও আর অডিও জোড়া লাগানো হয়; কয়েক সেকেন্ড লাগে।</li>
+          <li>ডাউনলোড চলার সময় অ্যাপ বন্ধ করবেন না; ছোট করে (minimize) রাখতে পারেন।</li>
+        </ul>
+      </div>
+      <figure>
+        <div class="win"><div class="win-bar"><img src="assets/mark.svg" alt=""><span>তাযকিয়া ডাউনলোডার</span><i></i><i></i></div>
+          <img class="shot" src="assets/downloader/progress.webp" alt="ডাউনলোড চলছে: ৮টির মধ্যে ৩টি শেষ, চতুর্থটি ৬৩% ডাউনলোড হচ্ছে, বাকিগুলো অপেক্ষায়" width="1200" height="1004" loading="lazy"></div>
+        <figcaption>ডাউনলোড চলছে: ওপরে মোট অগ্রগতি, নিচে প্রতিটি ফাইলের অবস্থা।</figcaption>
+      </figure>
+    </li>
+    <li>
+      <div>
+        <h3>শেষ হলে ফোল্ডার খুলুন</h3>
+        <ul>
+          <li>সব শেষ হলে <b>ফোল্ডার খুলুন</b> চাপুন — ফাইলগুলো সেখানে পাবেন।</li>
+          <li>কোনোটা ব্যর্থ হলে লাল লেখায় কারণ দেখাবে (যেমন ভিডিওটি প্রাইভেট)। <b>ব্যর্থগুলো আবার চেষ্টা করুন</b> চাপলে শুধু সেগুলো আবার চলবে।</li>
+          <li>আরেকটা লিংক ডাউনলোড করতে <b>নতুন লিংক</b> চাপুন।</li>
+        </ul>
+        <p style="margin-top:14px">ফাইলগুলো এভাবে সাজানো থাকে:</p>
+        <div class="files"><code>Downloads\Tazkiyah\
+└─ শাইখ হারুন ইজহার হাফিযাহুল্লাহ\
+   ├─ 001 - যুবক ভাইদের প্রতি গুরুত্বপূর্ণ নাসীহাহ….mp4
+   ├─ 002 - আওয়ামদের জন্যে কোন মাযহাব নেই….mp4
+   └─ 003 - সেমিনার - “ট্রান্সজেন্ডার মতবাদ”….mp4</code></div>
+      </div>
+      <figure>
+        <div class="win"><div class="win-bar"><img src="assets/mark.svg" alt=""><span>তাযকিয়া ডাউনলোডার</span><i></i><i></i></div>
+          <img class="shot" src="assets/downloader/done.webp" alt="সবগুলো ডাউনলোড শেষ: প্রতিটির পাশে সম্পন্ন, ফাইলের আকার, আর নতুন লিংক ও ফোল্ডার খুলুন বোতাম" width="1200" height="1004" loading="lazy"></div>
+        <figcaption>সব শেষ: প্রতিটির পাশে "সম্পন্ন" আর ফাইলের আকার।</figcaption>
+      </figure>
+    </li>
+  </ol>
+
+  <h2>সমস্যা হলে</h2>
+  <div class="faq">
+    <details open><summary>"ইউটিউব সাময়িকভাবে আটকে দিয়েছে" দেখাচ্ছে</summary>
+      <p>একসঙ্গে অনেক ডাউনলোড হলে ইউটিউব মাঝে মাঝে "আপনি কি রোবট?" ধরনের যাচাই চায়। অ্যাপ নিজেই কিছুক্ষণ থেমে দুবার আবার চেষ্টা করে। তাও না হলে:</p>
+      <ul>
+        <li>যে ব্রাউজারে আপনি ইউটিউবে লগইন করা আছেন, অপশনের <b>ইউটিউব "bot" বলে আটকালে</b> ঘর থেকে সেটি বেছে নিন। Firefox সবচেয়ে ভালো কাজ করে; Chrome বা Edge বাছলে সেটা আগে পুরো বন্ধ করে নিন।</li>
+        <li>কিছুক্ষণ (আধা ঘণ্টা–এক ঘণ্টা) পরে আবার চেষ্টা করুন; ব্যর্থগুলো <b>আবার চেষ্টা করুন</b> চাপলেই হবে।</li>
+      </ul></details>
+    <details><summary>হঠাৎ কোনো ভিডিওই ডাউনলোড হচ্ছে না</summary>
+      <p>ইউটিউব মাঝে মাঝে নিজের সিস্টেম বদলায়, তখন অ্যাপেরও আপডেট লাগে। এই পাতা থেকে আবার <b>ডাউনলোড করুন</b> চেপে নতুন ভার্সন ইনস্টল করুন — আগেরটার ওপরেই বসে যাবে, সেটিংস ঠিক থাকবে। অ্যাপের নিচে বর্তমান ভার্সন লেখা থাকে।</p></details>
+    <details><summary>Windows ফাইলটা খুলতে দিচ্ছে না / ব্রাউজার ফাইলটা আটকে দিচ্ছে</summary>
+      <p>Windows-এর নীল বার্তায় <b>More info → Run anyway</b> চাপুন (ওপরের ছবি দেখুন)। Chrome বা Edge "সচরাচর ডাউনলোড হয় না" বললে ডাউনলোড তালিকায় ফাইলটির পাশের <b>⋯</b> চেপে <b>Keep</b> চাপুন।</p></details>
+    <details><summary>অ্যাপ খুললে সাদা বা খালি উইন্ডো দেখায়</summary>
+      <p>অ্যাপটি Windows-এর <b>Microsoft Edge WebView2</b> দিয়ে চলে, যা Windows ১০/১১-এ সাধারণত আগে থেকেই থাকে। না থাকলে Microsoft-এর সাইট থেকে <a href="https://developer.microsoft.com/microsoft-edge/webview2/">WebView2 Runtime</a> ইনস্টল করে অ্যাপটি আবার খুলুন।</p></details>
+    <details><summary>কিছু ভিডিও "ব্যর্থ" দেখাচ্ছে</summary>
+      <p>প্রাইভেট, মুছে ফেলা, বয়স-সীমাবদ্ধ বা শুধু চ্যানেল-মেম্বারদের ভিডিও ডাউনলোড করা যায় না; লাইভ শেষ না হলেও না। কারণটা ভিডিওর নিচে লাল লেখায় দেখায়।</p></details>
+    <details><summary>ইনস্টল না করে চালানো যায়? আনইনস্টল করব কীভাবে?</summary>
+      <p><a href="https://github.com/ilmcraft/tazkiyah-downloader/releases/latest/download/TazkiyahDownloader-portable.zip">পোর্টেবল zip</a> ডাউনলোড করে যেকোনো ফোল্ডারে খুলুন (Extract all), তারপর ভেতরের <code>TazkiyahDownloader.exe</code> চালান — পেনড্রাইভেও রাখা যায়। আনইনস্টল করতে Windows <b>Settings → Apps → Installed apps</b>-এ <b>Tazkiyah Downloader</b> খুঁজে <b>Uninstall</b> চাপুন; আপনার ডাউনলোড করা ফাইল মুছবে না।</p></details>
+    <details><summary>Mac বা ফোনে চলবে?</summary>
+      <p>আপাতত শুধু Windows-এর জন্য তৈরি। ফোনে লেকচার অফলাইনে রাখতে <a href="./#/app">তাযকিয়া Android অ্যাপ</a>-এ সরাসরি সেভ করা যায়।</p></details>
+  </div>
+
+  <div class="bottom-cta on-dark">
+    <div>
+      <h2>তাযকিয়া ডাউনলোডার</h2>
+      <p>Windows ১০/১১ · ফ্রি · ওপেন সোর্স</p>
+    </div>
+    <a class="btn accent big" href="https://github.com/ilmcraft/tazkiyah-downloader/releases/latest/download/TazkiyahDownloader-Setup.exe" download>
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 3h2v10.17l3.59-3.58L18 11l-6 6-6-6 1.41-1.41L11 13.17V3zM5 19h14v2H5z"/></svg>
+      <span>ডাউনলোড করুন</span></a>
+  </div>
+
+  <p class="fineprint">শুধু ব্যক্তিগত ব্যবহারের জন্য। ইউটিউব থেকে ডাউনলোড ইউটিউবের শর্তের বাইরে; ভিডিওর স্বত্ব সংশ্লিষ্ট বক্তা ও নির্মাতাদের — অনুমতি ছাড়া আবার আপলোড বা বিক্রি করবেন না। অ্যাপটি ভিডিও ডাউনলোডের জন্য ওপেন সোর্স <a href="https://github.com/yt-dlp/yt-dlp">yt-dlp</a> ব্যবহার করে, আর আপনার কোনো তথ্য কোথাও পাঠায় না। সব ভার্সন: <a href="https://github.com/ilmcraft/tazkiyah-downloader/releases">GitHub রিলিজ</a>।</p>
+</main>
+
+<footer class="foot">
+  <div class="foot-in">
+    <div class="foot-about">
+      <p class="foot-brand">তাযকিয়া</p>
+      <p>লেকচারের স্বত্ব বক্তা ও আপলোডকারীদের; ভিডিও চলে ইউটিউবের প্লেয়ারে। এই সাইট কোনো বক্তা বা ইউটিউবের সঙ্গে যুক্ত নয়।</p>
+    </div>
+    <nav class="foot-nav" aria-label="ফুটার মেনু">
+      <div>
+        <p class="foot-h">ঘুরে দেখুন</p>
+        <a href="./">হোম</a>
+        <a href="./#/speakers">বক্তাগণ</a>
+        <a href="./#/app">Android অ্যাপ</a>
+      </div>
+      <div>
+        <p class="foot-h">যোগাযোগ</p>
+        <a href="https://github.com/ilmcraft/tazkiyah/issues">প্রশ্ন বা মতামত</a>
+        <a href="https://github.com/ilmcraft/tazkiyah-downloader">ডাউনলোডারের সোর্স কোড</a>
+      </div>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>
