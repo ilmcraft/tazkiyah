@@ -1,5 +1,6 @@
 {
   "speakerId": "speaker-005",
+  "lastSearch": "2026-11-13",
   "videos": {
     "-G87OUdohjE": {
       "status": "low-confidence",
@@ -221,6 +222,11 @@
       "status": "proposed",
       "date": "2026-11-08",
       "lectureId": "spk005-0191"
+    },
+    "4BctCRmnRZ4": {
+      "status": "duplicate",
+      "date": "2026-11-13",
+      "note": "একই লেকচার: spk005-0324"
     },
     "4TPSCnH5mDE": {
       "status": "proposed",
@@ -706,6 +712,12 @@
       "date": "2026-11-08",
       "lectureId": "spk005-0358"
     },
+    "CKYWqHnaVq0": {
+      "status": "unlisted-channel",
+      "date": "2026-11-13",
+      "channelId": "UCE__Z1bUtJy0cawZLA-0Lrw",
+      "channel": "IN THE QALB"
+    },
     "CamuQqsymVE": {
       "status": "rejected",
       "date": "2026-11-10",
@@ -846,6 +858,13 @@
       "date": "2026-11-10",
       "note": "নাম শুধু বিবরণে"
     },
+    "FI747qSLovU": {
+      "status": "proposed",
+      "date": "2026-11-13",
+      "lectureId": "spk005-0406",
+      "channelId": "UCyxC4e499ZU1sUZkK9GU66w",
+      "channel": "THE SABIQUN NARRATIVE "
+    },
     "FRS9gL75K-s": {
       "status": "rejected",
       "date": "2026-11-10",
@@ -942,6 +961,13 @@
       "status": "proposed",
       "date": "2026-11-08",
       "lectureId": "spk005-0239"
+    },
+    "Gy6t0yaQHKY": {
+      "status": "proposed",
+      "date": "2026-11-13",
+      "lectureId": "spk005-0407",
+      "channelId": "UCyxC4e499ZU1sUZkK9GU66w",
+      "channel": "THE SABIQUN NARRATIVE "
     },
     "HEgwf2uU1VY": {
       "status": "rejected",
@@ -1336,6 +1362,12 @@
       "status": "proposed",
       "date": "2026-11-08",
       "lectureId": "spk005-0261"
+    },
+    "PKohguXom0g": {
+      "status": "unlisted-channel",
+      "date": "2026-11-13",
+      "channelId": "UCtIJsdvVkxdt6rv2CvnwDNg",
+      "channel": "The Normative"
     },
     "PXFq3tkGKEo": {
       "status": "proposed",
@@ -3024,6 +3056,13 @@
       "status": "duplicate",
       "date": "2026-11-08",
       "note": "একই লেকচার: t1pVFgjzPRE"
+    },
+    "tOFy_gzJ5Z0": {
+      "status": "proposed",
+      "date": "2026-11-13",
+      "lectureId": "spk005-0408",
+      "channelId": "UCfx50GXZb6gDbxfTBScSGaw",
+      "channel": "Shamsul Arefin Shakti (Official)"
     },
     "tOlqCvl_Bv0": {
       "status": "rejected",

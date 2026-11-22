@@ -2372,6 +2372,33 @@
       "durationSec": 3002,
       "publishedAt": "2026-09-28",
       "addedAt": "2026-11-10"
+    },
+    {
+      "id": "spk005-0406",
+      "title": "জব–ব্যবসা–ক্যারিয়ার–ভবিষ্যৎ !!",
+      "categoryIds": ["halal-rizq"],
+      "media": { "type": "youtube", "videoId": "FI747qSLovU", "startSec": 0 },
+      "durationSec": 5905,
+      "publishedAt": "2026-11-10",
+      "addedAt": "2026-11-13"
+    },
+    {
+      "id": "spk005-0407",
+      "title": "যদি ইসলামী শরীয়াহ থাকতো",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "Gy6t0yaQHKY", "startSec": 0 },
+      "durationSec": 2223,
+      "publishedAt": "2026-11-11",
+      "addedAt": "2026-11-13"
+    },
+    {
+      "id": "spk005-0408",
+      "title": "শাপলা vs শাহবাগ",
+      "categoryIds": ["contemporary"],
+      "media": { "type": "youtube", "videoId": "tOFy_gzJ5Z0", "startSec": 0 },
+      "durationSec": 480,
+      "publishedAt": "2026-11-12",
+      "addedAt": "2026-11-13"
     }
   ]
 }

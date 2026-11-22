@@ -1,5 +1,6 @@
 {
   "speakerId": "speaker-001",
+  "lastSearch": "2026-11-13",
   "videos": {
     "-YP1Ztn7hrg": {
       "status": "rejected",
@@ -11,6 +12,12 @@
       "status": "proposed",
       "date": "2026-11-08",
       "lectureId": "spk001-0074"
+    },
+    "0T-wj7wlA4o": {
+      "status": "unlisted-channel",
+      "date": "2026-11-13",
+      "channelId": "UC0RHlDLFKyRLkQh5YHho0YQ",
+      "channel": "Muslim Ummah মুসলিম উম্মাহ"
     },
     "18j5tylyPfE": {
       "status": "low-confidence",
